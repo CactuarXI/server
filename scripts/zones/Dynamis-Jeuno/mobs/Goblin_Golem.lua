@@ -3,6 +3,12 @@
 --  Mob: Goblin Golem
 -- Note: Mega Boss
 -----------------------------------
+require('scripts/globals/dynamis')
+mixins =
+{
+    require('scripts/mixins/dynamis_beastmen')
+}
+-----------------------------------
 local entity = {}
 
 entity.onMobDeath = function(mob, player, optParams)

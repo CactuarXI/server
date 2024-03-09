@@ -5,7 +5,12 @@
 -- Spawned by trading a Shrouded Bijou to the ??? in front of Castle Zvahl.
 -----------------------------------
 local ID = zones[xi.zone.DYNAMIS_XARCABARD]
-mixins = { require('scripts/mixins/job_special') }
+require('scripts/globals/dynamis')
+mixins =
+{
+    require('scripts/mixins/dynamis_beastmen'),
+    require('scripts/mixins/job_special')
+}
 -----------------------------------
 local entity = {}
 

@@ -2,9 +2,10 @@
 -- Area: Dynamis - Beaucedine
 --  Mob: Arch Angra Mainyu
 -- Note: Mega Boss
------------------------------------
--- mixins = { require('scripts/mixins/job_special') }
-require('scripts/globals/dynamis')
+mixins =
+{
+    require('scripts/mixins/dynamis_beastmen')
+}
 -----------------------------------
 local entity = {}
 
