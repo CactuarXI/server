@@ -10,8 +10,6 @@ end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     if not target:isInfront(mob, 48) or target:checkDistance(mob) > 13  then
-        skill:setAnimationID(0)
-        skill:setKnockback(0)
         skill:setMsg(xi.msg.basic.NONE)
         return 1
     end
