@@ -357,7 +357,7 @@ local function getRangedHitRate(attacker, target, bonus)
 
     -- Applying hitrate caps
     hitrate = utils.clamp(hitrate, 0.2, 0.98)
-    print(hitrate)
+    --print(hitrate)
     return hitrate
 end
 
@@ -1325,6 +1325,14 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
         defender:updateEnmityFromDamage(enmityEntity, finaldmg * enmityMult)
     end
 
+    if attacker:hasStatusEffect(xi.effect.SENGIKORI) then
+        if finaldmg > 0 then
+            defender:setMod(xi.mod.SENGIKORI_DEBUFF, 25)  -- Apply Debuff to target.
+            attacker:setLocalVar('Sengikori_SC', 0)       -- Set Initial Variable
+            attacker:delStatusEffect(xi.effect.SENGIKORI) -- Consume status effect.
+        end
+    end
+
     if finaldmg > 0 then
         -- Pack the weaponskill ID in the top 8 bits of this variable which is utilized
         -- in OnMobDeath in luautils.  Max WSID is 255.
@@ -1415,7 +1423,7 @@ xi.weaponskills.getHitRate = function(attacker, target, bonus)
 
     -- Applying hitrate caps
     hitrate = utils.clamp(hitrate, 0.2, 0.98)
-    print(hitrate)
+    -- print(hitrate)
     return hitrate
 end
 

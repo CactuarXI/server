@@ -510,6 +510,15 @@ xi.spells.damage.calculateIfMagicBurst = function(target, spellElement)
         end
 
         magicBurst = 1.25 + (0.1 * skillchainCount) + rankBonus
+
+        if
+            target:getLocalVar('Sengikori_SC') == 3 and
+            target:getMod(xi.mod.SENGIKORI_DEBUFF) > 0
+        then
+            magicBurst = magicBurst + (target:getMod(xi.mod.SENGIKORI_DEBUFF) / 100)
+            target:setMod(xi.mod.SENGIKORI_DEBUFF, 0) -- Consume the "Effect" upon magic burst.
+            target:setLocalVar('Sengikori_SC', 0)
+        end
     end
 
     return magicBurst
@@ -542,7 +551,7 @@ xi.spells.damage.calculateIfMagicBurstBonus = function(caster, target, spellId, 
     
     if spellGroup == xi.magic.spellGroup.BLACK then
         if
-            not caster:hasStatusEffect(xi.effect.IMMANENCE)
+            caster:hasStatusEffect(xi.effect.IMMANENCE)
         then
             return magicBurstBonus
         end
@@ -566,7 +575,6 @@ xi.spells.damage.calculateIfMagicBurstBonus = function(caster, target, spellId, 
     -- TODO: BLM job trait has to be separate from gear trait, since the job trait is NOT capped. At least, cap is not known.
     -- Magic Burst Damage I is found in gear. caps at 40% with innin, AM2 and such
     -- Magic Burst Damage II is found in other gear and BLM job traits pertain to this one OR to a third, separate one. neither has known cap
-
     if skillchainCount > 0 then
         magicBurstBonus = modBurst -- + modBurstTrait once investigated. Probably needs to be divided by 100
     end
