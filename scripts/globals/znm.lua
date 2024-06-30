@@ -377,36 +377,36 @@ xi.znm.soultrapper.getZeniValue = function(target, user, item)
 
     local zeni = 0
     -- no claim  = little to no zeni
-    if not target:isPet() or hpp == 100 then
+    if target:isPet() or hpp == 100 then
         zeni = math.random(1,5)
     else
         -- base for small size mobs
-        zeni = 16 
+        zeni = 30
         -- large model mobs get a bonus, possibly up to 50 but based on working backwards from known subjects (Genbu, Aw'euvhi, etc it appears to be 2.5x)
         if (modelSize > 0) then
-            zeni = zeni * 2.5
+            zeni = zeni * 3
         end
 
         -- Level Component
         if (targetLevel > 75) then
-            zeni = zeni + (targetLevel - 75)
+            zeni = zeni + ((targetLevel - 75) * 5)
         end
 
         -- NM/Rarity Component -- appears to be very substantial, outweighing even SubjectsOfInterest partial matches
         if isNM then
             local nmBonus = 0
             if (modelSize > 0) then
-                nmBonus = 30
+                nmBonus = 100
             else
                 -- seems that small NMs get a bit bigger bonus, perhaps to offset the low base to begin with
-                nmBonus = 40
+                nmBonus = 125
             end
             zeni = zeni + nmBonus
 
             if isBeingIrresponsible then
                 -- what are you doing taking pictures? you are in a battle?!
                 -- proto-omega, salvalge bosses, etc all give more points than would be expected
-                zeni = zeni + 20
+                zeni = zeni + 35
             end
         end
 
@@ -425,8 +425,10 @@ xi.znm.soultrapper.getZeniValue = function(target, user, item)
             zeni = zeni * 0.25
         elseif (hpp > 25) then
             zeni = zeni * 0.50
-        elseif (hpp > 5) then
+        elseif (hpp > 15) then
             zeni = zeni * 0.75
+        elseif (hpp > 5) then
+            zeni = zeni * 1.00
         end
 
         -- Bonus for HS Soul Plate
@@ -478,12 +480,61 @@ end
 -----------------------------------
 xi.znm.ryo = xi.znm.ryo or {}
 
+local function calculateZeniBonus(plateData)
+    local zeni = plateData.zeni
+    local faunaMatch = plateData.fauna
+    local subOfInterestMatch = plateData.subOfInterest
+    local ecosystem = plateData.ecoSystem
+
+    local faunaKey = GetServerVariable('[ZNM]SubjectsOfInterest')
+    local subjectsOfInterestKey = GetServerVariable('[ZNM]Fauna')
+
+    local percBonus = 0
+
+    if (faunaKey == 0) then
+        faunaKey = 1 -- if there is no subject of interest var, take the first index for now
+    end
+
+    local isCurrentFauna = false
+    local isCurrentSubjectsOfInterest = false
+    local isCurrentEcoSytem = false
+    if (GetServerVariable('[ZNM]SubjectsOfInterest') == subOfInterestMatch) then
+        isCurrentSubjectsOfInterest = true
+        zeni = zeni + 250
+        percBonus = percBonus + 50
+    end
+
+    if (GetServerVariable('[ZNM]Ecosystem') == ecosystem) then
+        isCurrentEcoSytem = true
+        zeni = zeni + 100
+        percBonus = percBonus + 25
+    end
+
+    if (GetServerVariable('[ZNM]Fauna') == faunaMatch) then
+        isCurrentFauna = true
+        zeni = zeni + 500
+        percBonus = percBonus + 75
+    end
+
+    -- Add a little randomness
+    -- zeni = zeni + math.random(-10, 10)
+    -- clamp - highest reports in era are ~100ish
+    -- WINGSCUSTOM include a percentage bonus for matching fauna/SoI/Ecosystem
+    zeni = utils.clamp(zeni, 1, 1000) * (1 + (percBonus / 100))
+
+    -- Sanitize Zeni
+    zeni = math.floor(zeni) -- Remove any floating point information
+
+    return zeni, isCurrentSubjectsOfInterest, isCurrentFauna, isCurrentEcoSytem
+end
+
 xi.znm.ryo.onTrade = function(player, npc, trade)
     if npcUtil.tradeHasExactly(trade, xi.item.SOUL_PLATE) then
         -- Cache the soulplate value on the player
         local item = trade:getItem(0)
         local plateData = item:getSoulPlateData()
-        player:setLocalVar('[ZNM][Ryo]SoulPlateValue', plateData.zeni)
+        local zeni, isCurrentSubjectsOfInterest, isCurrentFauna, isCurrentEcoSytem = calculateZeniBonus(plateData)
+        player:setLocalVar('[ZNM][Ryo]SoulPlateValue', zeni)
         player:startEvent(914)
     end
 end
@@ -623,7 +674,7 @@ xi.znm.sanraku.onTrade = function(player, npc, trade)
         if (isCurrentFauna) then
             updateFaunaLimit(zeni)
         end
-        player:startEvent(910, zeni)
+        player:startEvent(910, 9000, 1500, 255)
     else
         -- taken from sanraku.lua
         znm = -1
