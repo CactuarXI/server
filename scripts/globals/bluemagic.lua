@@ -560,7 +560,7 @@ xi.spells.blue.useCuringSpell = function(caster, target, spell, params)
     end
 
     local final = getCureFinal(caster, spell, getBaseCureOld(power, divisor, constant), params.minCure, true)
-    final       = final + final * target:getMod(xi.mod.CURE_POTENCY_RCVD) / 100
+    final       = final + final * (target:getMod(xi.mod.CURE_POTENCY_RCVD + caster:getMod(xi.mod.CURE_POTENCY_II)) / 100
     final       = final * xi.settings.main.CURE_POWER
     final       = utils.clamp(final, 0, target:getMaxHP() - target:getHP())
 
