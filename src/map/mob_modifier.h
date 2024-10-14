@@ -107,6 +107,7 @@ enum MOBMODIFIER : int
     MOBMOD_NO_WIDESCAN            = 76, // Disables widescan for a specific mob
     MOBMOD_TRUST_DISTANCE         = 77, // TRUSTS ONLY: Set movement type/distance. See trust.lua for details.
     MOBMOD_STANDBACK_RANGE        = 78, // Applies a specific standback range for the mob
+    MOBMOD_SC_EXP_BONUS           = 79, // Applies an exp bonus to mobs that suffer a skillchain
 
             // ASB Mod Start
     MOBMOD_DRAW_IN_INCLUDE_PARTY     = 100, // this will cause the mob's draw-in to also affect all party and alliance members
