@@ -4649,6 +4649,15 @@ namespace charutils
                             }
                         }
                     }
+
+                    //Skillchain EXP Bonus Multiplier added after the exp chain cap
+                    if (PMob->getMobMod(MOBMOD_SC_EXP_BONUS))
+                    {
+                        const float monsterbonus = 1.f + PMob->getMobMod(MOBMOD_SC_EXP_BONUS) / 100.f;
+                        exp *= monsterbonus;
+                        exp = std::fmin(exp,20000); //Cap at 20000 exp per mob with a SC of 1000 damage or higher against a mob yielding 2k EXP or more 
+                    }
+
                     // pet or companion exp penalty needs to be added here
                     if (distance(PMember->loc.p, PMob->loc.p) > 100)
                     {
