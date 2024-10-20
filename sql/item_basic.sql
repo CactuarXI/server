@@ -13855,7 +13855,7 @@ INSERT INTO `item_basic` VALUES (16466,0,'knife','knife',1,2084,2,0,485);
 INSERT INTO `item_basic` VALUES (16467,0,'mythril_knife','mythril_knife',1,2084,2,0,2069);
 INSERT INTO `item_basic` VALUES (16468,0,'darksteel_knife','darksteel_knife',1,2084,2,0,7215);
 INSERT INTO `item_basic` VALUES (16469,0,'cermet_knife','cermet_knife',1,2084,2,0,5967);
-INSERT INTO `item_basic` VALUES (16470,0,'gully','gully',1,2084,2,0,2947);
+INSERT INTO `item_basic` VALUES (16470,0,'gully','gully',1,2084,2,0,2890);
 INSERT INTO `item_basic` VALUES (16471,0,'blind_knife','blind_knife',1,2084,2,0,135);
 INSERT INTO `item_basic` VALUES (16472,0,'poison_knife','poison_knife',1,2084,2,0,1226);
 INSERT INTO `item_basic` VALUES (16473,0,'kukri','kukri',1,2084,2,0,1035);
