@@ -324,7 +324,7 @@ local function cRangedRatio(attacker, defender, params, ignoredDef, tp)
     return pdif, pdifcrit
 end
 
-local function getRangedHitRate(attacker, target, bonus)
+xi.weaponskills.getRangedHitRate = function(attacker, target, bonus)
     local acc = attacker:getRACC()
     local eva = target:getEVA() + target:getMod(xi.mod.SPECIAL_ATTACK_EVASION)
 
@@ -1026,7 +1026,10 @@ xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams,
         calcParams.bonusAcc = calcParams.bonusAcc - accLost
     end
 
-    calcParams.hitRate = getRangedHitRate(attacker, target, calcParams.bonusAcc + 10)
+    calcParams.hitRate = xi.weaponskills.getRangedHitRate(attacker, target, calcParams.bonusAcc + 10)
+    --[[if wsParams.melee == true then
+        calcParams.hitRate = xi.weaponskills.getHitRate(attacker, target, calcParams.bonusAcc + 10)
+    end]]
 
     -- Send our params off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams = xi.weaponskills.calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)

@@ -14122,21 +14122,18 @@ int CLuaBaseEntity::getRACC()
         return 0;
     }
 
-    CBattleEntity* PEntity = static_cast<CBattleEntity*>(m_PBaseEntity);
+    auto* PEntity = static_cast<CBattleEntity*>(m_PBaseEntity);
 
-    int skill = PEntity->GetSkill(weapon->getSkillType());
-    int acc   = skill;
-
-    if (skill > 200)
+    // if battletarget then use distance correction
+    if (PEntity->GetBattleTarget() != nullptr)
     {
-        acc = (int)(200 + (skill - 200) * 0.9);
+        return PEntity->RACC(weapon->getSkillType(), distance(PEntity->loc.p, PEntity->GetBattleTarget()->loc.p), weapon->getILvlSkill());
     }
-
-    acc += PEntity->getMod(Mod::RACC);
-    acc += PEntity->AGI() / 2;
-    acc = acc + std::min<int16>(((100 + PEntity->getMod(Mod::FOOD_RACCP)) * acc / 100), PEntity->getMod(Mod::FOOD_RACC_CAP));
-
-    return acc;
+    // otherwise do not use distance correction and just give base RATT
+    else
+    {
+        return PEntity->RACC(weapon->getSkillType(), 0, weapon->getILvlSkill(), false);
+    }
 }
 
 /************************************************************************
@@ -14162,7 +14159,18 @@ uint16 CLuaBaseEntity::getRATT()
         return 0;
     }
 
-    return static_cast<CBattleEntity*>(m_PBaseEntity)->RATT(weapon->getSkillType(), weapon->getILvlSkill());
+    auto* PEntity = static_cast<CBattleEntity*>(m_PBaseEntity);
+
+    // if battletarget then use distance correction
+    if (PEntity->GetBattleTarget() != nullptr)
+    {
+        return PEntity->RATT(weapon->getSkillType(), distance(PEntity->loc.p, PEntity->GetBattleTarget()->loc.p), weapon->getILvlSkill());
+    }
+    // otherwise do not use distance correction and just give base RATT
+    else
+    {
+        return PEntity->RATT(weapon->getSkillType(), 0, weapon->getILvlSkill(), false);
+    }
 }
 
 /************************************************************************
@@ -14358,6 +14366,28 @@ bool CLuaBaseEntity::isWeaponTwoHanded()
 
     return weapon->isTwoHanded();
 }
+
+/************************************************************************
+ *  Function: getRangedPDIF()
+ *  Purpose : Return pdif values.
+ *  Example : attacker:getRangedPDIF(defender, isCritical, bonusAttackPercent, xi.slot.MAIN, ignoredDef)
+ *  Notes   : Battleutils calculates via GetRangedDamageRatio
+ ************************************************************************/
+
+float CLuaBaseEntity::getRangedPDIF(CLuaBaseEntity* PLuaBaseEntity, bool isCritical, float atkMulti, uint16 ignoredDef)
+{
+    if (m_PBaseEntity->objtype == TYPE_NPC)
+    {
+        ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
+        return false;
+    }
+
+    CBattleEntity* PAttacker = static_cast<CBattleEntity*>(m_PBaseEntity);
+    CBattleEntity* PDefender = static_cast<CBattleEntity*>(PLuaBaseEntity->GetBaseEntity());
+
+    return battleutils::GetRangedDamageRatio(PAttacker, PDefender, isCritical, atkMulti, ignoredDef);
+}
+
 
 /************************************************************************
  *  Function: getGuardRate()
@@ -14730,7 +14760,7 @@ uint8 CLuaBaseEntity::getWeaponSkillType(uint8 slotID)
 /************************************************************************
  *  Function: getWeaponSubSkillType()
  *  Purpose : Returns the integer value of the Weapon's Sub Type
- *  Example : if player:getWeaponSubSkillType(xi.slot.RANGED) == 10 then
+ *  Example : if player:getWeaponSubSkillType(xi.slot.RANGED) == xi.subskill.ANIMATOR then
  *  Notes   : Mainly used to differentiate between ammo and ranged equipment
  ************************************************************************/
 
@@ -16982,6 +17012,27 @@ void CLuaBaseEntity::setDamage(uint16 damage)
 
     auto* PMobEntity = static_cast<CMobEntity*>(m_PBaseEntity);
     if (auto* PItemWeapon = dynamic_cast<CItemWeapon*>(PMobEntity->m_Weapons[SLOT_MAIN]))
+    {
+        PItemWeapon->setDamage(damage);
+    }
+}
+
+/************************************************************************
+ *  Function: setRangedDamage()
+ *  Purpose : Override default ranged damage settings for a Mob
+ *  Example : mob:setRangedDamage(40)
+ ************************************************************************/
+
+void CLuaBaseEntity::setRangedDamage(uint16 damage)
+{
+    if (!(m_PBaseEntity->objtype & TYPE_MOB))
+    {
+        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        return;
+    }
+
+    auto* PMobEntity = static_cast<CMobEntity*>(m_PBaseEntity);
+    if (auto* PItemWeapon = dynamic_cast<CItemWeapon*>(PMobEntity->m_Weapons[SLOT_RANGED]))
     {
         PItemWeapon->setDamage(damage);
     }
@@ -19267,6 +19318,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("getRangedDmgRank", CLuaBaseEntity::getRangedDmgRank);
     SOL_REGISTER("getAmmoDmg", CLuaBaseEntity::getAmmoDmg);
     SOL_REGISTER("getWeaponHitCount", CLuaBaseEntity::getWeaponHitCount);
+    SOL_REGISTER("getRangedPDIF", CLuaBaseEntity::getRangedPDIF);
     SOL_REGISTER("getGuardRate", CLuaBaseEntity::getGuardRate);
     SOL_REGISTER("getBlockRate", CLuaBaseEntity::getBlockRate);
     SOL_REGISTER("getParryRate", CLuaBaseEntity::getParryRate);
@@ -19402,6 +19454,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("setDelay", CLuaBaseEntity::setDelay);
     SOL_REGISTER("getDelay", CLuaBaseEntity::getDelay);
     SOL_REGISTER("setDamage", CLuaBaseEntity::setDamage);
+    SOL_REGISTER("setRangedDamage", CLuaBaseEntity::setRangedDamage);
     SOL_REGISTER("hasSpellList", CLuaBaseEntity::hasSpellList);
     SOL_REGISTER("setSpellList", CLuaBaseEntity::setSpellList);
     SOL_REGISTER("setAutoAttackEnabled", CLuaBaseEntity::setAutoAttackEnabled);

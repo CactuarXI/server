@@ -81,6 +81,7 @@ namespace mobutils
         return damage;
     }
 
+
     // Gest base skill rankings for ACC/ATT/EVA/MEVA
     uint16 GetBaseSkill(CMobEntity* PMob, uint8 rank)
     {
@@ -955,13 +956,18 @@ namespace mobutils
                 {
                     PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1146);
                 }
+                else if (PMob->m_Family == 176) // Mamool Ja NIN
+                {
+                    PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 0);
+                    PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 0);
+                    PMob->defaultMobMod(MOBMOD_HP_STANDBACK, 0);
+                }
                 else if (PMob->m_Family != 335) // exclude NIN Maat
                 {
                     PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 272);
                     PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 12);
+                    PMob->defaultMobMod(MOBMOD_HP_STANDBACK, 70);
                 }
-
-                PMob->defaultMobMod(MOBMOD_HP_STANDBACK, 70);
                 break;
             case JOB_BST:
                 PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 70);

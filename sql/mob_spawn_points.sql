@@ -6488,7 +6488,7 @@ INSERT INTO `mob_spawn_points` VALUES (16904230,'Hotupuku','Hotupuku',7,602,-78,
 
 -- Uninvited Guests
 INSERT INTO `mob_spawn_points` VALUES (16904232,'Mammet_Master','Mammet Master',8,-595.000,82.000,0.000,0);
-INSERT INTO `mob_spawn_points` VALUES (16904233,'Mammet-800','Mammet-800',9,-595.000,82.000,0.000,0);
+INSERT INTO `mob_spawn_points` VALUES (16904233,'Mammet-800_Leader','Mammet-800',9,-595.000,82.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (16904234,'Mammet-800','Mammet-800',9,-600.246,82.400,5.214,3);
 INSERT INTO `mob_spawn_points` VALUES (16904235,'Mammet-800','Mammet-800',9,-596.103,82.200,-10.430,213);
 INSERT INTO `mob_spawn_points` VALUES (16904236,'Mammet-800','Mammet-800',9,-575.020,82.225,9.450,100);
@@ -6498,7 +6498,7 @@ INSERT INTO `mob_spawn_points` VALUES (16904239,'Mammet-800','Mammet-800',9,-578
 INSERT INTO `mob_spawn_points` VALUES (16904240,'Mammet-800','Mammet-800',9,-588.182,82.200,19.998,71);
 INSERT INTO `mob_spawn_points` VALUES (16904241,'Mammet-800','Mammet-800',9,-558.682,80.209,4.013,119);
 INSERT INTO `mob_spawn_points` VALUES (16904242,'Mammet_Master','Mammet Master',8,5.000,2.000,0.000,0);
-INSERT INTO `mob_spawn_points` VALUES (16904243,'Mammet-800','Mammet-800',9,5.000,2.000,0.000,0);
+INSERT INTO `mob_spawn_points` VALUES (16904243,'Mammet-800_Leader','Mammet-800',9,5.000,2.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (16904244,'Mammet-800','Mammet-800',9,-0.246,2.400,5.214,3);
 INSERT INTO `mob_spawn_points` VALUES (16904245,'Mammet-800','Mammet-800',9,3.897,2.200,-10.430,213);
 INSERT INTO `mob_spawn_points` VALUES (16904246,'Mammet-800','Mammet-800',9,24.980,2.225,9.450,100);
@@ -6508,7 +6508,7 @@ INSERT INTO `mob_spawn_points` VALUES (16904249,'Mammet-800','Mammet-800',9,21.6
 INSERT INTO `mob_spawn_points` VALUES (16904250,'Mammet-800','Mammet-800',9,11.818,2.200,19.998,71);
 INSERT INTO `mob_spawn_points` VALUES (16904251,'Mammet-800','Mammet-800',9,41.318,0.209,4.013,119);
 INSERT INTO `mob_spawn_points` VALUES (16904252,'Mammet_Master','Mammet Master',8,605.000,-78.000,0.000,0);
-INSERT INTO `mob_spawn_points` VALUES (16904253,'Mammet-800','Mammet-800',9,605.000,-78.000,0.000,0);
+INSERT INTO `mob_spawn_points` VALUES (16904253,'Mammet-800_Leader','Mammet-800',9,605.000,-78.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (16904254,'Mammet-800','Mammet-800',9,599.754,-77.600,5.214,3);
 INSERT INTO `mob_spawn_points` VALUES (16904255,'Mammet-800','Mammet-800',9,603.897,-77.800,-10.430,213);
 INSERT INTO `mob_spawn_points` VALUES (16904256,'Mammet-800','Mammet-800',9,624.980,-77.775,9.450,100);
