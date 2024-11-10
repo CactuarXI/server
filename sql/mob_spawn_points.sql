@@ -68524,7 +68524,8 @@ INSERT INTO `mob_spawn_points` VALUES (17584318,'Helm_Beetle','Helm Beetle',24,-
 INSERT INTO `mob_spawn_points` VALUES (17584319,'Helm_Beetle','Helm Beetle',24,-179.000,-1.000,-356.000,127);
 INSERT INTO `mob_spawn_points` VALUES (17584320,'Helm_Beetle','Helm Beetle',24,-181.000,-1.000,-344.000,47);
 INSERT INTO `mob_spawn_points` VALUES (17584321,'Knight_Crawler','Knight Crawler',25,-349.000,-1.000,-262.000,127);
-INSERT INTO `mob_spawn_points` VALUES (17584322,'Knight_Crawler','Knight Crawler',25,-235.000,-1.000,223.000,127);
+-- INSERT INTO `mob_spawn_points` VALUES (17584322,'Knight_Crawler','Knight Crawler',25,-235.000,-1.000,223.000,127); (old)
+INSERT INTO `mob_spawn_points` VALUES (17584322,'Knight_Crawler','Knight Crawler',25,-284.185,-0.309,-259.442,127);
 INSERT INTO `mob_spawn_points` VALUES (17584323,'Knight_Crawler','Knight Crawler',25,-339.000,-1.000,-266.000,127);
 INSERT INTO `mob_spawn_points` VALUES (17584324,'Worker_Crawler','Worker Crawler',6,96.000,-32.000,-151.000,19);
 INSERT INTO `mob_spawn_points` VALUES (17584325,'Worker_Crawler','Worker Crawler',6,99.000,-32.000,-160.000,55);
@@ -68612,8 +68613,10 @@ INSERT INTO `mob_spawn_points` VALUES (17584406,'Water_Elemental','Water Element
 INSERT INTO `mob_spawn_points` VALUES (17584407,'Crawler_Hunter','Crawler Hunter',35,-132.149,-2.188,212.748,243);
 INSERT INTO `mob_spawn_points` VALUES (17584408,'Crawler_Hunter','Crawler Hunter',35,-187.836,-1.216,225.221,68);
 INSERT INTO `mob_spawn_points` VALUES (17584409,'Crawler_Hunter','Crawler Hunter',35,-206.625,-1.262,205.726,106);
-INSERT INTO `mob_spawn_points` VALUES (17584410,'Knight_Crawler','Knight Crawler',25,-204.559,-0.752,226.286,240);
-INSERT INTO `mob_spawn_points` VALUES (17584411,'Knight_Crawler','Knight Crawler',25,-198.699,-0.165,253.088,153);
+-- INSERT INTO `mob_spawn_points` VALUES (17584410,'Knight_Crawler','Knight Crawler',25,-204.559,-0.752,226.286,240); (old)
+INSERT INTO `mob_spawn_points` VALUES (17584410,'Knight_Crawler','Knight Crawler',25,-256.565,-0.327,-254.478,240);
+-- INSERT INTO `mob_spawn_points` VALUES (17584411,'Knight_Crawler','Knight Crawler',25,-198.699,-0.165,253.088,153); (old)
+INSERT INTO `mob_spawn_points` VALUES (17584411,'Knight_Crawler','Knight Crawler',25,-255.145,-0.511,-236.418,153);
 INSERT INTO `mob_spawn_points` VALUES (17584412,'Knight_Crawler','Knight Crawler',25,-185.014,-1.314,234.199,81);
 INSERT INTO `mob_spawn_points` VALUES (17584413,'Knight_Crawler','Knight Crawler',25,-186.685,-0.643,217.529,72);
 INSERT INTO `mob_spawn_points` VALUES (17584414,'Fire_Elemental','Fire Elemental',20,-187.648,-1.198,225.066,27);

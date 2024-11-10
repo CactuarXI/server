@@ -1173,6 +1173,16 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                         playerArg:setCharVar('[cactuarRegimes]needed3', regimeObj3)
                         playerArg:setCharVar('[cactuarRegimes]needed4', regimeObj4)
 
+                        -- Records of Eminence: Undertake a FoV Training Regime
+                        if player:getEminenceProgress(3) then
+                            xi.roe.onRecordTrigger(player, 3)
+                        end
+
+                        -- Records of Eminence: Undertake a GoV Training Regime
+                        if player:getEminenceProgress(11) then
+                            xi.roe.onRecordTrigger(player, 11)
+                        end
+
                         pageRepeatMenu.options = pageRepeatMenu_Options
                         delaySendMenu(playerArg, pageRepeatMenu)
                     end,
@@ -1273,7 +1283,7 @@ end
 -- can stack each effect up to maxStack times, per https://ffxiclopedia.fandom.com/wiki/Grounds_of_Valor#Prowesses
 local prowessData =
 {
-    { effect = xi.effect.PROWESS_CASKET_RATE,   basePower = 4,   addPower = 4,   maxStack = 5  },
+    { effect = xi.effect.PROWESS_CASKET_RATE,   basePower = 10,  addPower = 10,  maxStack = 5  },
     { effect = xi.effect.PROWESS_SKILL_RATE,    basePower = 4,   addPower = 2,   maxStack = 11 },
     { effect = xi.effect.PROWESS_CRYSTAL_YIELD, basePower = 4,   addPower = 4,   maxStack = 5  },
     { effect = xi.effect.PROWESS_TH,            basePower = 1,   addPower = 1,   maxStack = 3  },

@@ -1,5 +1,5 @@
 -----------------------------------
--- Attachment: Smoke Screen
+-- Attachment: Truesights
 -----------------------------------
 local attachmentObject = {}
 
