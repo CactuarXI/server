@@ -240,7 +240,7 @@ namespace synthutils
 
         if (PChar->CraftContainer->getCraftType() == CRAFT_DESYNTHESIS) // If it's a desynth, lower success rate.
         {
-            successRate = 75;  // Success rate still lower than regular crafts, however boosted to feel less bad.
+            successRate = 75; // Success rate still lower than regular crafts, however boosted to feel less bad.
             maxChanceHQ = 80;
         }
 
@@ -490,7 +490,7 @@ namespace synthutils
 
             if (PChar->CraftContainer->getCraftType() == CRAFT_DESYNTHESIS) // If it's a desynth, higher skill up rate
             {
-                skillUpChance += 0.5;  // Desynthesis skill up rate higher than normal synthesis skill up rate as a QoL.
+                skillUpChance += 0.5; // Desynthesis skill up rate higher than normal synthesis skill up rate as a QoL.
             }
 
             if (PChar->CraftContainer->getQuantity(0) == SYNTHESIS_FAIL && PChar->CraftContainer->getCraftType() != CRAFT_DESYNTHESIS) // If synth breaks, lower skill up rate unless desynthesis
@@ -562,7 +562,7 @@ namespace synthutils
 
                         random = xirand::GetRandomNumber(1.);
 
-                        if(PChar->CraftContainer->getCraftType() == CRAFT_DESYNTHESIS) // Slight bonus to skill up amount when desynthing.
+                        if (PChar->CraftContainer->getCraftType() == CRAFT_DESYNTHESIS) // Slight bonus to skill up amount when desynthing.
                         {
                             chance -= 0.1;
                         }
