@@ -16,6 +16,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local params = {}
     params.ftpMod = { 2.75, 3.5, 4 }
     params.dex_wsc = 0.28 params.int_wsc = 0.28
+    params.hybridWS = true --Converted to Hybrid WS to allow for physical damage gear to enhance the WS.
     params.ele = xi.element.WIND
     params.skill = xi.skill.DAGGER
     params.includemab = true

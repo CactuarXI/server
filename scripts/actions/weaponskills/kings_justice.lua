@@ -17,10 +17,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local params = {}
     params.numHits = 3
     params.ftpMod = { 1.0, 1.25, 1.5 }
+    params.atkVaries = { 1.5, 1.5, 1.5 } --REMA attack bonus to flatten the damage curve for REMA WSs
     params.str_wsc = 0.5
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
-        params.ftpMod = { 2.25, 4.00, 5.50 }
+        params.ftpMod = { 2.25, 3.75, 5.0 } --Reduced fTP to curb top end damage slightly
         -- params.ftpMod = { 1.0, 3.0, 5.0 }
         params.multiHitfTP = true
     end
