@@ -34,7 +34,7 @@ xi.aftermath.effects =
     [4]  = { mods = { xi.mod.CRITHITRATE, 10 }, duration = getTier1RelicDuration }, -- Ragnarok
     [5]  = { mods = { xi.mod.ATTP, 10 }, duration = getTier1RelicDuration }, -- Guttler
     [6]  = { mods = { xi.mod.DMG, -2000 }, duration = getTier1RelicDuration }, -- Bravura
-    [7]  = { mods = { xi.mod.HASTE_GEAR, 1000 }, duration = getTier1RelicDuration }, -- Apocalypse
+    [7]  = { mods = { xi.mod.HASTE_ABILITY, 1000 }, duration = getTier1RelicDuration }, -- Apocalypse
     -- [8]  = { mods = { xi.mod.SPIKES, xi.subEffect.SHOCK_SPIKES, xi.mod.SPIKES_DMG, 10 }, duration = getTier1RelicDuration }, -- Gungnir
     [8]  = { mods = { xi.mod.ENSPELL, xi.subEffect.LIGHTNING_DAMAGE, xi.mod.ENSPELL_DMG_BONUS, 20, xi.mod.SPIKES, xi.subEffect.SHOCK_SPIKES, xi.mod.SPIKES_DMG, 15, xi.mod.CRITHITRATE, 5 }, duration = getTier1RelicDuration, includePets = true }, -- Gungnir (Cactuar custom, increased crit rate 10%)
     [9]  = { mods = { xi.mod.SUBTLE_BLOW, 10 }, duration = getTier1RelicDuration }, -- Kikoku
