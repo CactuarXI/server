@@ -475,7 +475,7 @@ end
 
 -- On Ability Use Unleash
 xi.job_utils.beastmaster.onUseAbilityUnleash = function(player, target, ability)
-    player:addStatusEffect(xi.effect.UNLEASH, 9, 0, 60)
+    player:addStatusEffect(xi.effect.UNLEASH, 9, 3, 60)
 end
 
 -- On Ability Check For Leave, Heel and Stay.
