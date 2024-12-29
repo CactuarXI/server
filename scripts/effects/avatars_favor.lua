@@ -5,29 +5,29 @@ local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)
     xi.avatarsFavor.applyAvatarsFavorAuraToPet(target, effect)
-    xi.avatarsFavor.applyAvatarsFavorDebuffsToPet(target)
+    -- xi.avatarsFavor.applyAvatarsFavorDebuffsToPet(target)
 end
 
 effectObject.onEffectTick = function(target, effect)
     -- Perform tick power upgrade to max
-    if effect:getPower() <= 11 then
+    if effect:getPower() <= 20 then
         effect:setPower(effect:getPower() + 1)
     end
 
     local summoningSkill = target:getSkillLevel(xi.skill.SUMMONING_MAGIC)
 
-    for i = 1, 7 do
+    for i = 1, 15 do
         if
-            summoningSkill <= xi.avatarsFavor.skillLevels[i] and
+            summoningSkill <= xi.avatarsFavor.skillLevelBreakpoints[i] and
             effect:getPower() > i
         then
             effect:setPower(i)
             break
         elseif
-            summoningSkill > 670 and
-            effect:getPower() > 7
+            summoningSkill > 735 and
+            effect:getPower() > 15
         then
-            effect:setPower(7) -- Making sure we set a power if we are over 670 skill
+            effect:setPower(15) -- Making sure we set a power if we are over 735 skill
         end
     end
 
@@ -43,7 +43,7 @@ effectObject.onEffectTick = function(target, effect)
 end
 
 effectObject.onEffectLose = function(target, effect)
-    xi.avatarsFavor.removeAvatarsFavorAuraFromPet(target)
+    -- xi.avatarsFavor.removeAvatarsFavorAuraFromPet(target)
 end
 
 return effectObject
