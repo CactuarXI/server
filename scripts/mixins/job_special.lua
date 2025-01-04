@@ -109,9 +109,8 @@ local job2hr =
     [xi.job.DRG] = xi.jsa.CALL_WYVERN,
     [xi.job.SMN] = xi.jsa.ASTRAL_FLOW,
     [xi.job.BLU] = xi.jsa.AZURE_LORE,
-
+    [xi.job.COR] = xi.jsa.WILD_CARD,
 -- following abilities are not yet defined on xi.jsa:
---  [xi.job.COR] = xi.jsa.WILD_CARD,
 --  [xi.job.PUP] = xi.jsa.OVERDRIVE,
 --  [xi.job.DNC] = xi.jsa.TRANCE,
 --  [xi.job.SCH] = xi.jsa.TABULA_RASA,

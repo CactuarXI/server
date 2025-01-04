@@ -86,6 +86,7 @@ end
 entity.onMobDeath = function(mob, player, optParams)
     player:showText(mob, ID.text.MEDUSA_DEATH)
     player:addTitle(xi.title.GORGONSTONE_SUNDERER)
+    xi.mob.nmTODPersist(mob, 259200) -- 3 Days
 
     for id = 1, 4 do
         DespawnMob(mob:getID() + id)

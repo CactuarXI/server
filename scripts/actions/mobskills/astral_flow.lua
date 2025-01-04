@@ -41,6 +41,8 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
         SpawnMob(avatar):updateEnmity(mob:getTarget())
     end
 
+    xi.mobskills.mobBuffMove(mob, xi.effect.ASTRAL_FLOW, 1, 0, 25)
+
     return xi.effect.ASTRAL_FLOW
 end
 

@@ -13,6 +13,7 @@ entity.onMobSpawn = function(mob)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.GRAVITY)
+    mob:addImmunity(xi.immunity.STUN)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
@@ -21,6 +22,7 @@ end
 
 entity.onMobDeath = function(mob, player, optParams)
     xi.hunts.checkHunt(mob, player, 474)
+    xi.mob.nmTODPersist(mob, 7200) -- 2 Hours
 end
 
 return entity

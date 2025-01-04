@@ -26844,6 +26844,29 @@ INSERT INTO `mob_droplist` VALUES (4024,1,2,1000,16108,@COMMON);  -- Goliard Cha
 INSERT INTO `mob_droplist` VALUES (4025,1,1,1000,2817,@RARE);  -- Aptant: Pera
 INSERT INTO `mob_droplist` VALUES (4025,1,1,1000,2816,@RARE);  -- Aptant: Tachus
 
+-- ZoneID: 54 Lamia No.8
+INSERT INTO `mob_droplist` VALUES (4026,1,1,1000,16083,@UNCOMMON); -- Mercenary's Turban
+INSERT INTO `mob_droplist` VALUES (4026,0,0,1000,1869,@UNCOMMON);  -- Lamia Skin (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (4026,0,0,1000,2229,@UNCOMMON);  -- Vial Of Chimera Blood (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (4026,0,0,1000,2167,80);         -- Lamian Armlet (8.0%)
+
+-- ZoneID: 54 Lamia No.7
+INSERT INTO `mob_droplist` VALUES (4027,1,1,1000,17737,@UNCOMMON);  -- Corsair's Scimitar
+INSERT INTO `mob_droplist` VALUES (4027,0,0,1000,1869,@UNCOMMON);  -- Lamia Skin (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (4027,0,0,1000,2229,@UNCOMMON);  -- Vial Of Chimera Blood (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (4027,0,0,1000,2167,80);         -- Lamian Armlet (8.0%)
+
+-- ZoneID: 54 Lamia No.9
+INSERT INTO `mob_droplist` VALUES (4028,1,1,1000,14960,@UNCOMMON); -- Evoker's Gages
+INSERT INTO `mob_droplist` VALUES (4028,0,0,1000,1869,@UNCOMMON);  -- Lamia Skin (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (4028,0,0,1000,2229,@UNCOMMON);  -- Vial Of Chimera Blood (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (4028,0,0,1000,2167,80);         -- Lamian Armlet (8.0%)
+
+-- ZoneID: 54 Merrow No.5
+INSERT INTO `mob_droplist` VALUES (4029,1,1,1000,15710,@UNCOMMON);  -- Volunteer's Nails
+INSERT INTO `mob_droplist` VALUES (4029,0,0,1000,1869,@UNCOMMON);  -- Lamia Skin (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (4029,0,0,1000,2229,@UNCOMMON);  -- Vial Of Chimera Blood (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (4029,0,0,1000,2167,80);         -- Lamian Armlet (8.0%)
 
 /*!40000 ALTER TABLE `mob_droplist` ENABLE KEYS */;
 UNLOCK TABLES;

@@ -51,6 +51,7 @@ zones[xi.zone.ARRAPAGO_REEF] =
         FEEL_A_CHILL                  = 8377, -- You feel a chill run down your spine!
         KEYHOLE                       = 8548, -- Fragments of bone, claws, and teeth are scattered around the gate...
         KEYS_SHATTER                  = 8549, -- The <item> shatters... The <item> shatters... The <item> shatters...
+        SENSE_OF_FOREBODING           = 8570, -- You feel an eerie sense of foreboding...
     },
     mob =
     {
@@ -61,6 +62,12 @@ zones[xi.zone.ARRAPAGO_REEF] =
         ZAREEHKL_THE_JUBILANT = GetFirstID('Zareehkl_the_Jubilant'),
         NUHN                  = GetFirstID('Nuhn'),
         BUKKI                 = GetFirstID('Bukki'),
+        LAMIA_NO19            = GetFirstID('Lamia_No19'),
+        MERROW_NO5            = GetFirstID('Merrow_No5'),
+        LAMIE_NO7             = GetFirstID('Lamie_No7'),
+        LAMIE_NO8             = GetFirstID('Lamie_No8'),
+        LAMIE_NO9             = GetFirstID('Lamie_No9'),
+        EURYALE               = GetFirstID('Euryale'),
     },
     npc =
     {

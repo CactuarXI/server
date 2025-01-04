@@ -6608,6 +6608,25 @@ INSERT INTO `mob_spell_lists` VALUES ('Feeblescheme_Bhogbigg',5109,273,1,255);  
 INSERT INTO `mob_spell_lists` VALUES ('Feeblescheme_Bhogbigg',5109,226,1,255);  -- Poisonga II
 INSERT INTO `mob_spell_lists` VALUES ('Feeblescheme_Bhogbigg',5109,196,1,255);  -- Thundaga III
 
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5',5110,466,1,255);  -- Maidens Virelai
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5',5110,387,1,255);  -- Mages Ballad II
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5',5110,376,1,255);  -- Horde Lullaby
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5',5110,392,1,255);  -- Knights Minne IV
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5',5110,373,1,255);  -- Foe Requiem VI
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5',5110,442,1,255);  -- Lightning Carol
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5',5110,382,1,255);  -- Armys Paeon V
+
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,466,1,255);  -- Maidens Virelai
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,387,1,255);  -- Mages Ballad II
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,376,1,255);  -- Horde Lullaby
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,392,1,255);  -- Knights Minne IV
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,373,1,255);  -- Foe Requiem VI
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,442,1,255);  -- Lightning Carol
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,382,1,255);  -- Armys Paeon V
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,442,1,255);  -- Carnage Elegy
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,397,1,255);  -- Valor Minuet IV
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,432,1,255);  -- Uncanny Etude
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,420,1,255);  -- Victory March
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
