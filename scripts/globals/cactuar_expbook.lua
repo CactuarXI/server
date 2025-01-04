@@ -13,9 +13,30 @@ function getZoneNameByNumber(zoneNumber)
     return 'UNKNOWN_ZONE'
 end
 
-local function delProwessEffect(player, effect)
+xi.cactuarRegimes.delProwessEffect = function(player, effect)
     if player:hasStatusEffect(effect) then
         player:delStatusEffectSilent(effect)
+    end
+end
+
+xi.cactuarRegimes.clearBuffVars = function(player)
+    local buffsVars =
+    {
+        '[cactuarRegimes]Buff_Warp',
+        '[cactuarRegimes]Buff_Circumspection',
+        '[cactuarRegimes]Buff_Reraise',
+        '[cactuarRegimes]Buff_Regen',
+        '[cactuarRegimes]Buff_Refresh',
+        '[cactuarRegimes]Buff_Protect',
+        '[cactuarRegimes]Buff_Shell',
+        '[cactuarRegimes]Buff_Haste',
+        '[cactuarRegimes]Buff_Flurry',
+        '[cactuarRegimes]Buff_Food',
+    }
+
+    -- Iterate over the buffs and reset each one
+    for _, buff in ipairs(buffsVars) do
+        player:setLocalVar(buff, 0)
     end
 end
 
@@ -78,7 +99,6 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                 local fieldSupportConfirmMenu =  {} -- "Are you certain?"
                     -- Menu Options
                     local fieldSupportConfirmMenu_Options = {}
-                    local regimeCancelConfirmMenu_Options = {}
 
                 local regimeCancelConfirmMenu =  {} -- "Are you certain?"
                     local regimeCancelConfirmMenu_Options = {}
@@ -115,6 +135,10 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                     -- Menu Options
                     local prowessMenu_Options = {}
 
+                local prowessResetConfirmMenu = {} -- "Are you certain?"
+                    -- Menu Options
+                    local prowessResetConfirmMenu_Options = {}
+
                 local pageNum =
                 {
                     { name = 'Page 1',  regimeId = 1,  zone = zoneID, var = page1  },
@@ -134,37 +158,8 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                 -----------------------------------
                 -- Dialog Helpers
                 -----------------------------------
-                local function displayObjectiveMessage(player, delay)
+                local function displayPageMessage(player, delay, message)
                     player:timer(delay, function(playerArg)
-                        local regimeZone = playerArg:getLocalVar('[cactuarRegimes]zone')
-                        local regimePage = playerArg:getLocalVar('[cactuarRegimes]regimeId')
-                        local obj1_needed = playerArg:getLocalVar('[cactuarRegimes]needed1')
-                        local obj2_needed = playerArg:getLocalVar('[cactuarRegimes]needed2')
-                        local obj3_needed = playerArg:getLocalVar('[cactuarRegimes]needed3')
-                        local obj4_needed = playerArg:getLocalVar('[cactuarRegimes]needed4')
-
-                        local regimeZoneID = regimeZone
-                        local regimeZoneData = xi.cactuarRegimes.zoneData[regimeZoneID]
-                        local regimeTrainingData = regimeZoneData.trainingData[regimePage]
-
-                        -- Only display messages if the objX_needed values are not nil or 0
-                        if obj1_needed and obj1_needed > 0 then
-                            playerArg:printToPlayer(string.format('%s %s', obj1_needed, regimeTrainingData.obj1Dialog), xi.msg.channel.SYSTEM_3)
-                        end
-                        if obj2_needed and obj2_needed > 0 then
-                            playerArg:printToPlayer(string.format('%s %s', obj2_needed, regimeTrainingData.obj2Dialog), xi.msg.channel.SYSTEM_3)
-                        end
-                        if obj3_needed and obj3_needed > 0 then
-                            playerArg:printToPlayer(string.format('%s %s', obj3_needed, regimeTrainingData.obj3Dialog), xi.msg.channel.SYSTEM_3)
-                        end
-                        if obj4_needed and obj4_needed > 0 then
-                            playerArg:printToPlayer(string.format('%s %s', obj4_needed, regimeTrainingData.obj4Dialog), xi.msg.channel.SYSTEM_3)
-                        end
-                    end)
-                end
-
-                local function displayPageMessage(playerArg, delay, message)
-                    playerArg:timer(delay, function(playerArg)
                         playerArg:printToPlayer(message, xi.msg.channel.SYSTEM_3)
                     end)
                 end
@@ -211,6 +206,16 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                     options = {}
                 }
 
+                prowessMenu = {
+                    title = 'What will you do?',
+                    options = {}
+                }
+
+                prowessResetConfirmMenu = {
+                    title = 'Are you certain?',
+                    options = {}
+                }
+
                 regimeCancelConfirmMenu = {
                     title = 'Are you certain?',
                     options = {}
@@ -239,55 +244,72 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                     function(playerArg)
                     end,
                 })
-                if player:getCharVar('[cactuarRegimes]regimeId') > 0 then
+                if player:getCharVar('[cactuarRegimes]regimeId') ~= 0 then
                     table.insert(mainMenu_Options, {
                         'Review current training regime.',
                         function(playerArg)
-                            local regimeZone  = playerArg:getCharVar('[cactuarRegimes]zone')
-                            local regimePage  = playerArg:getCharVar('[cactuarRegimes]regimeId')
-                            local obj1_killed = playerArg:getCharVar('[cactuarRegimes]killed1')
-                            local obj2_killed = playerArg:getCharVar('[cactuarRegimes]killed2')
-                            local obj3_killed = playerArg:getCharVar('[cactuarRegimes]killed3')
-                            local obj4_killed = playerArg:getCharVar('[cactuarRegimes]killed4')
-                            local obj1_needed = playerArg:getCharVar('[cactuarRegimes]needed1')
-                            local obj2_needed = playerArg:getCharVar('[cactuarRegimes]needed2')
-                            local obj3_needed = playerArg:getCharVar('[cactuarRegimes]needed3')
-                            local obj4_needed = playerArg:getCharVar('[cactuarRegimes]needed4')
-                            local pageRepeat  = playerArg:getCharVar('[cactuarRegimes]repeat')
-                            local repeatString = ''
 
-                            if pageRepeat == 0 then
-                                repeatString = 'No'
-                            elseif pageRepeat == 1 then
-                                repeatString = 'Yes'
+                            -- Retrieve regime variables
+                            local regimeVars = {
+                                zone     = playerArg:getCharVar('[cactuarRegimes]zone'),
+                                page     = playerArg:getCharVar('[cactuarRegimes]regimeId'),
+                                killed   = {
+                                    playerArg:getCharVar('[cactuarRegimes]killed1'),
+                                    playerArg:getCharVar('[cactuarRegimes]killed2'),
+                                    playerArg:getCharVar('[cactuarRegimes]killed3'),
+                                    playerArg:getCharVar('[cactuarRegimes]killed4'),
+                                },
+                                needed   = {
+                                    playerArg:getCharVar('[cactuarRegimes]needed1'),
+                                    playerArg:getCharVar('[cactuarRegimes]needed2'),
+                                    playerArg:getCharVar('[cactuarRegimes]needed3'),
+                                    playerArg:getCharVar('[cactuarRegimes]needed4'),
+                                },
+                                repeatPage = playerArg:getCharVar('[cactuarRegimes]repeat'),
+                            }
+
+                            local repeatString = regimeVars.repeatPage == 1 and 'Yes' or 'No'
+
+                            -- Retrieve regime data
+                            local regimeZoneData = xi.cactuarRegimes.zoneData[regimeVars.zone]
+                            local regimeTrainingData = regimeZoneData.trainingData[regimeVars.page]
+
+                            -- Display regime details
+                            playerArg:printToPlayer('Current Regime:', xi.msg.channel.SYSTEM_3)
+                            playerArg:printToPlayer(regimeTrainingData.zoneDialog, xi.msg.channel.SYSTEM_3)
+                            playerArg:printToPlayer(
+                                string.format('Training Regime: Page %i, Repeat: %s', regimeVars.page, repeatString),
+                                xi.msg.channel.SYSTEM_3
+                            )
+                            playerArg:printToPlayer(
+                                string.format('Base Reward: %s', regimeTrainingData.expReward),
+                                xi.msg.channel.SYSTEM_3
+                            )
+
+                            -- Display objectives
+                            for i = 1, 4 do
+                                local killed = regimeVars.killed[i]
+                                local needed = regimeVars.needed[i]
+                                local dialogKey = string.format('obj%iDialog', i)
+                                local dialog = regimeTrainingData[dialogKey]
+
+                                if needed and needed > 0 then
+                                    playerArg:printToPlayer(
+                                        string.format('Objective %i: %s / %s %s.', i, killed, needed, dialog),
+                                        xi.msg.channel.SYSTEM_3
+                                    )
+                                end
                             end
 
-                            local regimeZoneID = regimeZone
-                            local regimeZoneData = xi.cactuarRegimes.zoneData[regimeZoneID]
-                            local regimeTrainingData = regimeZoneData.trainingData[regimePage]
-
-                            playerArg:printToPlayer(string.format('Current Regime:'), xi.msg.channel.SYSTEM_3)
-                            playerArg:printToPlayer(string.format('%s', regimeTrainingData.zoneDialog), xi.msg.channel.SYSTEM_3)
-                            playerArg:printToPlayer(string.format('Training Regime: Page %i, Repeat: %s', regimePage, repeatString), xi.msg.channel.SYSTEM_3)
-                            playerArg:printToPlayer(string.format('Base Reward: %s', regimeTrainingData.expReward), xi.msg.channel.SYSTEM_3)
-                            playerArg:printToPlayer(string.format('Objective 1: %s/ %s %s.', obj1_killed, obj1_needed, regimeTrainingData.obj1Dialog), xi.msg.channel.SYSTEM_3)
-                            if obj2_needed ~= 0 or nil then
-                                playerArg:printToPlayer(string.format('Objective 2: %s/ %s %s.', obj2_killed, obj2_needed, regimeTrainingData.obj2Dialog), xi.msg.channel.SYSTEM_3)
-                            end
-                            if obj3_needed ~= 0 or nil then
-                                playerArg:printToPlayer(string.format('Objective 3: %s/ %s %s.', obj3_killed, obj3_needed, regimeTrainingData.obj3Dialog), xi.msg.channel.SYSTEM_3)
-                            end
-                            if obj4_needed ~= 0 or nil then
-                                playerArg:printToPlayer(string.format('Objective 4: %s/ %s %s.', obj4_killed, obj4_needed, regimeTrainingData.obj4Dialog), xi.msg.channel.SYSTEM_3)
-                            end
+                            -- Send the menu
                             mainMenu.options = mainMenu_Options
                             delaySendMenu(playerArg, mainMenu)
                         end,
                     })
+
                     table.insert(mainMenu_Options, {
                         'Cancel current training regime.',
                         function(playerArg)
-                            -- playerArg:setLocalVar('[cactuarRegimes]regimeReset_Primer', 1)
                             regimeCancelConfirmMenu.options = regimeCancelConfirmMenu_Options
                             delaySendMenu(playerArg, regimeCancelConfirmMenu)
                         end,
@@ -301,6 +323,7 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                         end,
                     })
                 end
+
                 table.insert(mainMenu_Options, {
                     'Read about field support.',
                     function(playerArg)
@@ -312,8 +335,8 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                 table.insert(mainMenu_Options, {
                     'Review active prowesses',
                     function(playerArg)
-                        mainMenu.options = prowessMenu_Options
-                        delaySendMenu(playerArg, mainMenu)
+                        prowessMenu.options = prowessMenu_Options
+                        delaySendMenu(playerArg, prowessMenu)
                     end,
                 })
 
@@ -323,7 +346,6 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                 table.insert(regimeCancelConfirmMenu_Options, {
                     'Yes',
                     function(playerArg)
-                        playerArg:setLocalVar('[cactuarRegimes]regimeReset_Primer', 0)
                         playerArg:printToPlayer('Your current training regime has been cancelled.', xi.msg.channel.SYSTEM_3)
                         xi.cactuarRegimes.clearRegimeVars(player)
                     end,
@@ -358,28 +380,39 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                         end
 
                         if playerArg:hasStatusEffect(xi.effect.PROWESS) then
-                            local prowessPower  = playerArg:getStatusEffect(xi.effect.PROWESS):getPower()
-                            local prowessZoneId = playerArg:getStatusEffect(xi.effect.PROWESS):getSubPower()
-                            local zoneName      = getZoneNameByNumber(prowessZoneId)
+                            local prowessEffect = playerArg:getStatusEffect(xi.effect.PROWESS)
+                            local prowessPower  = prowessEffect:getPower()
+                            local prowessZoneId = prowessEffect:getSubPower()
+                            local zoneName = getZoneNameByNumber(prowessZoneId)
 
                             playerArg:printToPlayer(string.format('Prowess Zone: %s', zoneName), xi.msg.channel.SYSTEM_3)
-                            playerArg:printToPlayer(string.format('Prowess Rewards: +%i%s', prowessPower, '%'), xi.msg.channel.SYSTEM_3)
+                            playerArg:printToPlayer(string.format('Prowess Rewards: +%i%s', prowessPower * 4, '%'), xi.msg.channel.SYSTEM_3)
 
-                            printProwessEffect(playerArg, xi.effect.PROWESS_WS_DMG       , 'Prowess Weaponskill DMG: +%i%s', '%')
-                            printProwessEffect(playerArg, xi.effect.PROWESS_CRYSTAL_YIELD, 'Prowess Crystal Yields: +%i%s', '%')
-                            printProwessEffect(playerArg, xi.effect.PROWESS_SKILL_RATE   , 'Prowess Skill Up Rate: +%i%s', '%')
-                            printProwessEffect(playerArg, xi.effect.PROWESS_ATTACK_SPEED , 'Prowess Attack Speed: +%i%s', '%')
-                            printProwessEffect(playerArg, xi.effect.PROWESS_CURE_POTENCY , 'Prowess Cure Potency: +%i%s', '%')
-                            printProwessEffect(playerArg, xi.effect.PROWESS_CASKET_RATE  , 'Prowess Casket Rate: +%i%s', '%')
-                            printProwessEffect(playerArg, xi.effect.PROWESS_TH           , 'Prowess Treasure Hunter: +%i')
-                            printProwessEffect(playerArg, xi.effect.PROWESS_KILLER       , 'Prowess Killer Effect: +%i')
-                            printProwessEffect(playerArg, xi.effect.PROWESS_MACC_MATK    , 'Prowess MACC/MATT: +%i')
-                            printProwessEffect(playerArg, xi.effect.PROWESS_ACC_RACC     , 'Prowess ACC/RACC: +%i')
-                            printProwessEffect(playerArg, xi.effect.PROWESS_ATT_RATT     , 'Prowess ATT/RATT: +%i')
-                            printProwessEffect(playerArg, xi.effect.PROWESS_HP_MP        , 'Prowess HP/MP: +%i')
+                            -- Define prowess effects and their corresponding messages
+                            local prowessEffects =
+                            {
+                                { effect = xi.effect.PROWESS_WS_DMG,        message = 'Prowess Weaponskill DMG: +%i%s', suffix = '%' },
+                                { effect = xi.effect.PROWESS_CRYSTAL_YIELD, message = 'Prowess Crystal Yields: +%i%s',  suffix = '%' },
+                                { effect = xi.effect.PROWESS_SKILL_RATE,    message = 'Prowess Skill Up Rate: +%i%s',   suffix = '%' },
+                                { effect = xi.effect.PROWESS_ATTACK_SPEED,  message = 'Prowess Attack Speed: +%i%s',    suffix = '%' },
+                                { effect = xi.effect.PROWESS_CURE_POTENCY,  message = 'Prowess Cure Potency: +%i%s',    suffix = '%' },
+                                { effect = xi.effect.PROWESS_CASKET_RATE,   message = 'Prowess Casket Rate: +%i%s',     suffix = '%' },
+                                { effect = xi.effect.PROWESS_TH,            message = 'Prowess Treasure Hunter: +%i'                 },
+                                { effect = xi.effect.PROWESS_KILLER,        message = 'Prowess Killer Effect: +%i'                   },
+                                { effect = xi.effect.PROWESS_MACC_MATK,     message = 'Prowess MACC/MATT: +%i'                       },
+                                { effect = xi.effect.PROWESS_ACC_RACC,      message = 'Prowess ACC/RACC: +%i'                        },
+                                { effect = xi.effect.PROWESS_ATT_RATT,      message = 'Prowess ATT/RATT: +%i'                        },
+                                { effect = xi.effect.PROWESS_HP_MP,         message = 'Prowess HP/MP: +%i'                           },
+                            }
+
+                            -- Iterate over the prowess effects and print if active
+                            for _, effectData in ipairs(prowessEffects) do
+                                printProwessEffect(playerArg, effectData.effect, effectData.message, effectData.suffix)
+                            end
                         else
                             playerArg:printToPlayer('You have no active prowess effects', xi.msg.channel.SYSTEM_3)
                         end
+
                         mainMenu.options = prowessMenu_Options
                         delaySendMenu(playerArg, mainMenu)
                     end,
@@ -393,10 +426,52 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                             mainMenu.options = mainMenu_Options
                             delaySendMenu(playerArg, mainMenu)
                         else
-                            playerArg:setLocalVar('[cactuarRegimes]Prowess_Reset', 1)
-                            fieldSupportConfirmMenu.options = fieldSupportConfirmMenu_Options
-                            delaySendMenu(playerArg, fieldSupportConfirmMenu)
+                            prowessResetConfirmMenu.options = prowessResetConfirmMenu_Options
+                            delaySendMenu(playerArg, prowessResetConfirmMenu)
                         end
+                    end,
+                })
+
+                -----------------------------------
+                -- Reset Prowess Confirm Menu
+                -----------------------------------
+                table.insert(prowessResetConfirmMenu_Options, {
+                    'Yes',
+                    function(playerArg)
+                        -- Define all prowess effects in a table
+                        local prowessEffects =
+                        {
+                            xi.effect.PROWESS,
+                            xi.effect.PROWESS_CASKET_RATE,
+                            xi.effect.PROWESS_SKILL_RATE,
+                            xi.effect.PROWESS_CRYSTAL_YIELD,
+                            xi.effect.PROWESS_TH,
+                            xi.effect.PROWESS_ATTACK_SPEED,
+                            xi.effect.PROWESS_HP_MP,
+                            xi.effect.PROWESS_ACC_RACC,
+                            xi.effect.PROWESS_ATT_RATT,
+                            xi.effect.PROWESS_MACC_MATK,
+                            xi.effect.PROWESS_CURE_POTENCY,
+                            xi.effect.PROWESS_WS_DMG,
+                            xi.effect.PROWESS_KILLER,
+                        }
+
+                        -- Iterate over the effects and remove each one
+                        for _, effect in ipairs(prowessEffects) do
+                            xi.cactuarRegimes.delProwessEffect(playerArg, effect)
+                        end
+
+                        -- Notify the player and send the menu
+                        playerArg:printToPlayer('Prowess progress has been reset.', xi.msg.channel.SYSTEM_3)
+                        prowessMenu.options = prowessMenu_Options
+                        delaySendMenu(playerArg, prowessMenu)
+                    end,
+                })
+                table.insert(prowessResetConfirmMenu_Options, {
+                    'No',
+                    function(playerArg)
+                        prowessMenu.options = prowessMenu_Options
+                        delaySendMenu(playerArg, prowessMenu)
                     end,
                 })
 
@@ -458,19 +533,26 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                         delaySendMenu(playerArg, fieldSupportCatagoryMenu)
                     end,
                 })
-                table.insert(fieldSupportMenu_Buffs_Defensive_Options_Page1,
-                {
-                    'Reraise (100)',
+
+                table.insert(fieldSupportMenu_Buffs_Defensive_Options_Page1, {
+                    'All Buffs Except Reraise',
                     function(playerArg)
-                        if not playerArg:hasStatusEffect(xi.effect.RERAISE) then
-                            playerArg:setLocalVar('[cactuarRegimes]Buff_Reraise', 1)
-                            fieldSupportConfirmMenu.options = fieldSupportConfirmMenu_Options
-                            delaySendMenu(playerArg, fieldSupportConfirmMenu)
-                        else
-                            playerArg:printToPlayer('You have already have this buff active', xi.msg.channel.SYSTEM_3)
-                            fieldSupportMenu.options = fieldSupportMenu_Buffs_Defensive_Options_Page1
-                            delaySendMenu(playerArg, fieldSupportMenu)
+
+                        local buffs = {
+                            { effect = xi.effect.PROTECT, var = '[cactuarRegimes]Buff_Protect' },
+                            { effect = xi.effect.SHELL,   var = '[cactuarRegimes]Buff_Shell'   },
+                            { effect = xi.effect.REGEN,   var = '[cactuarRegimes]Buff_Regen'   },
+                            { effect = xi.effect.REFRESH, var = '[cactuarRegimes]Buff_Refresh' },
+                        }
+                        -- Iterate over the table and set the local variable if the status effect is missing
+                        for _, buff in ipairs(buffs) do
+                            if not playerArg:hasStatusEffect(buff.effect) then
+                                playerArg:setLocalVar(buff.var, 1)
+                            end
                         end
+
+                        fieldSupportConfirmMenu.options = fieldSupportConfirmMenu_Options
+                        delaySendMenu(playerArg, fieldSupportConfirmMenu)
                     end,
                 })
 
@@ -488,6 +570,7 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                         end
                     end,
                 })
+
                 table.insert(fieldSupportMenu_Buffs_Defensive_Options_Page1, {
                     'Refresh (15 ~ 45)',
                     function(playerArg)
@@ -504,6 +587,30 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                 })
 
                 table.insert(fieldSupportMenu_Buffs_Defensive_Options_Page1, {
+                    'Next Page',
+                    function(playerArg)
+                        fieldSupportMenu.options = fieldSupportMenu_Buffs_Defensive_Options_Page2
+                        delaySendMenu(playerArg, fieldSupportMenu)
+                    end,
+                })
+
+                table.insert(fieldSupportMenu_Buffs_Defensive_Options_Page2,
+                {
+                    'Reraise (100)',
+                    function(playerArg)
+                        if not playerArg:hasStatusEffect(xi.effect.RERAISE) then
+                            playerArg:setLocalVar('[cactuarRegimes]Buff_Reraise', 1)
+                            fieldSupportConfirmMenu.options = fieldSupportConfirmMenu_Options
+                            delaySendMenu(playerArg, fieldSupportConfirmMenu)
+                        else
+                            playerArg:printToPlayer('You have already have this buff active', xi.msg.channel.SYSTEM_3)
+                            fieldSupportMenu.options = fieldSupportMenu_Buffs_Defensive_Options_Page1
+                            delaySendMenu(playerArg, fieldSupportMenu)
+                        end
+                    end,
+                })
+
+                table.insert(fieldSupportMenu_Buffs_Defensive_Options_Page2, {
                     'Protect (15 ~ 50)',
                     function(playerArg)
                         if not playerArg:hasStatusEffect(xi.effect.PROTECT) then
@@ -518,7 +625,7 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                     end,
                 })
 
-                table.insert(fieldSupportMenu_Buffs_Defensive_Options_Page1, {
+                table.insert(fieldSupportMenu_Buffs_Defensive_Options_Page2, {
                     'Shell (15 ~ 50)',
                     function(playerArg)
                         if not playerArg:hasStatusEffect(xi.effect.SHELL) then
@@ -532,13 +639,7 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                         end
                     end,
                 })
-                table.insert(fieldSupportMenu_Buffs_Defensive_Options_Page1, {
-                    'Next Page',
-                    function(playerArg)
-                        fieldSupportMenu.options = fieldSupportMenu_Buffs_Defensive_Options_Page2
-                        delaySendMenu(playerArg, fieldSupportMenu)
-                    end,
-                })
+
                 table.insert(fieldSupportMenu_Buffs_Defensive_Options_Page2, {
                     'Previous Page',
                     function(playerArg)
@@ -909,33 +1010,6 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                             end)
                         end
 
-                        if playerArg:getLocalVar('[cactuarRegimes]Prowess_Reset') == 1 then
-                            delProwessEffect(playerArg, xi.effect.PROWESS)
-                            delProwessEffect(playerArg, xi.effect.PROWESS_CASKET_RATE)
-                            delProwessEffect(playerArg, xi.effect.PROWESS_SKILL_RATE)
-                            delProwessEffect(playerArg, xi.effect.PROWESS_CRYSTAL_YIELD)
-                            delProwessEffect(playerArg, xi.effect.PROWESS_TH)
-                            delProwessEffect(playerArg, xi.effect.PROWESS_ATTACK_SPEED)
-                            delProwessEffect(playerArg, xi.effect.PROWESS_HP_MP)
-                            delProwessEffect(playerArg, xi.effect.PROWESS_ACC_RACC)
-                            delProwessEffect(playerArg, xi.effect.PROWESS_ATT_RATT)
-                            delProwessEffect(playerArg, xi.effect.PROWESS_MACC_MATK)
-                            delProwessEffect(playerArg, xi.effect.PROWESS_CURE_POTENCY)
-                            delProwessEffect(playerArg, xi.effect.PROWESS_WS_DMG)
-                            delProwessEffect(playerArg, xi.effect.PROWESS_KILLER)
-                            playerArg:printToPlayer('Prowess progress has been reset.', xi.msg.channel.SYSTEM_3)
-                        end
-                        playerArg:setLocalVar('[cactuarRegimes]Prowess_Reset', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Warp', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Circumspection', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Reraise', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Regen', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Refresh', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Protect', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Shell', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Haste', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Flurry', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Food', 0)
                         fieldSupportMenu.options = fieldSupportCatagoryMenu_Options
                         delaySendMenu(playerArg, fieldSupportMenu)
                     end,
@@ -943,17 +1017,7 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                 table.insert(fieldSupportConfirmMenu_Options, {
                     'No',
                     function(playerArg)
-                        playerArg:setLocalVar('[cactuarRegimes]Prowess_Reset', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Warp', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Circumspection', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Reraise', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Regen', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Refresh', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Protect', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Shell', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Haste', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Flurry', 0)
-                        playerArg:setLocalVar('[cactuarRegimes]Buff_Food', 0)
+                        xi.cactuarRegimes.clearBuffVars(player)
                         mainMenu.options = mainMenu_Options
                         delaySendMenu(playerArg, mainMenu)
                     end,
@@ -1245,17 +1309,7 @@ xi.cactuarRegimes.initializeBooks = function(zone)
                 })
 
                 -- npc:facePlayer(player)
-                player:setLocalVar('[cactuarRegimes]Prowess_Reset', 0)
-                player:setLocalVar('[cactuarRegimes]Buff_Warp', 0)
-                player:setLocalVar('[cactuarRegimes]Buff_Circumspection', 0)
-                player:setLocalVar('[cactuarRegimes]Buff_Reraise', 0)
-                player:setLocalVar('[cactuarRegimes]Buff_Regen', 0)
-                player:setLocalVar('[cactuarRegimes]Buff_Refresh', 0)
-                player:setLocalVar('[cactuarRegimes]Buff_Protect', 0)
-                player:setLocalVar('[cactuarRegimes]Buff_Shell', 0)
-                player:setLocalVar('[cactuarRegimes]Buff_Haste', 0)
-                player:setLocalVar('[cactuarRegimes]Buff_Flurry', 0)
-                player:setLocalVar('[cactuarRegimes]Buff_Food', 0)
+                xi.cactuarRegimes.clearBuffVars(player)
                 mainMenu.options = mainMenu_Options
                 delaySendMenu(player, mainMenu)
             end
@@ -1269,7 +1323,6 @@ xi.cactuarRegimes.clearRegimeVars = function(player)
     player:setCharVar('[cactuarRegimes]zone', 0)
     player:setCharVar('[cactuarRegimes]regimeId', 0)
     player:setCharVar('[cactuarRegimes]repeat', 0)
-    player:setCharVar('[cactuarRegimes]lastReward', 0)
     player:setCharVar('[cactuarRegimes]avgMobLevel', 0)
 
     for i = 1, 4 do
@@ -1297,7 +1350,7 @@ local prowessData =
     { effect = xi.effect.PROWESS_KILLER,        basePower = 1,   addPower = 1,   maxStack = 2  },
 }
 
-local function addGovProwessBonusEffect(player)
+xi.cactuarRegimes.addGovProwessBonusEffect = function(player)
     -- make a table of prowesses that are not yet maxed
     local availableProwesses = {}
     local zoneId = player:getZoneID()
@@ -1337,16 +1390,19 @@ local function addGovProwessBonusEffect(player)
 end
 
 xi.cactuarRegimes.checkRegime = function(player, mob, regimeId, index, regimeType)
-    local zoneID       = mob:getZoneID()
+    local zoneID = mob:getZoneID()
 
     -- dead players, or players not on this training regime, get no credit
     -- also prevents error when this function is called onMobDeath from a mob not killed by a player
     if
         not player or
         player:getHP() == 0 or
-        (player:getCharVar('[cactuarRegimes]zone') ~= zoneID or
-        player:getCharVar('[cactuarRegimes]regimeId') ~= regimeId)
+        player:getCharVar('[cactuarRegimes]zone') ~= zoneID
     then
+        return
+    end
+
+    if player:getCharVar('[cactuarRegimes]regimeId') ~= regimeId then
         return
     end
 
@@ -1360,16 +1416,7 @@ xi.cactuarRegimes.checkRegime = function(player, mob, regimeId, index, regimeTyp
     -- people in alliance get no fields credit unless FOV_REWARD_ALLIANCE is 1 in settings/main.lua
     if
         xi.settings.main.FOV_REWARD_ALLIANCE ~= 1 and
-        regimeType == xi.regime.type.FIELDS and
-        player:checkSoloPartyAlliance() == 2
-    then
-        return
-    end
-
-    -- people in alliance get no grounds credit unless GOV_REWARD_ALLIANCE is 1 in settings/main.lua
-    if
-        xi.settings.main.GOV_REWARD_ALLIANCE ~= 1 and
-        regimeType == xi.regime.type.GROUNDS and
+        ---regimeType == xi.regime.type.FIELDS and
         player:checkSoloPartyAlliance() == 2
     then
         return
@@ -1425,48 +1472,62 @@ xi.cactuarRegimes.checkRegime = function(player, mob, regimeId, index, regimeTyp
         return
     end
 
+    -----------------------------------
+    -- Completion
+    -----------------------------------
+
+    -- If the player completes a regime in a new zone, clear existing prowess.
+    if
+        player:hasStatusEffect(xi.effect.PROWESS)
+    then
+        local prowessCheck  = player:getStatusEffect(xi.effect.PROWESS):getSubPower()
+        if player:getCharVar('[cactuarRegimes]zone') ~= prowessCheck then -- If regime does not match the zoneID stored in prowess sub power, clear existing prowess.
+            local prowessEffects =
+            {
+                xi.effect.PROWESS,
+                xi.effect.PROWESS_CASKET_RATE,
+                xi.effect.PROWESS_SKILL_RATE,
+                xi.effect.PROWESS_CRYSTAL_YIELD,
+                xi.effect.PROWESS_TH,
+                xi.effect.PROWESS_ATTACK_SPEED,
+                xi.effect.PROWESS_HP_MP,
+                xi.effect.PROWESS_ACC_RACC,
+                xi.effect.PROWESS_ATT_RATT,
+                xi.effect.PROWESS_MACC_MATK,
+                xi.effect.PROWESS_CURE_POTENCY,
+                xi.effect.PROWESS_WS_DMG,
+                xi.effect.PROWESS_KILLER,
+            }
+
+            -- Iterate over the effects and remove each one
+            for _, effect in ipairs(prowessEffects) do
+                xi.cactuarRegimes.delProwessEffect(player, effect)
+            end
+        end
+    end
+
     -- get base reward
     player:messageBasic(xi.msg.basic.FOV_COMPLETED_REGIME)
     local reward = trainingData.expReward
 
-    -- adjust reward down if regime is higher than server mob level cap
-    -- example: if you have mobs capped at level 80, and the regime is level 100, you will only get 80% of the reward
-    -- "Currently commented out as we are defining our own regimes/regime data" - Umeboshi
-    --[[if
-        xi.settings.main.NORMAL_MOB_MAX_LEVEL_RANGE_MAX > 0 and
-        trainingData.max_level > xi.settings.main.NORMAL_MOB_MAX_LEVEL_RANGE_MAX
-    then
-        local avgCapLevel = (xi.settings.main.NORMAL_MOB_MAX_LEVEL_RANGE_MIN + xi.settings.main.NORMAL_MOB_MAX_LEVEL_RANGE_MAX) / 2
-        local avgMobLevel = (trainingData.min_level + trainingData.max_level) / 2
-
-        reward = math.floor(reward * avgCapLevel / avgMobLevel)
-    end]]
     rewardModifier = avgMobLevel / playerLevel
-    -- print(rewardModifier)
-    reward = math.floor(reward * rewardModifier)
 
-    -- prowess buffs from completing Grounds regimes
-    --if regimeType == xi.regime.type.GROUNDS then
-        addGovProwessBonusEffect(player)
+    xi.cactuarRegimes.addGovProwessBonusEffect(player)
 
-        -- repeat clears bonus
-        if player:hasStatusEffect(xi.effect.PROWESS) then
-            -- increase reward based on number of clears. hard caps at 2x base reward.
-            local govClears  = player:getStatusEffect(xi.effect.PROWESS):getPower()
-            local baseReward = reward
-
-            reward = reward * (100 + (govClears * 4)) / 100
-            reward = utils.clamp(reward, 0, baseReward * 2)
-
-            -- increment clears
-            player:delStatusEffectSilent(xi.effect.PROWESS)
-            player:addStatusEffect(xi.effect.PROWESS, govClears + 1, 0, 0, 0, zoneID)
-
-        else
-            -- keep track of number of clears
-            player:addStatusEffect(xi.effect.PROWESS, 1, 0, 0, 0, zoneID)
-        end
-    --end
+    -- repeat clears bonus
+    if player:hasStatusEffect(xi.effect.PROWESS) then
+        -- increase reward based on number of clears. hard caps at 2x base reward.
+        local govClears  = player:getStatusEffect(xi.effect.PROWESS):getPower()
+        local baseReward = reward
+        reward = reward * (100 + (govClears * 4)) / 100
+        reward = utils.clamp(reward, 0, baseReward * 2)
+        -- increment clears
+        player:delStatusEffectSilent(xi.effect.PROWESS)
+        player:addStatusEffect(xi.effect.PROWESS, govClears + 1, 0, 0, 0, zoneID)
+    else
+        -- keep track of number of clears
+        player:addStatusEffect(xi.effect.PROWESS, 1, 0, 0, 0, zoneID)
+    end
 
     -- award gil and tabs once per day, or at every page completion if REGIME_WAIT is 0 in settings.lua
     local vanadielEpoch = VanadielUniqueDay()
@@ -1505,14 +1566,14 @@ xi.cactuarRegimes.checkRegime = function(player, mob, regimeId, index, regimeTyp
     -- Award EXP for page completion
     -- Player must be equal or greater than REGIME_REWARD_THRESHOLD levels below the minimum suggested level
     if player:getMainLvl() >= math.max(1, trainingData.min_level - xi.settings.main.REGIME_REWARD_THRESHOLD) then
-        player:addExp(reward * xi.settings.main.BOOK_EXP_RATE)
+        player:addExp((reward * rewardModifier) * xi.settings.main.BOOK_EXP_RATE)
     end
 
     -- repeating regimes
     if player:getCharVar('[cactuarRegimes]repeat') == 1 then
         for i = 1, 4 do
-            player:setCharVar('[cactuarRegimes]killed' .. i, 0)
-            player:setCharVar('[cactuarRegimes]avgMobLevel', 0)
+            player:setCharVar('[cactuarRegimes]killed' .. i, 0) -- reset kill counter
+            player:setCharVar('[cactuarRegimes]avgMobLevel', 0) -- reset average mob level
         end
 
         player:messageBasic(xi.msg.basic.FOV_REGIME_BEGINS_ANEW)
