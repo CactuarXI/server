@@ -5503,6 +5503,17 @@ void CLuaBaseEntity::setAnimationSub(uint8 animationsub)
 }
 
 /************************************************************************
+ *  Function: setSpawnAnimation()
+ *  Purpose : Sets spawn animation for entities
+ *  Example : mob:setSpawnAnimation(1)
+ ************************************************************************/
+
+void CLuaBaseEntity::setSpawnAnimation(uint8 spawnAnimation)
+{
+    m_PBaseEntity->spawnAnimation = static_cast<SPAWN_ANIMATION>(spawnAnimation);
+}
+
+/************************************************************************
  *  Function: setAnimPath()
  *  Purpose : Updates an animation path for NPC
  *  Example : GetNPCByID(Door_Offset+12):setAnimPath(1)
@@ -18890,6 +18901,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("setAnimation", CLuaBaseEntity::setAnimation);
     SOL_REGISTER("getAnimationSub", CLuaBaseEntity::getAnimationSub);
     SOL_REGISTER("setAnimationSub", CLuaBaseEntity::setAnimationSub);
+    SOL_REGISTER("setSpawnAnimation", CLuaBaseEntity::setSpawnAnimation);
     SOL_REGISTER("getCallForHelpFlag", CLuaBaseEntity::getCallForHelpFlag);
     SOL_REGISTER("setCallForHelpFlag", CLuaBaseEntity::setCallForHelpFlag);
     SOL_REGISTER("getCallForHelpBlocked", CLuaBaseEntity::getCallForHelpBlocked);

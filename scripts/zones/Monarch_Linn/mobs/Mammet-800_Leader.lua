@@ -57,7 +57,7 @@ entity.onMobEngage = function(mob, target)
         if mobID == v and mob:getLocalVar('AlreadyEngagedOnce') == 0 then -- If this is the initial Mammet-800 in a BCNM
             mob:setLocalVar('AlreadyEngagedOnce', 1) -- only trigger the additional spawn logic once - or if players wipe we could respawn mammets that were killed
             local players = mob:getBattlefield():getPlayers()
-            for i = 1, #players, 2 do
+            for i = 3, #players, 2 do
                 if i == 19 then
                     break
                 end

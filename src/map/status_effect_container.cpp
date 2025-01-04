@@ -1805,6 +1805,17 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
                     if (PEffect && (PEffect->GetEffectFlags() & EFFECTFLAG_ALWAYS_EXPIRING) != 0)
                     {
                         PEffect->SetStartTime(server_clock::now());
+
+                        // Effect updated, probably from Ecliptic Attrition
+                        // Update status effect with new potency.
+                        // Take care to design your "owning" effects such as the EFFECT::EFFECT_COLURE_ACTIVE to control the subpower, rather than the resulting effect ticking down.
+                        // Otherwise odd things may happen
+                        if (PEffect->GetPower() != PStatusEffect->GetSubPower())
+                        {
+                            luautils::OnEffectLose(PMember, PEffect);
+                            PEffect->SetPower(PStatusEffect->GetSubPower());
+                            luautils::OnEffectGain(PMember, PEffect);
+                        }
                     }
                     else
                     {
@@ -1848,6 +1859,17 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
                     if (PEffect && (PEffect->GetEffectFlags() & EFFECTFLAG_ALWAYS_EXPIRING) != 0)
                     {
                         PEffect->SetStartTime(server_clock::now());
+
+                        // Effect updated, probably from Ecliptic Attrition
+                        // Update status effect with new potency.
+                        // Take care to design your "owning" effects such as the EFFECT::EFFECT_COLURE_ACTIVE to control the subpower, rather than the resulting effect ticking down.
+                        // Otherwise odd things may happen
+                        if (PEffect->GetPower() != PStatusEffect->GetSubPower())
+                        {
+                            luautils::OnEffectLose(PTarget, PEffect);
+                            PEffect->SetPower(PStatusEffect->GetSubPower());
+                            luautils::OnEffectGain(PTarget, PEffect);
+                        }
                     }
                     else
                     {
@@ -1879,6 +1901,17 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
                     if (PEffect && (PEffect->GetEffectFlags() & EFFECTFLAG_ALWAYS_EXPIRING) != 0)
                     {
                         PEffect->SetStartTime(server_clock::now());
+
+                        // Effect updated, probably from Ecliptic Attrition
+                        // Update status effect with new potency.
+                        // Take care to design your "owning" effects such as the EFFECT::EFFECT_COLURE_ACTIVE to control the subpower, rather than the resulting effect ticking down.
+                        // Otherwise odd things may happen
+                        if (PEffect->GetPower() != PStatusEffect->GetSubPower())
+                        {
+                            luautils::OnEffectLose(PMember, PEffect);
+                            PEffect->SetPower(PStatusEffect->GetSubPower());
+                            luautils::OnEffectGain(PMember, PEffect);
+                        }
                     }
                     else
                     {
@@ -1910,6 +1943,17 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
                     if (PEffect && (PEffect->GetEffectFlags() & EFFECTFLAG_ALWAYS_EXPIRING) != 0)
                     {
                         PEffect->SetStartTime(server_clock::now());
+
+                        // Effect updated, probably from Ecliptic Attrition
+                        // Update status effect with new potency.
+                        // Take care to design your "owning" effects such as the EFFECT::EFFECT_COLURE_ACTIVE to control the subpower, rather than the resulting effect ticking down.
+                        // Otherwise odd things may happen
+                        if (PEffect->GetPower() != PStatusEffect->GetSubPower())
+                        {
+                            luautils::OnEffectLose(PTarget, PEffect);
+                            PEffect->SetPower(PStatusEffect->GetSubPower());
+                            luautils::OnEffectGain(PTarget, PEffect);
+                        }
                     }
                     else
                     {

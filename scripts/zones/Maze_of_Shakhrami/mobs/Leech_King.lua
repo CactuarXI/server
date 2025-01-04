@@ -14,12 +14,12 @@ entity.onMobDespawn = function(mob)
         DisallowRespawn(ID.mob.LEECH_KING, true)
         DisallowRespawn(ID.mob.ARGUS, false)
         UpdateNMSpawnPoint(ID.mob.ARGUS)
-        xi.mob.nmTODPersist(mob, math.random(64800, 10800)) -- 18 to 30 hours
+        xi.mob.nmTODPersist(mob, math.random(36000, 43200)) -- 10 - 12 hrs
     else
         DisallowRespawn(ID.mob.ARGUS, true)
         DisallowRespawn(ID.mob.LEECH_KING, false)
         UpdateNMSpawnPoint(ID.mob.LEECH_KING)
-        xi.mob.nmTODPersist(GetMobByID(ID.mob.LEECH_KING), math.random(64800, 10800)) -- 18 to 30 hours
+        xi.mob.nmTODPersist(GetMobByID(ID.mob.LEECH_KING), math.random(36000, 43200)) -- 10 - 12 hrs
     end
 end
 

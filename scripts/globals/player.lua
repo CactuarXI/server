@@ -243,6 +243,35 @@ xi.player.onPlayerDeath = function(player)
     if player:getLocalVar('PVPMODE') == 1 then
         player:sendRaise(3)
     end
+    if player:getZoneID() == 54 then
+        local ID = zones[xi.zone.ARRAPAGO_REEF]
+
+        local lamiaNo19 = GetMobByID(ID.mob.LAMIA_NO19)
+        local lamiaNo19TOD = GetServerVariable('[SPAWN]16998868')
+        if
+            player:getXPos() > -273 and
+            player:getXPos() < 83 and
+            player:getZPos() > -9 and
+            player:getZPos() < 275
+        then
+            if
+                lamiaNo19TOD < os.time() and -- Spawn window open
+                not lamiaNo19:isSpawned() -- Not spawned already
+            then
+                player:messageSpecial(ID.text.SENSE_OF_FOREBODING)
+                if math.random(1, 2) == 1 then -- 50% chance of spawn
+                    lamiaNo19:setSpawn(player:getXPos(), player:getYPos(), player:getZPos())
+                    lamiaNo19:spawn()
+                -- print('Attempting to spawn NM')
+                end
+            else
+                -- print('Lamia TOD: On Cooldown')
+            end
+            -- print('You are within the bounds!')
+        else
+            -- print('You are outside the bounds!')
+        end
+    end
 end
 
 xi.player.onPlayerLevelUp = function(player)

@@ -334,6 +334,7 @@ xi.mobskills.mobRangedMove = function(mob, target, skill, numHits, accMod, dmgMo
         finaldmg   = 0
         hitslanded = 0
         yaegasumiEffect:setPower(yaegasumiEffectPower + 1) -- 1 power = 20% Damage Increase
+        target:addTP(500)
         skill:setMsg(xi.msg.basic.EVADES)
     elseif hitslanded == 0 or finaldmg == 0 then
         finaldmg   = 0
@@ -579,7 +580,10 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
             finaldmg = xi.weaponskills.handleBlock(mob, target, finaldmg) -- (ASB)
             hitslanded = hitslanded + 1
 
-            if tpEffect1 == xi.mobskills.physicalTpBonus.ENFEEB_SPECIAL or tpEffect2 == xi.mobskills.physicalTpBonus.ENFEEB_SPECIAL then
+            if
+                tpEffect1 == xi.mobskills.physicalTpBonus.ENFEEB_SPECIAL or
+                tpEffect2 == xi.mobskills.physicalTpBonus.ENFEEB_SPECIAL
+            then
                 if hitsdone == 1 then
                     target:addStatusEffect(xi.effect.MAX_HP_DOWN, 50, 0, 120)
                 elseif hitsdone == 2 then
@@ -590,8 +594,13 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
         hitsdone = hitsdone + 1
     end
 
-    if hitslanded == 3 then
-        target:addStatusEffect(xi.effect.MAX_TP_DOWN, 1000, 3, 120)
+    if
+        tpEffect1 == xi.mobskills.physicalTpBonus.ENFEEB_SPECIAL or
+        tpEffect2 == xi.mobskills.physicalTpBonus.ENFEEB_SPECIAL
+    then
+        if hitslanded == 3 then
+            target:addStatusEffect(xi.effect.MAX_TP_DOWN, 1000, 3, 120)
+        end
     end
 
     -- print(hitslanded)
@@ -613,6 +622,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
         finaldmg   = 0
         hitslanded = 0
         yaegasumiEffect:setPower(yaegasumiEffectPower + 1) -- 1 power = 20% Damage Increase
+        target:addTP(500)
         skill:setMsg(xi.msg.basic.EVADES)
     elseif hitslanded == 0 or finaldmg == 0 then
         finaldmg   = 0
@@ -623,6 +633,13 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
         local tpReturn = xi.combat.tp.getSingleMeleeHitTPReturn(mob, target)
         tpReturn = tpReturn + 10 * (hitslanded - 1) -- extra hits give 10 TP each
         mob:addTP(tpReturn)
+    end
+
+    if
+        mob:getMod(xi.mod.SAVETP) > 0 and
+        mob:getTP() < mob:getMod(xi.mod.SAVETP)
+    then
+        mob:setTP(mob:getMod(xi.mod.SAVETP))
     end
 
     --[[if -- ASB Pet damage reduction
@@ -724,7 +741,7 @@ xi.mobskills.mobMagicalMove = function(actor, target, action, baseDamage, action
 
         finalDamage  = 0
         yaegasumiEffect:setPower(yaegasumiEffectPower + 1)
-        action:setMsg(xi.msg.basic.EVADES)
+        target:addTP(500)
     end
 
     --Handle Magic Stoneskin - Umeboshi
@@ -744,6 +761,13 @@ xi.mobskills.mobMagicalMove = function(actor, target, action, baseDamage, action
     if finalDamage > 0 and action:getPrimaryTargetID() == target:getID() then
         local tpReturn = xi.combat.tp.getSingleMeleeHitTPReturn(actor, target)
         actor:addTP(tpReturn)
+    end
+
+    if
+        actor:getMod(xi.mod.SAVETP) > 0 and
+        actor:getTP() < actor:getMod(xi.mod.SAVETP)
+    then
+        actor:setTP(actor:getMod(xi.mod.SAVETP))
     end
 
     return finalDamage
@@ -883,6 +907,13 @@ xi.mobskills.mobBreathMove = function(mob, target, skill, percent, base, element
         mob:addTP(tpReturn)
     end
 
+    if
+        mob:getMod(xi.mod.SAVETP) > 0 and
+        mob:getTP() < mob:getMod(xi.mod.SAVETP)
+    then
+        mob:setTP(mob:getMod(xi.mod.SAVETP))
+    end
+
     return damage
 end
 
@@ -892,6 +923,10 @@ xi.mobskills.mobFinalAdjustments = function(dmg, mob, skill, target, attackType,
         skill:setMsg(xi.msg.basic.NONE)
         return 0
     end
+
+    --if mob:getMod(xi.mod.SAVETP) > 0 then
+    --    mob:addTP(mob:getMod(xi.mod.SAVETP))
+    --end
 
     -- physical attack missed, skip rest
     if skill:hasMissMsg() then
@@ -1052,10 +1087,24 @@ xi.mobskills.mobDrainMove = function(mob, target, drainType, drain, attackType, 
         return xi.msg.basic.DAMAGE
     end
 
+    if
+        mob:getMod(xi.mod.SAVETP) > 0 and
+        mob:getTP() < mob:getMod(xi.mod.SAVETP)
+    then
+        mob:setTP(mob:getMod(xi.mod.SAVETP))
+    end
+
     return xi.msg.basic.SKILL_NO_EFFECT
 end
 
 xi.mobskills.mobPhysicalDrainMove = function(mob, target, skill, drainType, drain)
+
+    if
+        mob:getMod(xi.mod.SAVETP) > 0 and
+        mob:getTP() < mob:getMod(xi.mod.SAVETP)
+    then
+        mob:setTP(mob:getMod(xi.mod.SAVETP))
+    end
     -- If target has Hysteria, no message skip rest
     if mob:hasStatusEffect(xi.effect.HYSTERIA) then
         return xi.msg.basic.NONE
@@ -1080,6 +1129,13 @@ local drainEffectCorrelation =
 }
 
 xi.mobskills.mobDrainAttribute = function(mob, target, typeEffect, power, tick, duration)
+    if
+        mob:getMod(xi.mod.SAVETP) > 0 and
+        mob:getTP() < mob:getMod(xi.mod.SAVETP)
+    then
+        mob:setTP(mob:getMod(xi.mod.SAVETP))
+    end
+
     if not drainEffectCorrelation[typeEffect] then
         return xi.msg.basic.SKILL_NO_EFFECT
     end
@@ -1096,9 +1152,17 @@ xi.mobskills.mobDrainAttribute = function(mob, target, typeEffect, power, tick, 
 end
 
 xi.mobskills.mobDrainStatusEffectMove = function(mob, target)
+
     -- If target has Hysteria, no message skip rest
     if mob:hasStatusEffect(xi.effect.HYSTERIA) then
         return xi.msg.basic.NONE
+    end
+
+    if
+        mob:getMod(xi.mod.SAVETP) > 0 and
+        mob:getTP() < mob:getMod(xi.mod.SAVETP)
+    then
+        mob:setTP(mob:getMod(xi.mod.SAVETP))
     end
 
     -- try to drain buff
@@ -1113,6 +1177,12 @@ end
 
 -- Adds a status effect to a target
 xi.mobskills.mobStatusEffectMove = function(mob, target, typeEffect, power, tick, duration, subType, subPower, tier)
+    if
+        mob:getMod(xi.mod.SAVETP) > 0 and
+        mob:getTP() < mob:getMod(xi.mod.SAVETP)
+    then
+        mob:setTP(mob:getMod(xi.mod.SAVETP))
+    end
     if target:canGainStatusEffect(typeEffect, power) then
         local statmod = xi.mod.INT
         local element = mob:getStatusEffectElement(typeEffect)
@@ -1133,6 +1203,12 @@ end
 
 -- similar to status effect move except, this will not land if the attack missed
 xi.mobskills.mobPhysicalStatusEffectMove = function(mob, target, skill, typeEffect, power, tick, duration)
+    if
+        mob:getMod(xi.mod.SAVETP) > 0 and
+        mob:getTP() < mob:getMod(xi.mod.SAVETP)
+    then
+        mob:setTP(mob:getMod(xi.mod.SAVETP))
+    end
     if xi.mobskills.mobPhysicalHit(skill) then
         return xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, power, tick, duration)
     end
@@ -1142,6 +1218,12 @@ end
 
 -- similar to statuseffect move except it will only take effect if facing
 xi.mobskills.mobGazeMove = function(mob, target, typeEffect, power, tick, duration)
+    if
+        mob:getMod(xi.mod.SAVETP) > 0 and
+        mob:getTP() < mob:getMod(xi.mod.SAVETP)
+    then
+        mob:setTP(mob:getMod(xi.mod.SAVETP))
+    end
     if
         target:isFacing(mob) and
         mob:isInfront(target)
@@ -1153,6 +1235,13 @@ xi.mobskills.mobGazeMove = function(mob, target, typeEffect, power, tick, durati
 end
 
 xi.mobskills.mobBuffMove = function(mob, typeEffect, power, tick, duration, subType, subPower)
+
+    if
+        mob:getMod(xi.mod.SAVETP) > 0 and
+        mob:getTP() < mob:getMod(xi.mod.SAVETP)
+    then
+        mob:setTP(mob:getMod(xi.mod.SAVETP))
+    end
 
     if subType == nil then
         subType = 0
@@ -1169,6 +1258,13 @@ xi.mobskills.mobBuffMove = function(mob, typeEffect, power, tick, duration, subT
 end
 
 xi.mobskills.mobHealMove = function(target, healAmount)
+    if
+        target:getMod(xi.mod.SAVETP) > 0 and
+        target:getTP() < target:getMod(xi.mod.SAVETP)
+    then
+        target:setTP(target:getMod(xi.mod.SAVETP))
+    end
+
     healAmount = math.min(healAmount, target:getMaxHP() - target:getHP())
 
     target:wakeUp()

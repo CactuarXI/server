@@ -4465,6 +4465,17 @@ INSERT INTO `mob_skill_lists` VALUES ('Worm_Enhanced',5415,428);
 INSERT INTO `mob_skill_lists` VALUES ('Worm_Enhanced',5415,429);
 INSERT INTO `mob_skill_lists` VALUES ('Worm_Enhanced',5415,1889);
 INSERT INTO `mob_skill_lists` VALUES ('Worm_Enhanced',5415,1839);
+
+INSERT INTO `mob_skill_lists` VALUES ('Merrow_NM',5416,1765); -- Gusting Gouge
+INSERT INTO `mob_skill_lists` VALUES ('Merrow_NM',5416,1766); -- Hysteric Barrage
+INSERT INTO `mob_skill_lists` VALUES ('Merrow_NM',5416,1767); -- Dukkeripen Heal
+INSERT INTO `mob_skill_lists` VALUES ('Merrow_NM',5416,1768); -- Dukkeripen Shadows
+INSERT INTO `mob_skill_lists` VALUES ('Merrow_NM',5416,1769); -- Dukkeripen Paralyze
+INSERT INTO `mob_skill_lists` VALUES ('Merrow_NM',5416,1770); -- Dukkeripen Heal
+INSERT INTO `mob_skill_lists` VALUES ('Merrow_NM',5416,1771); -- Tail Slap
+INSERT INTO `mob_skill_lists` VALUES ('Merrow_NM',5416,1772); -- Torrent
+INSERT INTO `mob_skill_lists` VALUES ('Merrow_NM',5416,1930); -- Tidal Slash
+INSERT INTO `mob_skill_lists` VALUES ('Merrow_NM',5416,1775); -- Rising Swell
 -- ------------------------------------------------------------
 -- Start of Ambuscade section
 -- NOTE: The mobs are changed every update in the DATs, so using out-of-date

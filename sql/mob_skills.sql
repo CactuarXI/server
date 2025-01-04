@@ -1776,7 +1776,7 @@ INSERT INTO `mob_skills` VALUES (1756,1188,'dukkeripen_para',1,12.0,2000,1500,4,
 INSERT INTO `mob_skills` VALUES (1757,1189,'dukkeripen_heal',0,7.0,2000,1500,1,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1758,1190,'tail_slap',4,10.0,2000,1500,4,0,0,3,0,0,0);
 INSERT INTO `mob_skills` VALUES (1759,1191,'hypnotic_sway',4,10.0,2000,2000,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (1760,1192,'swift_shot',0,7.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (1760,1192,'swift_shot',0,14.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1761,1192,'arrow_deluge',2,14.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1762,1193,'belly_dance',1,12.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1763,1507,'.',0,7.0,2000,1500,4,0,0,0,0,0,0);
@@ -1790,7 +1790,7 @@ INSERT INTO `mob_skills` VALUES (1770,1257,'dukkeripen_heal',0,7.0,2000,1500,1,0
 INSERT INTO `mob_skills` VALUES (1771,1258,'tail_slap',4,10.0,2000,1500,4,0,0,3,0,0,0);
 INSERT INTO `mob_skills` VALUES (1772,1259,'torrent',0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1773,1517,'swift_shot',0,7.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (1774,1518,'arrow_deluge',0,14.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (1774,1518,'arrow_deluge',2,14.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1775,1261,'rising_swell',1,12.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1776,1253,'hysteric_barrage',0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1777,1521,'.',0,7.0,2000,1500,4,0,0,0,0,0,0);
@@ -1948,9 +1948,9 @@ INSERT INTO `mob_skills` VALUES (1926,1270,'groundburst',1,19.0,2000,1800,4,0,0,
 INSERT INTO `mob_skills` VALUES (1929,1278,'pole_swing',0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1930,1279,'tidal_slash',4,10,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1931,1280,'eagle_eye_shot',0,25.0,2000,0,4,2,0,0,0,0,0); -- lamiae
-INSERT INTO `mob_skills` VALUES (1932,16,'eagle_eye_shot',0,25.0,2000,0,4,2,0,0,0,0,0); -- swift shot ??
+INSERT INTO `mob_skills` VALUES (1932,16,'eagle_eye_shot',0,25.0,2000,0,4,2,0,0,0,0,0); -- Lamie 2 Hour (See Lamie No.8)
 INSERT INTO `mob_skills` VALUES (1933,432,'azure_lore',0,7.0,2000,1500,1,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (1934,432,'wild_card',0,7.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (1934,432,'wild_card',0,7.0,2000,0,1,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1935,1679,'overdrive',0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1936,1299,'shibaraku',0,7.0,2000,1500,4,0,0,0,0,0,0);  -- need correct animation & timings
 -- INSERT INTO `mob_skills` VALUES (1937,1681,'.',0,7.0,2000,1500,4,0,0,0,0,0,0); -- gessho's teleport is probably here, one skill in one out.
