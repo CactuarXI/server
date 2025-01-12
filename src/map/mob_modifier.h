@@ -107,6 +107,7 @@ enum MOBMODIFIER : int
     MOBMOD_NO_WIDESCAN            = 76, // Disables widescan for a specific mob
     MOBMOD_TRUST_DISTANCE         = 77, // TRUSTS ONLY: Set movement type/distance. See trust.lua for details.
     MOBMOD_STANDBACK_RANGE        = 78, // Applies a specific standback range for the mob
+    MOBMOD_SC_EXP_BONUS           = 79, // Applies an exp bonus to mobs that suffer a skillchain
 
     MOBMOD_SPEED_BOOST_MULT       = 82, // Multiplier for the base speed of a mob when the mob's target is out of range (range between 100 and 25500, 250 means 2.5x, mechanism is from retail)
 
