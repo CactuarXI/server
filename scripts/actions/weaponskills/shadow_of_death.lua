@@ -16,6 +16,8 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local params = {}
     params.ftpMod = { 1.0, 2.5, 3.0 }
     params.str_wsc = 0.3 params.int_wsc = 0.3
+    params.hybridWS = true
+    params.atkVaries  = { 1.25, 1.25, 1.25 }
     params.ele = xi.element.DARK
     params.skill = xi.skill.SCYTHE
     params.includemab = true

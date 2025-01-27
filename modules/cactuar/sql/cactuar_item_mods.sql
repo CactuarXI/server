@@ -834,6 +834,9 @@ REPLACE INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
 (18330,559,3),   -- LIGHT_AFFINITY_PERP: 3
 (18330,560,3),   -- DARK_AFFINITY_PERP: 3
 
+--Apocalypse
+(18306,1000,1),  -- Physical Damage Limit: +1
+
 -- Swith Cape
 (11000,1,5),   -- DEF: 5
 (11000,2,-20), -- HP: -20

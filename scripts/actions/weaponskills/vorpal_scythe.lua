@@ -13,6 +13,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local params = {}
     params.numHits = 1
     params.ftpMod = { 1.0, 1.0, 1.0 }
+    params.atkVaries  = { 1.25, 1.25, 1.25 }
     -- wscs are in % so 0.2=20%
     params.str_wsc = 0.35
     params.critVaries = { 0.3, 0.6, 0.9 }
@@ -20,7 +21,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.ftpMod = { 2.0, 2.0, 2.0 }
         params.str_wsc = 1.0
-        params.atkVaries = { 1.0, 1.15, 1.25 }
+        --params.atkVaries = { 1.0, 1.15, 1.25 }
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)

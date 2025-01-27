@@ -17,6 +17,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local params = {}
     params.ftpMod = { 3.5, 3.5, 3.5 }
     params.vit_wsc = 0.6
+    params.hybridWS = true --Convert to Hybrid WS
     params.ele = xi.element.ICE
     params.skill = xi.skill.GREAT_SWORD
     params.includemab = true
