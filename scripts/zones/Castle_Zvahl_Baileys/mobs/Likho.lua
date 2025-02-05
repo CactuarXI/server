@@ -2,6 +2,7 @@
 -- Area: Castle Zvahl Baileys (161)
 --   NM: Likho
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

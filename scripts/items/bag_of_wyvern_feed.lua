@@ -4,6 +4,7 @@
 -- Item Effect: Pet Regen
 -- Duration 3 Minutes
 -----------------------------------
+---@type TItem
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)
@@ -26,6 +27,10 @@ end
 
 itemObject.onEffectGain = function(target, effect)
     local pet = target:getPet()
+    if not pet then
+        return
+    end
+
     pet:addMod(xi.mod.REGEN, 3)
 end
 

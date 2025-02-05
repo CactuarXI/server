@@ -5,6 +5,7 @@
 -----------------------------------
 mixins = { require('scripts/mixins/families/empty_terroanima') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
@@ -29,7 +30,7 @@ end
 entity.onMobFight = function(mob, target)
     if mob:getHPP() < 20 then
         local nextMob = GetMobByID(mob:getID() - 1) --Agonizer aggros at <20%
-        if not nextMob:isEngaged() then
+        if nextMob and not nextMob:isEngaged() then
             nextMob:updateEnmity(target)
         end
     end
@@ -39,7 +40,7 @@ entity.onMobDeath = function(mob, player, optParams)
     local momma = mob:getID()
     for i = momma + 1, momma + mob:getLocalVar('maxBabies') do
         local baby = GetMobByID(i)
-        if baby:isSpawned() then
+        if baby and baby:isSpawned() then
             baby:setHP(0)
         end
     end

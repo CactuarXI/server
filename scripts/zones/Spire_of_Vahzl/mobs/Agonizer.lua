@@ -5,6 +5,7 @@
 -----------------------------------
 mixins = { require('scripts/mixins/families/empty_terroanima') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
@@ -27,7 +28,7 @@ end
 entity.onMobFight = function(mob, target)
     if mob:getHPP() < 20 then
         local nextMob = GetMobByID(mob:getID() + 6) --Cumulator aggros at <20%
-        if not nextMob:isEngaged() then
+        if nextMob and not nextMob:isEngaged() then
             nextMob:updateEnmity(target)
         end
     end

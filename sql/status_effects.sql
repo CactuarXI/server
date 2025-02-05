@@ -197,6 +197,7 @@ INSERT INTO `status_effects` VALUES (159,'penalty',32,0,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (160,'preparations',32,0,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (161,'sprint',32,0,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (162,'enchantment',32,0,0,4,0,0,0,0,0);
+-- INSERT INTO `status_effects` VALUES (162,'enchantment',288,0,0,4,0,0,0,0,0); 1/18/2025 Merge LSB
 INSERT INTO `status_effects` VALUES (163,'azure_lore',4194336,0,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (164,'chain_affinity',4194336,0,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (165,'burst_affinity',4194336,0,0,0,0,0,0,0,0);

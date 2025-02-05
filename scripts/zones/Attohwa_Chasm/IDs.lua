@@ -32,11 +32,13 @@ zones[xi.zone.ATTOHWA_CHASM] =
     },
     mob =
     {
-        LIOUMERE         = GetFirstID('Lioumere'),
-        CITIPATI         = GetFirstID('Citipati'),
-        TIAMAT           = GetFirstID('Tiamat'),
-        FEELER_ANTLION   = GetFirstID('Feeler_Antlion'),
-        AMBUSHER_ANTLION = GetFirstID('Ambusher_Antlion'),
+        LIOUMERE            = GetFirstID('Lioumere'),
+        CITIPATI            = GetFirstID('Citipati'),
+        TIAMAT              = GetFirstID('Tiamat'),
+        FEELER_ANTLION      = GetFirstID('Feeler_Antlion'),
+        AMBUSHER_ANTLION    = GetFirstID('Ambusher_Antlion'),
+        ALASTOR_ANTLION     = GetFirstID('Alastor_Antlion'),
+        EXECUTIONER_ANTLION = GetTableOfIDs('Executioner_Antlion'),
         XOLOTL              = 16806215,
         SEKHMET             = 16805962,
     },
@@ -45,6 +47,7 @@ zones[xi.zone.ATTOHWA_CHASM] =
         MIASMA_OFFSET   = GetFirstID('_071'),
         GASPONIA_OFFSET = GetFirstID('_07n'),
         EXCAVATION      = GetTableOfIDs('Excavation_Point'),
+        QM_FEELER_ANTLION = GetFirstID('qm_feeler_antlion'),
         PARRA_MIASMA    =
         {
             16806320,

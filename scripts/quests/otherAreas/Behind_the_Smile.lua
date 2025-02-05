@@ -57,7 +57,7 @@ quest.sections =
         {
             ['Fyi_Chalmwoh'] =
             {
-                onTrigger = function(player, csid, option, npc)
+                onTrigger = function(player, npc)
                     if quest:getVar(player, 'prog') == 0 then
                         return quest:progressEvent(320, { [1] = xi.ki.RED_OIL })
                     end
@@ -76,7 +76,7 @@ quest.sections =
         {
             ['Enaremand'] =
             {
-                onTrigger = function(player, csid, option, npc)
+                onTrigger = function(player, npc)
                     if quest:getVar(player, 'prog') == 3 and
                     player:hasKeyItem(xi.ki.RED_OIL) then
                         return quest:event(534)
@@ -112,7 +112,7 @@ quest.sections =
 
             ['Bullheaded_Grosvez'] =
             {
-                onMobDeath = function(mob, player, isKiller, firstCall)
+                onMobDeath = function(mob, player, optParams)
                     if quest:getVar(player, 'prog') == 1 then
                         quest:setVar(player, 'prog', 2)
                     end

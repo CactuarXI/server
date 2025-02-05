@@ -5,16 +5,17 @@
 --  Utsusemi/Blink absorb: 4 shadows
 --  Range: Melee
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    return 0
+    return xi.apkallu.canUseAbility(mob, 20)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local numhits        = 5
     local accmod         = 1
-    local dmgmod         = 1
+    local dmgmod         = 0.25
     local tpEffect1      = xi.mobskills.physicalTpBonus.DMG_VARIES
     local tpEffect2      = xi.mobskills.physicalTpBonus.NONE
     local crit           = 0.00

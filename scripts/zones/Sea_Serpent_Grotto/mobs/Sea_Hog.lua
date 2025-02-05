@@ -2,6 +2,7 @@
 -- Area: Sea Serpent Grotto
 --   NM: Sea Hog
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

@@ -6,6 +6,7 @@ mixins = { require('scripts/mixins/job_special') }
 mixins = {require('scripts/mixins/weapon_break')}
 
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

@@ -90,7 +90,7 @@ quest.sections =
                 end,
 
                 [477] = function(player, csid, option, npc)
-                    if quest:complete() then
+                    if quest:complete(player) then
                         player:confirmTrade()
                     end
                 end,

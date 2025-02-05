@@ -95,7 +95,23 @@ void CAttack::SetCritical(bool value)
 
     if (m_attackType == PHYSICAL_ATTACK_TYPE::DAKEN)
     {
-        m_damageRatio = battleutils::GetRangedDamageRatio(m_attacker, m_victim, m_isCritical, 1, 0);
+        uint16 bonusRatt = 0;
+
+        if (m_attacker->StatusEffectContainer)
+        {
+            const CStatusEffect* sangeEffect = m_attacker->StatusEffectContainer->GetStatusEffect(EFFECT_SANGE);
+            CCharEntity*         PChar       = dynamic_cast<CCharEntity*>(m_attacker);
+
+            if (sangeEffect && PChar && PChar->PMeritPoints)
+            {
+                int32 meritValue = PChar->PMeritPoints->GetMeritValue(MERIT_SANGE, PChar);
+
+                // Add N ranged attack * merit level during Sange effect
+                bonusRatt += PChar->getMod(Mod::ENHANCES_SANGE) * meritValue;
+            }
+        }
+        m_damageRatio = battleutils::GetRangedDamageRatio(m_attacker, m_victim, m_isCritical, 1, 0, 0);
+        // m_damageRatio = battleutils::GetRangedDamageRatio(m_attacker, m_victim, m_isCritical, bonusRatt);
     }
     else
     {
@@ -318,7 +334,21 @@ uint8 CAttack::GetHitRate()
     }
     else if (m_attackType == PHYSICAL_ATTACK_TYPE::DAKEN)
     {
-        m_hitRate = battleutils::GetRangedHitRate(m_attacker, m_victim, false, 100);
+        int16 accBonus = 100;
+
+        if (m_attacker->StatusEffectContainer)
+        {
+            const CStatusEffect* sangeEffect = m_attacker->StatusEffectContainer->GetStatusEffect(EFFECT_SANGE);
+            CCharEntity*         PChar       = dynamic_cast<CCharEntity*>(m_attacker);
+            if (sangeEffect && PChar && PChar->PMeritPoints)
+            {
+                int32 meritValue = PChar->PMeritPoints->GetMeritValue(MERIT_SANGE, PChar);
+
+                accBonus += (meritValue - 1) * 25; // add 25 acc per merit past the first (you have to merit Sange to even have the status effect, so this will never be negative acc bonus)
+            }
+        }
+
+        m_hitRate = battleutils::GetRangedHitRate(m_attacker, m_victim, false, accBonus);
     }
     else if (m_attackDirection == RIGHTATTACK)
     {
@@ -445,7 +475,8 @@ bool CAttack::CheckCounter()
         return false;
     }
 
-    if (!m_victim->PAI->IsEngaged())
+    // Don't counter if not engaged or stunned, slept, etc.
+    if (!m_victim->PAI->IsEngaged() || m_victim->StatusEffectContainer->HasPreventActionEffect(true))
     {
         m_isCountered = false;
         return m_isCountered;
@@ -478,20 +509,34 @@ bool CAttack::CheckCounter()
         seiganChance = std::clamp<uint16>(seiganChance, 0, 100);
         seiganChance /= 4;
     }
-    if ((xirand::GetRandomNumber(100) < std::clamp<uint16>(m_victim->getMod(Mod::COUNTER) + meritCounter, 0, 80) ||
-         xirand::GetRandomNumber(100) < seiganChance) &&
-        facing(m_victim->loc.p, m_attacker->loc.p, 64) && xirand::GetRandomNumber(100) < battleutils::GetHitRate(m_victim, m_attacker))
-    {
-        m_isCountered = true;
-        m_isCritical  = (xirand::GetRandomNumber(100) < battleutils::GetCritHitRate(m_victim, m_attacker, false));
-    }
-    else if (m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_COUNTER))
-    { // Perfect Counter only counters hits that normal counter misses, always critical, can counter 1-3 times before wearing
-        m_isCountered = true;
-        m_isCritical  = true;
 
-        // TODO: Implement VIT-based formula for Perfect Counter wearing off, and add JP bonus
-        m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_PERFECT_COUNTER);
+    // Do not counter if PD is up
+    if (!m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_DODGE))
+    {
+        if ((xirand::GetRandomNumber(100) < std::clamp<uint16>(m_victim->getMod(Mod::COUNTER) + meritCounter, 0, 80) ||
+             xirand::GetRandomNumber(100) < seiganChance) &&
+            facing(m_victim->loc.p, m_attacker->loc.p, 64))
+        {
+            if (xirand::GetRandomNumber(100) < battleutils::GetHitRate(m_victim, m_attacker))
+            {
+                m_isCountered = true;
+                m_isCritical  = (xirand::GetRandomNumber(100) < battleutils::GetCritHitRate(m_victim, m_attacker, false));
+            }
+            else
+            {
+                m_attacker->PAI->EventHandler.triggerListener("MELEE_SWING_MISS", CLuaBaseEntity(m_attacker), CLuaBaseEntity(m_victim), CLuaAttack(this));
+            }
+        }
+        else if (m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_COUNTER))
+        {
+            // Perfect Counter only counters hits that normal counter misses, always critical, can counter 1-3 times before wearing
+            // TODO: Perfect Counter can negate an attack even if it misses (No accuracy check yet)
+            m_isCountered = true;
+            m_isCritical  = true;
+
+            // TODO: Implement VIT-based formula for Perfect Counter wearing off, and add JP bonus
+            m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_PERFECT_COUNTER);
+        }
     }
     return m_isCountered;
 }
@@ -637,6 +682,15 @@ void CAttack::ProcessDamage()
     if (m_attacker->getMod(Mod::AUGMENTS_TA) > 0 && taDmgBonus && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_TRICK_ATTACK))
     {
         m_damage += (int32)(m_damage * ((100 + (m_attacker->getMod(Mod::AUGMENTS_TA))) / 100.0f));
+    }
+
+    // low level mobs can get negative fSTR so low they crater their (base weapon damage + fstr) to below 0.
+    // TODO: find out proper fSTR calc for low level mobs when your VIT is ridiculously high. It's likely that this is slightly wrong (possibly you'd get more hits for 0 than you should)
+    // However, there are legitimate strategies on retail with 1 dmg weapons and negative fSTR ranks that result in all auto attacks hitting for 0 but using enspells for damage so no TP is fed.
+    // Absorption isn't possible at this point in the calculation, so zero it.
+    if (m_damage < 0)
+    {
+        m_damage = 0;
     }
 
     // Try skill up.

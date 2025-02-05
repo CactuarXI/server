@@ -123,6 +123,10 @@ INSERT INTO `traits` VALUES (106,'skillchain bonus',2,85,1,174,8,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (106,'skillchain bonus',2,95,2,174,12,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (127,'smite',2,40,1,898,25,NULL,0);
 INSERT INTO `traits` VALUES (127,'smite',2,80,2,898,38,'SOA',0);
+-- These are additive to Max HP boost, https://www.bg-wiki.com/ffxi/Max_HP_Boost
+INSERT INTO `traits` VALUES (135,'max hp boost II',2,75,1,1095,150,NULL,0);
+INSERT INTO `traits` VALUES (135,'max hp boost II',2,85,2,1095,300,'ROV',0);
+INSERT INTO `traits` VALUES (135,'max hp boost II',2,95,3,1095,450,'ROV',0);
 
 -- White Mage
 

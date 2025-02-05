@@ -1,20 +1,20 @@
 ﻿/*
 ===========================================================================
 
-Copyright (c) 2010-2015 Darkstar Dev Teams
+  Copyright (c) 2010-2015 Darkstar Dev Teams
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see http://www.gnu.org/licenses/
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see http://www.gnu.org/licenses/
 
 ===========================================================================
 */
@@ -40,10 +40,30 @@ void CPetController::Tick(time_point tick)
     TracyZoneScoped;
     TracyZoneString(PPet->getName());
 
-    if (PPet->objtype == TYPE_PET && static_cast<CPetEntity*>(PPet)->shouldDespawn(tick))
+    bool isPlayerPet = PPet->objtype == TYPE_PET || (PPet->objtype == TYPE_MOB && PPet->PMaster && PPet->PMaster->objtype == TYPE_PC);
+
+    // if a player pet then check if a charmed mob or jug pet and if it should despawn
+    if (isPlayerPet)
     {
-        petutils::DespawnPet(PPet->PMaster);
-        return;
+        // if a charmed mob and charm time is up then despawn
+        if (PPet->isCharmed && tick > PPet->charmTime)
+        {
+            petutils::DespawnPet(PPet->PMaster);
+            return;
+        }
+
+        // if a jug pet and the current time > jug spawn time + jug duration then despawn
+        auto* PPetEntity = dynamic_cast<CPetEntity*>(PPet);
+        if (PPetEntity && PPetEntity->isAlive() && PPetEntity->getPetType() == PET_TYPE::JUG_PET)
+        {
+            // need to covert tick to unix time (in seconds) because getJugSpawnTime and getJugDuration give unix time
+            auto tickAsUnixTime = static_cast<uint32>(std::chrono::duration_cast<std::chrono::seconds>(tick.time_since_epoch()).count());
+            if (tickAsUnixTime > PPetEntity->getJugSpawnTime() + PPetEntity->getJugDuration())
+            {
+                petutils::DespawnPet(PPetEntity->PMaster);
+                return;
+            }
+        }
     }
     CMobController::Tick(tick);
 }
@@ -77,7 +97,7 @@ void CPetController::DoRoamTick(time_point tick)
         {
             return;
         }
-        else if (PetEntity->m_PetID <= PETID_DARKSPIRIT)
+        else if (PetEntity->m_PetID == PETID_LIGHTSPIRIT) // Only Light Spirit will cast on roam tick
         {
             // this will respect the pet's mob casting cooldown properties via MOBMOD_MAGIC_COOL
             if (CMobController::IsSpellReady(0) && CMobController::TryCastSpell())
@@ -103,7 +123,7 @@ void CPetController::DoRoamTick(time_point tick)
             }
             PPet->PAI->PathFind->FollowPath(m_Tick);
         }
-        else if (PPet->GetSpeed() > 0)
+        else if (PPet->speed > 0)
         {
             PPet->PAI->PathFind->WarpTo(PPet->PMaster->loc.p, PetRoamDistance);
         }

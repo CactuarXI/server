@@ -9,6 +9,7 @@ mixins =
         require('scripts/mixins/weapon_break')
     }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 local ID = zones[xi.zone.CAEDARVA_MIRE]
 

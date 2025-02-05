@@ -1363,7 +1363,6 @@ INSERT INTO `mob_spell_lists` VALUES ('Animated_Shield',96,273,37,255); -- sleep
 INSERT INTO `mob_spell_lists` VALUES ('Stubborn_Dredvodd',97,54,1,255); -- stoneskin (1~255)
 
 -- Demonic_Tiphia (98)
-INSERT INTO `mob_spell_lists` VALUES ('Demonic_Tiphia',98,5,1,255);   -- cure_v (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Demonic_Tiphia',98,143,1,255); -- erase (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Demonic_Tiphia',98,274,1,255); -- sleepga_ii (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Demonic_Tiphia',98,356,1,255); -- paralyga (1~255)
@@ -5152,7 +5151,7 @@ INSERT INTO `mob_spell_lists` VALUES ('Toxic_Tamlyn',500,231,1,255);  -- bio_ii 
 INSERT INTO `mob_spell_lists` VALUES ('Zirnitra',501,359,75,255);  -- silencega (75~255)
 
 -- Pyuu the Spatemaker (502)
-INSERT INTO `mob_spell_lists` VALUES ('Pyuu_the_Spatemaker',502,171,1,255); -- water_iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Pyuu_the_Spatemaker',502,172,1,255); -- water_iv (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Pyuu_the_Spatemaker',502,201,1,255); -- waterga_iii (1~255)
 
 -- Erle (503)
@@ -5183,7 +5182,32 @@ INSERT INTO `mob_spell_lists` VALUES ('Providence',506,366,1,255); -- Graviga (1
 INSERT INTO `mob_spell_lists` VALUES ('Providence',506,357,1,255); -- Slowga (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Providence',506,367,1,255); -- Death (1~255)
 
--- Next Available: 507
+-- Two-faced Flan from Happy Caster ISNM3000
+INSERT INTO `mob_spell_lists` VALUES ('Two-faced_Flan',507,147,1,255); -- fire_iv (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Two-faced_Flan',507,152,1,255); -- blizzard_iv (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Two-faced_Flan',507,157,1,255); -- aero_iv (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Two-faced_Flan',507,162,1,255); -- stone_iv (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Two-faced_Flan',507,167,1,255); -- thunder_iv (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Two-faced_Flan',507,172,1,255); -- water_iv (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Two-faced_Flan',507,176,1,255); -- firaga_iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Two-faced_Flan',507,181,1,255); -- blizzaga_iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Two-faced_Flan',507,186,1,255); -- aeroga_iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Two-faced_Flan',507,191,1,255); -- stonega_iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Two-faced_Flan',507,196,1,255); -- thundaga_iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Two-faced_Flan',507,201,1,255); -- waterga_iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Two-faced_Flan',507,274,1,255); -- sleepga_ii (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Two-faced_Flan',507,362,1,255); -- bindga (1~255)
+
+-- Unfettered Twitherym (508)
+INSERT INTO `mob_spell_lists` VALUES ('Unfettered_Twitherym',508,366,1,255); -- Graviga (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Unfettered_Twitherym',508,356,1,255); -- Paralyga (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Unfettered_Twitherym',508,362,1,255); -- Bindga (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Unfettered_Twitherym',508,357,1,255); -- Slowga (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Unfettered_Twitherym',508,359,1,255); -- silencega (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Unfettered_Twitherym',508,360,1,255); -- dispelga (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Unfettered_Twitherym',508,187,1,255); -- aeroga_iv (1~255)
+
+-- Next Available: 509
 
 
 -- Adding Cactuar Specifics 700+ to avoid conflicts
@@ -6623,7 +6647,7 @@ INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,392,1,255);  -- 
 INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,373,1,255);  -- Foe Requiem VI
 INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,442,1,255);  -- Lightning Carol
 INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,382,1,255);  -- Armys Paeon V
-INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,442,1,255);  -- Carnage Elegy
+INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,422,1,255);  -- Carnage Elegy
 INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,397,1,255);  -- Valor Minuet IV
 INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,432,1,255);  -- Uncanny Etude
 INSERT INTO `mob_spell_lists` VALUES ('Merrow No.5 Low HP',5111,420,1,255);  -- Victory March

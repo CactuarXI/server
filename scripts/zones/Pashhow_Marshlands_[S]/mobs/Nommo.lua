@@ -5,6 +5,7 @@
 -----------------------------------
 mixins = {require('scripts/mixins/families/slug')}
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

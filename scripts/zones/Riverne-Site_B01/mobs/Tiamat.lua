@@ -9,7 +9,7 @@ local entity = {}
 entity.land = function(mob)
     -- need to deal with case of stun of touchdown
     mob:useMobAbility(1282)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
     mob:setLocalVar('changeTime', mob:getBattleTime() + 120)
     mob:setLocalVar('damageTaken', 0)
 end
@@ -17,7 +17,7 @@ end
 entity.flight = function(mob)
     mob:setAnimationSub(1)
     mob:addStatusEffectEx(xi.effect.ALL_MISS, 0, 1, 0, 0)
-    mob:setBehaviour(0)
+    mob:setBehavior(0)
     mob:setMobSkillAttack(730)
     mob:setLocalVar('changeTime', mob:getBattleTime() + 120)
     mob:setLocalVar('damageTaken', 0)
@@ -51,7 +51,7 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.MATT, 0)
     mob:setMod(xi.mod.ATT, 436)
     mob:setMod(xi.mod.REFRESH, 200)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
 
     mob:addListener('TAKE_DAMAGE', 'TIAMAT_TAKE_DAMAGE', function(defender, amount, attacker, attackType, damageType)
         local damageTaken = defender:getLocalVar('damageTaken') + amount
@@ -167,7 +167,7 @@ entity.onMobDisengage = function(mob)
         mob:setAnimationSub(0)
         mob:delStatusEffect(xi.effect.ALL_MISS)
         mob:setMobSkillAttack(0)
-        mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+        mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
     end
 end
 

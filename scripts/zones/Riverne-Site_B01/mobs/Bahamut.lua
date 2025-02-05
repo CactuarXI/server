@@ -4,6 +4,7 @@
 -----------------------------------
 local ID = zones[xi.zone.RIVERNE_SITE_B01]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local megaflareHPP =
@@ -100,11 +101,9 @@ entity.onMobFight = function(mob, target)
                     target:showText(mob, ID.text.BAHAMUT_TAUNT + 1)
                 end
 
-                -- without this check if the target is out of range it will keep attemping and failing to use Megaflare. Both Megaflare and Gigaflare have range 15.
-                if mob:checkDistance(target) <= 15 then
-                    -- default behaviour
-                    if bit.band(mob:getBehaviour(), xi.behavior.NO_TURN) > 0 then
-                        mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(xi.behavior.NO_TURN)))
+                if mob:checkDistance(target) <= 15 then -- without this check if the target is out of range it will keep attemping and failing to use Megaflare. Both Megaflare and Gigaflare have range 15.
+                    if bit.band(mob:getBehavior(), xi.behavior.NO_TURN) > 0 then -- default behavior
+                        mob:setBehavior(bit.band(mob:getBehavior(), bit.bnot(xi.behavior.NO_TURN)))
                     end
 
                     mob:useMobAbility(1551)
@@ -124,9 +123,8 @@ entity.onMobFight = function(mob, target)
                 mob:setLocalVar('tauntShown', 3)
             end
 
-            -- default behaviour
-            if bit.band(mob:getBehaviour(), xi.behavior.NO_TURN) > 0 then
-                mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(xi.behavior.NO_TURN)))
+            if bit.band(mob:getBehavior(), xi.behavior.NO_TURN) > 0 then -- default behavior
+                mob:setBehavior(bit.band(mob:getBehavior(), bit.bnot(xi.behavior.NO_TURN)))
             end
 
             mob:useMobAbility(1552)

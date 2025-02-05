@@ -2,6 +2,7 @@
 -- Area: Meriphataud Mountains [S]
 --   NM: Centipedal Centruroides
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 -- uses Hell Scissors (Throat Stab type move + 30tic poison)

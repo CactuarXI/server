@@ -2,6 +2,7 @@
 -- Area: La Vaule [S]
 --   NM: Cogtooth Skagnogg
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
@@ -27,7 +28,7 @@ entity.onMobFight = function(mob, target)
         if os.time() >= cooldownStart + 13 then
             mob:setLocalVar('cooldown', 0) -- Reset cooldown variable
             mob:setMobAbilityEnabled(true)
-            print('Cooldown ended. Mob can use skills again.')
+            -- print('Cooldown ended. Mob can use skills again.')
         end
     end
 end
@@ -111,13 +112,13 @@ entity.onMobWeaponSkillPrepare = function(mob, target)
         if currentIndex > #skills[skillIndex] then
             currentIndex = 1 -- Reset to the first skill if exceeded
             mob:setLocalVar('skillCycleState', 1) -- Switch to unique skills after cycling through normal skills
-            print('Switching to unique skills!')
+            -- print('Switching to unique skills!')
         end
     elseif cycleState == 1 then
         -- Check how many unique skills to use
         local uniqueSkillsUsed = mob:getLocalVar('uniqueSkillsUsed')
 
-        print(string.format('Unique Skills Used: %d, Unique Count: %d', uniqueSkillsUsed, uniqueCount))
+        -- print(string.format('Unique Skills Used: %d, Unique Count: %d', uniqueSkillsUsed, uniqueCount))
 
         if uniqueSkillsUsed < uniqueCount then
             -- Randomly select a skill from uniqueSkills
@@ -138,7 +139,7 @@ entity.onMobWeaponSkillPrepare = function(mob, target)
             mob:setLocalVar('skillCycleState', 0)        -- Return to normal state
             mob:setLocalVar('lastSkillIndex', 1)         -- Reset lastSkillIndex to start again
             mob:setLocalVar('uniqueSkillsUsed', 0)       -- Reset unique skills used counter
-            print('Returning to normal skill cycling and entering cooldown.')
+            -- print('Returning to normal skill cycling and entering cooldown.')
         end
     end
 
@@ -147,10 +148,10 @@ entity.onMobWeaponSkillPrepare = function(mob, target)
 
     if selectedSkill == nil then
         selectedSkill = skills[1][1]  -- Fallback to the first skill if no skill is selected
-        print('Warning: Selected skill was nil, falling back to default skill:', selectedSkill)
+        -- print('Warning: Selected skill was nil, falling back to default skill:', selectedSkill)
     end
 
-    print('Selected Skill', selectedSkill)
+    -- print('Selected Skill', selectedSkill)
     return selectedSkill
 end
 

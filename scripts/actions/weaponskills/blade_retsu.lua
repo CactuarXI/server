@@ -12,13 +12,15 @@
 -- 100%TP    200%TP    300%TP
 -- 1.00      1.00      1.00
 -----------------------------------
+---@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
-    local params = {}
+    local params   = {}
     params.numHits = 2
-    params.ftpMod = { 1.0, 1.0, 1.0 }
-    params.str_wsc = 0.2 params.dex_wsc = 0.2
+    params.ftpMod  = { 1, 1, 1 }
+    params.str_wsc = 0.2
+    params.dex_wsc = 0.2
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.ftpMod = { 1.25, 1.25, 1.25 }
@@ -26,19 +28,13 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
-    if damage > 0 and not target:hasStatusEffect(xi.effect.PARALYSIS) and not target:hasImmunity(xi.immunity.PARALYZE) then
-        local duration = (tp / 1000 * 30) * applyResistanceAddEffect(player, target, xi.element.ICE, 0)
-        -- paralyze proc based on lvl difference
-        local power = 30 + (player:getMainLvl() - target:getMainLvl()) * 3
-        if power > 35 then
-            power = 35
-        elseif power < 5 then
-            power = 5
-        end
 
-        target:addStatusEffect(xi.effect.PARALYSIS, power, 0, duration)
-        player:messagePublic(xi.msg.basic.SKILL_ENFEEB, target, wsID, xi.effect.PARALYSIS)
-    end
+    -- Handle status effect
+    local effectId      = xi.effect.PARALYSIS
+    local actionElement = xi.element.ICE
+    local power         = utils.clamp(30 + 3 * (player:getMainLvl() - target:getMainLvl()), 5, 35)
+    local duration      = math.floor(3 * tp / 100 * applyResistanceAddEffect(player, target, actionElement, 0))
+    xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration, wsID)
 
     return tpHits, extraHits, criticalHit, damage
 end

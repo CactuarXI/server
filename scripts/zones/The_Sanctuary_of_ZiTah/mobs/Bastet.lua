@@ -2,6 +2,7 @@
 -- Area: The Sanctuary of ZiTah
 --   NM: Bastet
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

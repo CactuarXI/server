@@ -2,6 +2,7 @@
 -- Area: Mount Zhayolm
 --   NM: Cerberus
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local drawInPos =

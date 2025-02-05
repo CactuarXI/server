@@ -466,7 +466,7 @@ xi.dynamis.zoneOnZoneIn = function(player, prevZone)
                 playerArg:messageBasic(xi.msg.basic.UNABLE_TO_ACCESS_SJ)
             end)
 
-            player:addStatusEffect(xi.effect.SJ_RESTRICTION, 0, 0, 0, 7200)
+            player:addStatusEffect(xi.effect.SJ_RESTRICTION, 0, 0, 0, 0, 0)
         end
 
         player:addStatusEffectEx(xi.effect.DYNAMIS, 0, 0, 3, 3600)
@@ -569,7 +569,12 @@ xi.dynamis.timeExtensionOnDeath = function(mob, player, optParams)
             end
         end
 
-        if found then
+        -- TODO: Refactor the above loops to not need the 'found' variable, and only use
+        -- non-nil te value.
+        if
+            found and
+            te
+        then
             -- award KI and extension to those who have not yet received it
             local effect = player:getStatusEffect(xi.effect.DYNAMIS)
             if effect and not player:hasKeyItem(te.ki) then
@@ -840,7 +845,10 @@ xi.dynamis.procMonster = function(mob, player)
 
         local extensions = getExtensions(player)
         if extensions > 2 then
-            if player:getSubJob() == xi.job.NONE and math.random(1, 100) == 1 then
+            if
+                player:hasStatusEffect(xi.effect.SJ_RESTRICTION) and
+                math.random(1, 100) == 1
+            then
                 mob:setLocalVar('dynamis_proc', 4)
                 mob:addStatusEffect(xi.effect.TERROR, 0, 0, 30)
                 mob:weaknessTrigger(3)

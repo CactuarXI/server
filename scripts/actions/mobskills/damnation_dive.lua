@@ -6,6 +6,7 @@
 -- Utsusemi/Blink absorb: 3 shadow
 -- Range: Melee
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 -----------------------------------

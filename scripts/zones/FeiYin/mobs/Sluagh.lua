@@ -2,6 +2,7 @@
 -- Area: FeiYin
 --   NM: Sluagh
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobFight = function(mob, target)

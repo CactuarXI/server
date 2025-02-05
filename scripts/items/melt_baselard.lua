@@ -1,8 +1,10 @@
 -----------------------------------
 -- ID: 18012
 -- Item: Melt Baselard
+-- Item Effect: DEFENSE DOWN
 -- Duration:
 -----------------------------------
+---@type TItem
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)

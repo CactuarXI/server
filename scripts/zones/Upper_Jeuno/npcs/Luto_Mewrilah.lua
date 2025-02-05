@@ -8,6 +8,7 @@ require('scripts/globals/pets/fellow')
 require('scripts/globals/fellow_utils')
 require('scripts/globals/npc_util')
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 local fellowWeapons =

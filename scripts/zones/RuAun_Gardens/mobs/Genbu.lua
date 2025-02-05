@@ -6,9 +6,10 @@
 local ID = zones[xi.zone.RUAUN_GARDENS]
 mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
-entity.onMobSpawn = function(mob, target)
+entity.onMobSpawn = function(mob)
     GetNPCByID(ID.npc.PORTAL_OFFSET + 5):setAnimation(xi.anim.CLOSE_DOOR)
     mob:setMobMod(xi.mobMod.WEAPON_BONUS, 21)
     mob:setMod(xi.mod.SILENCERES, 90)

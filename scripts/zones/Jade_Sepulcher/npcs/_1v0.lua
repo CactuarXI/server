@@ -4,6 +4,7 @@
 -- Involved in Missions: TOAU-29
 -- !pos 299 0 -199 67
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

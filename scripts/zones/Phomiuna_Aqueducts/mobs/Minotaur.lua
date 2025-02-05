@@ -4,16 +4,29 @@
 -----------------------------------
 mixins = { require('scripts/mixins/fomor_hate') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
-entity.onMobInitialize = function(mob)
-    mob:setMobMod(xi.mobMod.DRAW_IN, 15)
+entity.onMobFight = function(mob, target)
+    local drawInTable =
+    {
+        conditions =
+        {
+            mob:checkDistance(target) >= 15,
+        },
+        position = mob:getPos(),
+    }
+    if drawInTable.conditions[1] then
+        for _, member in ipairs(target:getAlliance()) do
+            utils.drawIn(member, drawInTable)
+        end
+    end
 end
 
 entity.onMobSpawn = function(mob)
     mob:setLocalVar('fomorHateAdj', 2)
 
-    mob:setMobMod(xi.mobMod.DRAW_IN, 1)
+    -- mob:setMobMod(xi.mobMod.DRAW_IN, 1) -- TODO: DRAW_IN Now Handled In Lua
     mob:setMobMod(xi.mobMod.DRAW_IN_INCLUDE_PARTY, 1)
     mob:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 10)
 end

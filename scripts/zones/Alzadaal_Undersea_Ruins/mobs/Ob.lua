@@ -4,6 +4,7 @@
 -----------------------------------
 mixins = { require('scripts/mixins/rage') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local harlequinFrameModelId = 1977
@@ -118,7 +119,7 @@ local function setupHarlequin(mob)
     mob:setSpellList(700)
     mob:setMobMod(xi.mobMod.MAGIC_COOL, 35)
     mob:setMod(xi.mod.UFASTCAST, 25)
-    mob:setBehaviour(0) -- Standback disabled
+    mob:setBehavior(0) -- Standback disabled
     mob:setMobMod(xi.mobMod.HP_STANDBACK, 0)
     mob:setMobMod(xi.mobMod.SPECIAL_SKILL, 0) -- ranged attacks disabled
     mob:setMod(xi.mod.DELAY, 0) -- remove high attack speed

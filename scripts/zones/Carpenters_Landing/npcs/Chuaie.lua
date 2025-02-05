@@ -6,7 +6,7 @@
 -----------------------------------
 require('scripts/globals/barge')
 -----------------------------------
-
+---@type TNpcEntity
 local entity = {}
 local eventId = 18
 local location = xi.barge.location.SOUTH_LANDING

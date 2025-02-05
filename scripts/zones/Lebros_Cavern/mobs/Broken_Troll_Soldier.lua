@@ -5,6 +5,7 @@
 -----------------------------------
 mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local ability =
@@ -28,16 +29,18 @@ local newHP =
 entity.onMobInitialize = function(mob)
 end
 
-entity.onMobSpawn = function(mob, target)
+entity.onMobSpawn = function(mob)
     xi.assault.adjustMobLevel(mob)
     local instance = mob:getInstance()
     local ID = mob:getID()
 
-    if
-        ID == instance:getLocalVar('troll1') or
-        ID == instance:getLocalVar('troll2')
-    then
-        mob:setLocalVar('twoHR', math.random(40, 60))
+    if instance then
+        if
+            ID == instance:getLocalVar('troll1') or
+            ID == instance:getLocalVar('troll2')
+        then
+            mob:setLocalVar('twoHR', math.random(40, 60))
+        end
     end
 
     mob:setHP(mob:getHP() * newHP[math.random(1, #newHP)])
@@ -60,7 +63,7 @@ entity.onMobDeath = function(mob, player, optParams)
     end
 end
 
-entity.onMobDespawn = function(mob, player, optParams)
+entity.onMobDespawn = function(mob)
 end
 
 return entity

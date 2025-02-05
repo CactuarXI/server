@@ -2,6 +2,7 @@
 -- Area: Chamber of Oracles
 --  NPC: Armoury Crate
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 --[[local loot =

@@ -2,6 +2,7 @@
 -- Area: Sealions Den
 --  Mob: Omega
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
@@ -15,7 +16,7 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
     mob:setMod(xi.mod.REGAIN, 100)
     mob:setMobMod(xi.mobMod.SKILL_LIST, 54)
 end
@@ -41,9 +42,6 @@ entity.onAdditionalEffect = function(mob, target, damage)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
-end
-
-entity.onEventFinish = function(player, csid, option, npc)
 end
 
 return entity

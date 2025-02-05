@@ -26,6 +26,7 @@ This file is part of DarkStar-server source code.
 #include "../../../common/utils.h"
 #include "../../ai/states/despawn_state.h"
 #include "../../entities/charentity.h"
+#include "../../entities/baseentity.h"
 #include "../../entities/fellowentity.h"
 #include "../../packets/char.h"
 #include "../../status_effect_container.h"
@@ -119,7 +120,7 @@ void CFellowController::DoRoamTick(time_point tick)
         {
             POwner->PAI->PathFind->FollowPath(tick);
         }
-        else if (POwner->GetSpeed() > 0)
+        else if (POwner->speed > 0)
         {
             POwner->PAI->PathFind->StepTo(POwner->PMaster->loc.p, RoamDistance);
         }

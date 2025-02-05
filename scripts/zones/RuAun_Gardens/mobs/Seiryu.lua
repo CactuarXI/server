@@ -1,18 +1,18 @@
 -----------------------------------
 -- Area: Ru'Aun Gardens
--- NM: Seiryu
--- ID: 17309981
+--   NM: Seiryu
 -----------------------------------
 local ID = zones[xi.zone.RUAUN_GARDENS]
 mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
 end
 
-entity.onMobSpawn = function(mob, target)
+entity.onMobSpawn = function(mob)
     GetNPCByID(ID.npc.PORTAL_OFFSET + 2):setAnimation(xi.anim.CLOSE_DOOR)
     mob:setMod(xi.mod.SILENCERES, 90)
     mob:addMod(xi.mod.ATT, 50)
@@ -22,6 +22,7 @@ entity.onMobSpawn = function(mob, target)
     -- TP move about every 9 seconds without TP feed
     mob:setMod(xi.mod.REGAIN, 750)
     mob:setMagicCastingEnabled(false)
+    mob:setMobMod(xi.mobMod.CANNOT_GUARD, 1)
 end
 
 entity.onMobEngage = function(mob, target)
@@ -48,12 +49,12 @@ end
 
 entity.onMobMagicPrepare = function(mob, target, spellId)
     if not mob:hasStatusEffect(xi.effect.HUNDRED_FISTS, 0) then
-        local rnd = math.random()
-        if rnd < 0.5 then
+        local rnd = math.random(1, 100)
+        if rnd <= 50 then
             return 186 -- aeroga 3
-        elseif rnd < 0.7 then
+        elseif rnd <= 70 then
             return 157 -- aero 4
-        elseif rnd < 0.9 then
+        elseif rnd <= 90 then
             return 208 -- tornado
         else
             return 237 -- choke

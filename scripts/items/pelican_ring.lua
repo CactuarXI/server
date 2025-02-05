@@ -1,7 +1,9 @@
 -----------------------------------
 -- ID: 15554
--- Pelican Ring
---  Enchantment: Increases rate at which fishing skill is gained
+-- Item: Pelican Ring
+-- Fishing Skillup Rate increase
+-----------------------------------
+-- Duration: 20:00 min
 -----------------------------------
 local itemObject = {}
 
@@ -17,8 +19,8 @@ itemObject.onItemCheck = function(target, item, param, caster)
             effectCount >= 2
         then
             caster:printToPlayer(('Only 2 Enchantment effects can be active from a unique Ring/Earring item.'), xi.msg.channel.SYSTEM_3)
-            return xi.msg.basic.ITEM_UNABLE_TO_USE_2
-        end
+        return xi.msg.basic.ITEM_UNABLE_TO_USE_2
+    end
     end
 
     return 0
@@ -40,6 +42,10 @@ itemObject.onEffectGain = function(target, effect)
 end
 
 itemObject.onEffectLose = function(target, effect)
+    if target:getMod(xi.mod.PELICAN_RING_EFFECT) > 0 then
+        -- Prevent underflows with the >0 check
+        target:delMod(xi.mod.PELICAN_RING_EFFECT, 1)
+    end
 end
 
 return itemObject

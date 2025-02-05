@@ -6,6 +6,7 @@
 -- Utsusemi/Blink absorb: Wipes Shadows
 -- Range: 30 yalms
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
@@ -21,9 +22,9 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     local family = mob:getFamily()
     local mobHPP = mob:getHPP()
 
-    if family == 168 and mobHPP <= 35 then -- Khimaira < 35%
+    if family == 168 and mobHPP < 35 then -- Khimaira < 35%
         return 0
-    elseif family == 315 and mobHPP <= 50 then -- Tyger < 50%
+    elseif family == 315 and mobHPP < 50 then -- Tyger < 50%
         return 0
     end
 

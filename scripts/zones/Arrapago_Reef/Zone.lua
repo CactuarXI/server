@@ -3,6 +3,7 @@
 -----------------------------------
 local ID = zones[xi.zone.ARRAPAGO_REEF]
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
@@ -52,6 +53,10 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
     then
         player:startEvent(237)
     end
+end
+
+zoneObject.onGameDay = function()
+    xi.apkallu.updateHate(xi.zone.ARRAPAGO_REEF, -3)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option, npc)

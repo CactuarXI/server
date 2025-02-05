@@ -7,6 +7,7 @@ require('scripts/globals/pets/fellow')
 require('scripts/globals/fellow_utils')
 require('scripts/globals/quests')
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

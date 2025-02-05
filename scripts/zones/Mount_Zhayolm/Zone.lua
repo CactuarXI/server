@@ -3,6 +3,7 @@
 -----------------------------------
 local ID = zones[xi.zone.MOUNT_ZHAYOLM]
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
@@ -34,6 +35,10 @@ zoneObject.afterZoneIn = function(player)
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
+end
+
+zoneObject.onGameDay = function()
+    xi.apkallu.updateHate(xi.zone.MOUNT_ZHAYOLM, -3)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option, npc)

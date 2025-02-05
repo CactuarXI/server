@@ -1,12 +1,10 @@
 -----------------------------------
 -- ID: 17704
--- Item: Vulcan Blade
+-- Item: Vulcan Sword
 -- Item Effect: Enfire
 -- Duration: 3 minutes
 -----------------------------------
-
-
------------------------------------
+---@type TItem
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)

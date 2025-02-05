@@ -3,6 +3,7 @@
 --   NM: Fahrafahr the Bloodied
 -- !pos 38.967 -14.478 115.574 61
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 -- Immune to bind grav sleep, Only uses Drop Hammer.

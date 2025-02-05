@@ -664,6 +664,12 @@ xi.mob.onAddEffect = function(mob, target, damage, effect, params)
                         dMod = 20 + (dMod - 20) / 2
                     end
 
+                    -- This is a bad assumption, but it prevents some negative damage (healing) when there otherwise shouldn't be
+                    -- TODO: better understand damage add effects from mobs
+                    if dMod < 0 then
+                        dMod = 0
+                    end
+
                     power = dMod + target:getMainLvl() - mob:getMainLvl() + damage / 2
                 end
 
@@ -671,7 +677,7 @@ xi.mob.onAddEffect = function(mob, target, damage, effect, params)
 
                 power = addBonusesAbility(mob, ae.ele, target, power, ae.bonusAbilityParams)
                 power = power * applyResistanceAddEffect(mob, target, ae.ele, 0)
-                power = adjustForTarget(target, power, ae.ele)
+                power = power * xi.spells.damage.calculateNukeAbsorbOrNullify(target, ae.ele)
 
                 if ae.sub ~= xi.subEffect.TP_DRAIN and ae.sub ~= xi.subEffect.MP_DRAIN then
                     power = finalMagicNonSpellAdjustments(mob, target, ae.ele, power)
@@ -683,6 +689,7 @@ xi.mob.onAddEffect = function(mob, target, damage, effect, params)
                 if power < 0 then
                     if ae.negMsg then
                         message = ae.negMsg
+                        power   = power * -1 -- outgoing action packets only support unsigned integers. The "negative message" will also handle healing automagically deep inside core somewhere.
                     else
                         power = 0
                     end

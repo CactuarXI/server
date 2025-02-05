@@ -10,6 +10,7 @@ mixins =
 }
 local ID = zones[xi.zone.CAEDARVA_MIRE]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local peallaidhPHTable =

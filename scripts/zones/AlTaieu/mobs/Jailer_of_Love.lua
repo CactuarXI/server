@@ -5,6 +5,7 @@
 -----------------------------------
 local ID = zones[xi.zone.ALTAIEU]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.lastEnmityList = {}
@@ -118,7 +119,7 @@ local spawnSharks = function(mob)
 end
 
 entity.onMobInitialize = function(mob)
-    mob:setBehaviour(2)
+    mob:setBehavior(2)
     mob:setMagicCastingEnabled(true)
 end
 

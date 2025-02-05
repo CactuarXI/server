@@ -1,7 +1,12 @@
 -----------------------------------
--- Smouldering Swarm
--- Deals Fire damage to targets around the mob. Additional Effect: Burn
+--  Smouldering Swarm
+--
+--  Description: Deals Fire damage to enemies within an area of effect. Additional effect: Knockback
+--  Type: Magical (Fire)
+--  Utsusemi/Blink absorb: 2-3 shadows
+--  Range: 10' radial
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
@@ -9,15 +14,15 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local damage = mob:getWeaponDmg() * 5
-    local dmgmod = 1
+    local dmgmod = 2
+    local duration = math.random(15, 90)
+    local damage = mob:getWeaponDmg()
+
     damage = xi.mobskills.mobMagicalMove(mob, target, skill, damage, xi.element.FIRE, dmgmod, xi.mobskills.magicalTpBonus.MAB_BONUS, 1)
     damage = xi.mobskills.mobFinalAdjustments(damage, mob, skill, target, xi.attackType.MAGICAL, xi.damageType.FIRE, xi.mobskills.shadowBehavior.WIPE_SHADOWS)
 
-    local power = mob:getMainLvl() / 4 * 0.6 + 7
-    local duration = math.random(30, 60)
-    xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BURN, power, 3, duration)
     target:takeDamage(damage, mob, xi.attackType.MAGICAL, xi.damageType.FIRE)
+    target:addStatusEffect(xi.effect.BURN, 10, 3, duration)
     return damage
 end
 

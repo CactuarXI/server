@@ -87,7 +87,7 @@ quest.sections =
 
             ['Perifool'] =
             {
-                onMobDeath = function(mob, player, isKiller, firstCall)
+                onMobDeath = function(mob, player, optParams)
                     if quest:getVar(player, 'Prog') == 0 then
                         quest:setVar(player, 'Prog', 1)
                     end
@@ -105,14 +105,11 @@ quest.sections =
         },
         [xi.zone.BONEYARD_GULLY] =
         {
-            onZoneIn =
-            {
-                function(player, prevZone)
-                    if quest:getVar(player, 'Prog') == 3 then
-                        return 8
-                    end
-                end,
-            },
+            onZoneIn = function(player, prevZone)
+                if quest:getVar(player, 'Prog') == 3 then
+                    return 8
+                end
+            end,
 
             onEventUpdate =
             {

@@ -100,6 +100,8 @@ set(PACKET_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/fellow_despawn.h
     ${CMAKE_CURRENT_SOURCE_DIR}/fishing.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/fishing.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fish_ranking.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fish_ranking.h
     ${CMAKE_CURRENT_SOURCE_DIR}/furniture_interact.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/furniture_interact.h
     ${CMAKE_CURRENT_SOURCE_DIR}/guild_menu.cpp

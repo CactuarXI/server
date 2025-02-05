@@ -4,6 +4,7 @@
 local ID = zones[xi.zone.PROMYVION_VAHZL]
 require('scripts/globals/exp_controller')
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
@@ -130,7 +131,7 @@ zoneObject.onEventFinish = function(player, csid, option, npc)
     end
 end
 
-zoneObject.onGameDay = function(zone)
+zoneObject.onGameDay = function()
 end
 
 return zoneObject

@@ -4,6 +4,7 @@
 -- Item Effect: 10% haste
 -- Duration: 3 minutes
 -----------------------------------
+---@type TItem
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)
@@ -23,8 +24,8 @@ itemObject.onItemUnequip = function(user, item)
     local effect = user:getItemEnchantmentEffect(item:getID())
     if effect then
         effect:delStatusEffect()
+        end
     end
-end
 
 itemObject.onEffectGain = function(target, effect)
     effect:addMod(xi.mod.HASTE_MAGIC, 1000)

@@ -1,8 +1,17 @@
 -----------------------------------------
 -- ID: 15198
+-- Item: Sprout Beret
+-- Experience point bonus
+-----------------------------------
+-- Bonus: +150%
+-- Duration: 720 min
+-- Max bonus: 30000 exp
+
+-- Cactuar Custom
 -- Sprout Beret
 -- Enchantment: 60Min, Costume - Mandragora (white)
------------------------------------------
+-----------------------------------
+---@type TItem
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)

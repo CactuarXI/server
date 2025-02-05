@@ -3,6 +3,7 @@
 -- Area: Nyzul Isle
 -- Info: Enemy Leader, Spams Water Bomb
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
@@ -21,6 +22,10 @@ entity.onMobDeath = function(mob, player, optParams)
         xi.nyzul.spawnChest(mob, player)
         xi.nyzul.enemyLeaderKill(mob)
         local instance = mob:getInstance()
+        if not instance then
+            return
+        end
+
         local chars    = instance:getChars()
 
         for _, entities in ipairs(chars) do

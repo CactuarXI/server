@@ -3,10 +3,8 @@
 --  Mob: Tartaruga Gigante
 -----------------------------------
 local ID = zones[xi.zone.WAUGHROON_SHRINE]
-
-require('scripts/globals/magic')
-require('scripts/globals/utils')
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 -- Removes any possible debuff when it goes into shell and we have no function that exists for this
@@ -31,8 +29,8 @@ local intoShell = function(mob)
     mob:setMod(xi.mod.REGEN, 400)
     mob:setMod(xi.mod.UDMGRANGE, -9500)
     mob:setMod(xi.mod.UDMGPHYS, -9500)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.STANDBACK))
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.STANDBACK))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
 end
 
 local outOfShell = function(mob)
@@ -44,8 +42,8 @@ local outOfShell = function(mob)
     mob:setMod(xi.mod.REGEN, 0)
     mob:setMod(xi.mod.UDMGRANGE, 0)
     mob:setMod(xi.mod.UDMGPHYS, 0)
-    mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(xi.behavior.STANDBACK)))
-    mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(xi.behavior.NO_TURN)))
+    mob:setBehavior(bit.band(mob:getBehavior(), bit.bnot(xi.behavior.STANDBACK)))
+    mob:setBehavior(bit.band(mob:getBehavior(), bit.bnot(xi.behavior.NO_TURN)))
     mob:setLocalVar('DamageTaken', 0)
 end
 
@@ -54,8 +52,8 @@ entity.onMobSpawn = function(mob)
     mob:setMobAbilityEnabled(true)
     mob:setAutoAttackEnabled(true)
     mob:setMagicCastingEnabled(false) -- will not cast until it goes into shell
-    mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(xi.behavior.STANDBACK)))
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+    mob:setBehavior(bit.band(mob:getBehavior(), bit.bnot(xi.behavior.STANDBACK)))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
     mob:setMobMod(xi.mobMod.SIGHT_RANGE, 13)
     mob:setMod(xi.mod.REGEN, 0)
     mob:setMod(xi.mod.DOUBLE_ATTACK, 20)

@@ -3,6 +3,7 @@
 --  Mob: Hydra
 -- !pos -282 -24 -1 51
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local drawInPos =
@@ -39,6 +40,37 @@ entity.onMobRoam = function(mob)
 end
 
 entity.onMobFight = function(mob, target)
+    local targetPos = target:getPos()
+    local spawnPos = mob:getSpawnPos()
+
+    local drawInPositions =
+    {
+        { -279.879,    -24,  -1.103, targetPos.rot },
+        { -268.899,  -23.5, -11.148, targetPos.rot },
+        { -279.844, -23.75, -11.462, targetPos.rot },
+        { -268.952, -23.75,  -0.583, targetPos.rot },
+    }
+
+    local drawInTable =
+    {
+        conditions =
+        {
+            utils.distanceSquared(targetPos, spawnPos) > math.pow(18, 2),
+        },
+        position = utils.randomEntry(drawInPositions),
+        wait = 2,
+    }
+
+    for _, condition in ipairs(drawInTable.conditions) do
+        if condition then
+            mob:setMobMod(xi.mobMod.NO_MOVE, 1)
+            utils.drawIn(target, drawInTable)
+            break
+        else
+            mob:setMobMod(xi.mobMod.NO_MOVE, 0)
+        end
+    end
+
     local battletime = mob:getBattleTime()
     local headgrow = mob:getLocalVar('headgrow')
     local broken = mob:getAnimationSub()
@@ -97,28 +129,27 @@ end
 
 
 entity.onCriticalHit = function(mob)
-    local rand = math.random()
     local battletime = mob:getBattleTime()
-    local headbreak = mob:getLocalVar('headbreak')
-    local broken = mob:getAnimationSub()
+    local headbreak  = mob:getLocalVar('headbreak')
+    local broken     = mob:getAnimationSub()
 
     if mob:getHPP() > 75 then
-        if (rand <= 0.15 and broken < 2) then
+        if (math.random(1, 100) <= 15 and broken < 2) then
             mob:setAnimationSub(broken + 1)
             mob:setLocalVar('headgrow', battletime + math.random(480, 600))
         end
     elseif mob:getHPP() > 50 then
-        if (rand <= 0.1 and broken < 2) then
+        if (math.random(1, 100) <= 10 and broken < 2) then
             mob:setAnimationSub(broken + 1)
             mob:setLocalVar('headgrow', battletime + math.random(240, 360))
         end
     elseif mob:getHPP() > 25 then
-        if (rand <= 0.1 and broken < 2) then
+        if (math.random(1, 100) <= 10 and broken < 2) then
             mob:setAnimationSub(broken + 1)
             mob:setLocalVar('headgrow', battletime + math.random(90, 180))
         end
     elseif mob:getHPP() < 25 then
-        if (rand <= 0.1 and broken < 2) then
+        if (math.random(1, 100) <= 10 and broken < 2) then
             mob:setAnimationSub(broken + 1)
             mob:setLocalVar('headgrow', battletime + math.random(40, 90))
         end

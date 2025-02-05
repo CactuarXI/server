@@ -5,6 +5,7 @@
 mixins = { require('scripts/mixins/families/tonberry'),
     require('scripts/mixins/prelate_door'), }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobDeath = function(mob, player, optParams)

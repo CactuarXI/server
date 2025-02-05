@@ -12,8 +12,8 @@ end
 entity.onMobFight = function(mob, target)
 end
 entity.onMobWeaponSkillPrepare = function(mob, target)
-    if bit.band(mob:getBehaviour(), xi.behavior.NO_TURN) == 0 then -- re-enable noturn
-        mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+    if bit.band(mob:getBehavior(), xi.behavior.NO_TURN) == 0 then -- re-enable noturn
+        mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
     end
 end
 
@@ -24,9 +24,9 @@ entity.onMobWeaponSkill = function(target, mob, skill)
             mob:setMobSkillAttack(0)
         end)
     end
-    
-    if bit.band(mob:getBehaviour(), xi.behavior.NO_TURN) > 0 then -- default behaviour
-        mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(xi.behavior.NO_TURN)))
+
+    if bit.band(mob:getBehavior(), xi.behavior.NO_TURN) > 0 then -- default behaviour
+        mob:setBehavior(bit.band(mob:getBehavior(), bit.bnot(xi.behavior.NO_TURN)))
     end
 end
 

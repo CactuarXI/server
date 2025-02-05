@@ -4,17 +4,20 @@
 -- KSNM: Early Bird Catches the Wyrm
 -- For future reference: Trusts are not allowed in this fight
 -----------------------------------
+mixins = { require('scripts/mixins/draw_in') }
+-----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local grounded = function(mob)
     mob:setMobMod(xi.mobMod.NO_MOVE, 0)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
 end
 
 entity.onMobSpawn = function(mob)
     mob:addMod(xi.mod.EVA, 50)
     mob:addMod(xi.mod.ATT, 100)
-    mob:setMobMod(xi.mobMod.DRAW_IN, 1)
+    -- mob:setMobMod(xi.mobMod.DRAW_IN, 1) -- TODO: DRAW_IN Now Handled In Lua
     mob:setMobMod(xi.mobMod.DRAW_IN_INCLUDE_PARTY, 1)
     mob:setMobMod(xi.mobMod.DRAW_IN_IGNORE_STATIONARY, 1)
     mob:setMobSkillAttack(0) -- resetting so it doesn't respawn in flight mode.
@@ -42,7 +45,7 @@ entity.onMobFight = function(mob, target)
         local distance = math.sqrt(math.pow(diffX, 2) + math.pow(diffY, 2) + math.pow(diffZ, 2))
         if distance < 3 then
             mob:setLocalVar('state', 2) -- fly state
-            mob:setBehaviour(0)
+            mob:setBehavior(0)
             mob:setAnimationSub(1)
             mob:setMobMod(xi.mobMod.NO_MOVE, 1)
             mob:addStatusEffectEx(xi.effect.ALL_MISS, 0, 1, 0, 0)

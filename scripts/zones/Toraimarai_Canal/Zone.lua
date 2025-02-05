@@ -2,6 +2,8 @@
 -- Zone: Toraimarai Canal (169)
 -----------------------------------
 local ID = zones[xi.zone.TORAIMARAI_CANAL]
+-----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)

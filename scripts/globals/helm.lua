@@ -41,7 +41,7 @@ xi.helm.helmInfo =
                     { 1880, xi.item.SPRIG_OF_FRESH_MARJORAM      },
                     { 1060, xi.item.BAG_OF_SIMSIM                },
                     { 1310, xi.item.CLUMP_OF_MOHBWA_GRASS        },
-                    { 1760, xi.item.PEPHEDRO_HIVE_CHIP           },
+                    { 1760, xi.item.PEPHREDO_HIVE_CHIP           },
                     {  590, xi.item.EGGPLANT                     },
                     {  960, xi.item.BAG_OF_COFFEE_CHERRIES       },
                     {  450, xi.item.EASTERN_GINGER_ROOT          },
@@ -80,7 +80,7 @@ xi.helm.helmInfo =
                 {
                     { 1510, xi.item.CLUMP_OF_MOHBWA_GRASS        },
                     { 1470, xi.item.SPRIG_OF_FRESH_MARJORAM      },
-                    { 1480, xi.item.PEPHEDRO_HIVE_CHIP           },
+                    { 1480, xi.item.PEPHREDO_HIVE_CHIP           },
                     { 1170, xi.item.BAG_OF_SIMSIM                },
                     { 1100, xi.item.CLUMP_OF_IMPERIAL_TEA_LEAVES },
                     { 1000, xi.item.BAG_OF_COFFEE_CHERRIES       },
@@ -1773,14 +1773,29 @@ xi.helm.onTrigger = function(player, helmType)
     player:messageSpecial(zones[zoneId].text[info.message], info.tool)
 end
 
+xi.helm.weatherChange = function(currentWeather, neededWeather, pointTable)
+    local status = xi.status.DISAPPEAR
+    if utils.contains(currentWeather, neededWeather) then
+        status = xi.status.NORMAL
+    end
+
+    for point = 1, #pointTable do
+        if GetNPCByID(pointTable[point]):getStatus() ~= status then
+            GetNPCByID(pointTable[point]):setStatus(status)
+        end
+    end
+end
+
 xi.helm.movePoint = function(target, zoneId, helmType)
     local info = xi.helm.helmInfo[helmType]
     movePoint(target, zoneId, info)
 end
+
 xi.helm.doesToolBreak = function(player, helmType)
     local info = xi.helm.helmInfo[helmType]
     return doesToolBreak(player, info) and 1 or 0
 end
+
 xi.helm.pickItem = function(player, helmType)
     local info = xi.helm.helmInfo[helmType]
     return pickItem(player, info)

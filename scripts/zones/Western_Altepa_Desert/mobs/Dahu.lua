@@ -2,6 +2,7 @@
 -- Area: Western Altepa Desert
 --   NM: Dahu
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

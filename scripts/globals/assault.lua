@@ -193,7 +193,9 @@ xi.assault.adjustMobLevel = function(mob)
             reducedLevel = 25
         end
 
-        entity:setMobLevel(entity:getMainLvl() - reducedLevel)
+        if entity then
+            entity:setMobLevel(entity:getMainLvl() - reducedLevel)
+        end
     end
 end
 

@@ -8,6 +8,7 @@ local ID = zones[xi.zone.RABAO]
 require('scripts/globals/npc_util')
 -----------------------------------
 
+---@type TNpcEntity
 local entity = {}
 
 entity.onSpawn = function(npc)

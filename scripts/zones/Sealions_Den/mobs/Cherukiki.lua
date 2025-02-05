@@ -5,6 +5,7 @@
 local ID = zones[xi.zone.SEALIONS_DEN]
 mixins = { require('scripts/mixins/warriors_path_taru') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
@@ -12,10 +13,10 @@ entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.MAGIC_COOL, 60) -- cherukiki casts magic aproximately every 25 seconds
     mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
     mob:setMobMod(xi.mobMod.NO_LINK, 1)
-    mob:setMod(xi.mod.UDMGPHYS,   -10000)
-    mob:setMod(xi.mod.UDMGMAGIC,  -10000)
-    mob:setMod(xi.mod.UDMGRANGE,  -10000)
-    mob:setMod(xi.mod.UDMGBREATH, -10000)
+    mob:addMod(xi.mod.UDMGPHYS, -10000)
+    mob:addMod(xi.mod.UDMGMAGIC, -10000)
+    mob:addMod(xi.mod.UDMGRANGE, -10000)
+    mob:addMod(xi.mod.UDMGBREATH, -10000)
     mob:setMobMod(xi.mobMod.NO_MOVE, 1)
     mob:setLocalVar('cheru', 1)
     mob:setMagicCastingEnabled(false)
@@ -30,8 +31,13 @@ entity.onMobEngage = function(mob, target)
 end
 
 entity.onMobFight = function(mob, target)
-    local bfID = mob:getBattlefield():getArea()
     local battlefield = mob:getBattlefield()
+    if not battlefield then
+        return
+    end
+
+    local bfID = battlefield:getArea()
+
     local changetime = mob:getLocalVar('changetime')
     local battletime = mob:getBattleTime()
     if battlefield:getLocalVar('fireworks') == 1 then
@@ -43,13 +49,14 @@ entity.onMobFight = function(mob, target)
         end
     end
 
-    local tenzenId = GetMobByID(ID.mob.TENZEN + (bfID - 1))
+    local tenzenObj = GetMobByID(ID.mob.TENZEN + (bfID - 1))
     if
-        tenzenId:getHPP() <= 70 and
+        tenzenObj and
+        tenzenObj:getHPP() <= 70 and
         battlefield:getLocalVar('fireworks') == 0
     then
         if mob:getLocalVar('cooldown') == 0 then
-            mob:castSpell(4, tenzenId)
+            mob:castSpell(4, tenzenObj)
             mob:setLocalVar('cooldown', 70) -- every 30 seconds Cherukiki will cast Cure IV on tenzen
         end
     else

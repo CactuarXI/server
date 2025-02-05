@@ -3,6 +3,7 @@
 --  Mob: Gu'Dha Effigy
 -- Note: Mega Boss
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 mixins =

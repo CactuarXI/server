@@ -2,13 +2,18 @@
 -- Area: The Boyahda Tree
 --   NM: Ancient Goobbue
 -----------------------------------
-mixins = { require('scripts/mixins/job_special') }
+mixins =
+{
+    require('scripts/mixins/job_special'),
+    require('scripts/mixins/draw_in'),
+}
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMod(xi.mod.CRITHITRATE, 25)
-    mob:setMobMod(xi.mobMod.DRAW_IN, 1)
+    -- mob:setMobMod(xi.mobMod.DRAW_IN, 1) -- TODO: DRAW_IN Now Handled In Lua
 end
 
 entity.onMobSpawn = function(mob)

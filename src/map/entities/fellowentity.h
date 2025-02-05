@@ -1,7 +1,7 @@
 ﻿/*
 ===========================================================================
 
-  Copyright (c) 2018 Darkstar Dev Teams
+  Copyright (c) 2024 LandSandBoat Dev Teams
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -16,14 +16,14 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
 #ifndef _CFELLOWENTITY_H
 #define _CFELLOWENTITY_H
+#pragma once
 
+#include "charentity.h"
 #include "mobentity.h"
 
 class CEnmityContainer;

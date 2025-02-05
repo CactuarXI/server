@@ -4,6 +4,7 @@
 -- !pos -766 -12 632 79
 -- Spawn with Singed Buffalo: !additem 2593
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
@@ -18,7 +19,7 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.MAIN_DMG_RATING, 50)
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
     mob:setLocalVar('[rage]timer', 3600) -- 60 minutes
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
 end
 
 entity.onMobWeaponSkill = function(target, mob, skill)

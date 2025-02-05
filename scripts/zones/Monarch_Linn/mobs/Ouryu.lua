@@ -2,6 +2,7 @@
 -- Area: Monarch Linn
 --  Mob: Ouryu
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
@@ -15,7 +16,7 @@ entity.onMobSpawn = function(mob)
         mob:delStatusEffect(xi.effect.ALL_MISS)
     end
 
-    mob:setMobMod(xi.mobMod.DRAW_IN, 1)
+    -- mob:setMobMod(xi.mobMod.DRAW_IN, 1) -- TODO: DRAW_IN Now Handled In Lua
     mob:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 15)
     mob:setMobMod(xi.mobMod.WEAPON_BONUS, 14)
     mob:setLocalVar('setTwoHourThreshold', math.random(50, 80))
@@ -23,7 +24,11 @@ end
 
 entity.onMobFight = function(mob, target)
     local bf = mob:getBattlefield()
-    if bf:getID() == 961 and mob:getHPP() < 30 then
+    if
+        bf and
+        bf:getID() == 961 and
+        mob:getHPP() < 30
+    then
         bf:win()
         return
     end

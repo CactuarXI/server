@@ -20,7 +20,7 @@ end
 entity.onMobSpawn = function(mob)
     mob:setLocalVar('QueuedAbility', 0)
     mob:setLocalVar('[rage]timer', 5400)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
 end
 
 entity.onMobWeaponSkillPrepare = function(mob, target)
@@ -50,7 +50,7 @@ entity.onMobWeaponSkill = function(target, mob, skill)
     local skillID = skill:getID()
     if skillID == 2099 or skillID == 2100 or skillID == 2104 then
         mob:setLocalVar('QueuedAbility', 0)
-    end   
+    end
 end
 
 entity.onMobFight = function(mob, target)

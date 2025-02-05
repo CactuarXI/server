@@ -4,9 +4,7 @@
 -- Item Effect: VIT +7
 -- Duration: 3 minutes
 -----------------------------------
-
-
------------------------------------
+---@type TItem
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)
@@ -24,7 +22,7 @@ end
 
 itemObject.onEffectGain = function(target, effect)
     effect:addMod(xi.mod.VIT, 7)
-end
+    end
 
 itemObject.onEffectLose = function(target, effect)
 end

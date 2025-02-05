@@ -4,6 +4,7 @@
 -----------------------------------
 mixins = {require('scripts/mixins/families/funguar_s')}
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

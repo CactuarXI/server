@@ -44,7 +44,7 @@ local maxAreas =
     },
 }
 
-function onBattlefieldHandlerInitialise(zone)
+function onBattlefieldHandlerInitialize(zone)
     local id      = zone:getID()
     local default = 3
 
@@ -737,7 +737,6 @@ function Battlefield.onEntryTrigger(player, npc)
         local status  = player:getStatusEffect(xi.effect.BATTLEFIELD)
         local id      = status:getPower()
         local content = xi.battlefield.contents[id]
-
         if not content then
             return
         end
@@ -747,6 +746,7 @@ function Battlefield.onEntryTrigger(player, npc)
         end
 
         local options = utils.mask.setBit(0, content.index, true)
+        player:setLocalVar('[BCNM]EnterExisting', 1)
         return Battlefield:event(32000, 0, 0, 0, options, 0, 0, 0, 0)
     end
 
@@ -847,6 +847,11 @@ function Battlefield:onEntryEventUpdate(player, csid, option, npc)
             else
                 player:updateEvent(xi.battlefield.returnCode.WAIT)
             end
+        elseif result == xi.battlefield.returnCode.REQS_NOT_MET then
+            -- Ensure Battlefield Effect is removed
+            -- If you cant enter now, you cant enter by trying again right now...
+            player:delStatusEffect(xi.effect.BATTLEFIELD)
+            player:updateEvent(xi.battlefield.returnCode.REQS_NOT_MET)
         end
 
         -- TODO: Remove the localVar when issue with function return is resolved
@@ -983,11 +988,11 @@ function Battlefield:onEventFinishBattlefield(player, csid, option, npc)
 end
 
 -- Override this function if necessary to perform additional steps in battlefield
--- initialise.
+-- Initialize.
 function Battlefield:setupBattlefield(battlefield)
 end
 
-function Battlefield:onBattlefieldInitialise(battlefield)
+function Battlefield:onBattlefieldInitialize(battlefield)
     local hasMultipleAreas = not self.area
     battlefield:addGroups(self.groups, hasMultipleAreas)
 
@@ -1304,6 +1309,7 @@ function Battlefield:addEssentialMobs(mobNames)
     table.insert(self.groups, {
         mobs      = mobNames,
         superlink = true,
+        isParty   = true,
         allDeath  = utils.bind(self.handleAllMonstersDefeated, self),
     })
 end
@@ -1321,9 +1327,11 @@ function Battlefield:handleAllMonstersDefeated(battlefield, mob)
     if crateId ~= 0 then
         local crate = GetNPCByID(crateId)
 
-        battlefield:insertEntity(crate:getTargID(), false, true)
-        npcUtil.showCrate(crate)
-        crate:addListener('ON_TRIGGER', 'TRIGGER_CRATE', utils.bind(self.handleOpenArmouryCrate, self))
+        if crate then
+            battlefield:insertEntity(crate:getTargID(), false, true)
+            npcUtil.showCrate(crate)
+            crate:addListener('ON_TRIGGER', 'TRIGGER_CRATE', utils.bind(self.handleOpenArmouryCrate, self))
+        end
     else
         battlefield:setLocalVar('cutsceneTimer', self.delayToExit)
         battlefield:setStatus(xi.battlefield.status.WON)

@@ -6,6 +6,7 @@
 --  Utsusemi/Blink absorb: Wipes shadows
 --  Notes: Used by Bahamut every 10% of its HP (except at 10%), but can use at will when under 10%.
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
@@ -27,8 +28,8 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     mob:setMagicCastingEnabled(true)
     mob:setAutoAttackEnabled(true)
 
-    if bit.band(mob:getBehaviour(), xi.behavior.NO_TURN) == 0 then -- re-enable noturn
-        mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+    if bit.band(mob:getBehavior(), xi.behavior.NO_TURN) == 0 then -- re-enable noturn
+        mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
     end
 
     -- Damage calculation

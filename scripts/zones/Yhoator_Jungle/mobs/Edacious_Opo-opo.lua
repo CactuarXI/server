@@ -4,6 +4,7 @@
 -----------------------------------
 local ID = zones[xi.zone.YHOATOR_JUNGLE]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 

@@ -5,6 +5,7 @@
 local ID = zones[xi.zone.THE_SHROUDED_MAW]
 mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local useCamisado = function(mob)
@@ -67,7 +68,7 @@ entity.onMobSpawn = function(mob)
 
     mob:setLocalVar('TileTriggerHPP', triggerVal) -- Starting point for tile drops
     mob:setLocalVar('Area', area)
-    mob:setMobMod(xi.mobMod.DRAW_IN, 1)
+    -- mob:setMobMod(xi.mobMod.DRAW_IN, 1) -- TODO: DRAW_IN Now Handled In Lua
     mob:setMobMod(xi.mobMod.DRAW_IN_INCLUDE_PARTY, 1)
     mob:setMod(xi.mod.UDMGPHYS, -5000)
     mob:setMod(xi.mod.UDMGRANGE, -5000)
@@ -98,14 +99,16 @@ entity.onMobFight = function(mob, target)
             local tileId = tileBase + offset - 1
             local tile = GetNPCByID(tileId)
 
-            if tile:getLocalVar('Dropped') ~= xi.anim.OPEN_DOOR then
-                tile:setLocalVar('Dropped', xi.anim.OPEN_DOOR)
-                SendEntityVisualPacket(tileId, animationSet[area + 1], 4)     -- Animation for floor dropping
-                SendEntityVisualPacket(tileId, 's123', 4)          -- Tile dropping sound
+            if tile then
+                if tile:getLocalVar('Dropped') ~= xi.anim.OPEN_DOOR then
+                    tile:setLocalVar('Dropped', xi.anim.OPEN_DOOR)
+                    SendEntityVisualPacket(tileId, animationSet[area + 1], 4)     -- Animation for floor dropping
+                    SendEntityVisualPacket(tileId, 's123', 4)          -- Tile dropping sound
 
-                tile:timer(3100, function(t)                 -- 3.1s second delay (ish)
-                    t:updateToEntireZone(xi.status.NORMAL, xi.anim.OPEN_DOOR)       -- Floor opens
-                end)
+                    tile:timer(3100, function(t)                 -- 3.1s second delay (ish)
+                        t:updateToEntireZone(xi.status.NORMAL, xi.anim.OPEN_DOOR)       -- Floor opens
+                    end)
+                end
             end
         end
     end

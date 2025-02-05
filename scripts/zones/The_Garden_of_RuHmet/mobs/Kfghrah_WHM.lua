@@ -2,6 +2,7 @@
 -- Area: The Garden of Ru'Hmet
 --  Mob: Kf'ghrah WHM
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
@@ -40,7 +41,7 @@ entity.onMobFight = function(mob, target)
             battleForm = 0
         end
 
-        mob:getAnimationSub(battleForm)
+        mob:setAnimationSub(battleForm)
         mob:setLocalVar('changeTime', mob:getBattleTime())
         if mob:getAnimationSub() == 0 then
             mob:setMagicCastingEnabled(true) -- will only cast magic in ball form

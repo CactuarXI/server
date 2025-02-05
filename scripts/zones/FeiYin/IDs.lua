@@ -41,6 +41,8 @@ zones[xi.zone.FEIYIN] =
         UNCANNY_SENSATION                  = 10654, -- You are assaulted by an uncanny sensation.
         HOMEPOINT_SET                      = 10703, -- Home point set!
         UNITY_WANTED_BATTLE_INTERACT       = 10761, -- Those who have accepted % must pay # Unity accolades to participate. The content for this Wanted battle is #. [Ready to begin?/You do not have the appropriate object set, so your rewards will be limited.]
+
+        ITS_FINALLY_OVER                   = 7412,  -- It is finally...over... Ahh... I can... I can see... Tavnazia... The land of wind...and light... My... My home...!
     },
     mob =
     {

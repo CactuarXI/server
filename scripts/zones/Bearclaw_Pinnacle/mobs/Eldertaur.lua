@@ -8,7 +8,7 @@
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    -- mob:setMobMod(xi.mobMod.DRAW_IN, 1)
+    -- -- mob:setMobMod(xi.mobMod.DRAW_IN, 1) -- TODO: DRAW_IN Now Handled In Lua
     -- mob:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 40)
     -- mob:setMod(xi.mod.DMGMAGIC, -1000)
 end

@@ -8,6 +8,7 @@
 --  Notes: Used only by Ouryu and Dragua. The blinding effect does not last long
 --                but is very harsh. The attack is wide enough to generally hit an entire alliance.
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)

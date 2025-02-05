@@ -3,6 +3,7 @@
 --  Mob: Race Runner
 --  ENM: Like the Wind
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local pathNodes =
@@ -40,7 +41,7 @@ local pathNodes =
 }
 
 entity.onMobSpawn = function(mob)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.STANDBACK))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.STANDBACK))
     mob:setLocalVar('hitsRequired', math.random(1, 10))
     mob:setMod(xi.mod.TRIPLE_ATTACK, 20)
     mob:setMod(xi.mod.UDMGMAGIC, -4000)

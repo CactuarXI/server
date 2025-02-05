@@ -3,6 +3,7 @@
 --  NPC: Jonette
 -- Main Quest NPC for Secrets of Ovens Lost
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

@@ -222,7 +222,7 @@ namespace zoneutils
         return PTertiary;
     }
 
-    std::vector<uint16> GetZonesOnThisProcess()
+    auto GetZonesOnThisProcess() -> std::vector<uint16>
     {
         char address[INET_ADDRSTRLEN];
         inet_ntop(AF_INET, &map_ip, address, INET_ADDRSTRLEN);
@@ -248,6 +248,20 @@ namespace zoneutils
         }
 
         return zonesOnThisProcess;
+    }
+
+    bool IsZoneOnThisProcess(ZONEID zoneId)
+    {
+        std::vector processZones = GetZonesOnThisProcess();
+        for (auto& zone : processZones)
+        {
+            if (zone == zoneId)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /************************************************************************
@@ -302,12 +316,14 @@ namespace zoneutils
                     {
                         while (rset->next())
                         {
-                            if (!luautils::IsContentEnabled(rset->getString("content_tag").c_str()))
+                            // If there is no content tag, always load the NPC
+                            const auto contentTagFound = !rset->isNull("content_tag");
+                            if (contentTagFound && !luautils::IsContentEnabled(rset->get<std::string>("content_tag").c_str()))
                             {
                                 continue;
                             }
 
-                            uint32 NpcID = rset->getUInt("npcid");
+                            uint32 NpcID = rset->get<uint32>("npcid");
 
                             if (!(PZone->GetTypeMask() & ZONE_TYPE::INSTANCED))
                             {
@@ -315,31 +331,32 @@ namespace zoneutils
                                 PNpc->targid     = NpcID & 0xFFF;
                                 PNpc->id         = NpcID;
 
-                                PNpc->name       = rset->getString("name");          // Internal name
-                                PNpc->packetName = rset->getString("polutils_name"); // Name sent to the client (when applicable)
+                                PNpc->name       = rset->get<std::string>("name");          // Internal name
+                                PNpc->packetName = rset->get<std::string>("polutils_name"); // Name sent to the client (when applicable)
 
-                                PNpc->loc.p.rotation = (uint8)rset->getUInt("pos_rot");
-                                PNpc->loc.p.x        = rset->getFloat("pos_x");
-                                PNpc->loc.p.y        = rset->getFloat("pos_y");
-                                PNpc->loc.p.z        = rset->getFloat("pos_z");
-                                PNpc->loc.p.moving   = (uint16)rset->getUInt("flag");
+                                PNpc->loc.p.rotation = rset->get<uint8>("pos_rot");
+                                PNpc->loc.p.x        = rset->get<float>("pos_x");
+                                PNpc->loc.p.y        = rset->get<float>("pos_y");
+                                PNpc->loc.p.z        = rset->get<float>("pos_z");
+                                PNpc->loc.p.moving   = rset->get<uint16>("flag");
 
-                                PNpc->m_TargID = rset->getUInt("flag") >> 16;
+                                PNpc->m_TargID = rset->get<uint32>("flag") >> 16;
 
-                                PNpc->speed    = (uint8)rset->getInt("speed");    // Overwrites baseentity.cpp's defined speed
-                                PNpc->speedsub = (uint8)rset->getInt("speedsub"); // Overwrites baseentity.cpp's defined speedsub
+                                PNpc->speed          = rset->get<uint8>("speed");    // Overwrites baseentity.cpp's defined speed
+                                PNpc->animationSpeed = rset->get<uint8>("speedsub"); // Overwrites baseentity.cpp's defined animationSpeed
+                                PNpc->baseSpeed      = rset->get<uint8>("speedsub"); // Overwrites baseentity.cpp's defined baseSpeed
 
-                                PNpc->animation    = (uint8)rset->getInt("animation");
-                                PNpc->animationsub = (uint8)rset->getInt("animationsub");
+                                PNpc->animation    = rset->get<uint8>("animation");
+                                PNpc->animationsub = rset->get<uint8>("animationsub");
 
-                                PNpc->namevis = (uint8)rset->getInt("namevis");
-                                PNpc->status  = static_cast<STATUS_TYPE>(rset->getInt("status"));
-                                PNpc->m_flags = rset->getInt("entityFlags");
+                                PNpc->namevis = rset->get<uint8>("namevis");
+                                PNpc->status  = static_cast<STATUS_TYPE>(rset->get<uint8>("status"));
+                                PNpc->m_flags = rset->get<uint32>("entityFlags");
 
                                 db::extractFromBlob(rset, "look", PNpc->look);
 
-                                PNpc->name_prefix = (uint8)rset->getInt("name_prefix");
-                                PNpc->widescan    = (uint8)rset->getInt("widescan");
+                                PNpc->name_prefix = rset->get<uint8>("name_prefix");
+                                PNpc->widescan    = rset->get<uint8>("widescan");
 
                                 PZone->InsertNPC(PNpc);
                             }
@@ -465,15 +482,16 @@ namespace zoneutils
                                 ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay((sql->GetIntData(19) * 1000) / 60);
                                 ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay((sql->GetIntData(19) * 1000) / 60);
 
-                                PMob->m_Behaviour   = (uint16)sql->GetIntData(20);
+                                PMob->m_Behavior   = (uint16)sql->GetIntData(20);
                                 PMob->m_Link        = (uint8)sql->GetIntData(21);
                                 PMob->m_Type        = (uint8)sql->GetIntData(22);
                                 PMob->m_Immunity    = (IMMUNITY)sql->GetIntData(23);
                                 PMob->m_EcoSystem   = (ECOSYSTEM)sql->GetIntData(24);
                                 PMob->m_ModelRadius = (float)sql->GetIntData(25);
 
-                                PMob->speed    = (uint8)sql->GetIntData(26);
-                                PMob->speedsub = (uint8)sql->GetIntData(26);
+                                PMob->baseSpeed       = (uint8)sql->GetIntData(26);
+                                PMob->speed           = (uint8)sql->GetIntData(26);
+                                PMob->animationSpeed  = (uint8)sql->GetIntData(26);
 
                                 PMob->strRank = (uint8)sql->GetIntData(27);
                                 PMob->dexRank = (uint8)sql->GetIntData(28);
@@ -634,7 +652,7 @@ namespace zoneutils
         // clang-format on
 
         ShowInfo("Loading Mob scripts");
-        // handle mob initialise functions after they're all loaded
+        // handle mob Initialize functions after they're all loaded
         // clang-format off
         ForEachZone([](CZone* PZone)
         {
@@ -797,7 +815,7 @@ namespace zoneutils
         {
             if (PZone.second->GetIP() != 0)
             {
-                luautils::OnZoneInitialise(PZone.second->GetID());
+                luautils::OnZoneInitialize(PZone.second->GetID());
             }
         }
 

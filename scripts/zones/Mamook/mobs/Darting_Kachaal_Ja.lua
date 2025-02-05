@@ -11,6 +11,7 @@
 --  flee from its target and begin to spam aeroga iii. It also regains the ability to
 --  auto-attack. However, it begins fleeing again after taking damage.
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local pathNodes =
@@ -31,7 +32,7 @@ entity.onMobSpawn = function(mob)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP) -- Needs verification
 
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.STANDBACK))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.STANDBACK))
     mob:setMobMod(xi.mobMod.MAGIC_COOL, 30)
     mob:setMobAbilityEnabled(false) -- Not witnessed to use any mob abilities
     mob:setLocalVar('nextPoint', 1)

@@ -11,6 +11,7 @@
 -- Charisma -5
 -- Defense % 9 (cap 100)
 -----------------------------------
+---@type TItemFood
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)
@@ -22,8 +23,8 @@ itemObject.onItemUse = function(target)
 end
 
 itemObject.onEffectGain = function(target, effect)
-    target:addMod(xi.mod.HP, 12)
-    target:addMod(xi.mod.MP, 12)
+    target:addMod(xi.mod.FOOD_HP, 12)
+    target:addMod(xi.mod.FOOD_MP, 12)
     target:addMod(xi.mod.DEX, -1)
     target:addMod(xi.mod.AGI, 3)
     target:addMod(xi.mod.VIT, -1)
@@ -33,8 +34,8 @@ itemObject.onEffectGain = function(target, effect)
 end
 
 itemObject.onEffectLose = function(target, effect)
-    target:delMod(xi.mod.HP, 12)
-    target:delMod(xi.mod.MP, 12)
+    target:delMod(xi.mod.FOOD_HP, 12)
+    target:delMod(xi.mod.FOOD_MP, 12)
     target:delMod(xi.mod.DEX, -1)
     target:delMod(xi.mod.AGI, 3)
     target:delMod(xi.mod.VIT, -1)

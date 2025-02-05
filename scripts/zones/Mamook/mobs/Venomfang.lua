@@ -2,6 +2,7 @@
 -- Area: Mamook
 --   NM: Venomfang
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

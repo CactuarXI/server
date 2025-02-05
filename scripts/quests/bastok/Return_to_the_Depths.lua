@@ -55,7 +55,7 @@ quest.sections =
         {
             ['Ayame'] =
             {
-                onTrigger = function(player, csid, option, npc)
+                onTrigger = function(player, npc)
                     if quest:getVar(player, 'prog') == 10 then
                         return quest:progressEvent(881)
                     end
@@ -64,7 +64,7 @@ quest.sections =
 
             onEventFinish =
             {
-                [881] = function(player, csid, option, npc)
+                [881] = function(player, npc)
                     quest:complete(player)
                 end,
             },
@@ -90,16 +90,13 @@ quest.sections =
                 end,
             },
 
-            afterZoneIn =
-            {
-                function(player, prevZone)
-                    if quest:getVar(player, 'prog') == 0 then
-                        return quest:progressEvent(40, 0, xi.item.SPRIG_OF_FRESH_MUGWORT, xi.item.MOORISH_IDOL, xi.item.PIECE_OF_ANGEL_SKIN, xi.item.BULB_OF_MISAREAUX_GARLIC)
-                    elseif quest:getVar(player, 'prog') == 5 then
+            afterZoneIn = function(player)
+                if quest:getVar(player, 'prog') == 0 then
+                    return quest:progressEvent(40, 0, xi.item.SPRIG_OF_FRESH_MUGWORT, xi.item.MOORISH_IDOL, xi.item.PIECE_OF_ANGEL_SKIN, xi.item.BULB_OF_MISAREAUX_GARLIC)
+                elseif quest:getVar(player, 'prog') == 5 then
                         return quest:progressEvent(41)
                     end
                 end,
-            },
 
             onEventFinish =
             {

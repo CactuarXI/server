@@ -29,9 +29,17 @@ zones[xi.zone.CEIZAK_BATTLEGROUNDS] =
         UNCANNY_SENSATION             = 8039, -- You are assaulted by an uncanny sensation.
         ENERGIES_COURSE               = 8040, -- The arcane energies begin to course within your veins.
         MYSTICAL_WARMTH               = 8041, -- You feel a mystical warmth welling up inside you!
+
+        MONSTER_APPEAR                = 8017, -- A monster appears! CHECK IDs
+        SPRING_STEP                   = 8025, -- The spring has returned to your step.
     },
     mob =
     {
+        UNFETTERED_TWITHERYM    = GetFirstID('Unfettered_Twitherym'),
+        SUPERNAL_CHAPULI        = GetFirstID('Supernal_Chapuli'),
+        TRANSCENDENT_SCORPION   = GetFirstID('Transcendent_Scorpion'),
+        MASTOP                  = GetFirstID('Mastop'),
+        TAXET                   = GetFirstID('Taxet'),
         REIVE_MOB_OFFSET = GetFirstID('Knotted_Root'),
     },
     npc =

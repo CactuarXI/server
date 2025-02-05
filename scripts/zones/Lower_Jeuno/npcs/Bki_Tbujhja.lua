@@ -7,6 +7,7 @@
 -----------------------------------
 local ID = zones[xi.zone.LOWER_JEUNO]
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
@@ -57,7 +58,7 @@ entity.onTrigger = function(player, npc)
         player:getCharVar('TheRequiemCS') == 3 and
         not player:hasKeyItem(xi.ki.STAR_RING1)
     then
-        if math.random(1, 2) == 1 then
+        if math.random(1, 100) <= 50 then
             player:startEvent(147) -- oh, did you take the holy water and play the requiem? you must do both!
         else
             player:startEvent(149) -- his stone sarcophagus is deep inside the eldieme necropolis.

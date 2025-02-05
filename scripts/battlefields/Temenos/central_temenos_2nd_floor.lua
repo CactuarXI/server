@@ -40,10 +40,12 @@ function content:handleElementalDeath(elementalMod, bonusMod, bonusAmount, weakE
         local mysticID = mob:getID() + 6
         local mystic   = GetMobByID(mysticID)
 
-        mystic:timer(3000, function(mobArg)
-            mystic:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos(), mob:getRotPos())
-            SpawnMob(mysticID)
-        end)
+        if mystic then
+            mystic:timer(3000, function(mobArg)
+                mystic:setSpawn(mob:getXPos(), mob:getYPos(), mob:getZPos(), mob:getRotPos())
+                SpawnMob(mysticID)
+            end)
+        end
 
         return
     end
@@ -264,7 +266,7 @@ content.groups =
             'Mystic_Avatar_Carbuncle',
         },
         mobMods = { [xi.mobMod.DETECTION] = xi.detects.HEARING },
-        inParty = true,
+        isParty = true,
     },
 
     {

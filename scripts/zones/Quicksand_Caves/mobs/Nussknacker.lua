@@ -2,6 +2,7 @@
 -- Area: Quicksand Caves
 --   NM: Nussknacker
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobRoam = function(mob)

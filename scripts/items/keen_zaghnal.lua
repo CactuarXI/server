@@ -1,10 +1,11 @@
 -----------------------------------
 -- ID: 18067
 -- Equip: Keen Zaghnal
---  Enchantment: Accuracy +3
+-- Enchantment: Accuracy +3
 -- Enchantment will wear off if weapon is unequipped.
---  Effect lasts for 30 minutes
+-- Effect lasts for 30 minutes
 -----------------------------------
+---@type TItem
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)

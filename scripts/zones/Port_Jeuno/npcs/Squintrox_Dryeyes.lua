@@ -9,6 +9,7 @@
 local ID = zones[xi.zone.PORT_JEUNO]
 require('scripts/missions/amk/helpers')
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 -- maps the menu options to the key items/missions that block access
@@ -428,7 +429,7 @@ entity.onEventUpdate = function(player, csid, option, npc)
             local entry = menuMetadata[1][xi.ki.MOOGLE_KEY]
             local asaKit = player:getCharVar(entry.reqItemCharVar)
             if asaKit == 0 then
-                asaKit = entry.reqItems[math.random(#entry.reqItems)]
+                asaKit = entry.reqItems[math.random(1, #entry.reqItems)]
                 player:setCharVar(entry.reqItemCharVar, asaKit)
             end
 

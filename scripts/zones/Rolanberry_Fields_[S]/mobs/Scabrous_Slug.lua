@@ -6,6 +6,7 @@
 local ID = zones[xi.zone.ROLANBERRY_FIELDS_S]
 mixins = { require('scripts/mixins/families/slug') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobDeath = function(mob, player, optParams)

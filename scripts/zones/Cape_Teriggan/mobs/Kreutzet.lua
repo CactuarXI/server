@@ -2,6 +2,7 @@
 -- Area: Cape Teriggan
 --   NM: Kreutzet
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobRoam = function(mob)
@@ -29,7 +30,7 @@ entity.onMobWeaponSkill = function(target, mob, skill)
     end
 end
 
-entity.onMobDisengage = function(mob, weather)
+entity.onMobDisengage = function(mob)
     if
         not (mob:getWeather() == xi.weather.WIND or
         mob:getWeather() == xi.weather.GALES)

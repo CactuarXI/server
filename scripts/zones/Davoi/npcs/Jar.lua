@@ -5,6 +5,7 @@
 -- Notes: Used to obtain Power Sandals
 -- !pos <randomized>
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 local move = function(npc)

@@ -2,9 +2,11 @@
 -- Area: Attohwa Chasm
 --   NM: Alastor Antlion
 -----------------------------------
-mixins = { require('scripts/mixins/families/antlion_ambush_noaggro') }
 local ID = zones[xi.zone.ATTOHWA_CHASM]
+mixins = { require('scripts/mixins/families/antlion_ambush_noaggro') }
+local attohwaChasmGlobal = require('scripts/zones/Attohwa_Chasm/globals')
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
@@ -21,7 +23,12 @@ entity.onAdditionalEffect = function(mob, target, damage)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
-    GetNPCByID(ID.npc.ALASTOR_QM):updateNPCHideTime(xi.settings.main.FORCE_SPAWN_QM_RESET_TIME)
+end
+
+entity.onMobDespawn = function(mob)
+    if attohwaChasmGlobal.canStartFeelerQMTimer() then
+        GetNPCByID(ID.npc.QM_FEELER_ANTLION):updateNPCHideTime(xi.settings.main.FORCE_SPAWN_QM_RESET_TIME)
+    end
 end
 
 return entity

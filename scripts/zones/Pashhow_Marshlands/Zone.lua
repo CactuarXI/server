@@ -5,6 +5,7 @@ local ID = zones[xi.zone.PASHHOW_MARSHLANDS]
 require('scripts/quests/i_can_hear_a_rainbow')
 require('scripts/missions/amk/helpers')
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
@@ -47,9 +48,13 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onZoneWeatherChange = function(weather)
+    local toxicTamlyn = GetMobByID(ID.mob.TOXIC_TAMLYN)
     if weather == xi.weather.RAIN or weather == xi.weather.SQUALL then
         DisallowRespawn(ID.mob.TOXIC_TAMLYN, false)
-        if os.time() > GetServerVariable('TamlynRespawn') then
+        if
+            os.time() > GetServerVariable('TamlynRespawn') and
+            not toxicTamlyn:isSpawned()
+        then
             SpawnMob(ID.mob.TOXIC_TAMLYN)
         end
     elseif weather ~= xi.weather.RAIN or weather ~= xi.weather.SQUALL then

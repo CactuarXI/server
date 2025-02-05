@@ -5,6 +5,7 @@ local ID = zones[xi.zone.JUGNER_FOREST]
 require('scripts/quests/i_can_hear_a_rainbow')
 require('scripts/missions/amk/helpers')
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
@@ -16,6 +17,9 @@ zoneObject.onInitialize = function(zone)
     for offset = 1, 10 do
         xi.mob.nmTODPersistCache(zone, ID.mob.KING_ARTHRO - offset)
     end
+
+    UpdateNMSpawnPoint(ID.mob.METEORMAULER)
+    GetMobByID(ID.mob.METEORMAULER):setRespawnTime(math.random(900, 10800))
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
 

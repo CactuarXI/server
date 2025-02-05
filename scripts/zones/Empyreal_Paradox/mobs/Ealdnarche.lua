@@ -3,8 +3,7 @@
 --  Mob: Eald'narche
 -- Apocalypse Nigh Final Fight
 -----------------------------------
-require('scripts/globals/magic')
-
+---@type TMobEntity
 local entity = {}
 
 local spellList =

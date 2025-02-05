@@ -2,6 +2,7 @@
 -- Dragoon Job Utilities
 -----------------------------------
 require('scripts/globals/ability')
+require('scripts/globals/combat/magic_hit_rate')
 require('scripts/globals/jobpoints')
 require('scripts/globals/spells/damage_spell')
 require('scripts/globals/weaponskills')
@@ -520,7 +521,10 @@ end
 
 xi.job_utils.dragoon.useDeepBreathing = function(player, target, ability)
     local wyvern = getWyvern(player)
-    wyvern:addStatusEffect(xi.effect.MAGIC_ATK_BOOST, 0, 0, 180) -- Message when effect is lost is 'Magic Attack boost wears off.'
+
+    if wyvern then
+        wyvern:addStatusEffect(xi.effect.MAGIC_ATK_BOOST, 0, 0, 180) -- Message when effect is lost is 'Magic Attack boost wears off.'
+    end
 end
 
 xi.job_utils.dragoon.useSpiritBond = function(player, target, ability)
@@ -700,7 +704,7 @@ xi.job_utils.dragoon.useDamageBreath = function(wyvern, target, skill, action, d
     local _, skillchainCount = xi.magicburst.formMagicBurst(element, target)
 
     -- 'Breath accuracy is directly affected by a wyvern's current HP', but no data exists.
-    local resist              = xi.spells.damage.calculateResist(wyvern, target, 0, 0, element, 0, bonusMacc)
+    local resist              = xi.combat.magicHitRate.calculateResistRate(wyvern, target, 0, 0, element, 0, 0, bonusMacc)
     local sdt                 = xi.spells.damage.calculateSDT(target, element)
     local nukeAbsorbOrNullify = xi.spells.damage.calculateNukeAbsorbOrNullify(target, element)
     local magicBurst          = 1

@@ -10,6 +10,7 @@
 -- Attack % 14 (cap 85)
 -- Ranged Attack % 14 (cap 85)
 -----------------------------------
+---@type TItemFood
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)
@@ -24,7 +25,7 @@ itemObject.onEffectGain = function(target, effect)
     target:addMod(xi.mod.FOOD_HPP, 5)
     target:addMod(xi.mod.FOOD_HP_CAP, 150)
     target:addMod(xi.mod.DEX, 4)
-    target:addMod(xi.mod.MP, 5)
+    target:addMod(xi.mod.FOOD_MP, 5)
     target:addMod(xi.mod.HPHEAL, 9)
     target:addMod(xi.mod.FOOD_ATTP, 14)
     target:addMod(xi.mod.FOOD_ATT_CAP, 85)
@@ -36,7 +37,7 @@ itemObject.onEffectLose = function(target, effect)
     target:delMod(xi.mod.FOOD_HPP, 5)
     target:delMod(xi.mod.FOOD_HP_CAP, 150)
     target:delMod(xi.mod.DEX, 4)
-    target:delMod(xi.mod.MP, 5)
+    target:delMod(xi.mod.FOOD_MP, 5)
     target:delMod(xi.mod.HPHEAL, 9)
     target:delMod(xi.mod.FOOD_ATTP, 14)
     target:delMod(xi.mod.FOOD_ATT_CAP, 85)

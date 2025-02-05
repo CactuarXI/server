@@ -27,7 +27,7 @@ zones[xi.zone.CLOISTER_OF_GALES] =
     },
     mob =
     {
-        GARUDA_PRIME     = GetFirstID('Garuda_Prime_Trial'),
+        GARUDA_PRIME     = GetFirstID('Garuda_Prime_TBW'),
         GARUDA_PRIME_ASA = GetFirstID('Garuda_Prime_ASA'),
         GARUDA_PRIME_WTB = GetFirstID('Garuda_Prime_WTB'),
         OGMIOS           = GetFirstID('Ogmios'),

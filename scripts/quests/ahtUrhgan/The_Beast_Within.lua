@@ -72,7 +72,7 @@ quest.sections =
             {
                 [762] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 2)
-                    player:tradeComplete(false)
+                    player:tradeComplete()
                     player:setPos(300, -0.853, -177.745, 60, 67) -- Jade Sepulcher
                 end,
             },
@@ -80,16 +80,13 @@ quest.sections =
 
         [xi.zone.JADE_SEPULCHER] =
         {
-            onZoneIn =
-            {
-                function(player, prevZone)
-                    if quest:getVar(player, 'Prog') == 2 then
-                        return 2
-                    elseif quest:getVar(player, 'Prog') == 4 then
-                        return 6
-                    end
-                end,
-            },
+            onZoneIn = function(player, prevZone)
+                if quest:getVar(player, 'Prog') == 2 then
+                    return 2
+                elseif quest:getVar(player, 'Prog') == 4 then
+                    return 6
+                end
+            end,
 
             onEventFinish =
             {

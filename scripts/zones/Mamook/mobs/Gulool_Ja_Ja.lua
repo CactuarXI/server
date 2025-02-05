@@ -11,6 +11,7 @@
 -----------------------------------
 mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
@@ -23,6 +24,7 @@ entity.onMobSpawn = function(mob)
 
     mob:setMobMod(xi.mobMod.NO_STANDBACK, 1)
     mob:setMobMod(xi.mobMod.NO_MOVE, 1)
+    mob:setMod(xi.mod.DOUBLE_ATTACK, 20)
 end
 
 entity.onMobEngage = function(mob, target)

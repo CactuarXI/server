@@ -5,6 +5,7 @@
 local ID = zones[xi.zone.RULUDE_GARDENS]
 require('scripts/globals/quests')
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

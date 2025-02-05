@@ -13,14 +13,15 @@
 -- 100%TP    200%TP    300%TP
 -- 1.5625      2.6875      4.125
 -----------------------------------
+---@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
-    local params = {}
-    params.numHits = 1
-    params.ftpMod = { 1.5625, 1.88, 2.5 }
-    params.str_wsc = 0.75
-    params.atkVaries = { 2.0, 2.0, 2.0 }
+    local params     = {}
+    params.numHits   = 1
+    params.ftpMod    = { 1.5625, 1.88, 2.5 }
+    params.str_wsc   = 0.75
+    params.atkVaries = { 2, 2, 2 }
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         -- params.ftpMod = { 1.5625, 2.6875, 4.125 }
@@ -28,12 +29,13 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
-    -- Silence duration changed from 60 to 45 as per bg-wiki: http://www.bg-wiki.com/bg/Tachi:_Gekko
-    if damage > 0 and not target:hasStatusEffect(xi.effect.SILENCE) and not target:hasImmunity(xi.immunity.SILENCE) then
-        local duration = 60 * applyResistanceAddEffect(player, target, xi.element.WIND, 0)
-        target:addStatusEffect(xi.effect.SILENCE, 1, 0, duration)
-        player:messagePublic(xi.msg.basic.SKILL_ENFEEB, target, wsID, xi.effect.SILENCE)
-    end
+
+    -- Handle status effect
+    local effectId      = xi.effect.SILENCE
+    local actionElement = xi.element.WIND
+    local power         = 1
+    local duration      = math.floor(45 * applyResistanceAddEffect(player, target, actionElement, 0))
+    xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration, wsID)
 
     return tpHits, extraHits, criticalHit, damage
 end

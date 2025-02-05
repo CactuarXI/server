@@ -5,6 +5,7 @@ local ID = zones[xi.zone.PHANAUET_CHANNEL]
 require('scripts/globals/barge')
 require('scripts/globals/exp_controller')
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)

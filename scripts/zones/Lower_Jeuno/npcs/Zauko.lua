@@ -7,6 +7,7 @@
 require('scripts/zones/Lower_Jeuno/globals')
 local ID = zones[xi.zone.LOWER_JEUNO]
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
@@ -22,7 +23,7 @@ entity.onTrigger = function(player, npc)
     local allLampsLit = true
     for i = 0, 11 do
         local lamp = GetNPCByID(ID.npc.STREETLAMP_OFFSET + i)
-        if lamp:getAnimation() == xi.anim.CLOSE_DOOR then
+        if lamp and lamp:getAnimation() == xi.anim.CLOSE_DOOR then
             allLampsLit = false
             break
         end
@@ -95,7 +96,7 @@ entity.onEventFinish = function(player, csid, option, npc)
             -- repeat victory. offer membership card.
             params.fame = 15
             if option == 1 then
-                params.ki = xi.ki.LAMP_LIGHTERS_MEMBERSHIP_CARD
+                params.keyItem = xi.ki.LAMP_LIGHTERS_MEMBERSHIP_CARD
             end
         end
 

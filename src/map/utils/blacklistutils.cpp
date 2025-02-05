@@ -1,20 +1,20 @@
 ﻿/*
 ===========================================================================
 
-Copyright (c) 2010-2015 Darkstar Dev Teams
+  Copyright (c) 2010-2015 Darkstar Dev Teams
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see http://www.gnu.org/licenses/
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see http://www.gnu.org/licenses/
 
 ===========================================================================
 */
@@ -66,7 +66,7 @@ namespace blacklistutils
         const char* query = "SELECT c.charid, c.charname FROM char_blacklist AS b INNER JOIN chars AS c ON b.charid_target = c.charid WHERE charid_owner = %u";
         if (_sql->Query(query, PChar->id) == SQL_ERROR || _sql->NumRows() == 0)
         {
-            PChar->pushPacket(new CSendBlacklist(PChar, blacklist, true, true));
+            PChar->pushPacket<CSendBlacklist>(PChar, blacklist, true, true);
             return;
         }
 
@@ -88,7 +88,7 @@ namespace blacklistutils
             {
                 // reset the client blist if it's the first 12 (or less)
                 // this is the last blist packet if total count equals row count
-                PChar->pushPacket(new CSendBlacklist(PChar, blacklist, totalCount <= 12, totalCount == rowCount));
+                PChar->pushPacket<CSendBlacklist>(PChar, blacklist, totalCount <= 12, totalCount == rowCount);
                 blacklist.clear();
                 currentCount = 0;
             }
@@ -97,7 +97,7 @@ namespace blacklistutils
         // Push remaining entries..
         if (!blacklist.empty())
         {
-            PChar->pushPacket(new CSendBlacklist(PChar, blacklist, false, true));
+            PChar->pushPacket<CSendBlacklist>(PChar, blacklist, false, true);
         }
     }
 

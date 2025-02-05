@@ -5,6 +5,7 @@
 require('scripts/globals/quests')
 require('scripts/globals/follow')
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local offsets = { 7, 9, 11, 8, 10, 12 }

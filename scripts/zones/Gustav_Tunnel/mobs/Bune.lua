@@ -4,10 +4,11 @@
 -----------------------------------
 mixins = {require('scripts/mixins/job_special')}
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
-    mob:setMobMod(xi.mobMod.DRAW_IN, 1)
+    -- mob:setMobMod(xi.mobMod.DRAW_IN, 1) -- TODO: DRAW_IN Now Handled In Lua
 end
 
 entity.onMobDeath = function(mob, player, optParams)

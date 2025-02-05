@@ -54,7 +54,7 @@ function content:onBattlefieldTick(battlefield, tick)
     -- Get which player is going to be aggrod
     local player = GetPlayerByID(battlefield:getLocalVar('AutoAggroTarget'))
 
-    if player:isDead() then
+    if player and player:isDead() then
         -- Need to find a new target
         local players = battlefield:getPlayers()
 
@@ -79,13 +79,14 @@ function content:onBattlefieldTick(battlefield, tick)
     end
 
     local boss = GetMobByID(nextBoss)
+    if player and boss then
+        battlefield:setLocalVar('AutoAggro', boss:getID())
+        battlefield:setLocalVar('AutoAggroTime', os.time() + utils.minutes(7))
+        battlefield:setLocalVar('AutoAggroTarget', player:getID())
 
-    battlefield:setLocalVar('AutoAggro', boss:getID())
-    battlefield:setLocalVar('AutoAggroTime', os.time() + utils.minutes(7))
-    battlefield:setLocalVar('AutoAggroTarget', player:getID())
-
-    if boss:isAlive() then
-        boss:updateEnmity(player)
+        if boss:isAlive() then
+            boss:updateEnmity(player)
+        end
     end
 end
 
@@ -117,8 +118,10 @@ function content.handleBossCombatTick(boss, supportOffsets, otherSupportOffsets)
 
     for _, offset in ipairs(offsets) do
         local support = GetMobByID(bossID + offset)
-        support:setSpawn(bossX + math.random(-2, 2), bossY, bossZ + math.random(-2, 2))
-        support:spawn()
+        if support then
+            support:setSpawn(bossX + math.random(-2, 2), bossY, bossZ + math.random(-2, 2))
+            support:spawn()
+        end
     end
 
     -- Alternate which support group to spawn
@@ -197,13 +200,13 @@ content.groups =
             'Lightsteel_Quadav',
         },
 
-        mods =
+        mods = -- Supposedly weak to piercing and magic. Strong against Slash, Impact and H2h
         {
             [xi.mod.PIERCE_SDT] = 2000,
             [xi.mod.UDMGMAGIC ] = 2000,
-            [xi.mod.IMPACT_SDT] = 100,
-            [xi.mod.HTH_SDT   ] = 100,
-            [xi.mod.SLASH_SDT ] = 100,
+            [xi.mod.IMPACT_SDT] = -2000,
+            [xi.mod.HTH_SDT   ] = -2000,
+            [xi.mod.SLASH_SDT ] = -2000,
         },
 
         isParty    = true,
@@ -234,7 +237,7 @@ content.groups =
         {
             [xi.mod.IMPACT_SDT] = 2000,
             [xi.mod.HTH_SDT   ] = 2000,
-            [xi.mod.UDMGMAGIC ] = 100,
+            [xi.mod.UDMGMAGIC ] = -2000,
         },
 
         isParty    = true,

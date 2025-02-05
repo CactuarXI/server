@@ -2,6 +2,7 @@
 -- Area: The Boyahda Tree
 --   NM: Leshonki
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local updateRegen = function(mob)

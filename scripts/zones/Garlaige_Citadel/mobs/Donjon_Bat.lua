@@ -2,6 +2,7 @@
 -- Area: Garlaige Citadel
 --  Mob: Donjon Bat
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

@@ -2,6 +2,7 @@
 -- Area: Toraimarai Canal
 --   NM: Magic Sludge
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

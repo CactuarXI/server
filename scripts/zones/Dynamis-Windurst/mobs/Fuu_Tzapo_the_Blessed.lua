@@ -9,6 +9,7 @@ mixins =
     require('scripts/mixins/remove_doom')
 }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

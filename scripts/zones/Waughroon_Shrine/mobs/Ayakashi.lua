@@ -5,6 +5,7 @@
 -----------------------------------
 mixins = { require('scripts/mixins/families/avatar') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

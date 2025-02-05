@@ -140,7 +140,7 @@ quest.sections =
                         local chance = math.random(1, 5)
                         if chance <= 2 then
                             npcUtil.giveItem(player, xi.item.BUNCH_OF_BLAZING_PEPPERS)
-                            player:tradeComplete(false)
+                            player:tradeComplete()
                             return player:startEvent(12, 1102, 0, 0, xi.item.BUNCH_OF_BLAZING_PEPPERS)-- successful no break
                         elseif chance == 3 then
                             npcUtil.giveItem(player, xi.item.BUNCH_OF_BLAZING_PEPPERS)
@@ -150,7 +150,7 @@ quest.sections =
                             player:confirmTrade()
                             return player:startEvent(12, 0, 1, 0) -- unsuccessful and breaks
                         elseif chance == 5 then
-                            player:tradeComplete(false)
+                            player:tradeComplete()
                             return player:startEvent(12, 0, 0, 0) -- unsuccessful and no break
                         end
                     end

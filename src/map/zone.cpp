@@ -638,6 +638,15 @@ void CZone::updateCharLevelRestriction(CCharEntity* PChar)
 
     if (m_levelRestriction != 0)
     {
+        // remove buffs in level cap zones as well (such as riverne sites)
+        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DISPELABLE, true);
+        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ERASABLE, true);
+        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK, true);
+        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ON_ZONE, true);
+        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_SONG, true);
+        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ROLL, true);
+        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_SYNTH_SUPPORT, true);
+        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_BLOODPACT, true);
         PChar->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_LEVEL_RESTRICTION, EFFECT_LEVEL_RESTRICTION, m_levelRestriction, 0, 0));
     }
 }
@@ -1130,6 +1139,15 @@ void CZone::CharZoneIn(CCharEntity* PChar)
             PChar->PPet->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION, true);
         }
     }
+    else if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_SYNC))
+    {
+        // Logging in with no party and a level sync status = bad.
+        if (!PChar->PParty)
+        {
+            PChar->StatusEffectContainer->DelStatusEffectSilent(EFFECT_LEVEL_SYNC);
+            PChar->StatusEffectContainer->DelStatusEffectSilent(EFFECT_LEVEL_RESTRICTION);
+        }
+    }
 
     monstrosity::HandleZoneIn(PChar);
 
@@ -1161,7 +1179,7 @@ void CZone::CharZoneOut(CCharEntity* PChar)
         {
             if (PChar->PParty->GetSyncTarget() == PChar || PChar->PParty->GetLeader() == PChar)
             {
-                PChar->PParty->SetSyncTarget("", 551);
+                PChar->PParty->SetSyncTarget("", MsgStd::LevelSyncDeactivateLeftArea);
             }
             if (PChar->PParty->GetSyncTarget() != nullptr)
             {
@@ -1175,27 +1193,12 @@ void CZone::CharZoneOut(CCharEntity* PChar)
                 }
                 if (count < 2) // 3, because one is zoning out - thus at least 2 will be left
                 {
-                    PChar->PParty->SetSyncTarget("", 552);
+                    PChar->PParty->SetSyncTarget("", MsgStd::LevelSyncRemoveTooFewMembers);
                 }
             }
         }
         PChar->StatusEffectContainer->DelStatusEffectSilent(EFFECT_LEVEL_SYNC);
         PChar->StatusEffectContainer->DelStatusEffectSilent(EFFECT_LEVEL_RESTRICTION);
-    }
-
-    if (PChar->PLinkshell1 != nullptr)
-    {
-        PChar->PLinkshell1->DelMember(PChar);
-    }
-
-    if (PChar->PLinkshell2 != nullptr)
-    {
-        PChar->PLinkshell2->DelMember(PChar);
-    }
-
-    if (PChar->PUnityChat != nullptr)
-    {
-        PChar->PUnityChat->DelMember(PChar);
     }
 
     if (PChar->PTreasurePool != nullptr) // TODO: Condition for eliminating problems with MobHouse, we need to solve it once and for all!
@@ -1211,13 +1214,6 @@ void CZone::CharZoneOut(CCharEntity* PChar)
         m_TreasurePool = new CTreasurePool(TREASUREPOOL_ZONE);
     }
 
-    PChar->ClearTrusts(); // trusts don't survive zone lines
-
-    if (PChar->isDead())
-    {
-        charutils::SaveDeathTime(PChar);
-    }
-
     PChar->loc.zone = nullptr;
 
     if (PChar->status == STATUS_TYPE::SHUTDOWN)
@@ -1227,38 +1223,6 @@ void CZone::CharZoneOut(CCharEntity* PChar)
     else
     {
         PChar->loc.prevzone = m_zoneID;
-    }
-
-    PChar->SpawnPCList.clear();
-    PChar->SpawnNPCList.clear();
-    PChar->SpawnMOBList.clear();
-    PChar->SpawnPETList.clear();
-    PChar->SpawnTRUSTList.clear();
-
-    if (PChar->PParty && PChar->loc.destination != 0 && PChar->m_moghouseID == 0)
-    {
-        uint8 data[4]{};
-
-        if (PChar->PParty->m_PAlliance)
-        {
-            ref<uint32>(data, 0) = PChar->PParty->m_PAlliance->m_AllianceID;
-            message::send(MSG_ALLIANCE_RELOAD, data, sizeof data, nullptr);
-        }
-        else
-        {
-            ref<uint32>(data, 0) = PChar->PParty->GetPartyID();
-            message::send(MSG_PT_RELOAD, data, sizeof data, nullptr);
-        }
-    }
-
-    if (PChar->PParty)
-    {
-        PChar->PParty->PopMember(PChar);
-    }
-
-    if (PChar->PAutomaton)
-    {
-        PChar->PAutomaton->PMaster = nullptr;
     }
 
     charutils::WriteHistory(PChar);

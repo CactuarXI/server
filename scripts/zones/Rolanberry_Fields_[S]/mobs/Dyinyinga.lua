@@ -7,6 +7,7 @@
 -- Has en-slow that overwrites and prevents Haste 2.
 -- When slow is active on the player, the NM moves out to melee at a normal range and stops trying to stand on them until it wears. Aura ceases at this time too.
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local updateRegen = function(mob)
@@ -46,8 +47,8 @@ entity.onMobFight = function(mob, target)
                     newZ = newZ + (newZ > tarZ and 1 or -1) * math.random(1, 3)
                 else
                     -- random direction
-                    newX = newX + (math.random(1, 2) == 1 and 1 or -1) * math.random(1, 3)
-                    newZ = newZ + (math.random(1, 2) == 1 and 1 or -1) * math.random(1, 3)
+                    newX = newX + (math.random(1, 100) <= 50 and 1 or -1) * math.random(1, 3)
+                    newZ = newZ + (math.random(1, 100) <= 50 and 1 or -1) * math.random(1, 3)
                 end
 
                 mob:pathTo(newX, newY, newZ)

@@ -3,7 +3,9 @@
 -- Item: Talaria
 -- Enchantment: Increases movement speed.
 -- Durration: 60 Mins
+-- Base speed 10% or +5
 -----------------------------------
+---@type TItem
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)

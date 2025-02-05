@@ -2,6 +2,7 @@
 -- Area: La Vaule [S]
 --   NM: Agrios
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

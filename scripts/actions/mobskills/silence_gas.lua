@@ -3,6 +3,7 @@
 --  Description: Emits a noxious cloud in a fan-shaped area of effect, dealing Dark damage to all targets. Additional effect: Silence
 --  Type: Magical Dark (Element)
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)

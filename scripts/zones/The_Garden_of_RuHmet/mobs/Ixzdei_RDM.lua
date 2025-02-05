@@ -6,6 +6,7 @@
 local ID = zones[xi.zone.THE_GARDEN_OF_RUHMET]
 mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
@@ -74,6 +75,7 @@ entity.onMobFight = function(mob, target)
     local heal = mob:getLocalVar('heal')
     local zdeiOne = GetMobByID(ID.mob.IXZDEI_BASE)
     local zdeiTwo = GetMobByID(ID.mob.IXZDEI_BASE + 1)
+
     if
         hpp < healpercent and
         heal == 0 and
@@ -83,6 +85,10 @@ entity.onMobFight = function(mob, target)
         switch (mobID): caseof
         {
             [ID.mob.IXZDEI_BASE] = function()
+                if not zdeiOne then
+                    return
+                end
+
                 local spawnPos = zdeiOne:getSpawnPos()
                 mob:setMagicCastingEnabled(false)
                 mob:pathTo(spawnPos.x, spawnPos.y, spawnPos.z) -- go back to pedastal to heal
@@ -102,6 +108,10 @@ entity.onMobFight = function(mob, target)
             end,
 
             [ID.mob.IXZDEI_BASE + 1] = function()
+                if not zdeiTwo then
+                    return
+                end
+
                 local spawnPos = zdeiTwo:getSpawnPos()
                 mob:setMagicCastingEnabled(false)
                 mob:pathTo(spawnPos.x, spawnPos.y, spawnPos.z)

@@ -6,18 +6,16 @@
 --  Range: Melee
 --  Notes: Requires Weapon
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    if
-        mob:getAnimationSub() == 0 and
-        mob:getMainJob() ~= xi.job.MNK and
-        mob:getMainJob() ~= xi.job.PUP
-    then
-        return 0
-    else
+    -- Do not use if not holding a weapon
+    if mob:getAnimationSub() ~= 0 then
         return 1
     end
+
+    return 0
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)

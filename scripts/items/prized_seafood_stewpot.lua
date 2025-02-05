@@ -16,6 +16,7 @@
 -- Ranged Accuracy 7
 -- Evasion 7
 -----------------------------------
+---@type TItemFood
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)
@@ -29,7 +30,7 @@ end
 itemObject.onEffectGain = function(target, effect)
     target:addMod(xi.mod.FOOD_HPP, 10)
     target:addMod(xi.mod.FOOD_HP_CAP, 100)
-    target:addMod(xi.mod.MP, 20)
+    target:addMod(xi.mod.FOOD_MP, 20)
     target:addMod(xi.mod.DEX, 2)
     target:addMod(xi.mod.VIT, 2)
     target:addMod(xi.mod.AGI, 2)
@@ -44,7 +45,7 @@ end
 itemObject.onEffectLose = function(target, effect)
     target:delMod(xi.mod.FOOD_HPP, 10)
     target:delMod(xi.mod.FOOD_HP_CAP, 100)
-    target:delMod(xi.mod.MP, 20)
+    target:delMod(xi.mod.FOOD_MP, 20)
     target:delMod(xi.mod.DEX, 2)
     target:delMod(xi.mod.VIT, 2)
     target:delMod(xi.mod.AGI, 2)

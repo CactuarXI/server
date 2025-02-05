@@ -8,6 +8,7 @@ mixins =
     require('scripts/mixins/dynamis_beastmen')
 }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.DMGPHYS, 5000)

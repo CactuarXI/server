@@ -5,13 +5,15 @@
 local ID = zones[xi.zone.DRAGONS_AERY]
 mixins = { require('scripts/mixins/rage') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
     mob:setLocalVar('[rage]timer', 3600) -- 60 minutes
     mob:setMobMod(xi.mobMod.WEAPON_BONUS, 50) -- Level 90 + 50 = 140 Base Weapon Damage
+    mob:setMobMod(xi.mobMod.NO_MOVE, 0)
 
-    mob:setMobMod(xi.mobMod.DRAW_IN, 1)
+    -- mob:setMobMod(xi.mobMod.DRAW_IN, 1) -- TODO: DRAW_IN Now Handled In Lua
     mob:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 20)
     mob:setMobMod(xi.mobMod.DRAW_IN_FRONT, 1)
 
@@ -32,6 +34,26 @@ entity.onMobFight = function(mob, target)
     if battletime >= twohourTime then
         mob:useMobAbility(1053) -- Legitimately captured super_buff ID
         mob:setLocalVar('twohourTime', battletime + math.random(60, 120))
+    end
+
+    local drawInTable =
+    {
+        conditions =
+        {
+            target:getXPos() > 95 and target:getZPos() > 56,
+            target:getXPos() < 60 and target:getZPos() < 23,
+        },
+        position = mob:getPos(),
+        wait = 3,
+    }
+    for _, condition in ipairs(drawInTable.conditions) do
+        if condition then
+            mob:setMobMod(xi.mobMod.NO_MOVE, 1)
+            utils.drawIn(target, drawInTable)
+            break
+        else
+            mob:setMobMod(xi.mobMod.NO_MOVE, 0)
+        end
     end
 end
 

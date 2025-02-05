@@ -4,6 +4,7 @@
 -----------------------------------
 local ID = zones[xi.zone.CARPENTERS_LANDING]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
@@ -11,7 +12,7 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
-    if math.random() > .5 then
+    if math.random(1, 100) <= 50 then
         return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENAERO, { chance = 50 })
     else
         return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENWATER, { chance = 50 })

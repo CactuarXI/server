@@ -3,6 +3,7 @@
 -- Checks eligibility to use
 -- maxBabies set by NM lua
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
@@ -10,8 +11,9 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 
     for i = id + 1, id + mob:getLocalVar('maxBabies') do
         local baby = GetMobByID(i)
-        if not baby:isSpawned() then
-            return 0
+        if baby and not baby:isSpawned() then
+            fam = 0
+            break
         end
     end
 
@@ -19,9 +21,9 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local id = mob:getID()
-    local pos = mob:getPos()
-
+    local id    = mob:getID()
+    local pos   = mob:getPos()
+    local momma = mob:getID()
     -- Ingester - ENM: You are what you eat
     if mob:getPool() == 2080 then
         for i = 4, 1, -1 do
@@ -32,18 +34,21 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
             end
         end
     else
-        for babyID = id + 1, id + mob:getLocalVar('maxBabies') do
+        for babyID = momma + 1, momma + mob:getLocalVar('maxBabies') do
             local baby = GetMobByID(babyID)
-            if not baby:isSpawned() then
-                SpawnMob(babyID):updateEnmity(mob:getTarget())
+            if baby and not baby:isSpawned() then
+                SpawnMob(babyID)
+
+                local mobTarget = mob:getTarget()
+                if mobTarget then
+                    baby:updateEnmity(mobTarget)
+                end
+
                 baby:setPos(pos.x, pos.y, pos.z)
                 break
             end
         end
     end
-
-    skill:setMsg(xi.msg.basic.NONE)
-    return 0
 end
 
 return mobskillObject

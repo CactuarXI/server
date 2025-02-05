@@ -1,4 +1,24 @@
-﻿#include "trustutils.h"
+﻿/*
+===========================================================================
+
+  Copyright (c) 2024 LandSandBoat Dev Teams
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see http://www.gnu.org/licenses/
+
+===========================================================================
+*/
+#include "trustutils.h"
 
 #include "common/timer.h"
 #include "common/utils.h"
@@ -60,8 +80,8 @@ struct Trust_t
     uint8  cmbSkill;
     uint16 cmbDmgMult;
     uint16 cmbDelay;
-    uint8  speed;
-    uint8  subSpeed;
+    uint8  baseSpeed;
+    uint8  animationSpeed;
 
     // stat ranks
     uint8 strRank;
@@ -122,8 +142,8 @@ struct Trust_t
     , cmbSkill(0)
     , cmbDmgMult(0)
     , cmbDelay(0)
-    , speed(0)
-    , subSpeed(0)
+    , baseSpeed(0)
+    , animationSpeed(0)
     , strRank(0)
     , dexRank(0)
     , vitRank(0)
@@ -284,12 +304,8 @@ namespace trustutils
                 trust->HPscale   = _sql->GetFloatData(17);
                 trust->MPscale   = _sql->GetFloatData(18);
 
-                // retail seems to have a static *155* for all Trusts in client memory
-                // TODO: trust->speed = 155;
-                trust->speed = (uint8)_sql->GetIntData(19);
-
-                // similarly speedSub is always 50
-                trust->subSpeed = 50;
+                trust->baseSpeed      = 62;
+                trust->animationSpeed = 50;
 
                 trust->strRank = (uint8)_sql->GetIntData(20);
                 trust->dexRank = (uint8)_sql->GetIntData(21);
@@ -420,7 +436,9 @@ namespace trustutils
         PTrust->m_MobSkillList = trustData->m_MobSkillList;
         PTrust->HPscale        = trustData->HPscale;
         PTrust->MPscale        = trustData->MPscale;
-        PTrust->speed          = trustData->speed;
+        PTrust->baseSpeed      = trustData->baseSpeed;
+        PTrust->speed          = trustData->baseSpeed;
+        PTrust->animationSpeed = trustData->animationSpeed;
         PTrust->m_TrustID      = trustData->trustID;
         PTrust->status         = STATUS_TYPE::NORMAL;
         PTrust->m_ModelRadius  = trustData->radius;

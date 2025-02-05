@@ -7,6 +7,7 @@
 -- "Will close skillchains with players and other trusts if possible, otherwise uses a weapon skill at 3000 TP."
 -- TODO: We don't have a combination of OPENER and CLOSER for TP skill settings, so leaving as OPENER for now.
 -----------------------------------
+---@type TSpellTrust
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
@@ -24,7 +25,7 @@ spellObject.onMobSpawn = function(mob)
     })
 
     mob:addListener('WEAPONSKILL_USE', 'MILDAURION_WEAPONSKILL_USE', function(mobArg, target, wsid, tp, action)
-        if wsid == xi.mobSkill.LIGHT_BLADE then
+        if wsid == xi.mobSkill.LIGHT_BLADE_3 then
             --  For Vana'diel!
             xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
         end

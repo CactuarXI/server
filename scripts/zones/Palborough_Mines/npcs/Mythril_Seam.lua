@@ -6,12 +6,13 @@
 -- !pos -68 -7 173 143
 -- Rock Racketeer !pos 210 -32 -63 143
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if npcUtil.tradeHas(trade, xi.item.PICKAXE) then -- pickaxe
         if player:getFreeSlotsCount() > 0 then
-            if math.random() < 0.47 then
+            if math.random(1, 100) <= 47 then
                 if player:getCharVar('rockracketeer_sold') == 5 then
                     player:startEvent(51, 12, xi.item.SHARP_STONE) -- Sharp Stone
                 else

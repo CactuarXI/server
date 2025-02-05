@@ -57,8 +57,8 @@ local flare = function(mob, target, level)
         end
 
         if mob:checkDistance(target) <= 15 then -- without this check if the target is out of range it will keep attemping and failing to use Megaflare. Both Megaflare and Gigaflare have range 15.
-            if bit.band(mob:getBehaviour(), xi.behavior.NO_TURN) > 0 then -- default behaviour
-                mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(xi.behavior.NO_TURN)))
+            if bit.band(mob:getBehavior(), xi.behavior.NO_TURN) > 0 then -- default behaviour
+                mob:setBehavior(bit.band(mob:getBehavior(), bit.bnot(xi.behavior.NO_TURN)))
             end
 
             if level == 0 then

@@ -2,6 +2,7 @@
 -- Area: Gustav Tunnel
 --   NM: Amikiri
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

@@ -2,6 +2,7 @@
 -- Area: Ilrusi Atoll (Extermination)
 --  Mob: Undead Toad
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 

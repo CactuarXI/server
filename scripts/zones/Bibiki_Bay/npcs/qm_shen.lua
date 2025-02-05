@@ -6,6 +6,7 @@
 -----------------------------------
 local ID = zones[xi.zone.BIBIKI_BAY]
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
@@ -13,6 +14,7 @@ entity.onTrade = function(player, npc, trade)
         npcUtil.tradeHasExactly(trade, xi.item.SHRIMP_LANTERN) and
         npcUtil.popFromQM(player, npc, ID.mob.SHEN)
     then
+        player:messageSpecial(ID.text.SHEN_SPAWN, xi.item.SHRIMP_LANTERN)
         player:confirmTrade()
         player:messageSpecial(ID.text.SHEN_SPAWN)
     end

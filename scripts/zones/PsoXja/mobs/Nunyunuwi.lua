@@ -2,6 +2,7 @@
 -- Area: Pso'Xja
 --  Mob: Nunyunuwi
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

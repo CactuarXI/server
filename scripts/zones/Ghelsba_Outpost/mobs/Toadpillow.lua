@@ -3,6 +3,7 @@
 -- Mob: Toadpillow
 -- BCNM: Toadal Recall
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local shroomAbilities =

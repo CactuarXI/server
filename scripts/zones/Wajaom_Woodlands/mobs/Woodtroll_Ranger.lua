@@ -1,12 +1,13 @@
 -----------------------------------
---   Area: Wajaom Woodlands
---    Mob: Woodtroll Ranger
+-- Area: Wajaom Woodlands
+--  Mob: Woodtroll Ranger
 -----------------------------------
-mixins = {require('scripts/mixins/weapon_break')}
+mixins = { require('scripts/mixins/weapon_break') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 return entity

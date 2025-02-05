@@ -6,6 +6,7 @@
 -----------------------------------
 local ID = zones[xi.zone.THE_SHRINE_OF_RUAVITAU]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 -- TODO: MG Slave Gloves follow her weirdly due to a 3 second delay in onMobRoam. This needs to be cleaned up somehow.
@@ -45,7 +46,7 @@ local getSlaves = function()
     for _, slaveGlobeID in ipairs(slaveGlobes) do
         local slaveGlobe = GetMobByID(slaveGlobeID)
 
-        if slaveGlobe:isSpawned() then
+        if slaveGlobe and slaveGlobe:isSpawned() then
             table.insert(spawnedSlaves, slaveGlobe)
         else
             table.insert(notSpawnedSlaves, slaveGlobe)
@@ -97,10 +98,12 @@ local spawnSlaveGlobe = function(mg, slaveGlobe, spawnPos)
         for _, slaveGlobeID in ipairs(slaveGlobes) do
             local currentSlave = GetMobByID(slaveGlobeID)
 
-            local action = currentSlave:getCurrentAction()
-            if action ~= xi.act.NONE and action ~= xi.act.DEATH then
-                currentSlave:follow(followTarget, xi.followType.ROAM)
-                followTarget = currentSlave
+            if currentSlave then
+                local action = currentSlave:getCurrentAction()
+                if action ~= xi.act.NONE and action ~= xi.act.DEATH then
+                    currentSlave:follow(followTarget, xi.followType.ROAM)
+                    followTarget = currentSlave
+                end
             end
         end
     end)
@@ -148,7 +151,7 @@ entity.onMobFight = function(mob, target)
     -- Keep pets linked
     for _, slaveGlobeID in ipairs(slaveGlobes) do
         local pet = GetMobByID(slaveGlobeID)
-        if pet:getCurrentAction() == xi.act.ROAMING then
+        if pet and pet:getCurrentAction() == xi.act.ROAMING then
             pet:updateEnmity(target)
         end
     end
@@ -176,7 +179,7 @@ entity.onMobDeath = function(mob, player, optParams)
 
     for _, slaveGlobeID in ipairs(slaveGlobes) do
         local pet = GetMobByID(slaveGlobeID)
-        if pet:isSpawned() then
+        if pet and pet:isSpawned() then
             DespawnMob(slaveGlobeID)
         end
     end

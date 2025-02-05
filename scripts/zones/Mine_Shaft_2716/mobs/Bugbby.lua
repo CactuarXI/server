@@ -6,6 +6,7 @@
 local ID = zones[xi.zone.MINE_SHAFT_2716]
 mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
@@ -41,16 +42,22 @@ entity.onMobFight = function(mob, target)
         for moblinId = ID.mob.MOVAMUQ + mobIdOffset, ID.mob.MOVAMUQ + mobIdOffset + 3 do
             local moblinAlive = GetMobByID(moblinId)
 
-            if moblinAlive:isAlive() then -- make sure we're not adding dead moblins into the table
+            if moblinAlive and moblinAlive:isAlive() then -- make sure we're not adding dead moblins into the table
                 table.insert(activeMoblins, moblinId)
             end
         end
 
         if #activeMoblins > 0 then
-            local randMoblin = GetMobByID(activeMoblins[math.random(#activeMoblins)]) -- choose random moblin from activeMoblins
+            local randMoblin = GetMobByID(activeMoblins[math.random(1, #activeMoblins)]) -- choose random moblin from activeMoblins
             mob:disengage()
             mob:resetEnmity(target)
-            mob:updateEnmity(randMoblin:getTarget()) -- attack the chosen random moblin's target
+
+            if randMoblin then
+                local randMoblinTarget = randMoblin:getTarget()
+                if randMoblinTarget then
+                    mob:updateEnmity(randMoblinTarget) -- attack the chosen random moblin's target
+                end
+            end
         end
     end
 end

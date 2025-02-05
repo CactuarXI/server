@@ -4,6 +4,7 @@
 local ID = zones[xi.zone.RIVERNE_SITE_B01]
 require('scripts/globals/exp_controller')
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)

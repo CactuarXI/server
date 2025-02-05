@@ -7,10 +7,11 @@
 --  Range: Melee
 --  Notes:
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    return 0
+    return xi.apkallu.canUseAbility(mob, 10)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)

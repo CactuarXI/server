@@ -1,11 +1,9 @@
------------------------------------------
+-----------------------------------
 -- ID: 15462
 -- Item: Talisman Obi
 -- Effect: 3Min, MP+12 Enmity-2
------------------------------------------
-
-
------------------------------------------
+-----------------------------------
+---@type TItem
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)
@@ -27,6 +25,8 @@ itemObject.onEffectGain = function(target, effect)
 end
 
 itemObject.onEffectLose = function(target, effect)
+    target:delMod(xi.mod.MP, 12)
+    target:delMod(xi.mod.ENMITY, -2)
 end
 
 return itemObject

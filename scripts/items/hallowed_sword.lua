@@ -3,6 +3,7 @@
 -- Item: Hallowed Sword
 -- Item Effect: Enlight
 -----------------------------------
+---@type TItem
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)

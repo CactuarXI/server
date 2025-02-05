@@ -34,7 +34,7 @@ local points =
 }
 
 entity.onMobSpawn = function(mob)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.STANDBACK))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.STANDBACK))
     mob:setMod(xi.mod.REGAIN, 1000)
     mob:setSpeed(90)
 end

@@ -2,6 +2,7 @@
 -- Area: Sealions Den
 --  Mob: Mammet-22 Zeta
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
@@ -117,9 +118,6 @@ entity.onMobWeaponSkillPrepare = function(mob, target)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
-end
-
-entity.onEventFinish = function(player, csid, option, npc)
 end
 
 return entity

@@ -2,13 +2,13 @@
 -- Area: Uleguerand Range
 --  Mob: Jormungand
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 -- TODO: Draw in should draw in to slightly in front of where Tiamat is facing
 
 entity.onMobInitialize = function(mob)
     mob:setCarefulPathing(true)
-    -- mob:setMobMod(xi.mobMod.DRAW_IN, 15)
 end
 
 entity.onMobSpawn = function(mob)
@@ -33,7 +33,7 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.REFRESH, 200)
     mob:setMod(xi.mod.DARK_MEVA, 70)
     mob:setMobMod(xi.mobMod.MAGIC_COOL, 20)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
 
     mob:addListener('TAKE_DAMAGE', 'JORM_TAKE_DAMAGE', function(defender, amount, attacker, attackType, damageType)
         local damageTaken = defender:getLocalVar('damageTaken') + amount
@@ -64,14 +64,14 @@ end
 
 entity.land = function(mob)
     mob:useMobAbility(1282)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
     mob:setLocalVar('changeTime', os.time() + 60)
 end
 
 entity.flight = function(mob)
     mob:setAnimationSub(1)
     mob:addStatusEffectEx(xi.effect.ALL_MISS, 0, 1, 0, 0)
-    mob:setBehaviour(0)
+    mob:setBehavior(0)
     mob:setMobSkillAttack(732)
     mob:setLocalVar('changeTime', os.time() + 30)
 end
@@ -207,7 +207,7 @@ entity.onMobDisengage = function(mob)
         mob:setAnimationSub(0)
         mob:delStatusEffect(xi.effect.ALL_MISS)
         mob:setMobSkillAttack(0)
-        mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+        mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
         mob:resetLocalVars()
     end
 end

@@ -1,6 +1,7 @@
 -----------------------------------
 -- xi.effect.COUNTERSTANCE
 -----------------------------------
+---@type TEffect
 local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)

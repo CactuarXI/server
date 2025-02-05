@@ -118,7 +118,7 @@ quest.sections =
                 [7] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 1)
                     player:delKeyItem(quest:getVar(player, 'KIChoice'))
-                    return quest:messageSpecial(ID.text.PHOENIX_FADES, 0, quest:getVar(player, 'KIChoice'))
+                    quest:messageSpecial(ID.text.PHOENIX_FADES, 0, quest:getVar(player, 'KIChoice'))
                 end,
             },
         },

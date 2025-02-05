@@ -7,6 +7,7 @@ mixins =
     require('scripts/mixins/families/khimaira'),
 }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local drawInPos =

@@ -5,16 +5,17 @@
 --  Type: Magical
 --  Utsusemi/Blink absorb: Ignores shadows
 --  Range: Unknown
---  Notes: Used by RNG trolls only.
+--  Notes: Used by RNG trolls only as their ranged special attack.
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
     if mob:getMainJob() == xi.job.RNG then
         return 0
-    else
-        return 1
     end
+
+    return 1
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)

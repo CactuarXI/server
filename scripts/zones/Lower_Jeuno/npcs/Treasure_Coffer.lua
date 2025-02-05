@@ -6,6 +6,7 @@
 -----------------------------------
 local ID = zones[xi.zone.LOWER_JEUNO]
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 local optionToKI =
@@ -1714,7 +1715,7 @@ local function givePrize(player, ki)
             p = p.prizes
             -- determine prize
             local prize = nil
-            local roll = math.random(p[#p].cutoff)
+            local roll = math.random(1, p[#p].cutoff)
             for i = 1, #p do
                 if roll <= p[i].cutoff then
                     prize = p[i]
@@ -1724,7 +1725,10 @@ local function givePrize(player, ki)
 
             -- determine augments
             local addAug = {}
-            if prize.augments ~= nil then
+            if
+                prize and
+                prize.augments ~= nil
+            then
                 local pAug = {}
                 -- deep copy augments for prize
                 for k, v in pairs(prize.augments) do
@@ -1733,7 +1737,7 @@ local function givePrize(player, ki)
 
                 for i = 1, 4 do
                     -- static 50% chance to get any augment at all each loop
-                    if #addAug == 0 or math.random(1, 2) == 1 then
+                    if #addAug == 0 or math.random(1, 100) <= 50 then
                         -- since lua arrays start at index 1, set start at 1 to guarantee at least one augment
                         roll = math.random(1, #pAug)
                     else
@@ -1763,14 +1767,16 @@ local function givePrize(player, ki)
             end
 
             -- give prize
-            if
-                player:getFreeSlotsCount() ~= 0 and
-                player:addItem(prize.itemId, 1, unpack(addAug))
-            then
-                player:messageSpecial(ID.text.ITEM_OBTAINED, prize.itemId)
-                player:delKeyItem(ki)
-            else
-                player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, prize.itemId)
+            if prize then
+                if
+                    player:getFreeSlotsCount() ~= 0 and
+                    player:addItem(prize.itemId, 1, unpack(addAug))
+                then
+                    player:messageSpecial(ID.text.ITEM_OBTAINED, prize.itemId)
+                    player:delKeyItem(ki)
+                else
+                    player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, prize.itemId)
+                end
             end
         end
     end

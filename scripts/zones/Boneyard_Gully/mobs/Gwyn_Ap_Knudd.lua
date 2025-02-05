@@ -73,7 +73,7 @@ entity.onMobDeath = function(mob, player, optParams)
     if mob:getLocalVar('cleanupUndead') == 0 then
         for i = 1, 9 do
             local undead = GetMobByID(mob:getID() + i)
-            undead:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NONE))
+            undead:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NONE))
 
             if undead:isAlive() then
                 undead:setHP(0)
@@ -91,7 +91,7 @@ entity.onMobDespawn = function(mob, player, optParams)
             local undead = GetMobByID(mob:getID() + i)
 
             if undead:isSpawned() then
-                undead:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NONE))
+                undead:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NONE))
                 DespawnMob(undead:getID())
             end
         end

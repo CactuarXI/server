@@ -1,4 +1,23 @@
-﻿// Copyright (c) 2010-2015 Darkstar Dev Teams
+﻿/*
+===========================================================================
+
+  Copyright (c) 2010-2015 Darkstar Dev Teams
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see http://www.gnu.org/licenses/
+
+===========================================================================
+*/
 
 #include "common/cbasetypes.h"
 #include "common/kernel.h"
@@ -259,7 +278,7 @@ bool _vsocket_init()
         }
     }
 #elif defined(HAVE_SETRLIMIT) && !defined(CYGWIN)
-    // NOTE: getrlimit and setrlimit have bogus behaviour in cygwin.
+    // NOTE: getrlimit and setrlimit have bogus behavior in cygwin.
     //       "Number of fds is virtually unlimited in cygwin" (sys/param.h)
     { // set socket limit to MAX_FD
         struct rlimit rlp;
@@ -286,7 +305,7 @@ bool _vsocket_init()
 
     sFD_ZERO(&readfds);
 
-    // initialise last send-receive tick
+    // initialize last send-receive tick
     last_tick = time(nullptr);
     return true;
 }
@@ -354,7 +373,7 @@ using AccessControl = struct _access_control
     uint32 mask;
 };
 
-enum _aco
+enum _aco : uint8
 {
     ACO_DENY_ALLOW,
     ACO_ALLOW_DENY,

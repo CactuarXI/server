@@ -6,7 +6,7 @@
 local entity = {}
 
 entity.onMobSpawn = function(mob)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_DESPAWN))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_DESPAWN))
     mob:setMobMod(xi.mobMod.NO_STANDBACK, 1)
     mob:setMod(xi.mod.LULLABYRES, 70)
     mob:setMod(xi.mod.SILENCERES, 70)

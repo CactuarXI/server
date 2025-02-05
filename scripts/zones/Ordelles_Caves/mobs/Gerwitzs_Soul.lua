@@ -3,6 +3,7 @@
 --   NM: Gerwitz's Soul
 -- !pos -51 0.1 3 193
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

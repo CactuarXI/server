@@ -277,6 +277,11 @@ xi.settings.main =
     -- Please visit scripts/globals/events/login_campaign.lua for assigning the correct campaign dates.
     ENABLE_LOGIN_CAMPAIGN = 1,
 
+    -- FISH RANKING CONTEST
+    -- Set to false to require manual progression of contest
+    AUTO_FISHING_CONTEST = true,
+    MAX_FAKE_ENTRIES     = 15,
+
     -- NYZUL
     RUNIC_DISK_SAVE      = true, -- Allow anyone participating in Nyzul to save progress. Set to false so only initiator can save progress.
     ENABLE_NYZUL_CASKETS = true, -- Enable Treasure casket pops from NMs.
@@ -292,6 +297,9 @@ xi.settings.main =
     CHOCOBO_RAISING_GIL_MULTIPLIER      = 1.0,   -- float. Multiplier for gil recieved through chocobo actions (care plans, etc.). Default 1.0.
     CHOCOBO_RAISING_DISABLE_RETIREMENT  = false, -- true/false.
     CHOCOBO_RAISING_STAT_GROWTH_CAP     = 512,   -- int.
+
+    -- SYNERGY (HEAVILY-IN-DEVELOPMENT, USE AT YOUR OWN RISK)
+    ENABLE_SYNERGY = false, -- true/false. Enable Synergy features.
 
     -- MISC
     RIVERNE_PORTERS              = 120,   -- Time in seconds that Unstable Displacements in Cape Riverne stay open after trading a scale.

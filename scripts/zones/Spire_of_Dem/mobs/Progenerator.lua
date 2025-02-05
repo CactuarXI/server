@@ -5,6 +5,7 @@
 -----------------------------------
 mixins = { require('scripts/mixins/families/empty_terroanima') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
@@ -19,10 +20,10 @@ end
 
 entity.onMobWeaponSkillPrepare = function(mob, target)
     local fission = 755
-    local random = math.random()
+    local random = math.random(1, 100)
 
     if mob:getHPP() <= 50 then
-        if random < 0.6 then
+        if random <= 60 then
             return fission
         end
     end
@@ -38,7 +39,7 @@ entity.onMobDeath = function(mob, player, optParams)
     local momma = mob:getID()
     for i = momma + 1, momma + mob:getLocalVar('maxBabies') do
         local baby = GetMobByID(i)
-        if baby:isSpawned() then
+        if baby and baby:isSpawned() then
             baby:setHP(0)
         end
     end

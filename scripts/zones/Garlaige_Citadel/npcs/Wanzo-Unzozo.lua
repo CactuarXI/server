@@ -10,6 +10,7 @@ require('scripts/globals/quests')
 -----------------------------------
 ID = require('scripts/zones/Garlaige_Citadel/IDs')
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 entity.onTrigger = function(player, npc)

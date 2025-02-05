@@ -3,8 +3,9 @@
 -- Mob: Metal Crab
 -- BCNM: Crustacean Conundrum
 -----------------------------------
-require('scripts/globals/mobs')
------------------------------------
+---@type TMobEntity
+local entity = {}
+
 local dots =
     {
         xi.effect.DIA,
@@ -15,7 +16,6 @@ local dots =
         xi.effect.SHOCK,
         xi.effect.FROST,
     }
-local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
@@ -23,7 +23,7 @@ end
 
 entity.onMobSpawn = function(mob)
     if VanadielDayOfTheWeek() == xi.day.WATERSDAY then
-        mob:setMod(xi.mod.REGEN, 6, 3, 0)
+        mob:setMod(xi.mod.REGEN, 6)
     end
     mob:setMod(xi.mod.DMGMAGIC_CAP, 1)
     mob:setMod(xi.mod.DMGPHYS_CAP, 1)

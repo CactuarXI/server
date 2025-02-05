@@ -3,6 +3,7 @@
 -- Taillegeas - !pos 31 1.996 57.971
 -- Log ID [3] - Quest ID [68]
 -----------------------------------
+
 local quest = Quest:new(xi.questLog.JEUNO, xi.quest.id.jeuno.DUCAL_HOSPITALITY)
 -----------------------------------
 

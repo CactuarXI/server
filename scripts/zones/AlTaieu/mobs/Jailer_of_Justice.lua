@@ -3,6 +3,7 @@
 --   NM: Jailer of Justice
 -----------------------------------
 local ID = zones[xi.zone.ALTAIEU]
+---@type TMobEntity
 local entity = {}
 
 local spawnXzomit = function(mob, xzomit)

@@ -2,6 +2,7 @@
 -- Area: Sealions Den
 --   NM: Ultima
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local abilities = { 1259, 1260, 1269, 1270 }
@@ -23,10 +24,10 @@ end
 entity.onMobWeaponSkillPrepare = function(mob, target)
     local stage = mob:getLocalVar('stage')
     if stage == 0 then
-        local checker = math.random()
-        if checker < 0.50 then
+        local checker = math.random(1, 100)
+        if checker <= 50 then
             return abilities[1]
-        elseif checker < 0.75 then
+        elseif checker <= 75 then
             return abilities[3]
         else
             return abilities[4]

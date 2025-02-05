@@ -4,6 +4,7 @@
 -----------------------------------
 local ID = zones[xi.zone.THE_GARDEN_OF_RUHMET]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
@@ -30,6 +31,7 @@ entity.onMobFight = function(mob, target)
     for i = mobId + 1, mobId + 3 do
         local wynav = GetMobByID(i)
         if
+            wynav and
             not wynav:isSpawned() and
             utils.canUseAbility(mob) == true
         then

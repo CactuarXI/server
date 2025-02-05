@@ -9,7 +9,7 @@ local entity = {}
 entity.onMobSpawn = function(mob)
     mob:hideName(true)
     mob:setStatus(xi.status.NORMAL)
-    mob:setMobMod(xi.mobMod.DRAW_IN, 1)
+    -- mob:setMobMod(xi.mobMod.DRAW_IN, 1) -- TODO: DRAW_IN Now Handled In Lua
     mob:setMobMod(xi.mobMod.ALWAYS_AGGRO, 1)
     mob:setMobMod(xi.mobMod.SOUND_RANGE, 3)
     mob:setMobMod(xi.mobMod.SIGHT_RANGE, 3)

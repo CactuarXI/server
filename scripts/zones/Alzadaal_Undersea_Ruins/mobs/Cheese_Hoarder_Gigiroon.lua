@@ -5,6 +5,7 @@
 -----------------------------------
 mixins = { require('scripts/mixins/rage') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 local PathingPoints = {
     {x = -193.5, y = -8.0, z = 73.5}, -- Index 1 - 6 North Room

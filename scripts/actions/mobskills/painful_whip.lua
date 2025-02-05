@@ -2,6 +2,7 @@
 -- Painful Whip
 -- Deals physical damage to target. Can Critical Hit
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)

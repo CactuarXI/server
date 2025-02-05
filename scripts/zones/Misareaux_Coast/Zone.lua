@@ -5,6 +5,7 @@ require('scripts/globals/exp_controller')
 local ID = zones[xi.zone.MISAREAUX_COAST]
 local misareauxGlobal = require('scripts/zones/Misareaux_Coast/globals')
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)

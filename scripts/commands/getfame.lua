@@ -1,3 +1,4 @@
+-----------------------------------
 -- func: getfame
 -- desc: Gets fame level of a target player
 -----------------------------------
@@ -9,7 +10,7 @@ commandObj.cmdprops =
     parameters = 'si'
 }
 
-commandObj.error = function(player, msg)
+local function error(player, msg)
     if msg == nil then
         msg = '!getfame [player] <fame_zone 0-15>'
     end
@@ -19,39 +20,31 @@ end
 
 commandObj.onTrigger = function(player, target, famezone)
     -- validate target
-    local targ
+    local targ = nil
 
     if target == nil then
-        error(player)
-        return
+        if player:getCursorTarget() == nil then
+            targ = player
+        else
+            if player:getCursorTarget():isPC() then
+                targ = player:getCursorTarget()
+            else
+                error(player, 'You must target a player or specify a name.')
+                return
+            end
+        end
     else
         targ = GetPlayerByName(target)
         if targ == nil then
-            error(player, string.format('Player named %s not found or not a valid player!', target))
+            error(player, string.format('Player named "%s" not found or not a valid player!', target))
             return
         end
     end
 
-    -- validate famezone
-    local fameAreas =
-    {
-        'San d\'Oria',              -- 0
-        'Bastok',                   -- 1
-        'Windurst',                 -- 2
-        'Jeuno',                    -- 3
-        'Selbina / Rabao',          -- 4
-        'Norg',                     -- 5
-        'Abyssea - Konschtat',      -- 6
-        'Abyssea - Tahrongi',       -- 7
-        'Abyssea - La Theine',      -- 8
-        'Abyssea - Misareaux',      -- 9
-        'Abyssea - Vunkerl',        -- 10
-        'Abyssea - Attohwa',        -- 11
-        'Abyssea - Altepa',         -- 12
-        'Abyssea - Grauberg',       -- 13
-        'Abyssea - Uleguerand',     -- 14
-        'Adoulin'                   -- 15
-    }
+    local fameZoneNames = {}
+    for name, value in pairs(xi.fameArea) do
+        fameZoneNames[value] = name
+    end
 
     -- Validate famezone
     if famezone == nil then
@@ -59,7 +52,7 @@ commandObj.onTrigger = function(player, target, famezone)
         -- return
         player:printToPlayer(string.format('Fame Report for player: %s', targ:getName()), xi.msg.channel.SYSTEM_3)
         for i = 0, 15 do
-            player:printToPlayer(string.format('Area %s (%s): %s (Level: %s)', i, fameAreas[i + 1], player:getFame(i), player:getFameLevel(i)), xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('Area %s (%s): %s (Level: %s)', i, fameZoneNames[i], player:getFame(i), player:getFameLevel(i)), xi.msg.channel.SYSTEM_3)
         end
 
         return
@@ -73,9 +66,9 @@ commandObj.onTrigger = function(player, target, famezone)
     local level = player:getFameLevel(famezone)
 
     if level < 9 then
-        player:printToPlayer(string.format('%s\'s reputation in fame area %i (%s) is %i (Level %i). Next level at %i (%i points to go).', targ:getName(), famezone, fameAreas[famezone + 1], fame, level, fameBaseValues[level + 1], fameBaseValues[level + 1]-fame), xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format('%s\'s reputation in fame area %i (%s) is %i (Level %i). Next level at %i (%i points to go).', targ:getName(), famezone, fameZoneNames[famezone], fame, level, fameBaseValues[level + 1], fameBaseValues[level + 1]-fame), xi.msg.channel.SYSTEM_3)
     else
-        player:printToPlayer(string.format('%s\'s reputation in fame area %i (%s) is %i (Level %i).', targ:getName(), famezone, fameAreas[famezone + 1], fame, level), xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format('%s\'s reputation in fame area %i (%s) is %i (Level %i).', targ:getName(), famezone, fameZoneNames[famezone], fame, level), xi.msg.channel.SYSTEM_3)
     end
 end
 

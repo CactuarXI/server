@@ -2,6 +2,7 @@
 -- Area: Fei'Yin
 --   NM: Western Shadow
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

@@ -3,6 +3,7 @@
 -----------------------------------
 local ID = zones[xi.zone.RANGUEMONT_PASS]
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
@@ -10,8 +11,10 @@ zoneObject.onInitialize = function(zone)
     local phIndex = math.random(1, 3)
     local ph = GetMobByID(ID.mob.TAISAIJIN_PH[phIndex])
 
-    ph:setLocalVar("timeToGrow", GetServerVariable("[Taisai]TimeToGrow"))
-    ph:setLocalVar('phIndex', phIndex)
+    if ph then
+        ph:setLocalVar('timeToGrow', GetServerVariable('[Taisai]TimeToGrow'))
+        ph:setLocalVar('phIndex', phIndex)
+    end
 
     xi.cactuarRegimes.initializeBooks(zone)
 end

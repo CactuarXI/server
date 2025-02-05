@@ -2,15 +2,27 @@
 -- Area: Halvung
 --  NPC: Decorative Bronze Gate (_1qp)
 -----------------------------------
+local ID = zones[xi.zone.HALVUNG]
+-----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    local item = xi.items.HALVUNG_SHAKUDO_KEY
-
-    if npcUtil.tradeHasExactly(trade, { item, item + 1, item + 2 }) then
+    if
+        npcUtil.tradeHasExactly(trade,
+        {
+            xi.item.HALVUNG_SHAKUDO_KEY,
+            xi.item.HALVUNG_BRONZE_KEY,
+            xi.item.HALVUNG_BRASS_KEY
+        })
+    then
         player:confirmTrade()
-        npc:openDoor(15)
-        player:messageSpecial(zones[npc:getZoneID()].text.KEY_BREAKS, item, item + 1, item + 2)
+        npc:openDoor()
+        player:messageSpecial(ID.text.KEY_BREAKS,
+            xi.item.HALVUNG_SHAKUDO_KEY,
+            xi.item.HALVUNG_BRONZE_KEY,
+            xi.item.HALVUNG_BRASS_KEY
+        )
     end
 end
 
@@ -23,6 +35,8 @@ entity.onTrigger = function(player, npc)
     then
         npc:openDoor(15)
         -- player:startEvent(??)
+            else
+        player:messageSpecial(ID.text.WIDE_TRENCH)
     end
 end
 

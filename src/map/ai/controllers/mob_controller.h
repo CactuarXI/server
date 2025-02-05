@@ -1,20 +1,20 @@
 ﻿/*
 ===========================================================================
 
-Copyright (c) 2010-2015 Darkstar Dev Teams
+  Copyright (c) 2010-2015 Darkstar Dev Teams
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see http://www.gnu.org/licenses/
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see http://www.gnu.org/licenses/
 
 ===========================================================================
 */
@@ -59,7 +59,10 @@ public:
     void         TapDeclaimTime();
     virtual bool Cast(uint16 targid, SpellID spellid) override;
     void         SetFollowTarget(CBaseEntity* PTarget, FollowType followType);
+    bool         HasFollowTarget();
     void         ClearFollowTarget();
+
+    void OnCastStopped(CMagicState& state, action_t& action);
 
 protected:
     virtual bool TryDeaggro();
@@ -95,7 +98,7 @@ private:
     CMobEntity* const PMob;
 
     time_point m_LastActionTime;
-    time_point m_LastMagicTime;
+    time_point m_nextMagicTime;
     time_point m_LastMobSkillTime;
     time_point m_LastSpecialTime;
     time_point m_DeaggroTime;
@@ -103,7 +106,7 @@ private:
     time_point m_NeutralTime;
     time_point m_WaitTime;
     time_point m_mobHealTime;
-    FollowType m_followType;
+    FollowType m_followType = FollowType::None;
 
     bool       m_firstSpell{ true };
     time_point m_LastRoamScript{ time_point::min() };

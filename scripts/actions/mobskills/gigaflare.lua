@@ -7,6 +7,7 @@
 --  Range:
 --  Notes: Used by Bahamut when at 10% of its HP, and can use anytime afterwards at will.
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
@@ -30,8 +31,8 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
         mob:setMobAbilityEnabled(true) -- enable the spells/other mobskills again
         mob:setMagicCastingEnabled(true)
         mob:setAutoAttackEnabled(true)
-        if (mob:getBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN)) == 0) then -- re-enable noturn
-            mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+        if bit.band(mob:getBehavior(), xi.behavior.NO_TURN) == 0 then -- re-enable noturn
+            mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
         end
     elseif mob:getID() == 16896157 then -- BV2 Bahamut
         local gigaFlareCount = mob:getLocalVar('gigaFlareCount')
@@ -41,8 +42,8 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
         mob:setMobAbilityEnabled(true) -- re-enable the other actions on success
         mob:setMagicCastingEnabled(true)
         mob:setAutoAttackEnabled(true)
-        if (mob:getBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN)) == 0) then -- re-enable noturn
-            mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+        if bit.band(mob:getBehavior(), xi.behavior.NO_TURN) == 0 then -- re-enable noturn
+            mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
         end
     end
 

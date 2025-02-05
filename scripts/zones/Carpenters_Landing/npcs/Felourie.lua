@@ -6,6 +6,7 @@
 -----------------------------------
 require('scripts/globals/barge')
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 local eventId = 20

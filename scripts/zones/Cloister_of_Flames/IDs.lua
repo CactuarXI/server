@@ -37,7 +37,7 @@ zones[xi.zone.CLOISTER_OF_FLAMES] =
     {
         IFRIT_PRIME     = GetFirstID('Ifrit_Prime_Trial'),
         IFRIT_PRIME_ASA = GetFirstID('Ifrit_Prime_ASA'),
-        IFRIT_PRIME_WTB = GetFirstID('Ifrit_Prime_WTB'),
+        IFRIT_PRIME_WTB = GetFirstID('Ifrit_Prime_WTB')
     },
     npc =
     {

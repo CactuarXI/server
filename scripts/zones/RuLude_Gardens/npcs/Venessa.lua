@@ -7,33 +7,34 @@ require('scripts/globals/npc_util')
 
 
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 local rewards =
 {
-    {   xi.item.BRILLIANT_VISION,  xi.item.SUMMONING_EARRING },
-    {     xi.item.PAINFUL_VISION,       xi.item.DARK_EARRING },
-    {    xi.item.TIMOROUS_VISION, xi.item.ENFEEBLING_EARRING },
-    {   xi.item.VENERABLE_VISION,     xi.item.STRING_EARRING },
-    {     xi.item.VIOLENT_VISION,    xi.item.BUCKLER_EARRING },
-    {   xi.item.AUDACIOUS_VISION,     xi.item.DIVINE_EARRING },
-    {   xi.item.ENDEARING_VISION,    xi.item.SINGING_EARRING },
-    { xi.item.PUNCTILIOUS_VISION,   xi.item.PARRYING_EARRING },
-    {      xi.item.VERNAL_VISION,    xi.item.EVASION_EARRING },
-    {       xi.item.VIVID_VISION,    xi.item.HEALING_EARRING },
-    {   xi.item.MALICIOUS_VISION,   xi.item.NINJUTSU_EARRING },
-    { xi.item.PRETENTIOUS_VISION,  xi.item.ELEMENTAL_EARRING },
-    {    xi.item.PRISTINE_VISION,       xi.item.WIND_EARRING },
-    {      xi.item.SOLEMN_VISION,   xi.item.GUARDING_EARRING },
-    {     xi.item.VALIANT_VISION, xi.item.AUGMENTING_EARRING },
-    {   xi.item.IMPETUOUS_VISION,     xi.item.TOREADERS_RING },
-    {     xi.item.TENUOUS_VISION,        xi.item.ASTRAL_ROPE },
-    {       xi.item.SNIDE_VISION,      xi.item.SAFETY_MANTLE },
-    {        xi.item.GRAVE_IMAGE,          xi.item.HABU_SKIN },
-    {     xi.item.BEATIFIC_IMAGE,          xi.item.TIGER_EYE },
-    {     xi.item.VALOROUS_IMAGE,    xi.item.RHEIYOH_LEATHER },
-    {      xi.item.ANCIENT_IMAGE,     xi.item.OVERSIZED_FANG },
-    {       xi.item.VIRGIN_IMAGE,      xi.item.SUPER_CERMENT },
+    { xi.item.BRILLIANT_VISION,   xi.item.SUMMONING_EARRING  },
+    { xi.item.PAINFUL_VISION,     xi.item.DARK_EARRING       },
+    { xi.item.TIMOROUS_VISION,    xi.item.ENFEEBLING_EARRING },
+    { xi.item.VENERABLE_VISION,   xi.item.STRING_EARRING     },
+    { xi.item.VIOLENT_VISION,     xi.item.BUCKLER_EARRING    },
+    { xi.item.AUDACIOUS_VISION,   xi.item.DIVINE_EARRING     },
+    { xi.item.ENDEARING_VISION,   xi.item.SINGING_EARRING    },
+    { xi.item.PUNCTILIOUS_VISION, xi.item.PARRYING_EARRING   },
+    { xi.item.VERNAL_VISION,      xi.item.EVASION_EARRING    },
+    { xi.item.VIVID_VISION,       xi.item.HEALING_EARRING    },
+    { xi.item.MALICIOUS_VISION,   xi.item.NINJUTSU_EARRING   },
+    { xi.item.PRETENTIOUS_VISION, xi.item.ELEMENTAL_EARRING  },
+    { xi.item.PRISTINE_VISION,    xi.item.WIND_EARRING       },
+    { xi.item.SOLEMN_VISION,      xi.item.GUARDING_EARRING   },
+    { xi.item.VALIANT_VISION,     xi.item.AUGMENTING_EARRING },
+    { xi.item.IMPETUOUS_VISION,   xi.item.TOREADERS_RING     },
+    { xi.item.TENUOUS_VISION,     xi.item.ASTRAL_ROPE        },
+    { xi.item.SNIDE_VISION,       xi.item.SAFETY_MANTLE      },
+    { xi.item.GRAVE_IMAGE,        xi.item.PIECE_OF_HABU_SKIN },
+    { xi.item.BEATIFIC_IMAGE,     xi.item.TIGER_EYE          },
+    { xi.item.VALOROUS_IMAGE,     xi.item.RHEIYOH_LEATHER    },
+    { xi.item.ANCIENT_IMAGE,      xi.item.OVERSIZED_FANG     },
+    { xi.item.VIRGIN_IMAGE,       xi.item.SUPER_CERMENT      },
 }
 
 entity.onTrade = function(player, npc, trade)

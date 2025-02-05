@@ -8,8 +8,7 @@
 -----------------------------------
 local ID  = zones[xi.zone.OLDTON_MOVALPOLOS]
 -----------------------------------
-local ID = require('scripts/zones/Oldton_Movalpolos/IDs')
------------------------------------
+
 local quest = Quest:new(xi.questLog.BASTOK, xi.quest.id.bastok.A_QUESTION_OF_FAITH)
 
 quest.reward =
@@ -39,7 +38,6 @@ quest.sections =
                 end,
             },
         },
-
     },
 
     {
@@ -74,7 +72,6 @@ quest.sections =
                 end,
 
                 [241] = function(player, csid, option, npc)
-                        player:addFame(xi.fameArea.BASTOK, 50)
                         quest:complete(player)
                 end,
             },
@@ -115,7 +112,7 @@ quest.sections =
             {
                 [6] = function(player, csid, option, npc)
                     player:delKeyItem(xi.ki.DAWN_TALISMAN)
-                    return quest:messageSpecial(ID.text.WAS_TAKEN_FROM_YOU, 0, xi.ki.DAWN_TALISMAN)
+                    player:messageSpecial(ID.text.WAS_TAKEN_FROM_YOU, 0, xi.ki.DAWN_TALISMAN)
                 end,
             },
         },

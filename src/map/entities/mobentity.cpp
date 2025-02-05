@@ -35,6 +35,7 @@
 #include "enmity_container.h"
 #include "entities/charentity.h"
 #include "lua/lua_loot.h"
+#include "lua/luautils.h"
 #include "mob_modifier.h"
 #include "mob_spell_container.h"
 #include "mob_spell_list.h"
@@ -92,7 +93,7 @@ CMobEntity::CMobEntity()
 , m_TrueDetection(false)
 , m_Link(0)
 , m_isAggroable(false)
-, m_Behaviour(BEHAVIOUR_NONE)
+, m_Behavior(BEHAVIOR_NONE)
 , m_SpawnType(SPAWNTYPE_NORMAL)
 , m_battlefieldID(0)
 , m_bcnmID(0)
@@ -514,7 +515,7 @@ void CMobEntity::PostTick()
         // If this mob is charmed, it should sync with its master
         if (PMaster && PMaster->PPet == this && PMaster->objtype == TYPE_PC)
         {
-            ((CCharEntity*)PMaster)->pushPacket(new CPetSyncPacket((CCharEntity*)PMaster));
+            ((CCharEntity*)PMaster)->pushPacket<CPetSyncPacket>((CCharEntity*)PMaster);
         }
 
         updatemask = 0;
@@ -545,7 +546,7 @@ bool CMobEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
         return true;
     }
 
-    if (targetFlags & TARGET_PLAYER_DEAD && (m_Behaviour & BEHAVIOUR_RAISABLE) && isDead())
+    if (targetFlags & TARGET_PLAYER_DEAD && (m_Behavior & BEHAVIOR_RAISABLE) && isDead())
     {
         return true;
     }
@@ -557,7 +558,7 @@ bool CMobEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
 
     if (targetFlags & TARGET_NPC)
     {
-        if (allegiance == PInitiator->allegiance && !(m_Behaviour & BEHAVIOUR_NOHELP) && !isCharmed)
+        if (allegiance == PInitiator->allegiance && !(m_Behavior & BEHAVIOR_NOHELP) && !isCharmed)
         {
             return true;
         }
@@ -662,8 +663,8 @@ void CMobEntity::DistributeRewards()
                 if (PMember->getZone() == PChar->getZone())
                 {
                     RoeDatagramList datagrams;
-                    datagrams.emplace_back(RoeDatagram("mob", this));
-                    datagrams.emplace_back(RoeDatagram("atkType", static_cast<uint8>(this->BattleHistory.lastHitTaken_atkType)));
+                    datagrams.emplace_back("mob", this);
+                    datagrams.emplace_back("atkType", static_cast<uint8>(this->BattleHistory.lastHitTaken_atkType));
                     roeutils::event(ROE_MOBKILL, (CCharEntity*)PMember, datagrams);
                 }
             });
@@ -695,23 +696,18 @@ void CMobEntity::DistributeRewards()
 void CMobEntity::DropItems(CCharEntity* PChar)
 {
     TracyZoneScoped;
-    // Adds an item to the treasure pool and returns true if the pool has been filled
-    auto AddItemToPool = [this, PChar](uint16 ItemID, uint8 dropCount)
+    // Adds an item to the treasure pool. Treasure pool will automatically kick out items if the pool is full (prioritizing non rare non ex items)
+    auto AddItemToPool = [this, PChar](uint16 ItemID)
     {
         PChar->PTreasurePool->AddItem(ItemID, this);
-        return dropCount >= TREASUREPOOL_SIZE;
     };
-
-    // Limit number of items that can drop to the treasure pool size
-    uint8 dropCount = 0;
 
     DropList_t* dropList = itemutils::GetDropList(m_DropID);
 
     if (!getMobMod(MOBMOD_NO_DROPS) && dropList != nullptr && (!dropList->Items.empty() || !dropList->Groups.empty() || PAI->EventHandler.hasListener("ITEM_DROPS")))
     {
-        // THLvl is the number of 'extra chances' at an item. If the item is obtained, then break out.
-        int16 maxRolls = 1 + (m_THLvl > 2 ? 2 : m_THLvl);
-        int16 bonus    = (m_THLvl > 2 ? (m_THLvl - 2) * 10 : 0);
+        // THLvl determines the drop rate.
+        auto thDropRateFunction = lua["xi"]["combat"]["treasureHunter"]["getDropRate"];
 
         LootContainer loot(dropList);
 
@@ -726,50 +722,46 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                 total += item.DropRate;
             }
 
-            // NOTE: When switching over to the correct TH table method fixed rate means to not use the TH table
-            int16 rolls = group.hasFixedRate ? 1 : maxRolls;
+            uint16 groupDropRate = group.GroupRate * 10;
 
-            for (int16 roll = 0; roll < rolls; ++roll)
+            if (!group.hasFixedRate)
             {
-                // Determine if this group should drop an item
-                if (group.GroupRate > 0 && xirand::GetRandomNumber(1000) < group.GroupRate * settings::get<float>("map.DROP_RATE_MULTIPLIER") + bonus)
+                groupDropRate = thDropRateFunction(m_THLvl, groupDropRate);
+            }
+
+            // Determine if this group should drop an item.
+            if (groupDropRate > 0 && xirand::GetRandomNumber(1, 10000) <= groupDropRate * settings::get<float>("map.DROP_RATE_MULTIPLIER"))
+            {
+                // Each item in the group is given its own weight range which is the previous value to the previous value + item.DropRate
+                // Such as 2 items with drop rates of 200 and 800 would be 0-199 and 200-999 respectively
+                uint16 previousRateValue = 0;
+                uint16 itemRoll          = xirand::GetRandomNumber(total);
+                for (const DropItem_t& item : group.Items)
                 {
-                    // Each item in the group is given its own weight range which is the previous value to the previous value + item.DropRate
-                    // Such as 2 items with drop rates of 200 and 800 would be 0-199 and 200-999 respectively
-                    uint16 previousRateValue = 0;
-                    uint16 itemRoll          = xirand::GetRandomNumber(total);
-                    for (const DropItem_t& item : group.Items)
+                    if (itemRoll < previousRateValue + item.DropRate)
                     {
-                        if (previousRateValue + item.DropRate > itemRoll)
-                        {
-                            if (AddItemToPool(item.ItemID, ++dropCount))
-                            {
-                                return;
-                            }
-                            break;
-                        }
-                        previousRateValue += item.DropRate;
+                        AddItemToPool(item.ItemID);
+
+                        break;
                     }
-                    break;
+                    previousRateValue += item.DropRate;
                 }
             }
         });
 
+        // Ungrouped drops. This are affected by TH UNLESS they have an specified fixed rate.
         loot.ForEachItem([&](const DropItem_t& item)
         {
-            // NOTE: When switching over to the correct TH table method fixed rate means to not use the TH table
-            int16 rolls = item.hasFixedRate ? 1 : maxRolls;
+            uint16 itemDropRate = item.DropRate * 10;
 
-            for (int16 roll = 0; roll < rolls; ++roll)
+            if (!item.hasFixedRate)
             {
-                if (item.DropRate > 0 && xirand::GetRandomNumber(1000) < item.DropRate * settings::get<float>("map.DROP_RATE_MULTIPLIER") + bonus)
-                {
-                    if (AddItemToPool(item.ItemID, ++dropCount))
-                    {
-                        return;
-                    }
-                    break;
-                }
+                itemDropRate = thDropRateFunction(m_THLvl, itemDropRate);
+            }
+
+            if (itemDropRate > 0 && xirand::GetRandomNumber(1, 10000) <= itemDropRate * settings::get<float>("map.DROP_RATE_MULTIPLIER"))
+            {
+                AddItemToPool(item.ItemID);
             }
         });
         // clang-format on
@@ -795,29 +787,16 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                 switch (xirand::GetRandomNumber(4))
                 {
                     case 0:
-
-                        if (AddItemToPool(1126, ++dropCount))
-                        {
-                            return;
-                        }
+                        AddItemToPool(1126);
                         break;
                     case 1:
-                        if (AddItemToPool(1127, ++dropCount))
-                        {
-                            return;
-                        }
+                        AddItemToPool(1127);
                         break;
                     case 2:
-                        if (AddItemToPool(2955, ++dropCount))
-                        {
-                            return;
-                        }
+                        AddItemToPool(2955);
                         break;
                     case 3:
-                        if (AddItemToPool(2956, ++dropCount))
-                        {
-                            return;
-                        }
+                        AddItemToPool(2956);
                         break;
                 }
             }
@@ -826,22 +805,13 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                 switch (xirand::GetRandomNumber(3))
                 {
                     case 0:
-                        if (AddItemToPool(1126, ++dropCount))
-                        {
-                            return;
-                        }
+                        AddItemToPool(1126);
                         break;
                     case 1:
-                        if (AddItemToPool(1127, ++dropCount))
-                        {
-                            return;
-                        }
+                        AddItemToPool(1127);
                         break;
                     case 2:
-                        if (AddItemToPool(2955, ++dropCount))
-                        {
-                            return;
-                        }
+                        AddItemToPool(2955);
                         break;
                 }
             }
@@ -849,26 +819,17 @@ void CMobEntity::DropItems(CCharEntity* PChar)
             {
                 if (xirand::GetRandomNumber(2) == 0)
                 {
-                    if (AddItemToPool(1126, ++dropCount))
-                    {
-                        return;
-                    }
+                    AddItemToPool(1126);
                 }
                 else
                 {
-                    if (AddItemToPool(1127, ++dropCount))
-                    {
-                        return;
-                    }
+                    AddItemToPool(1127);
                 }
             }
             else
             {
                 // b.seal only
-                if (AddItemToPool(1126, ++dropCount))
-                {
-                    return;
-                }
+                AddItemToPool(1126);
             }
         }
 
@@ -941,28 +902,28 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                 switch (element)
                 {
                     case ELEMENT_FIRE:
-                        AddItemToPool(3297, ++dropCount); // Flame Geode
+                        AddItemToPool(3297); // Flame Geode
                         break;
                     case ELEMENT_EARTH:
-                        AddItemToPool(3300, ++dropCount); // Soil Geode
+                        AddItemToPool(3300); // Soil Geode
                         break;
                     case ELEMENT_WATER:
-                        AddItemToPool(3302, ++dropCount); // Aqua Geode
+                        AddItemToPool(3302); // Aqua Geode
                         break;
                     case ELEMENT_WIND:
-                        AddItemToPool(3299, ++dropCount); // Breeze Geode
+                        AddItemToPool(3299); // Breeze Geode
                         break;
                     case ELEMENT_ICE:
-                        AddItemToPool(3298, ++dropCount); // Snow Geode
+                        AddItemToPool(3298); // Snow Geode
                         break;
                     case ELEMENT_THUNDER:
-                        AddItemToPool(3301, ++dropCount); // Thunder Geode
+                        AddItemToPool(3301); // Thunder Geode
                         break;
                     case ELEMENT_LIGHT:
-                        AddItemToPool(3303, ++dropCount); // Light Geode
+                        AddItemToPool(3303); // Light Geode
                         break;
                     case ELEMENT_DARK:
-                        AddItemToPool(3304, ++dropCount); // Shadow Geode
+                        AddItemToPool(3304); // Shadow Geode
                         break;
                     default:
                         break;
@@ -974,28 +935,28 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                 switch (element)
                 {
                     case ELEMENT_FIRE:
-                        AddItemToPool(3520, ++dropCount); // Ifritite
+                        AddItemToPool(3520); // Ifritite
                         break;
                     case ELEMENT_EARTH:
-                        AddItemToPool(3523, ++dropCount); // Titanite
+                        AddItemToPool(3523); // Titanite
                         break;
                     case ELEMENT_WATER:
-                        AddItemToPool(3525, ++dropCount); // Leviatite
+                        AddItemToPool(3525); // Leviatite
                         break;
                     case ELEMENT_WIND:
-                        AddItemToPool(3522, ++dropCount); // Garudite
+                        AddItemToPool(3522); // Garudite
                         break;
                     case ELEMENT_ICE:
-                        AddItemToPool(3521, ++dropCount); // Shivite
+                        AddItemToPool(3521); // Shivite
                         break;
                     case ELEMENT_THUNDER:
-                        AddItemToPool(3524, ++dropCount); // Ramuite
+                        AddItemToPool(3524); // Ramuite
                         break;
                     case ELEMENT_LIGHT:
-                        AddItemToPool(3526, ++dropCount); // Carbit
+                        AddItemToPool(3526); // Carbit
                         break;
                     case ELEMENT_DARK:
-                        AddItemToPool(3527, ++dropCount); // Fenrite
+                        AddItemToPool(3527); // Fenrite
                         break;
                     default:
                         break;
@@ -1016,6 +977,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                 case REGION_TYPE::MAMOOL_JA_SAVAGE:
                 case REGION_TYPE::HALVUNG:
                 case REGION_TYPE::ARRAPAGO:
+                case REGION_TYPE::ALZADAAL:
                     effect = 2;
                     break;
 
@@ -1083,12 +1045,15 @@ void CMobEntity::DropItems(CCharEntity* PChar)
             }
         });
         // clang-format on
+
+        // Is this really checked last? Would crystals actually kick out non-rare/ex items from the same mob dropping a large pool?
         uint8 crystalYieldMod = (PChar->getMod(Mod::CRYSTAL_YIELD));
         for (uint8 i = 0; i < crystalRolls; i++)
         {
-            if (xirand::GetRandomNumber(100) < (20 + crystalYieldMod) && AddItemToPool(4095 + m_Element, ++dropCount))
+            // TODO: implement nation aketon crystal bonus (per member?)
+            if (xirand::GetRandomNumber(100) < (20 + crystalYieldMod))
             {
-                return;
+                AddItemToPool(4095 + m_Element);
             }
         }
     }
@@ -1166,7 +1131,7 @@ void CMobEntity::FadeOut()
 void CMobEntity::OnDeathTimer()
 {
     TracyZoneScoped;
-    if (!(m_Behaviour & BEHAVIOUR_RAISABLE))
+    if (!(m_Behavior & BEHAVIOR_RAISABLE))
     {
         PAI->Despawn();
     }
@@ -1253,7 +1218,25 @@ void CMobEntity::OnCastFinished(CMagicState& state, action_t& action)
     TracyZoneScoped;
     CBattleEntity::OnCastFinished(state, action);
 
+    CMobController* mobController = dynamic_cast<CMobController*>(PAI->GetController());
+    if (mobController)
+    {
+        mobController->OnCastStopped(state, action);
+    }
+
     TapDeaggroTime();
+}
+
+void CMobEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBASIC_ID msg, bool blockedCast)
+{
+    TracyZoneScoped;
+    CBattleEntity::OnCastInterrupted(state, action, msg, blockedCast);
+
+    CMobController* mobController = dynamic_cast<CMobController*>(PAI->GetController());
+    if (mobController)
+    {
+        mobController->OnCastStopped(state, action);
+    }
 }
 
 bool CMobEntity::OnAttack(CAttackState& state, action_t& action)

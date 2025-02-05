@@ -4,8 +4,9 @@
 --  NPC: Iron Door (Spawn Lost Soul) (Enter chest room)
 -- !pos 247.735 18.499 -142.267 198
 -----------------------------------
-local ID = require('scripts/zones/Maze_of_Shakhrami/IDs')
+local ID = zones[xi.zone.MAZE_OF_SHAKHRAMI]
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

@@ -3,11 +3,10 @@
 --   NM: Altedour I Tavnazia
 -- Involved in Quest: Pieuje's Decision
 -----------------------------------
-mixins = {require('scripts/mixins/job_special')}
-require('scripts/globals/mobs')
-require('scripts/globals/quests')
-require('scripts/globals/utils')
+local ID = zones[xi.zone.FEIYIN]
+mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
@@ -22,7 +21,7 @@ end
 entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.DMGMAGIC,-70)
     mob:addMod(xi.mod.ACC, 175)
-end 
+end
 
 entity.onMobFight = function(mob, target)
     local TP = (100 - mob:getHPP()) * 0.5
@@ -32,6 +31,7 @@ entity.onMobFight = function(mob, target)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
+    player:showText(mob, ID.text.ITS_FINALLY_OVER)
 end
 
 return entity

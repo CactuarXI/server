@@ -5,6 +5,7 @@
 -- Reports in testimonials state that he is stronger on Firesday and
 -- weaker on Watersday ***This requires verification***
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

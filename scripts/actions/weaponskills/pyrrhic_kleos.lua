@@ -13,19 +13,22 @@
 -- 100%TP    200%TP    300%TP
 -- 1.5        1.5        1.5
 -----------------------------------
+---@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
-    local params = {}
+    local params   = {}
     params.numHits = 4
-    params.ftpMod = { 1.5, 1.5, 1.5 }
-    params.str_wsc = 0.2 params.dex_wsc = 0.3
+    params.ftpMod  = { 1.5, 1.5, 1.5 }
+    params.str_wsc = 0.2
+    params.dex_wsc = 0.3
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.multiHitfTP = true -- http://wiki.ffo.jp/html/15896.html
-        params.ftpMod = { 1.70, 1.70, 1.70 }
+        params.ftpMod  = { 1.70, 1.70, 1.70 }
         -- params.ftpMod = { 1.75, 1.75, 1.75 }
-        params.str_wsc = 0.4 params.dex_wsc = 0.4
+        params.str_wsc = 0.4
+        params.dex_wsc = 0.4
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
@@ -33,13 +36,12 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     -- Apply Aftermath
     xi.aftermath.addStatusEffect(player, tp, xi.slot.MAIN, xi.aftermath.type.MYTHIC)
 
-    if damage > 0 then
-        if not target:hasStatusEffect(xi.effect.EVASION_DOWN) then
-            local duration = tp / 1000 * 60 * applyResistanceAddEffect(player, target, xi.element.ICE, 0)
-            target:addStatusEffect(xi.effect.EVASION_DOWN, 10, 0, duration)
-            player:messagePublic(xi.msg.basic.SKILL_ENFEEB, target, wsID, xi.effect.EVASION_DOWN)
-        end
-    end
+    -- Handle status effect
+    local effectId      = xi.effect.EVASION_DOWN
+    local actionElement = xi.element.ICE
+    local power         = 10
+    local duration      = math.floor(6 * tp / 100 * applyResistanceAddEffect(player, target, actionElement, 0))
+    xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration, wsID)
 
     return tpHits, extraHits, criticalHit, damage
 end

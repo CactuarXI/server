@@ -7,6 +7,7 @@ local ID = zones[xi.zone.TEMPLE_OF_UGGALEPIH]
 mixins = { require('scripts/mixins/families/tonberry'),
     require('scripts/mixins/prelate_door'), }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local kingqPHTable =

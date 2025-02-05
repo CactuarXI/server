@@ -4,6 +4,7 @@
 local ID = zones[xi.zone.PROMYVION_MEA]
 require('scripts/globals/exp_controller')
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)

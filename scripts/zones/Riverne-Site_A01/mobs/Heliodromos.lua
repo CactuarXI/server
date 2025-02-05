@@ -4,6 +4,7 @@
 -----------------------------------
 local ID = zones[xi.zone.RIVERNE_SITE_A01]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local HELIODROMOS =
@@ -36,8 +37,11 @@ entity.onMobRoam = function(mob)
         -- allow placeholders to respawn
         for i = ID.mob.HELIODROMOS_OFFSET - 3, ID.mob.HELIODROMOS_OFFSET - 1 do
             local ph = GetMobByID(i)
-            DisallowRespawn(i, false)
-            ph:setRespawnTime(GetMobRespawnTime(ph:getID()))
+
+            if ph then
+                DisallowRespawn(i, false)
+                ph:setRespawnTime(GetMobRespawnTime(ph:getID()))
+            end
         end
     end
 end
@@ -70,8 +74,11 @@ entity.onMobDespawn = function(mob)
         -- allow placeholders to respawn
         for i = ID.mob.HELIODROMOS_OFFSET - 3, ID.mob.HELIODROMOS_OFFSET - 1 do
             local ph = GetMobByID(i)
-            DisallowRespawn(i, false)
-            ph:setRespawnTime(GetMobRespawnTime(ph:getID()))
+
+            if ph then
+                DisallowRespawn(i, false)
+                ph:setRespawnTime(GetMobRespawnTime(ph:getID()))
+            end
         end
     end
 end

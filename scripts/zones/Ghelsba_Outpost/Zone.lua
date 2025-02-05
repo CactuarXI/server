@@ -2,6 +2,8 @@
 -- Zone: Ghelsba_Outpost (140)
 -----------------------------------
 local ID = zones[xi.zone.GHELSBA_OUTPOST]
+-----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)

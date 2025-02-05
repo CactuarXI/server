@@ -1,7 +1,8 @@
 -----------------------------------
--- Area: Rolanberry Fields (110)
---   NM: Silk Caterpillar (Spawning handled in Zone.lua)
+-- Area: Rolanberry Fields
+--   NM: Silk Caterpillar
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
@@ -9,6 +10,10 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
+end
+
+entity.onMobDespawn = function(mob)
+    UpdateNMSpawnPoint(mob:getID())
 end
 
 return entity

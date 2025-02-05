@@ -2,6 +2,7 @@
 -- Area: Ve'Lugannon Palace
 --  Mob: Enkidu
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

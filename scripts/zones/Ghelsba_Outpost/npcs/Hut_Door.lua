@@ -3,7 +3,7 @@
 --  NPC: Hut Door
 -- !pos -165.357 -11.672 77.771 140
 -----------------------------------
-local ID = zones[xi.zone.GHELSBA_OUTPOST]
+---@type TNpcEntity
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

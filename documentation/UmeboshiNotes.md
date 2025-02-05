@@ -1,6 +1,17 @@
 https://discord.com/channels/392903136336936960/883227930828886060/988921416978157608  -- animation commands discussion.
 !costume "CostumeID"
 !injectaction 11 "MobskillID"
+player:injectActionPacket(target:getID(), 11, 1500, 0, 0, 0, 10, 1)
+
+Mobskills:
+1556 : Beserker Dance
+1557 : WOTG Quadav Rock thorw?
+1616 : Quadav Siege Turret
+1636 : Rock throw (Gigas?)
+1667 : Ice Smash move
+1696 : Level UP!
+1728 : Explosion, no animation. Following IDs are different elements.
+1800 : Purple Morbol Spear Attack
 
 Custume ID - Mob Family Name
     - Mobskill Animation ID

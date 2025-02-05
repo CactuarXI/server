@@ -3,6 +3,7 @@
 -- Mob: Doll Factory
 -- BCNM: Factory Rejects
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local function immunity(mob, id)

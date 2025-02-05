@@ -4,12 +4,14 @@
 -- Type: Chocobo Renter
 -- !pos 101.591 39.999 360.898 117
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 local eventSucceed = 910
 local eventFail    = 911
 
 entity.onTrade = function(player, npc, trade)
+    xi.chocobo.renterOnTrade(player, npc, trade, eventSucceed, eventFail)
 end
 
 entity.onTrigger = function(player, npc)

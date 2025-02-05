@@ -9,6 +9,7 @@ mixins =
 require('scripts/mixins/families/ameretat'),
 }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local jodyPHTable =

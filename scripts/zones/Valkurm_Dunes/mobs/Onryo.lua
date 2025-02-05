@@ -3,10 +3,7 @@
 --  Mob: Onryo
 -- Involved in Quest: Yomi Okuri
 -----------------------------------
-require('scripts/globals/mobs')
-require('scripts/globals/quests')
-
------------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

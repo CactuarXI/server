@@ -7,6 +7,7 @@
 local ID = zones[xi.zone.CARPENTERS_LANDING]
 require('scripts/globals/barge')
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 local eventId = 31
 

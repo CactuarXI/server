@@ -2,6 +2,7 @@
 -- Area: Aht Urhgan Whitegate
 --  NPC: Dhima Polevhia
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 local craftingItems = {

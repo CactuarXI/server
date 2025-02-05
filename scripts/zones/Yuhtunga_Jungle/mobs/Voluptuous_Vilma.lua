@@ -4,6 +4,7 @@
 -----------------------------------
 local ID = zones[xi.zone.YUHTUNGA_JUNGLE]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local roseGardenPH = ID.mob.ROSE_GARDEN - 1
@@ -26,18 +27,20 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
-    local random = math.random(1,5)
-    if random == 5 then
-        return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.WEIGHT)
-    elseif random == 4 then
-        return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.SILENCE)
-    elseif random == 3 then
-        return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.BLIND)
-    elseif random == 2 then
-        return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.PARALYZE)
-    else
-        return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.POISON)
-    end
+    -- Vilma randomly effects its target with one of the following effects
+    local effects =
+    {
+        [1] = xi.mob.ae.POISON,
+        [2] = xi.mob.ae.PARALYZE,
+        [3] = xi.mob.ae.BLIND,
+        [4] = xi.mob.ae.SILENCE,
+        [5] = xi.mob.ae.WEIGHT,
+        [6] = xi.mob.ae.SLOW,
+        [7] = xi.mob.ae.BIND,
+    }
+    local random = math.random(1, #effects)
+
+    return xi.mob.onAddEffect(mob, target, damage, effects[random])
 end
 
 entity.onMobFight = function(mob, target)
@@ -53,8 +56,8 @@ end
 
 entity.onMobDespawn = function(mob)
     DisallowRespawn(ID.mob.VOLUPTUOUS_VILMA, true)
-    DisallowRespawn(ID.mob.ROSE_GARDEN, false)
-    GetMobByID(roseGardenPH):setRespawnTime(GetMobRespawnTime(roseGardenPH))
+    DisallowRespawn(ID.mob.ROSE_GARDEN_PH, false)
+    GetMobByID(ID.mob.ROSE_GARDEN_PH):setRespawnTime(GetMobRespawnTime(ID.mob.ROSE_GARDEN_PH))
 end
 
 return entity

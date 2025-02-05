@@ -5,6 +5,7 @@ local ID = zones[xi.zone.TAHRONGI_CANYON]
 require('scripts/quests/i_can_hear_a_rainbow')
 require('scripts/missions/amk/helpers')
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
@@ -62,15 +63,16 @@ end
 
 zoneObject.onZoneWeatherChange = function(weather)
     local habrok = GetMobByID(ID.mob.HABROK)
-
-    if habrok:isSpawned() and not isHabrokWeather(weather) then
-        DespawnMob(ID.mob.HABROK)
-    elseif
-        not habrok:isSpawned() and
-        isHabrokWeather(weather) and
-        os.time() > habrok:getLocalVar('pop')
-    then
-        SpawnMob(ID.mob.HABROK)
+    if habrok then
+        if habrok:isSpawned() and not isHabrokWeather(weather) then
+            DespawnMob(ID.mob.HABROK)
+        elseif
+            not habrok:isSpawned() and
+            isHabrokWeather(weather) and
+            os.time() > habrok:getLocalVar('pop')
+        then
+            SpawnMob(ID.mob.HABROK)
+        end
     end
 end
 

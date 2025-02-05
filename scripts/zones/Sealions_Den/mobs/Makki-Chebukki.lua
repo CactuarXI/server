@@ -4,16 +4,17 @@
 -----------------------------------
 mixins = { require('scripts/mixins/warriors_path_taru') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.SPECIAL_COOL, 30) -- Makki Chebukki uses ranged attack every 30 seconds
     mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
     mob:setMobMod(xi.mobMod.NO_LINK, 1)
-    mob:setMod(xi.mod.UDMGPHYS,   -10000)
-    mob:setMod(xi.mod.UDMGMAGIC,  -10000)
-    mob:setMod(xi.mod.UDMGRANGE,  -10000)
-    mob:setMod(xi.mod.UDMGBREATH, -10000)
+    mob:addMod(xi.mod.UDMGPHYS, -10000)
+    mob:addMod(xi.mod.UDMGMAGIC, -10000)
+    mob:addMod(xi.mod.UDMGRANGE, -10000)
+    mob:addMod(xi.mod.UDMGBREATH, -10000)
     mob:setMobMod(xi.mobMod.NO_MOVE, 1)
     mob:setLocalVar('makki', 1)
 end
@@ -27,6 +28,10 @@ end
 
 entity.onMobFight = function(mob, target)
     local battlefield = mob:getBattlefield()
+    if not battlefield then
+        return
+    end
+
     local battletime = mob:getBattleTime()
     local changetime = mob:getLocalVar('changetime')
     if battlefield:getLocalVar('fireworks') == 1 then

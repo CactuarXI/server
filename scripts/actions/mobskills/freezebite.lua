@@ -3,6 +3,7 @@
 -- Great Sword weapon skill
 -- Delivers an ice elemental attack. Damage varies with TP.
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)

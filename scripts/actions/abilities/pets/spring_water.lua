@@ -1,6 +1,7 @@
 -----------------------------------
 -- Spring Water
 -----------------------------------
+---@type TAbilityPet
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
@@ -36,7 +37,7 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
     target:wakeUp()
     target:delStatusEffect(xi.effect.SILENCE)
 
-    if math.random() > 0.5 then
+    if math.random(1, 100) <= 50 then
         target:delStatusEffect(xi.effect.SLOW)
     end
 

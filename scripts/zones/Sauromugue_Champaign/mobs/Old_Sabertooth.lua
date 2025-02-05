@@ -4,6 +4,7 @@
 -- Involved in Quest: The Fanged One
 -- !pos 676 -10 -366 120
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local pathNodes =
@@ -22,11 +23,11 @@ local pathNodes =
 }
 
 entity.onMobSpawn = function(mob)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.STANDBACK))
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.STANDBACK))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
     mob:setMobAbilityEnabled(false)
     mob:setAutoAttackEnabled(false)
-    mob:setRoamFlags(256, 512)
+    mob:setRoamFlags(bit.bor(xi.roamFlag.IGNORE, xi.roamFlag.SCRIPTED))
     mob:pathThrough(pathNodes, xi.path.flag.PATROL)
 
     mob:addListener('TAKE_DAMAGE', 'PRIME_TAKE_DAMAGE', function(tiger, amount, attacker)
@@ -34,7 +35,7 @@ entity.onMobSpawn = function(mob)
             tiger:setLocalVar('tookDamage', 1)
             tiger:setMobAbilityEnabled(true)
             tiger:setAutoAttackEnabled(true)
-            tiger:setBehaviour(0)
+            tiger:setBehavior(0)
         end
     end)
 end

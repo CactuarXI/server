@@ -92,9 +92,10 @@ enum class LATENT : uint16
     VS_FAMILY              = 60, // Vs. Specific Family ID (e.g. Vs. Korrigan: Accuracy+3)
     VS_SUPERFAMILY         = 61, // Vs. Specific SuperFamily ID (e.g. Vs. Mandragora: Accuracy+3)
     MAINJOB                = 62, // mainjob - PARAM: JOBTYPE
+    IN_ADOULIN             = 63, //
 };
 
-#define MAX_LATENTEFFECTID 63
+#define MAX_LATENTEFFECTID 64
 
 /************************************************************************
  *                                                                       *
@@ -134,6 +135,7 @@ public:
     CLatentEffect(CLatentEffect&& o) noexcept
     {
         std::swap(m_POwner, o.m_POwner);
+        std::swap(m_PItem, o.m_PItem);
         std::swap(m_ConditionsID, o.m_ConditionsID);
         std::swap(m_ConditionsValue, o.m_ConditionsValue);
         std::swap(m_SlotID, o.m_SlotID);
@@ -144,6 +146,7 @@ public:
     CLatentEffect& operator=(CLatentEffect&& o) noexcept
     {
         std::swap(m_POwner, o.m_POwner);
+        std::swap(m_PItem, o.m_PItem);
         std::swap(m_ConditionsID, o.m_ConditionsID);
         std::swap(m_ConditionsValue, o.m_ConditionsValue);
         std::swap(m_SlotID, o.m_SlotID);

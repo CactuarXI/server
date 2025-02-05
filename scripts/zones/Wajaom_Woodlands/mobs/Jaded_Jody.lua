@@ -7,6 +7,7 @@ mixins =
 require('scripts/mixins/families/ameretat'),
 }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

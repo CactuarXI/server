@@ -1,12 +1,10 @@
 -----------------------------------
 -- ID: 14957
 -- Item: aiming_gloves
--- Item Effect: Ranged Accuracy +3
--- Duration: 60 seconds (Needs confirmation)
+-- Item Effect: RACC +3
+-- Duration: 60 seconds
 -----------------------------------
-
-
------------------------------------
+---@type TItem
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)
@@ -27,6 +25,7 @@ itemObject.onEffectGain = function(target, effect)
 end
 
 itemObject.onEffectLose = function(target, effect)
+    target:delMod(xi.mod.RACC, 3)
 end
 
 return itemObject

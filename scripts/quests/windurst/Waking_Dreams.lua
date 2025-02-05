@@ -90,7 +90,7 @@ quest.sections =
                         player:messageSpecial(ID.text.DIABOLOS_UNLOCKED)
                     end
 
-                    if quest:complete(player, quest) then
+                    if quest:complete(player) then
                         player:delKeyItem(xi.ki.WHISPER_OF_DREAMS)
                         quest:setVar(player, 'Stage', getMidnight())
                     end

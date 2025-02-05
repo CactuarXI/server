@@ -5,6 +5,7 @@
 -----------------------------------
 mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
@@ -32,7 +33,7 @@ entity.onMobDeath = function(mob, player, optParams)
     player:addTitle(xi.title.BOROKA_BELEAGUERER)
 end
 
-entity.onMobDespawn = function(mob, player, optParams)
+entity.onMobDespawn = function(mob)
     xi.mob.nmTODPersist(mob, math.random(75600, 86400)) -- 21-24 hour respawn
 end
 

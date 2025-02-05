@@ -4,6 +4,7 @@
 -----------------------------------
 mixins = { require('scripts/mixins/rage') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
@@ -45,7 +46,7 @@ entity.onMobWeaponSkill = function(target, mob, skill)
 end
 
 entity.onCriticalHit = function(mob, attacker)
-    if math.random(100) <= mob:getLocalVar('BreakChance') then
+    if math.random(1, 100) <= mob:getLocalVar('BreakChance') then
         local animationSub = mob:getAnimationSub()
         if animationSub == 4 then
             mob:setAnimationSub(1) -- 1 horn broken

@@ -1,9 +1,10 @@
 -----------------------------------
 -- ID: 17828
---  Item: Koen
---  Enchantment: Enfire
---  Duration:
+-- Item: Koen
+-- Enchantment: Enfire
+-- Duration:
 -----------------------------------
+---@type TItem
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)

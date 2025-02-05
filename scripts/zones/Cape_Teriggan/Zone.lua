@@ -5,13 +5,23 @@ local ID = zones[xi.zone.CAPE_TERIGGAN]
 -----------------------------------
 require('scripts/quests/i_can_hear_a_rainbow')
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     local zmeyGorynych = GetMobByID(ID.mob.ZMEY_GORYNYCH)
-    zmeyGorynych:setRespawnTime(3600, 7200) -- 1 to 2 hours
-    -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.KREUTZET)
+    if zmeyGorynych then
+        zmeyGorynych:setRespawnTime(math.random(3600, 7200)) -- 1 to 2 hours
+    end
+
+    local kreutzet = GetMobByID(ID.mob.KREUTZET)
+    if kreutzet then
+        xi.mob.nmTODPersistCache(zone, ID.mob.KREUTZET) -- TODO: Examine this spawn logic to work with TOD persist.
+        UpdateNMSpawnPoint(ID.mob.KREUTZET)
+        kreutzet:setRespawnTime(math.random(32400, 43200)) -- 9 to 12 hours
+        kreutzet:setLocalVar('cooldown', os.time() + kreutzet:getRespawnTime() / 1000)
+        DisallowRespawn(kreutzet:getID(), true) -- prevents accidental 'pop' during no wind weather and immediate despawn
+    end
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.cactuarRegimes.initializeBooks(zone)
@@ -55,6 +65,7 @@ zoneObject.onZoneWeatherChange = function(weather)
     local kreutzet = GetMobByID(ID.mob.KREUTZET)
 
     if
+        kreutzet and
         not kreutzet:isSpawned() and
         os.time() > GetServerVariable('\\[SPAWN\\]'..ID.mob.KREUTZET) and
         (weather == xi.weather.WIND or weather == xi.weather.GALES)

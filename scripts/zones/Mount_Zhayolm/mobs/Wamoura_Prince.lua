@@ -5,6 +5,7 @@
 local ID = zones[xi.zone.MOUNT_ZHAYOLM]
 mixins = { require('scripts/mixins/families/wamouracampa') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 function canEvolve(mob)

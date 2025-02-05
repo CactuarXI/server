@@ -8,6 +8,7 @@ mixins =
     require('scripts/mixins/dynamis_beastmen')
 }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

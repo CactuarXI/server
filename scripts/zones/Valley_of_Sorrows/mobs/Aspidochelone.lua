@@ -5,6 +5,7 @@
 local ID = zones[xi.zone.VALLEY_OF_SORROWS]
 mixins = { require('scripts/mixins/rage') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local intoShell = function(mob)
@@ -17,8 +18,8 @@ local intoShell = function(mob)
     mob:setMod(xi.mod.REGEN, 200)
     mob:setMod(xi.mod.UDMGRANGE, -9500)
     mob:setMod(xi.mod.UDMGPHYS, -9500)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.STANDBACK))
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.STANDBACK))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
 end
 
 local outOfShell = function(mob)
@@ -30,8 +31,8 @@ local outOfShell = function(mob)
     mob:setMod(xi.mod.REGEN, 0)
     mob:setMod(xi.mod.UDMGRANGE, 0)
     mob:setMod(xi.mod.UDMGPHYS, 0)
-    mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(xi.behavior.STANDBACK)))
-    mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(xi.behavior.NO_TURN)))
+    mob:setBehavior(bit.band(mob:getBehavior(), bit.bnot(xi.behavior.STANDBACK)))
+    mob:setBehavior(bit.band(mob:getBehavior(), bit.bnot(xi.behavior.NO_TURN)))
 end
 
 entity.onMobSpawn = function(mob)
@@ -45,9 +46,9 @@ entity.onMobSpawn = function(mob)
     mob:setMobAbilityEnabled(true)
     mob:setAutoAttackEnabled(true)
     mob:setMagicCastingEnabled(false) -- will not cast until it goes into shell
-    mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(xi.behavior.STANDBACK)))
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
-    mob:setMobMod(xi.mobMod.DRAW_IN, 1)
+    mob:setBehavior(bit.band(mob:getBehavior(), bit.bnot(xi.behavior.STANDBACK)))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
+    -- mob:setMobMod(xi.mobMod.DRAW_IN, 1) -- TODO: DRAW_IN Now Handled In Lua
     mob:setMod(xi.mod.REGEN, 0)
     mob:setMod(xi.mod.UDMGMAGIC, -3000)
     mob:setMod(xi.mod.DOUBLE_ATTACK, 20)

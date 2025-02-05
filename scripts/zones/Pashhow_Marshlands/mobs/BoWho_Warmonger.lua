@@ -2,47 +2,19 @@
 -- Area: Pashhow Marshlands
 --   NM: Bo'Who Warmonger
 -----------------------------------
-mixins = {require('scripts/mixins/job_special')}
-local ID = zones[xi.zone.PASHHOW_MARSHLANDS]
+mixins = { require('scripts/mixins/job_special'), require('scripts/mixins/rotz_bodyguarded_nm') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
--- TODO: Implement better pathing systems for guards to follow master
+-- all body guard functionality in the rotz_bodyguarded_nm mixin
 
 entity.onMobSpawn = function(mob)
-    -- Takes half damage from all attacks
-    mob:addMod(xi.mod.UDMGPHYS, -5000)
-    mob:addMod(xi.mod.UDMGRANGE, -5000)
-    mob:addMod(xi.mod.UDMGMAGIC, -5000)
-    mob:addMod(xi.mod.UDMGBREATH, -5000)
-
-    -- May spawn in a party with two other Quadav
-    if math.random(3) == 2 then
-        GetMobByID(ID.mob.BOWHO_GUARD1):setSpawn(mob:getXPos() + 2, mob:getYPos(), mob:getZPos())
-        GetMobByID(ID.mob.BOWHO_GUARD2):setSpawn(mob:getXPos() + 4, mob:getYPos(), mob:getZPos())
-        SpawnMob(ID.mob.BOWHO_GUARD1)
-        SpawnMob(ID.mob.BOWHO_GUARD2)
-    end
-end
-
-entity.onMobEngage = function(mob, target)
-    local mobId = mob:getID()
-    for i = 1, 2 do
-        GetMobByID(mobId + i):updateEnmity(target)
-    end
-end
-
-entity.onMobRoam = function(mob)
-    local mobId = mob:getID()
-
-    for i = 1, 2 do
-        local guard = GetMobByID(mobId + i)
-        if guard:isSpawned() and guard:getID() == mobId + 1 then
-            guard:pathTo(mob:getXPos() + 1, mob:getYPos() + 3, mob:getZPos() + 0.15)
-        elseif guard:isSpawned() and guard:getID() == mobId + 2 then
-            guard:pathTo(mob:getXPos() + 3, mob:getYPos() + 5, mob:getZPos() + 0.15)
-        end
-    end
+    -- retail captures show these mods are not dependent on region control
+    mob:setMod(xi.mod.UDMGPHYS, -5000)
+    mob:setMod(xi.mod.UDMGRANGE, -5000)
+    mob:setMod(xi.mod.UDMGBREATH, -5000)
+    mob:setMod(xi.mod.UDMGMAGIC, -5000)
 end
 
 entity.onMagicCastingCheck = function(mob, target, spell)
@@ -60,9 +32,8 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
-    xi.mob.nmTODPersist(mob, math.random(84, 96) * 900) -- 21 to 24 hours in 15 minute windows
-    DespawnMob(ID.mob.BOWHO_GUARD1)
-    DespawnMob(ID.mob.BOWHO_GUARD2)
+    UpdateNMSpawnPoint(mob:getID())
+    mob:setRespawnTime(75600 + math.random(600, 900)) -- 21 hours, plus 10 to 15 min
 end
 
 return entity

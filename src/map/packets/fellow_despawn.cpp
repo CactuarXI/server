@@ -46,7 +46,7 @@ CFellowDespawnPacket::CFellowDespawnPacket(CBaseEntity* PEntity)
     ref<float>(0x14)       = PEntity->loc.p.z;
     ref<uint16>(0x18)      = PEntity->loc.p.moving;
     ref<uint8>(0x1C)       = PEntity->speed;
-    ref<uint8>(0x1D)       = PEntity->speedsub;
+    ref<uint8>(0x1D)       = PEntity->animationSpeed;
     CFellowEntity* PFellow = (CFellowEntity*)PEntity;
     ref<uint8>(0x1E)       = PFellow->GetHPP();
     ref<uint8>(0x1F)       = 0x02; // despawn animation

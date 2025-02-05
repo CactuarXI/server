@@ -2,6 +2,8 @@
 -- Zone: The_Shrine_of_RuAvitau (178)
 -----------------------------------
 local ID = zones[xi.zone.THE_SHRINE_OF_RUAVITAU]
+-----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)

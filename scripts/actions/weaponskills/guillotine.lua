@@ -7,12 +7,13 @@
 -- 100%TP     200%TP     300%TP
 -- 0.875    0.875    0.875
 -----------------------------------
+---@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
-    local params = {}
+    local params   = {}
     params.numHits = 4
-    params.ftpMod = { 0.875, 0.875, 0.875 }
+    params.ftpMod  = { 0.875, 0.875, 0.875 }
     -- wscs are in % so 0.2=20%
     params.str_wsc = 0.25
     params.mnd_wsc = 0.25
@@ -25,11 +26,12 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
-    if damage > 0 and not target:hasStatusEffect(xi.effect.SILENCE) and not target:hasImmunity(xi.immunity.SILENCE) then
-        local duration = (30 + (tp / 1000 * 30)) * applyResistanceAddEffect(player, target, xi.element.WIND, 0)
-        target:addStatusEffect(xi.effect.SILENCE, 1, 0, duration)
-        player:messagePublic(xi.msg.basic.SKILL_ENFEEB, target, wsID, xi.effect.SILENCE)
-    end
+    -- Handle status effect
+    local effectId      = xi.effect.SILENCE
+    local actionElement = xi.element.WIND
+    local power         = 1
+    local duration      = math.floor((30 + 3 * tp / 100) * applyResistanceAddEffect(player, target, actionElement, 0))
+    xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration, wsID)
 
     return tpHits, extraHits, criticalHit, damage
 end

@@ -8,6 +8,7 @@ local ID = zones[xi.zone.BONEYARD_GULLY]
 mixins = { require('scripts/mixins/job_special') }
 
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local dialogue =

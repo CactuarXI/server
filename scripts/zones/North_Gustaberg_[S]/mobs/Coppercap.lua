@@ -6,6 +6,7 @@
 mixins = {require('scripts/mixins/families/funguar_s')}
 local ID = zones[xi.zone.NORTH_GUSTABERG_S]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local gloomanitaPHTable =

@@ -5,6 +5,7 @@
 -----------------------------------
 local ID = zones[xi.zone.EMPYREAL_PARADOX]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
@@ -17,6 +18,10 @@ end
 
 entity.onMobSpawn = function(mob)
     local battlefield = mob:getBattlefield()
+    if not battlefield then
+        return
+    end
+
     if GetMobByID(ID.mob.PROMATHIA + (battlefield:getArea() - 1) * 2):isDead() then
     -- Need to multiply getArea by 2 due to the two Promathia versions
     -- if GetMobByID(ID.mob.PROMATHIA_OFFSET + (battlefield:getArea() * 2)):isDead() then

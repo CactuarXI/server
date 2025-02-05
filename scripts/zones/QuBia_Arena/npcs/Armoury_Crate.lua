@@ -2,6 +2,7 @@
 -- Area: Qu'Bia Arena
 --  NPC: Armoury Crate
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 --[[local loot =

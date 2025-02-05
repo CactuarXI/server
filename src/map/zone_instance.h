@@ -1,20 +1,20 @@
 ﻿/*
 ===========================================================================
 
-Copyright (c) 2010-2015 Darkstar Dev Teams
+  Copyright (c) 2010-2015 Darkstar Dev Teams
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see http://www.gnu.org/licenses/
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see http://www.gnu.org/licenses/
 
 ===========================================================================
 */
@@ -25,14 +25,12 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "instance.h"
 #include "zone.h"
 
-typedef std::vector<std::unique_ptr<CInstance>> instanceList_t;
-
 class CZoneInstance : public CZone
 {
 public:
     DISALLOW_COPY_AND_MOVE(CZoneInstance);
 
-    virtual CCharEntity* GetCharByName(std::string const& name) override; // finds the player if exists in zone
+    virtual CCharEntity* GetCharByName(const std::string& name) override; // finds the player if exists in zone
     virtual CCharEntity* GetCharByID(uint32 id) override;
     virtual CBaseEntity* GetEntity(uint16 targid, uint8 filter = -1) override; // get a pointer to any entity in the zone
 
@@ -68,9 +66,9 @@ public:
     virtual void ZoneServer(time_point tick) override;
     virtual void CheckTriggerAreas() override;
 
-    virtual void ForEachChar(std::function<void(CCharEntity*)> const& func) override;
-    virtual void ForEachCharInstance(CBaseEntity* PEntity, std::function<void(CCharEntity*)> const& func) override;
-    virtual void ForEachMobInstance(CBaseEntity* PEntity, std::function<void(CMobEntity*)> const& func) override;
+    virtual void ForEachChar(const std::function<void(CCharEntity*)>& func) override;
+    virtual void ForEachCharInstance(CBaseEntity* PEntity, const std::function<void(CCharEntity*)>& func) override;
+    virtual void ForEachMobInstance(CBaseEntity* PEntity, const std::function<void(CMobEntity*)>& func) override;
 
     CInstance* CreateInstance(uint16 instanceid);
 
@@ -78,7 +76,9 @@ public:
     ~CZoneInstance() override;
 
 private:
-    instanceList_t instanceList;
+    typedef std::vector<std::unique_ptr<CInstance>> instanceList_t;
+
+    instanceList_t m_InstanceList;
 };
 
 #endif // _CZONEINSTANCE_H

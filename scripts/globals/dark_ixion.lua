@@ -285,10 +285,10 @@ end
 -- Adjustments made once to Dark Ixion when he begins roaming
 xi.darkixion.roamingMods = function(mob)
     -- don't take damage until the fight officially starts
-    mob:setMod(xi.mod.UDMGPHYS, -100)
-    mob:setMod(xi.mod.UDMGRANGE, -100)
-    mob:setMod(xi.mod.UDMGBREATH, -100)
-    mob:setMod(xi.mod.UDMGMAGIC, -100)
+    mob:setMod(xi.mod.UDMGPHYS, -10000)
+    mob:setMod(xi.mod.UDMGRANGE, -10000)
+    mob:setMod(xi.mod.UDMGBREATH, -10000)
+    mob:setMod(xi.mod.UDMGMAGIC, -10000)
 
     -- restore hp just in case something caused him to regen while roaming
     local diHP = GetServerVariable('DarkIxion_HP')
@@ -312,7 +312,7 @@ xi.darkixion.roamingMods = function(mob)
     mob:setLocalVar('charging', 0)
     mob:setLocalVar('double', 0)
     mob:setLocalVar('lastHit', 0)
-    mob:setBehaviour(0)
+    mob:setBehavior(0)
     mob:setAutoAttackEnabled(true)
     mob:setMobAbilityEnabled(true)
 end

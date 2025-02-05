@@ -2,11 +2,11 @@
 -- Area: West Ronfaure
 --  NPC: Zovriace
 -- Type: Patrol NPC
--- !pos -135.297 -61.920 270.550 100
+-- !pos -436.356 -15.851 -258.168 100
 -----------------------------------
 local ID = zones[xi.zone.WEST_RONFAURE]
 -----------------------------------
-
+---@type TNpcEntity
 local entity = {}
 
 local pathNodes =

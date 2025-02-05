@@ -1,6 +1,7 @@
 -----------------------------------
 -- Astral Flow
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 local avatarOffsets =
@@ -37,8 +38,11 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     end
 
     if not GetMobByID(avatar):isSpawned() then
-        GetMobByID(avatar):setSpawn(pos.x + 1, pos.y, pos.z + 1, pos.rot)
-        SpawnMob(avatar):updateEnmity(mob:getTarget())
+        GetMobByID(avatar):setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1, mob:getRotPos())
+        local mobTarget = mob:getTarget()
+        if mobTarget then
+            SpawnMob(avatar):updateEnmity(mobTarget)
+        end
     end
 
     xi.mobskills.mobBuffMove(mob, xi.effect.ASTRAL_FLOW, 1, 0, 25)

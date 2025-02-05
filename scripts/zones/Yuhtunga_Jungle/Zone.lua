@@ -5,6 +5,7 @@ local ID = zones[xi.zone.YUHTUNGA_JUNGLE]
 require('scripts/quests/i_can_hear_a_rainbow')
 require('scripts/missions/amk/helpers')
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 local function updateRainHarvesting(status)
@@ -15,7 +16,7 @@ end
 
 zoneObject.onInitialize = function(zone)
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.MEWW_THE_TURTLERIDER)
+    xi.mob.nmTODPersistCache(zone, ID.mob.TURTLERIDER)
     xi.mob.nmTODPersistCache(zone, ID.mob.BAYAWAK)
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
@@ -26,6 +27,8 @@ zoneObject.onInitialize = function(zone)
     xi.cactuarRegimes.initializeBooks(zone)
 
     xi.bmt.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
+
+    GetMobByID(ID.mob.TURTLERIDER):setRespawnTime(math.random(900, 10800))
 
     GetMobByID(ID.mob.PYUU_THE_SPATEMAKER):setRespawnTime(math.random(5400, 7200))
 end
@@ -74,19 +77,22 @@ zoneObject.onEventFinish = function(player, csid, option, npc)
 end
 
 zoneObject.onZoneWeatherChange = function(weather)
+    -- Harvesting points only appear during rainy weather
+    xi.helm.weatherChange(weather, { xi.weather.RAIN, xi.weather.SQUALL }, ID.npc.HARVESTING)
+
+    -- NM Bayawak only spawns during fire weather
     local bayawak = GetMobByID(ID.mob.BAYAWAK)
-    if
-        not bayawak:isSpawned() and os.time() > GetServerVariable('BAYAWAK_RESPAWN') and
-        (weather == xi.weather.HOT_SPELL or weather == xi.weather.HEAT_WAVE)
-    then
-        DisallowRespawn(bayawak:getID(), false)
-        bayawak:setRespawnTime(math.random(30, 150)) -- pop 30-150 sec after fire weather starts
-    end
-    
-    if weather == xi.weather.RAIN or weather == xi.weather.SQUALL then
-        updateRainHarvesting(xi.status.NORMAL)
-    else
-        updateRainHarvesting(xi.status.DISAPPEAR)
+    if bayawak then
+        if weather == xi.weather.HOT_SPELL or weather == xi.weather.HEAT_WAVE then
+            DisallowRespawn(bayawak:getID(), false)
+
+            -- Spawn if respawn is up
+            if os.time() > bayawak:getLocalVar('respawn') then
+                SpawnMob(bayawak:getID())
+            end
+        else
+            DisallowRespawn(bayawak:getID(), true)
+        end
     end
 end
 

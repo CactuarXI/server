@@ -29,6 +29,13 @@ zones[xi.zone.KING_RANPERRES_TOMB] =
         NO_COMBINATION                = 8264,  -- You were unable to enter a combination.
         REGIME_REGISTERED             = 10342, -- New training regime registered!
         COMMON_SENSE_SURVIVAL         = 11429, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+
+        HERE_LIES_KING_RANPERRE       = 7257,  -- Here lies King Ranperre. May he rest in peace.
+        NOTHING_HAPPENS               = 7259,  -- Nothing happens.
+        CHANGE_WATER                  = 7260,  -- You change the water.
+        WATER_ALREADY_CHANGED         = 7261,  -- The water has already been changed.
+        ALREADY_WATER_HERE            = 7262,  -- There is already water here.
+        WATERSKIN_LYING_HERE          = 7263,  -- A waterskin is lying here.
     },
     mob =
     {

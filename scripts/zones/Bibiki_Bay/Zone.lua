@@ -5,6 +5,7 @@ local ID = zones[xi.zone.BIBIKI_BAY]
 require('scripts/globals/manaclipper')
 require('scripts/globals/exp_controller')
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)

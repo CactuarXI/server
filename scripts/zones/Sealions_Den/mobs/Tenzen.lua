@@ -5,13 +5,14 @@
 local ID = zones[xi.zone.SEALIONS_DEN]
 local tenzenFunctions = require('scripts/zones/Sealions_Den/helpers/TenzenFunctions')
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
     -- Tenzen in Warriors Path is a completely scripted encounter once you trigger certain states
     -- Leaving mods here as visuals
     mob:setMod(xi.mod.DEF, 350)
-    mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(xi.behavior.STANDBACK)))
+    mob:setBehavior(bit.band(mob:getBehavior(), bit.bnot(xi.behavior.STANDBACK)))
     mob:setMobMod(xi.mobMod.NO_MOVE, 1)
     mob:setMobMod(xi.mobMod.SIGHT_RANGE, 10)
     mob:setAnimationSub(0)
@@ -81,6 +82,7 @@ entity.onMobFight = function(mob, target)
     -- win condition set
     local battlefield = mob:getBattlefield()
     if
+        battlefield and
         battlefield:getID() == 993 and
         mob:getHPP() <= 15
     then -- Tenzen gives up at 15% - win

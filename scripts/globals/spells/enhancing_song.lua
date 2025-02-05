@@ -96,8 +96,8 @@ local pTable =
     -- Misc.
     [xi.magic.spell.GODDESSS_HYMNUS   ] = { 1, xi.effect.HYMNUS,    xi.mod.AUGMENT_SONG_STAT, 0,                      0,                        0,                    1,   0,   1,   0,  0, false },
     [xi.magic.spell.SENTINELS_SCHERZO ] = { 1, xi.effect.SCHERZO,   xi.mod.AUGMENT_SONG_STAT, 0,                      0,                        0,                    1, 350,  45,   1, 10, false },
-    [xi.magic.spell.RAPTOR_MAZURKA    ] = { 1, xi.effect.MAZURKA,   xi.mod.AUGMENT_SONG_STAT, 0,                      0,                        0,                   12,   0,  12,   0,  0, false },
-    [xi.magic.spell.CHOCOBO_MAZURKA   ] = { 1, xi.effect.MAZURKA,   xi.mod.AUGMENT_SONG_STAT, 0,                      0,                        0,                   24,   0,  24,   0,  0, false },
+    [xi.magic.spell.RAPTOR_MAZURKA    ] = { 1, xi.effect.MAZURKA,   xi.mod.AUGMENT_SONG_STAT, 0,                      0,                        0,                    5,   0,  12,   0,  0, false },
+    [xi.magic.spell.CHOCOBO_MAZURKA   ] = { 1, xi.effect.MAZURKA,   xi.mod.AUGMENT_SONG_STAT, 0,                      0,                        0,                   10,   0,  24,   0,  0, false },
 
     -- Emnity Songs
     [xi.magic.spell.FOE_SIRVENTE      ] = { 1, xi.effect.SIRVENTE,  xi.mod.AUGMENT_SONG_STAT, 0,                      0,                        0,                   35,   0,  35,   1,  0, true  },
@@ -114,16 +114,16 @@ xi.spells.enhancing.calculateSongPower = function(caster, target, spell, spellId
     local multiplier  = pTable[spellId][10]
     local divisor     = pTable[spellId][11]
     local singingLvl  = caster:getSkillLevel(xi.skill.SINGING)
-    local rangedLvl   = caster:getWeaponSkillLevel(xi.slot.RANGED)
 
     -- Add ranged skill level ONLY if it's an instrument.
     local rangeType = caster:getWeaponSkillType(xi.slot.RANGED)
+    local rangedLvl = caster:getWeaponSkillLevel(xi.slot.RANGED)
 
-    if
-        rangeType == xi.skill.STRING_INSTRUMENT or
-        rangeType == xi.skill.WIND_INSTRUMENT
-    then
+    -- String instruments have half the skill effectiveness and amplify the AoE in exchange.
+    if rangeType == xi.skill.WIND_INSTRUMENT then
         singingLvl = singingLvl + rangedLvl
+    elseif rangeType == xi.skill.STRING_INSTRUMENT then
+        singingLvl = singingLvl + math.floor(rangedLvl / 2)
     end
 
     -- Get Potency bonuses from Singing Skill and Instrument Skill. TODO: Investigate JP-Wiki. Most of this makes no sense.

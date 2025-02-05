@@ -15,6 +15,7 @@
 -- HP recovered when healing +2
 -- MP recovered when healing +1
 -----------------------------------
+---@type TItemFood
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)
@@ -26,7 +27,7 @@ itemObject.onItemUse = function(target)
 end
 
 itemObject.onEffectGain = function(target, effect)
-    target:addMod(xi.mod.HP, 25)
+    target:addMod(xi.mod.FOOD_HP, 25)
     target:addMod(xi.mod.STR, 7)
     target:addMod(xi.mod.AGI, 1)
     target:addMod(xi.mod.INT, -2)
@@ -41,7 +42,7 @@ itemObject.onEffectGain = function(target, effect)
 end
 
 itemObject.onEffectLose = function(target, effect)
-    target:delMod(xi.mod.HP, 25)
+    target:delMod(xi.mod.FOOD_HP, 25)
     target:delMod(xi.mod.STR, 7)
     target:delMod(xi.mod.AGI, 1)
     target:delMod(xi.mod.INT, -2)

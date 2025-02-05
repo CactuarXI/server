@@ -12,6 +12,7 @@ mixins = {
 -----------------------------------
 mixins = { require('scripts/mixins/families/ruszor') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

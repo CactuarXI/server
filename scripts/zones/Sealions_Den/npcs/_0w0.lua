@@ -4,6 +4,8 @@
 -- !pos 612 132 774 32
 -----------------------------------
 local ID = zones[xi.zone.SEALIONS_DEN]
+-----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

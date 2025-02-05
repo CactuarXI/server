@@ -1,20 +1,20 @@
 ﻿/*
 ===========================================================================
 
-Copyright (c) 2018 Darkstar Dev Teams
+  Copyright (c) 2018 Darkstar Dev Teams
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see http://www.gnu.org/licenses/
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see http://www.gnu.org/licenses/
 
 ===========================================================================
 */
@@ -40,7 +40,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 namespace
 {
-    enum TRUST_MOVEMENT_TYPE
+    enum TRUST_MOVEMENT_TYPE : int8
     {
         // NOTE: If you need to add special movement types, add descending into the minus values.
         //     : All of the positive values are taken for the ranged movement range.
@@ -180,7 +180,7 @@ void CTrustController::DoCombatTick(time_point tick)
                             {
                                 POwner->PAI->PathFind->FollowPath(m_Tick);
                             }
-                            else if (POwner->GetSpeed() > 0)
+                            else if (POwner->speed > 0)
                             {
                                 POwner->PAI->PathFind->StepTo(PTarget->loc.p, true);
                             }
@@ -237,7 +237,7 @@ void CTrustController::DoRoamTick(time_point tick)
             [[fallthrough]];
         default: // Something invalid set
         {
-            // Default retail behaviour: Master engages a monster and executes a melee swing
+            // Default retail behavior: Master engages a monster and executes a melee swing
             trustEngageCondition = PMaster->GetBattleTarget() && masterMeleeSwing;
             break;
         }
@@ -288,7 +288,7 @@ void CTrustController::DoRoamTick(time_point tick)
         {
             POwner->PAI->PathFind->FollowPath(m_Tick);
         }
-        else if (POwner->GetSpeed() > 0)
+        else if (POwner->speed > 0)
         {
             POwner->PAI->PathFind->StepTo(PFollowTarget->loc.p, true);
         }

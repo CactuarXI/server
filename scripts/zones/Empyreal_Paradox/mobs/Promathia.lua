@@ -5,6 +5,7 @@
 -----------------------------------
 local ID = zones[xi.zone.EMPYREAL_PARADOX]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local percents = { 90, 80, 70, 60, 50, 40, 30, 20, 10 }

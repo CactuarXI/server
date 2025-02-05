@@ -2,6 +2,7 @@
 -- Area: Kuftal Tunnel
 --   NM: Sabotender Mariachi
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local updateRegen = function(mob)

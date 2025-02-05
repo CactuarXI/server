@@ -5,6 +5,7 @@
 -----------------------------------
 local ID = zones[xi.zone.KING_RANPERRES_TOMB]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobDespawn = function(mob)

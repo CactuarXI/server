@@ -11,7 +11,7 @@ local function spawnSpider(mob, attacker, uint)
     local spider = mob:getID() + uint
 
     if uint > 9 then
-        mob:setBehaviour(0)
+        mob:setBehavior(0)
         return
     end
 
@@ -25,7 +25,7 @@ end
 
 entity.onMobSpawn = function(mob)
     mob:addMod(xi.mod.SLEEPRES, 100)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_DESPAWN))
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_DESPAWN))
 
     mob:addListener('TAKE_DAMAGE', 'ANANSI_TAKE_DAMAGE', function(mobArg, amount, attacker, attackType, damageType)
         if amount > mobArg:getHP() then

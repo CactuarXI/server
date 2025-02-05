@@ -5,6 +5,8 @@
 mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
 local ID = zones[xi.zone.MAMOOK]
+-----------------------------------
+---@type TMobEntity
 local entity = {}
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)

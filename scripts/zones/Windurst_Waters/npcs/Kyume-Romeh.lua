@@ -6,6 +6,7 @@
 -----------------------------------
 local ID = zones[xi.zone.WINDURST_WATERS]
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
@@ -37,7 +38,7 @@ entity.onTrigger = function(player, npc)
             player:startEvent(669) -- Quest not furthered
         end
     else
-        if math.random(1, 2) == 1 then
+        if math.random(1, 100) <= 50 then
             player:startEvent(604) -- Standard Conversation
         else
             player:startEvent(393) -- Standard Conversation

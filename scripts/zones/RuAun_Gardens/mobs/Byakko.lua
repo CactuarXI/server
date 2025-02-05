@@ -6,13 +6,14 @@
 local ID = zones[xi.zone.RUAUN_GARDENS]
 mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
 end
 
-entity.onMobSpawn = function(mob, target)
+entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.ATT, 391)
     mob:setMod(xi.mod.DEF, 345)
     mob:addMod(xi.mod.VIT, 43)

@@ -59,6 +59,7 @@ zones[xi.zone.THE_ELDIEME_NECROPOLIS] =
         UNCANNY_SENSATION                = 11605, -- You are assaulted by an uncanny sensation.
         COMMON_SENSE_SURVIVAL            = 11639, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
+
     mob =
     {
         CWN_CYRFF           = GetFirstID('Cwn_Cyrff'),
@@ -73,6 +74,7 @@ zones[xi.zone.THE_ELDIEME_NECROPOLIS] =
         SKULL_OFFSET        = 17575937,
         ANEMONE             = GetFirstID('Anemone'),
     },
+
     npc =
     {
         GATE_OFFSET        = GetFirstID('_5f1'),
@@ -81,6 +83,15 @@ zones[xi.zone.THE_ELDIEME_NECROPOLIS] =
         TREASURE_COFFER    = GetFirstID('Treasure_Coffer'),
         SARCOPHAGUS_OFFSET = GetFirstID('Sarcophagus'),
         CANDLE_OFFSET      = GetFirstID('_5fu'),
+        QM1                = GetFirstID('qm1'),
+
+        QM1_POS =
+        {
+            { -460.85, -1.5, 425.14 }, -- D-5.
+            { -24.10, -9.303, 258.993 }, -- I-7.
+            { -19.624, -1.631, 60.368 }, -- I-10.
+            { 256.757, -20.489, 335.920 }, -- M-6.
+        },
     },
 }
 

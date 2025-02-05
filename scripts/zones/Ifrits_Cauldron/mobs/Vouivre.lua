@@ -2,6 +2,7 @@
 -- Area: Ifrits Cauldron
 --   NM: Vouivre
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

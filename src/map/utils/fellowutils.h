@@ -1,7 +1,7 @@
 ﻿/*
 ===========================================================================
 
-  Copyright (c) 2010-2015 Darkstar Dev Teams
+  Copyright (c) 2024 LandSandBoat Dev Teams
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -11,16 +11,14 @@
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-
   GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
+#pragma once
 
 #ifndef _IFELLOWUTILS_H
 #define _IFELLOWUTILS_H
@@ -89,7 +87,10 @@ enum FELLOWMESSAGEOFFSET : uint16
     FELLOWMESSAGEOFFSET_HIGH_KILLS        = 519, // 11+ kills
 };
 
+class CBattleEntity;
+class CCharEntity;
 class CFellowEntity;
+
 namespace fellowutils
 {
     void   LoadFellowMessages();

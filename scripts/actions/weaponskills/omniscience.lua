@@ -12,14 +12,15 @@
 -- 100%TP    200%TP    300%TP
 -- 2.00      2.00      2.00
 -----------------------------------
+---@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
-    local params = {}
-    params.ftpMod = { 2.0, 2.0, 2.0 }
-    params.mnd_wsc = 0.3
-    params.ele = xi.element.DARK
-    params.skill = xi.skill.STAFF
+    local params      = {}
+    params.ftpMod     = { 2, 2, 2 }
+    params.mnd_wsc    = 0.3
+    params.ele        = xi.element.DARK
+    params.skill      = xi.skill.STAFF
     params.includemab = true
     
     params.useStatCoefficient = true
@@ -37,13 +38,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     -- Apply Aftermath
     xi.aftermath.addStatusEffect(player, tp, xi.slot.MAIN, xi.aftermath.type.MYTHIC)
 
-    if damage > 0 then
-        if not target:hasStatusEffect(xi.effect.MAGIC_ATK_DOWN) then
-            local duration = tp / 1000 * 60
-            target:addStatusEffect(xi.effect.MAGIC_ATK_DOWN, 10, 0, duration)
-            player:messagePublic(xi.msg.basic.SKILL_ENFEEB, target, wsID, xi.effect.MAGIC_ATK_DOWN)
-        end
-    end
+    -- Handle status effect
+    local effectId      = xi.effect.MAGIC_ATK_DOWN
+    local power         = 10
+    local duration      = math.floor(6 * tp / 100)
+    xi.weaponskills.handleWeaponskillEffect(player, target, effectId, 0, damage, power, duration)
 
     return tpHits, extraHits, criticalHit, damage
 end

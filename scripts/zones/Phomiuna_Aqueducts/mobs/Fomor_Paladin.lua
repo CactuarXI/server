@@ -5,6 +5,7 @@
 mixins = { require('scripts/mixins/fomor_hate') }
 local ID = zones[xi.zone.PHOMIUNA_AQUEDUCTS]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

@@ -4,6 +4,7 @@
 -----------------------------------
 local ID = zones[xi.zone.ILRUSI_ATOLL]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

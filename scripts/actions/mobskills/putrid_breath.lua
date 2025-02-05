@@ -6,8 +6,7 @@
 -- Range: 15' Conal
 -- Notes: Only used by Cirrate Christelle
 -----------------------------------
-
------------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)

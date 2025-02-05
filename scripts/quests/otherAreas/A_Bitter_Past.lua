@@ -9,8 +9,7 @@
 -----------------------------------
 local lufaiseID = zones[xi.zone.LUFAISE_MEADOWS]
 -----------------------------------
-local ID = zones[xi.zone.LUFAISE_MEADOWS]
------------------------------------
+
 local quest = Quest:new(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.A_BITTER_PAST)
 local orcNM = lufaiseID.mob.BLACKBONE_FRAZDIZ
 
@@ -138,7 +137,7 @@ quest.sections =
 
     {
         check = function(player, status, vars)
-            return status == xi.questStaus.QUEST_COMPLETED
+            return status == xi.questStatus.QUEST_COMPLETED
         end,
 
         [xi.zone.TAVNAZIAN_SAFEHOLD] =

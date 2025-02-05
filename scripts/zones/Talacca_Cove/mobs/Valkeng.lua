@@ -39,8 +39,8 @@ local function changeToValoredge(mob, percent)
     mob:setMod(xi.mod.UDMGRANGE, 0)
     mob:setMod(xi.mod.UDMGMAGIC, 0)
     mob:setMagicCastingEnabled(false)
-    -- mob:setBehaviour(0) -- Standback disabled
-    mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(xi.behavior.STANDBACK)))
+    -- mob:setBehavior(0) -- Standback disabled
+    mob:setBehavior(bit.band(mob:getBehavior(), bit.bnot(xi.behavior.STANDBACK)))
     mob:setMobMod(xi.mobMod.SPECIAL_SKILL, 0) -- ranged attacks disabled
     mob:delMobMod(xi.mobMod.HP_STANDBACK, 50)
     mob:setMod(xi.mod.DELAY, 2400) -- high attack speed
@@ -71,8 +71,8 @@ local function changeToStormwaker(mob, percent)
     mob:setSpellList(2) -- generic blm
     mob:setMobMod(xi.mobMod.MAGIC_COOL, 20)
     mob:setMod(xi.mod.UFASTCAST, 25)
-    -- mob:setBehaviour(0) -- Standback disabled
-    mob:setBehaviour(bit.band(mob:getBehaviour(), bit.bnot(xi.behavior.STANDBACK)))
+    -- mob:setBehavior(0) -- Standback disabled
+    mob:setBehavior(bit.band(mob:getBehavior(), bit.bnot(xi.behavior.STANDBACK)))
     mob:setMobMod(xi.mobMod.HP_STANDBACK, 20)
     mob:setMobMod(xi.mobMod.SPECIAL_SKILL, 0) -- ranged attacks disabled
     mob:setMod(xi.mod.DELAY, 0) -- remove high attack speed
@@ -99,8 +99,8 @@ local function changeToSharpshot(mob, percent)
     mob:setMod(xi.mod.UDMGRANGE, -8500)
     mob:setMod(xi.mod.UDMGMAGIC, 0)
     mob:setMagicCastingEnabled(false)
-    mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.STANDBACK))
-    -- mob:setBehaviour(2) --Standback enabled
+    mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.STANDBACK))
+    -- mob:setBehavior(2) --Standback enabled
     mob:setMobMod(xi.mobMod.SPECIAL_SKILL, 272) -- ranged attacks enabled
     mob:setMobMod(xi.mobMod.SPECIAL_COOL, 14) -- ranged attack speed
     mob:setMod(xi.mod.DELAY, 0) -- remove high attack speed

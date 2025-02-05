@@ -117,6 +117,12 @@ zones[xi.zone.SOUTHERN_SAN_DORIA] =
         YOU_HAVE_JOINED_UNITY          = 15982, -- ou have joined [Pieuje's/Ayame's/Invincible Shield's/Apururu's/Maat's/Aldo's/Jakoh Wahcondalo's/Naja Salaheem's/Flaviria's/Yoran-Oran's/Sylvie's] Unity!
         HAVE_ALREADY_CHANGED_UNITY     = 16058, -- ou have already changed Unities. Please wait until the next tabulation period.
         TEAR_IN_FABRIC_OF_SPACE        = 16519, -- There appears to be a tear in the fabric of space...
+
+        TO_GET_TO_KING_RANPERRES       = 7902,  -- To get to King Ranperre's Tomb, head out the Eastgate into East Ronfaure, then make your way south as far as you can go. You should find it before long.
+        YOU_FIND_A_WELL                = 7910,  -- You find a well.
+        DONT_NEED_MORE_WATER           = 7912,  -- You don't need any more water.
+        I_THANK_YOU_ADVENTURER         = 7914,  -- I thank you, kind adventurer. His Majesty, the late king, thanks you, too.
+
     },
     mob =
     {

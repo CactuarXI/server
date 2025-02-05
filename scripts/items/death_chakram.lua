@@ -1,10 +1,10 @@
 -----------------------------------
+-- ID: 18231
 -- Item: Death Chakram
 -- Item Effect: +5% MP
 -- Duration 3 Minutes
 -----------------------------------
-
------------------------------------
+---@type TItem
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)
@@ -25,6 +25,7 @@ itemObject.onEffectGain = function(target, effect)
 end
 
 itemObject.onEffectLose = function(target, effect)
+    target:delMod(xi.mod.MPP, 5)
 end
 
 return itemObject

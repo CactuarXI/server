@@ -2,8 +2,7 @@
 -- Area: Aydeewa Subterrane
 --   NM: Bluestreak Gyugyuroon
 -----------------------------------
-require('scripts/globals/hunts')
------------------------------------
+---@type TMobEntity
 local entity = {}
 
 local pathNodes =

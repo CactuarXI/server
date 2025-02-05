@@ -2,6 +2,7 @@
 -- Area: Western Altepa Desert
 --   NM: King Vinegarroon
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local updateRegen = function(mob)
@@ -28,7 +29,7 @@ entity.onAdditionalEffect = function(mob, target, damage)
     return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.PETRIFY, { chance = 100 })
 end
 
-entity.onMobDisengage = function(mob, weather)
+entity.onMobDisengage = function(mob)
     if
         not (mob:getWeather() == xi.weather.DUST_STORM or
         mob:getWeather() == xi.weather.SAND_STORM)
@@ -82,7 +83,7 @@ entity.onMobFight = function(mob, target)
             { -265, -1.65, -542, target:getRotPos() },
             { -270, -0.86, -542, target:getRotPos() },
             { -275, -0.86, -542, target:getRotPos() },
-            { -280, -0.86, -542, target:getRotPos() }, --
+            { -280, -0.86, -542, target:getRotPos() },
             { -285, -0.86, -542, target:getRotPos() },
             { -290, -0.39, -542, target:getRotPos() },
             { -295, -2.17, -542, target:getRotPos() },

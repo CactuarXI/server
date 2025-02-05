@@ -2,6 +2,7 @@
 -- Area: The Boyahda Tree
 --   NM: Ellyllon
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

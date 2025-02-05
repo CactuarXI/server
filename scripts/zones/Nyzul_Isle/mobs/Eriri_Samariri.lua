@@ -3,6 +3,7 @@
 -- Area: Nyzul Isle
 -- Info: Enemy Leader, Spams Frog Song
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobWeaponSkillPrepare = function(mob, target)
@@ -14,7 +15,11 @@ entity.onMobDeath = function(mob, player, optParams)
         xi.nyzul.spawnChest(mob, player)
         xi.nyzul.enemyLeaderKill(mob)
         local instance = mob:getInstance()
-        local chars    = instance:getChars()
+        if not instance then
+            return
+        end
+
+        local chars = instance:getChars()
 
         for _, entities in ipairs(chars) do
             if entities:hasStatusEffect(xi.effect.COSTUME) then

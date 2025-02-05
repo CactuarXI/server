@@ -3,9 +3,10 @@
 --  NPC: Riche
 -- !pos 5.945 -3.75 13.612 1
 -----------------------------------
-local ID = require('scripts/zones/Phanauet_Channel/IDs')
+local ID = zones[xi.zone.PHANAUET_CHANNEL]
 require('scripts/globals/barge')
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)

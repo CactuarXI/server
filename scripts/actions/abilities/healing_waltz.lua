@@ -5,22 +5,21 @@
 -- TP Required: 20%
 -- Recast Time: 00:15
 -----------------------------------
+---@type TAbility
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
     local waltzCost = 200 - player:getMod(xi.mod.WALTZ_COST) * 10
-    local returnCode = 0
-    local canUseAbility = false
     if target:getHP() == 0 then
-        returnCode = xi.msg.basic.CANNOT_ON_THAT_TARG
+        return xi.msg.basic.CANNOT_ON_THAT_TARG, 0
     elseif player:hasStatusEffect(xi.effect.SABER_DANCE) then
-        returnCode = xi.msg.basic.UNABLE_TO_USE_JA2
+        return xi.msg.basic.UNABLE_TO_USE_JA2, 0
     elseif player:hasStatusEffect(xi.effect.TRANCE) then
-        canUseAbility = true
+        return 0, 0
     elseif player:getTP() < waltzCost then
-        returnCode = xi.msg.basic.NOT_ENOUGH_TP
+        return xi.msg.basic.NOT_ENOUGH_TP, 0
     else
-        --[[ Apply 'Waltz Ability Delay' reduction
+        --[[ Apply "Waltz Ability Delay" reduction
             1 modifier = 1 second]]
         local recastMod = player:getMod(xi.mod.WALTZ_DELAY)
         if recastMod ~= 0 then
@@ -28,7 +27,7 @@ abilityObject.onAbilityCheck = function(player, target, ability)
             ability:setRecast(utils.clamp(newRecast, 0, newRecast))
         end
 
-        -- Apply 'Fan Dance' Waltz recast reduction
+        -- Apply "Fan Dance" Waltz recast reduction
         if player:hasStatusEffect(xi.effect.FAN_DANCE) then
             local fanDanceMerits = target:getMerit(xi.merit.FAN_DANCE)
             -- Every tier beyond the 1st is -5% recast time
@@ -37,27 +36,17 @@ abilityObject.onAbilityCheck = function(player, target, ability)
             end
         end
 
-        canUseAbility = true
-    end
+        -- Inform core we want to cleanup Contradance if it's active after the ability is done
+        ability:setPostActionCleanupEffect(xi.effect.CONTRADANCE)
 
-    if
-        canUseAbility and
-        player:getStatusEffect(xi.effect.CONTRADANCE)
-    then
-        ability:setAOE(1)
-        ability:setRange(10)
-        player:delStatusEffect(xi.effect.CONTRADANCE)
+        return 0, 0
     end
-    return returnCode, 0
 end
 
-abilityObject.onUseAbility = function(player, target, ability, action)
+abilityObject.onUseAbility = function(player, target, ability)
     local waltzCost = 200 - player:getMod(xi.mod.WALTZ_COST) * 10
     -- Only remove TP if the player doesn't have Trance.
-    if
-        not player:hasStatusEffect(xi.effect.TRANCE) and
-        action:getPrimaryTargetID() == target:getID()
-    then
+    if not player:hasStatusEffect(xi.effect.TRANCE) then
         player:delTP(waltzCost)
     end
 

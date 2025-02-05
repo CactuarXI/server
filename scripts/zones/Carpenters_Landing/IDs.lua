@@ -46,6 +46,7 @@ zones[xi.zone.CARPENTERS_LANDING] =
         MTICKET_ADDED                 = 7451, -- 10 tickets were added to your 'barge multi-ticket'
         DIG_THROW_AWAY                = 7294, -- You dig up <item>, but your inventory is full. You regretfully throw the <item> away.
         FIND_NOTHING                  = 7256, -- You dig and you dig, but find nothing.
+        POLISH_MUSHROOM_SPORE         = 7485, -- You polish the <keyitem> with the glowing mushroom spores!
     },
     mob =
     {
@@ -55,6 +56,7 @@ zones[xi.zone.CARPENTERS_LANDING] =
         CRYPTONBERRY_EXECUTOR = GetFirstID('Cryptonberry_Executor'),
         MYCOPHILE             = GetFirstID('Mycophile'),
         HERCULES_BEETLE       = GetFirstID('Hercules_Beetle'),
+        PARA                  = GetFirstID('Para'),
         BULLHEADED_GROSVEZ    = 16785721,
     },
     npc =

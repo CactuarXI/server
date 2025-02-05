@@ -23,7 +23,7 @@ zones[xi.zone.TALACCA_COVE] =
         VALKENG_RANGED_KEEP_FRAME     = 7870, -- Confirming status...Damage from ranged attacks...≺Numeric Parameter 0≻%.Executing maneuver...
         VALKENG_MAGIC_KEEP_FRAME      = 7871, -- Confirming status...Damage from magic attacks...≺Numeric Parameter 0≻%.Executing maneuver...
 
-        -- TODO: Shift IDs
+
         TIME_IN_THE_BATTLEFIELD_IS_UP = 7324, -- Your time in the battlefield is up! Now exiting...
         PARTY_MEMBERS_ARE_ENGAGED     = 7339, -- The battlefield where your party members are engaged in combat is locked. Access is denied.
         NO_BATTLEFIELD_ENTRY          = 7362, -- It appears as if something had been thrust into the rockface here...
@@ -38,6 +38,9 @@ zones[xi.zone.TALACCA_COVE] =
         THE_PARTY_WILL_BE_REMOVED     = 7676, -- If all party members' HP are still zero after # minute[/s], the party will be removed from the battlefield.
         ENTERING_THE_BATTLEFIELD_FOR  = 7697, -- Entering the battlefield for [Call to Arms/Compliments to the Chef/Puppetmaster Blues/Breaking the Bonds of Fate/Legacy of the Lost/Legacy of the Lost]!
         YOU_CAN_NOW_BECOME_A_CORSAIR  = 7795, -- You can now become a corsair!
+        IMPERIAL_ORDER_BREAKS         = 7684, -- The <item> breaks!
+        NOBODY_COMES_TO_HELP          = 7846, -- Nobody comes to help. The Imp Bandsman looks dejected.
+        HELP_HAS_ARRIVED              = 7847, -- Help has arrived!
     },
     mob =
     {

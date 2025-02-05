@@ -41,13 +41,20 @@ zones[xi.zone.TAVNAZIAN_SAFEHOLD] =
         DYNA_NPC_DEFAULT_MESSAGE       = 11963, -- There is a strange symbol drawn here. A haunting chill sweeps through you as you gaze upon it...
         RETRIEVE_DIALOG_ID             = 12264, -- You retrieve <item> from the porter moogle's care.
         COMMON_SENSE_SURVIVAL          = 13338, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+
+        CRUSE_ON_THE_GROUND            = 11755, -- There is a <keyitem> lying on the ground here! <player> obtains the <keyitem>!
+        TRAIL_OF_WATER                 = 11756, -- There is a trail of water here. It is still fresh.
     },
     mob =
     {
     },
     npc =
     {
-        QM_IN_SEARCH_OF_TRUTH_BASE = GetFirstID('qm_in_search_of_truth'),
+        QM1_IN_SEARCH_OF_TRUTH_BASE = GetFirstID('qm1_in_search_of_truth'),
+        QM2_IN_SEARCH_OF_TRUTH_BASE = GetFirstID('qm2_in_search_of_truth'),
+        QM3_IN_SEARCH_OF_TRUTH_BASE = GetFirstID('qm3_in_search_of_truth'),
+        QM4_IN_SEARCH_OF_TRUTH_BASE = GetFirstID('qm4_in_search_of_truth'),
+        QM5_IN_SEARCH_OF_TRUTH_BASE = GetFirstID('qm5_in_search_of_truth'),
     },
 }
 

@@ -6,6 +6,7 @@
 local ID = zones[xi.zone.BONEYARD_GULLY]
 mixins = {require('scripts/mixins/families/uragnite')}
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
@@ -20,11 +21,15 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onMobFight = function(mob, target)
+    local hpp         = mob:getHPP()
+    local battlefield = mob:getBattlefield()
+    if not battlefield then
+        return
+    end
 
-    local hpp   = mob:getHPP()
-    local bfID  = mob:getBattlefield():getArea()
-    local adds  = mob:getLocalVar('adds')
-    local petID = 0
+    local bfID        = battlefield:getArea()
+    local adds        = mob:getLocalVar('adds')
+    local petID       = 0
 
     -- Pet #1 spawn at 95% hp or less
     if hpp <= 95 and adds == 0 then
@@ -47,10 +52,13 @@ entity.onMobFight = function(mob, target)
     -- If we have spawned a pet
     if petID ~= 0 then
         local pet = SpawnMob(petID)
-        pet:updateEnmity(target)
 
-        local pos = mob:getPos()
-        pet:setPos(pos.x, pos.y, pos.z, pos.rot)
+        if pet then
+            local pos = mob:getPos()
+            battlefield:insertEntity(pet:getTargID(), false, true)
+            pet:updateEnmity(target)
+            pet:setPos(pos.x, pos.y, pos.z, pos.rot)
+        end
     end
 
     if mob:getHPP() < 10 and mob:getLocalVar('lastBreath') == 0 then
@@ -78,7 +86,7 @@ entity.onMobDeath = function(mob, player, optParams)
         local bfID = mob:getBattlefield():getArea()
         for _, petId in ipairs(ID.shellWeDance[bfID].PARATA_PET_IDS) do
             local pet = GetMobByID(petId)
-            if pet:isAlive() then
+            if pet and pet:isAlive() then
                 pet:setHP(0)
             end
         end

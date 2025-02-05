@@ -36,6 +36,8 @@ zones[xi.zone.SELBINA] =
         WENZEL_DELIVERY_DIALOG        = 7596, -- My independent survey confirms the town entrance as the preferred location from which adventurers send parcels.
         BORIS_DELIVERY_DIALOG         = 7597, -- My independent survey confirms the inn as the preferred location from which adventurers send parcels.
         RETRIEVE_DIALOG_ID            = 7757, -- You retrieve <item> from the porter moogle's care.
+
+        INSUFFICIENT_GIL              = 7630, -- You don't seem to have enough gil...
     },
     mob =
     {

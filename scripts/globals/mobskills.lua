@@ -91,7 +91,7 @@ local function MobTakeAoEShadow(mob, target, max)
     if
         (target:getMainJob() == xi.job.NIN or
         target:getSubJob() == xi.job.NIN) and
-        math.random() < 0.6
+        math.random(1, 100) <= 60
     then
         max = max - 1
         if max < 1 then
@@ -112,10 +112,25 @@ local function handleSinglePhysicalHit(mob, target, hitdamage, hitslanded, final
     then
         local pdif = math.random((minRatio * 1000), (maxRatio * 1000)) --generate random PDIF
         pdif = pdif / 1000 --multiplier set.
-        finaldmg = finaldmg + hitdamage * pdif
+        hitdamage = hitdamage * pdif
+
         -- also handle blocking
-        finaldmg = xi.combat.physical.handleBlock(target, mob, finaldmg)
+        local isBlockedWithShieldMastery = false
+        if xi.combat.physical.isBlocked(target, mob) then
+            hitdamage = hitdamage - xi.combat.physical.getDamageReductionForBlock(target, mob, hitdamage)
+
+            if target:hasTrait(xi.trait.SHIELD_MASTERY) then
+                isBlockedWithShieldMastery = true
+            end
+        end
+
+        if hitdamage > 0 and not isBlockedWithShieldMastery then
+            target:tryHitInterrupt(mob)
+        end
+
+        -- update the hitslanded and finaldmg
         hitslanded = hitslanded + 1
+        finaldmg = finaldmg + hitdamage
     end
 
     return hitslanded, finaldmg
@@ -374,7 +389,6 @@ end
 -----------------------------------
 xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmgMod, tpEffect1, tpEffect1_ftp100, tpEffect1_ftp200, tpEffect1_ftp300, tpEffect2, tpEffect2_ftp100, tpEffect2_ftp200, tpEffect2_ftp300, critPerc, attMod)
     local returninfo    = {}
-    local fStr = 0
 
     -- nil checks
 
@@ -426,20 +440,24 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
     end
 
     ----------------------------------
-    -- Get dSTR (bias to monsters, so no fSTR) (ASB)
+    -- Get fSTR
     ----------------------------------
+    local fStr = xi.combat.physical.calculateMeleeStatFactor(mob, target)
+
     if
         tpEffect1 == xi.mobskills.physicalTpBonus.RANGED or
         tpEffect2 == xi.mobskills.physicalTpBonus.RANGED
     then
-        fStr = xi.mobskills.fSTR2(mob:getStat(xi.mod.STR), target:getStat(xi.mod.VIT))
-    else
-        fStr = xi.mobskills.fSTR(mob:getStat(xi.mod.STR), target:getStat(xi.mod.VIT))
+        -- fStr = xi.mobskills.fSTR2(mob:getStat(xi.mod.STR), target:getStat(xi.mod.VIT))
+        fStr = xi.combat.physical.calculateRangedStatFactor(mob, target)
+    -- else
+        -- fStr = xi.mobskills.fSTR(mob:getStat(xi.mod.STR), target:getStat(xi.mod.VIT))
     end
     ----------------------------------
     -- Calculate Base Damage
     ----------------------------------
-    local base = 0 -- (ASB)
+    local base = math.max(1, mob:getWeaponDmg() + fStr)
+
     if
         tpEffect1 == xi.mobskills.physicalTpBonus.RANGED or
         tpEffect2 == xi.mobskills.physicalTpBonus.RANGED
@@ -776,16 +794,7 @@ end
 -- effect = xi.effect.WHATEVER if enfeeble
 -- statmod = the stat to account for resist (INT, MND, etc) e.g. xi.mod.INT
 -- This determines how much the monsters ability resists on the player.
-xi.mobskills.applyPlayerResistance = function(actor, effect, target, diff, bonusMacc, element)
-    local isEnfeeble = false
-
-    if
-        effect and
-        effect > 0
-    then
-        isEnfeeble = true
-    end
-
+xi.mobskills.applyPlayerResistance = function(actor, effectId, target, diff, bonusMacc, element)
     if not bonusMacc then
         bonusMacc = 0
     end
@@ -796,12 +805,7 @@ xi.mobskills.applyPlayerResistance = function(actor, effect, target, diff, bonus
         bonusMacc = bonusMacc + diff
     end
 
-    local magicAcc     = xi.combat.magicHitRate.calculateNonSpellMagicAccuracy(actor, target, 0, xi.skill.NONE, element, bonusMacc)
-    local magicEva     = xi.combat.magicHitRate.calculateTargetMagicEvasion(actor, target, element, isEnfeeble, 0, 0) -- false = not an enfeeble.
-    local magicHitRate = xi.combat.magicHitRate.calculateMagicHitRate(magicAcc, magicEva)
-    local resistRate   = xi.combat.magicHitRate.calculateResistRate(actor, target, xi.skill.NONE, element, magicHitRate, 0)
-
-    return resistRate
+    return xi.combat.magicHitRate.calculateResistRate(actor, target, 0, xi.skill.NONE, element, 0, effectId, bonusMacc)
 end
 
 xi.mobskills.mobAddBonuses = function(actor, target, damage, element, skill) -- used for SMN magical bloodpacts, despite the name.
@@ -843,7 +847,7 @@ xi.mobskills.mobBreathMove = function(mob, target, skill, percent, base, element
     if element and element > 0 then
         -- no skill available, pass nil
         local resist  = xi.mobskills.applyPlayerResistance(mob, nil, target, mob:getStat(xi.mod.INT)-target:getStat(xi.mod.INT), 0, element)
-        local defense = getElementalDamageReduction(target, element)
+        local defense = xi.spells.damage.calculateSDT(target, element)
 
         damage = damage * resist * defense
     end
@@ -924,10 +928,6 @@ xi.mobskills.mobFinalAdjustments = function(dmg, mob, skill, target, attackType,
         return 0
     end
 
-    --if mob:getMod(xi.mod.SAVETP) > 0 then
-    --    mob:addTP(mob:getMod(xi.mod.SAVETP))
-    --end
-
     -- physical attack missed, skip rest
     if skill:hasMissMsg() then
         return 0
@@ -953,7 +953,7 @@ xi.mobskills.mobFinalAdjustments = function(dmg, mob, skill, target, attackType,
         skill:setMsg(xi.msg.basic.DAMAGE)
     end
 
-    --Handle shadows depending on shadow behaviour / attackType
+    --Handle shadows depending on shadow behavior / attackType
     if
         shadowbehav ~= xi.mobskills.shadowBehavior.WIPE_SHADOWS and
         shadowbehav ~= xi.mobskills.shadowBehavior.IGNORE_SHADOWS

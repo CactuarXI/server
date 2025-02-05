@@ -4,6 +4,7 @@
 -----------------------------------
 local ID = zones[xi.zone.MISAREAUX_COAST]
 ------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobRoam = function(mob)
@@ -12,7 +13,7 @@ entity.onMobRoam = function(mob)
     end
 end
 
-entity.onMobDisengage = function(mob, weather)
+entity.onMobDisengage = function(mob)
     if mob:getWeather() ~= xi.weather.FOG then
         DespawnMob(mob:getID())
     end

@@ -14,6 +14,7 @@ mixins =
 local ID = zones[xi.zone.ALZADAAL_UNDERSEA_RUINS]
 
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 local function clearAbsorb(mob) -- we can use this block to 'clean the slate' for absorbs and elemental _SDT
     mob:setMod(xi.mod.FIRE_ABSORB, 0)

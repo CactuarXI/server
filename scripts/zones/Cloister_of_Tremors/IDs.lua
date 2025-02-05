@@ -36,7 +36,7 @@ zones[xi.zone.CLOISTER_OF_TREMORS] =
     mob =
     {
         GALGALIM        = GetFirstID('Galgalim'),
-        TITAN_PRIME     = GetFirstID('Titan_Prime_Trial'),
+        TITAN_PRIME     = GetFirstID('Titan_Prime_TBE'),
         TITAN_PRIME_ASA = GetFirstID('Titan_Prime_ASA'),
         TITAN_PRIME_WTB = GetFirstID('Titan_Prime_WTB'),
     },

@@ -21,8 +21,8 @@ local content = Limbus:new({
     timeExtension   = 5,
 })
 
-function content:onBattlefieldInitialise(battlefield)
-    Limbus.onBattlefieldInitialise(self, battlefield)
+function content:onBattlefieldInitialize(battlefield)
+    Limbus.onBattlefieldInitialize(self, battlefield)
 
     for i, crateID in ipairs(ID.NW_APOLLYON.npc.TIME_CRATES) do
         npcUtil.showCrate(GetNPCByID(crateID))
@@ -41,8 +41,10 @@ end
 
 local depowerBoss = function(bossID)
     local boss = GetMobByID(bossID)
-    boss:delMod(xi.mod.ATTP, 100)
-    boss:delMod(xi.mod.ACC, 50)
+    if boss then
+        boss:delMod(xi.mod.ATTP, 100)
+        boss:delMod(xi.mod.ACC, 50)
+    end
 end
 
 content.paths =

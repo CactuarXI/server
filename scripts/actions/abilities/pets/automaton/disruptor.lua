@@ -1,11 +1,7 @@
 -----------------------------------
 -- Disruptor
 -----------------------------------
-require('scripts/globals/automatonweaponskills')
-
-
-
------------------------------------
+---@type TAbilityAutomaton
 local abilityObject = {}
 
 abilityObject.onAutomatonAbilityCheck = function(target, automaton, skill)
@@ -14,18 +10,14 @@ end
 
 abilityObject.onAutomatonAbility = function(target, automaton, skill, master, action)
     automaton:addRecast(xi.recast.ABILITY, skill:getID(), 60)
-    -- Dispel
-    if spellEffect == xi.effect.NONE then
-        spellEffect = target:dispelStatusEffect()
-
-        if spellEffect == xi.effect.NONE then
-            skill:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
-        else
-            skill:setMsg(xi.msg.basic.MAGIC_ERASE)
-        end
+    local effect = target:dispelStatusEffect()
+    if effect ~= xi.effect.NONE then
+        skill:setMsg(xi.msg.basic.SKILL_ERASE)
+    else
+        skill:setMsg(xi.msg.basic.SKILL_NO_EFFECT)
     end
 
-        return spellEffect
+    return effect
 end
 
 return abilityObject

@@ -1,6 +1,7 @@
 -----------------------------------
 -- Zone: Chocobo_Circuit
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
@@ -28,7 +29,7 @@ zoneObject.onEventUpdate = function(player, csid, option, npc)
 end
 
 zoneObject.onEventFinish = function(player, csid, option, npc)
-    xi.chocoboRacing.onEventFinish(player, csid, option, npc)
+    xi.chocoboRacing.onEventFinish(player, csid, option)
 end
 
 return zoneObject

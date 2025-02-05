@@ -5,6 +5,7 @@ local huxzoiGlobal = require('scripts/zones/Grand_Palace_of_HuXzoi/globals')
 local ID = zones[xi.zone.GRAND_PALACE_OF_HUXZOI]
 require('scripts/globals/exp_controller')
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)

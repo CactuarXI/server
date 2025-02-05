@@ -3,6 +3,7 @@
 -- Description: Activates a shield to absorb all incoming magical damage.
 -- Type: Magical
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 local magicType =

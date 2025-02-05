@@ -6,6 +6,7 @@
 -----------------------------------
 require('scripts/globals/barge')
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 local timekeeperLocation = xi.barge.location.BARGE

@@ -2,6 +2,7 @@
 -- Area: Caedarva Mire
 --   NM: Vidhuwa the Wrathborn
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

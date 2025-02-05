@@ -2,6 +2,7 @@
 -- Area: Aht Urhgan Whitegate
 --  NPC: Shajaf
 -----------------------------------
+---@type TNpcEntity
 local entity = {}
 
 local wildcatBadges = {

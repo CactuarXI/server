@@ -3,10 +3,11 @@
 --   NM: Galarhigg (17125681 or 17125682 or 17125683)
 --     : Fight for WOTG07 - Purple, The New Black
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
-    mob:setMobMod(xi.mobMod.DRAW_IN, 1)
+    -- mob:setMobMod(xi.mobMod.DRAW_IN, 1) -- TODO: DRAW_IN Now Handled In Lua
 end
 
 entity.onMobDeath = function(mob, player, optParams)

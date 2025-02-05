@@ -9,6 +9,7 @@ mixins =
 }
 local ID = zones[xi.zone.DYNAMIS_BEAUCEDINE]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

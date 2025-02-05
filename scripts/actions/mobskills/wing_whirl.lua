@@ -2,13 +2,14 @@
 --  Wing Whirl
 --  Description: Strikes all targets within an area of effect with its wings.
 --  Type: Physical
---  Utsusemi/Blink absorb: 2-3 shadows?
+--  Utsusemi/Blink absorb: 4 shadows
 --  Range: Unknown radial
 -----------------------------------
+---@type TMobSkill
 local mobskillObject = {}
 
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
-    return 0
+    return xi.apkallu.canUseAbility(mob, 40)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)

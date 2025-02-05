@@ -159,6 +159,11 @@ void CLuaStatusEffect::setIcon(uint16 icon)
 
 //======================================================//
 
+void CLuaStatusEffect::setSource(EffectSourceType sourceType, uint16 sourceTypeParam)
+{
+    m_PLuaStatusEffect->SetSource(sourceType, sourceTypeParam);
+}
+
 void CLuaStatusEffect::setPower(uint16 power)
 {
     m_PLuaStatusEffect->SetPower(power);
@@ -281,6 +286,16 @@ uint16 CLuaStatusEffect::getEnchantmentSlotID()
     return m_PLuaStatusEffect->GetEnchantmentSlotID();
 }
 
+EffectSourceType CLuaStatusEffect::getSourceType()
+{
+    return m_PLuaStatusEffect->GetSourceType();
+}
+
+uint16 CLuaStatusEffect::getSourceTypeParam()
+{
+    return m_PLuaStatusEffect->GetSourceTypeParam();
+}
+
 //======================================================//
 
 void CLuaStatusEffect::Register()
@@ -288,6 +303,9 @@ void CLuaStatusEffect::Register()
     SOL_USERTYPE("CStatusEffect", CLuaStatusEffect);
     SOL_REGISTER("getEffectType", CLuaStatusEffect::getEffectType);
     SOL_REGISTER("getSubType", CLuaStatusEffect::getSubType);
+    SOL_REGISTER("getSourceType", CLuaStatusEffect::getSourceType);
+    SOL_REGISTER("getSourceTypeParam", CLuaStatusEffect::getSourceTypeParam);
+    SOL_REGISTER("setSource", CLuaStatusEffect::setSource);
     SOL_REGISTER("setIcon", CLuaStatusEffect::setIcon);
     SOL_REGISTER("getPower", CLuaStatusEffect::getPower);
     SOL_REGISTER("setPower", CLuaStatusEffect::setPower);

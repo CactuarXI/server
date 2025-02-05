@@ -2,6 +2,7 @@
 -- Spell: Carbuncle
 -- Summons Carbuncle to fight by your side
 -----------------------------------
+---@type TSpell
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
@@ -18,8 +19,8 @@ spellObject.onSpellCast = function(caster, target, spell)
     xi.pet.spawnPet(caster, xi.petId.CARBUNCLE)
     caster:delStatusEffectSilent(xi.effect.MANAWELL)
 
-    if caster:hasStatusEffect(xi.effect.AVATARS_FAVOR) then
-        local effect = caster:getStatusEffect(xi.effect.AVATARS_FAVOR)
+    local effect = caster:getStatusEffect(xi.effect.AVATARS_FAVOR)
+    if effect then
         effect:setPower(1) -- resummon resets effect
         xi.avatarsFavor.applyAvatarsFavorAuraToPet(caster, effect)
         xi.avatarsFavor.applyAvatarsFavorDebuffsToPet(caster)

@@ -5,6 +5,7 @@
 -----------------------------------
 local ID = zones[xi.zone.QUBIA_ARENA]
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local checkHounds = function(mob)
@@ -17,7 +18,7 @@ local checkHounds = function(mob)
 end
 
 entity.onMobSpawn = function(houndMob)
-    houndMob:setBehaviour(bit.bor(houndMob:getBehaviour(), xi.behavior.NO_DESPAWN))
+    houndMob:setBehavior(bit.bor(houndMob:getBehavior(), xi.behavior.NO_DESPAWN))
 
     houndMob:addListener('DEATH', 'RFREYBUG_DEATH', function(mob, killer)
         if checkHounds(mob) then
@@ -28,7 +29,7 @@ entity.onMobSpawn = function(houndMob)
             end)
         else
             for i = 0, 3 do
-                GetMobByID(ID.hounds[mob:getBattlefield():getArea()]+i):setBehaviour(0)
+                GetMobByID(ID.hounds[mob:getBattlefield():getArea()]+i):setBehavior(0)
             end
         end
     end)

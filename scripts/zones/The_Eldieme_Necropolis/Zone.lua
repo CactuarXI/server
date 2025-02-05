@@ -3,6 +3,7 @@
 -----------------------------------
 local ID = zones[xi.zone.THE_ELDIEME_NECROPOLIS]
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
@@ -12,6 +13,12 @@ zoneObject.onInitialize = function(zone)
     -- NM Persistance
     xi.mob.nmTODPersistCache(zone, ID.mob.ANEMONE)      -- Anemone #1
     xi.mob.nmTODPersistCache(zone, ID.mob.ANEMONE + 59) -- Anemone #2
+
+    -- Give the Acting in Good Faith ??? a random spawn
+    local qm1 = GetNPCByID(ID.npc.QM1)
+    if qm1 then
+        qm1:setPos(unpack(ID.npc.QM1_POS[math.random(1, 4)]))
+    end
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

@@ -1,20 +1,20 @@
 ﻿/*
 ===========================================================================
 
-Copyright (c) 2023 LandSandBoat Dev Teams
+  Copyright (c) 2023 LandSandBoat Dev Teams
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see http://www.gnu.org/licenses/
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see http://www.gnu.org/licenses/
 
 ===========================================================================
 */
@@ -41,18 +41,18 @@ void ConquestData::load()
     auto rset = db::query(Query);
     while (rset && rset->next())
     {
-        const auto regionId = rset->getInt("region_id");
+        const auto regionId = rset->get<uint32>("region_id");
 
         region_control_t regionControl{};
-        regionControl.current    = rset->getInt("region_control");
-        regionControl.prev       = rset->getInt("region_control_prev");
+        regionControl.current    = rset->get<uint8>("region_control");
+        regionControl.prev       = rset->get<uint8>("region_control_prev");
         regionControls[regionId] = regionControl;
 
         influence_t influence{};
-        influence.sandoria_influence = rset->getInt("sandoria_influence");
-        influence.bastok_influence   = rset->getInt("bastok_influence");
-        influence.windurst_influence = rset->getInt("windurst_influence");
-        influence.beastmen_influence = rset->getInt("beastmen_influence");
+        influence.sandoria_influence = rset->get<uint16>("sandoria_influence");
+        influence.bastok_influence   = rset->get<uint16>("bastok_influence");
+        influence.windurst_influence = rset->get<uint16>("windurst_influence");
+        influence.beastmen_influence = rset->get<uint16>("beastmen_influence");
         influences[regionId]         = influence;
     }
 }
@@ -85,9 +85,25 @@ uint8 ConquestData::getRegionOwner(REGION_TYPE region) const
 {
     uint8 regionNum = static_cast<uint8>(region);
 
-    if (regionNum < regionControls.size())
+    // Handle some conquest regions that don't have conquest info as non-error
+    // TODO: Do Sandoria/Bastok/Windurst count as "owned by" themselves, no one, or some other state where latents don't work?
+    switch (region)
     {
-        return regionControls[regionNum].current;
+        case REGION_TYPE::SANDORIA:
+        case REGION_TYPE::BASTOK:
+        case REGION_TYPE::WINDURST:
+        case REGION_TYPE::JEUNO:
+        case REGION_TYPE::DYNAMIS:
+        case REGION_TYPE::TAVNAZIAN_MARQ:
+        case REGION_TYPE::PROMYVION:
+        case REGION_TYPE::LUMORIA:
+        case REGION_TYPE::LIMBUS:
+            return NATION_TYPE::NATION_BEASTMEN;
+        default:
+            if (regionNum < regionControls.size())
+            {
+                return regionControls[regionNum].current;
+            }
     }
 
     ShowError(fmt::format("Invalid conquest region passed to function ({})", regionNum));

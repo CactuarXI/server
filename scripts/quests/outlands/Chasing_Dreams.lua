@@ -1,17 +1,35 @@
 -----------------------------------
 -- Chasing Dreams
 -----------------------------------
--- Log ID: 5, Quest ID: 195
---  Datta: !pos -6 -25 5
+-- Log ID: 5, Quest ID: 199
+-- Rabao: !zone 247
+-- Rudolfo: !pos 119 8 52
+-- Zoriboh: !pos -43 8 82
+-- Norg: !zone 252
+-- Sohyon: !pos 49 -6 14
+-- Washu: !pos 49 -6 14
+-- WASHUS_FLASK Key Item = 623
+-- Korrokola Tunnel: !zone 173
+-- Clam 1: !pos 104 -5 17
+-- Clam 2: !pos -25 -5 183
+-- Clam 3: !pos -254 -5 -56
+-- Clam 4: !pos -384 -5 53
+-- FLASK_OF_CLAM_WATER Key Item = 624
+-- Norg: !zone 252
+-- Sohyon: !pos 49 -6 14
+-- Storeroom_key Key Item = 633
+-- Gimb: !pos -6 -1 -43
+-- Port Bastok: !zone 236
+-- Kagetora: !pos -95 -2 29
+-- Eastern Gem x5: !giveitem <NAME> 1664
+-- Patient Wheel: !pos -106 5 51
+-- Selbina: !zone 248
+-- Abelard: -52 -11 -12
+-- Lufaise Meadows: !zone 24
+-- Rabao: !zone 247
+-- Zoriboh: !pos -43 8 82
 -----------------------------------
-
-require('scripts/globals/npc_util')
-require('scripts/globals/quests')
-
-
-require('scripts/globals/interaction/quest')
------------------------------------
-local ID = zones[xi.zone.KORROLOKA_TUNNEL]
+local korrolokaID = zones[xi.zone.KORROLOKA_TUNNEL]
 -----------------------------------
 
 local quest = Quest:new(xi.questLog.OUTLANDS, xi.quest.id.outlands.CHASING_DREAMS)
@@ -25,16 +43,16 @@ quest.reward =
 }
 
 local handleFlask = function(player)
-    player:messageSpecial(ID.text.FILL_FLASK, xi.ki.WASHUS_FLASK)
+    player:messageSpecial(korrolokaID.text.FILL_FLASK, xi.ki.WASHUS_FLASK)
 
-    if quest:isVarBitsSet(player, 'Option', 1, 2, 3, 4) then
+    if  quest:getVar(player, 'Option') == 30 then
         player:delKeyItem(xi.ki.WASHUS_FLASK)
-        player:messageSpecial(ID.text.FLASK_FULL, xi.ki.WASHUS_FLASK)
+        player:messageSpecial(korrolokaID.text.FLASK_FULL, xi.ki.WASHUS_FLASK)
         npcUtil.giveKeyItem(player, xi.ki.FLASK_OF_CLAM_WATER)
         quest:setVar(player, 'Prog', 4)
 
     else
-        player:messageSpecial(ID.text.STILL_LIGHT)
+        player:messageSpecial(korrolokaID.text.STILL_LIGHT)
     end
 end
 
@@ -113,8 +131,9 @@ quest.sections =
                 [209] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 2)
                 end,
+
                 [221] = function(player, csid, option, npc)
-                    npcUtil.giveKeyItem(player, xi.ki.WASHUS_FLASK)
+                    npcUtil.giveKeyItem(player, xi.ki.WASHUS_FLASK) -- WASHU'S FLASK Key Item = 623
                     quest:setVar(player, 'Prog', 3)
                 end,
             },
@@ -133,7 +152,7 @@ quest.sections =
                         handleFlask(player)
                         return quest:noAction()
                     else
-                        return quest:messageSpecial(ID.text.CLAM_EMPTY, xi.ki.WASHUS_FLASK)
+                        return quest:messageSpecial(korrolokaID.text.CLAM_EMPTY, xi.ki.WASHUS_FLASK)
                     end
                 end,
             },
@@ -148,7 +167,7 @@ quest.sections =
                         handleFlask(player)
                         return quest:noAction()
                     else
-                        return quest:messageSpecial(ID.text.CLAM_EMPTY, xi.ki.WASHUS_FLASK)
+                        return quest:messageSpecial(korrolokaID.text.CLAM_EMPTY, xi.ki.WASHUS_FLASK)
                     end
                 end,
             },
@@ -163,7 +182,7 @@ quest.sections =
                         handleFlask(player)
                         return quest:noAction()
                     else
-                        return quest:messageSpecial(ID.text.CLAM_EMPTY, xi.ki.WASHUS_FLASK)
+                        return quest:messageSpecial(korrolokaID.text.CLAM_EMPTY, xi.ki.WASHUS_FLASK)
                     end
                 end,
             },
@@ -178,7 +197,7 @@ quest.sections =
                         handleFlask(player)
                         return quest:noAction()
                     else
-                        return quest:messageSpecial(ID.text.CLAM_EMPTY, xi.ki.WASHUS_FLASK)
+                        return quest:messageSpecial(korrolokaID.text.CLAM_EMPTY, xi.ki.WASHUS_FLASK)
                     end
                 end,
             },
@@ -220,6 +239,7 @@ quest.sections =
                     player:delKeyItem(xi.ki.FLASK_OF_CLAM_WATER)
                     npcUtil.giveKeyItem(player, xi.ki.STOREROOM_KEY)
                 end,
+
                 [211] = function(player, csid, option, npc)
                     player:delKeyItem(xi.ki.STOREROOM_KEY)
                     quest:setVar(player, 'Prog', 5)
@@ -245,7 +265,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, { { xi.item.EASTERN_GEM, 5 } }) and
+                        npcUtil.tradeHasExactly(trade, { { 1664, 5 } }) and
                         quest:getVar(player, 'Prog') == 6
                     then
                         return quest:progressEvent(323)
@@ -268,6 +288,7 @@ quest.sections =
                 [322] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 6)
                 end,
+
                 [323] = function(player, csid, option, npc)
                     player:confirmTrade()
                     quest:setVar(player, 'Prog', 7)

@@ -4,6 +4,7 @@
 -- Used in Quests: Painful Memory
 -- !pos -289 -45 212 166
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

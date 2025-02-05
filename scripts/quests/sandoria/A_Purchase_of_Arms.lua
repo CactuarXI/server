@@ -90,7 +90,7 @@ quest.sections =
                 [5] = function(player, csid, option, npc)
                     player:delKeyItem(xi.ki.WEAPONS_ORDER)
                     npcUtil.giveKeyItem(player, xi.ki.WEAPONS_RECEIPT)
-                    return quest:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.WEAPONS_RECEIPT)
+                    quest:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.WEAPONS_RECEIPT)
                 end,
             },
         },

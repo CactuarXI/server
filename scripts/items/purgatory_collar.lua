@@ -4,6 +4,7 @@
 -- Item Effect: Conserve MP
 -- Duration: 45 seconds
 -----------------------------------
+---@type TItem
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)

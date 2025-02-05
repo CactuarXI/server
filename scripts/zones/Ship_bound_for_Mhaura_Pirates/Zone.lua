@@ -5,13 +5,14 @@ local ID = zones[xi.zone.SHIP_BOUND_FOR_MHAURA_PIRATES]
 require('scripts/globals/pirates')
 require('scripts/globals/sea_creatures')
 -----------------------------------
+---@type TZone
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     xi.pirates.init(ID)
 end
 
-zoneObject.onZoneIn = function(player, prevZone, zone)
+zoneObject.onZoneIn = function(player, prevZone)
     local cs = -1
     local zoneID = 228
 

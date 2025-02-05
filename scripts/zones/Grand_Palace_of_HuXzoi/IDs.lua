@@ -18,7 +18,7 @@ zones[xi.zone.GRAND_PALACE_OF_HUXZOI] =
         CONQUEST_BASE                 = 7082, -- Tallying conquest results...
         PORTAL_DOES_NOT_RESPOND       = 7241, -- The portal does not respond...
         GATE_DOES_NOT_RESPOND         = 7246, -- The gate does not respond...
-        -- DOES_NOT_RESPOND              = 7246, -- The gate does not respond...
+        DOES_NOT_RESPOND              = 7246, -- The gate does not respond...
         REQUEST_CONFIRMED             = 7367, -- Security portal access request confirmed. Commencing patrol routine. Stay on alert for intruder interference.
         PATROL_COMPLETED              = 7368, -- Patrol routine completed. Request transfer of final security portal access duty. Awaiting confirmation.
         DUTY_COMPLETE                 = 7369, -- Transfer of final security portal access duty complete.
@@ -40,7 +40,7 @@ zones[xi.zone.GRAND_PALACE_OF_HUXZOI] =
     },
     mob =
     {
-        JAILER_OF_TEMPERANCE_PH = GetTableOfIDs('Eozdei_Still', 5), -- Get the first 5 in the zone
+        JAILER_OF_TEMPERANCE_PH = utils.slice(GetTableOfIDs('Eozdei_Still'), 1, 5), -- Entries 1-5 of the table (1-indexed, inclusive)
         IXGHRAH                 = GetFirstID('Ixghrah'),
         JAILER_OF_TEMPERANCE    = GetFirstID('Jailer_of_Temperance'),
         IXAERN_MNK              = GetFirstID('Ixaern_MNK'),

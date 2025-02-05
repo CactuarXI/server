@@ -2,6 +2,7 @@
 -- Area: Ve'Lugannon Palace
 --   NM: Steam Cleaner
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

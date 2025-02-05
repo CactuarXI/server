@@ -36,10 +36,18 @@ end
 
 instanceObject.afterInstanceRegister = function(player)
     local instance = player:getInstance()
+    local rune     = GetNPCByID(ID.npc.RUNE_OF_RELEASE, instance)
+    local box      = GetNPCByID(ID.npc.ANCIENT_LOCKBOX, instance)
 
     xi.assault.afterInstanceRegister(player, xi.item.CAGE_OF_ZHAYOLM_FIREFLIES)
-    GetNPCByID(ID.npc.RUNE_OF_RELEASE, instance):setPos(-379.000, -10.000, 86.000, 192)
-    GetNPCByID(ID.npc.ANCIENT_LOCKBOX, instance):setPos(-381.000, -10.000, 86.000, 192)
+
+    if rune then
+        rune:setPos(-379.000, -10.000, 86.000, 192)
+    end
+
+    if box then
+        box:setPos(-381.000, -10.000, 86.000, 192)
+    end
 end
 
 instanceObject.onInstanceTimeUpdate = function(instance, elapsed)
