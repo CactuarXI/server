@@ -1,8 +1,6 @@
 -----------------------------------
 -- Zone: Aht_Urhgan_Whitegate (50)
 -----------------------------------
-local ID = zones[xi.zone.AHT_URHGAN_WHITEGATE]
------------------------------------
 ---@type TZone
 local zoneObject = {}
 
@@ -16,7 +14,8 @@ zoneObject.onInitialize = function(zone)
     zone:registerTriggerArea(7,   69,  0.0,    7,   73,  0.0,   11) -- Sets Mark for 'Led Astry' Quest cutscene.
     zone:registerTriggerArea(8,   10,  2.0,  -96,   14,  2.0,  -92) -- Sets Mark for 'Led Astry' Quest cutscene.
     zone:registerTriggerArea(9, -103,  0.0,  -16, -100,  0.0,  -12) -- Sets Mark for 'Striking a Balance' Quest cutscene.
-    zone:registerTriggerArea(12, -77,   10,   0,     0,    0,    0) -- Promotion Sergeant (Balrahn Way).
+    zone:registerTriggerArea(10, -89,  0.0,   -8,  -71,  0.0,    8) -- Balrahn Way
+    zone:registerTriggerArea(12, -77,   10,   0,     0,    0,    0) -- Promotion Sergeant (Balrahn Way). -- TODO: Delete?
 
     -- If server vars are set to the basic install values - trigger a change
     if GetServerVariable('[ZNM]SubjectsOfInterest') == 55 then
@@ -26,8 +25,8 @@ zoneObject.onInitialize = function(zone)
     if GetServerVariable('[ZNM]Fauna') == 62 then
         xi.znm.changeFauna()
     end
-
 end
+
 
 zoneObject.onZoneIn = function(player, prevZone)
     local cs = -1
@@ -122,8 +121,7 @@ zoneObject.onEventFinish = function(player, csid, option, npc)
     elseif csid == 797 then
         player:setCharVar('AgainstAllOdds', 1) -- Set For Corsair BCNM
         player:addQuest(xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.AGAINST_ALL_ODDS) -- Start of af 3 not completed yet
-        player:addKeyItem(xi.ki.LIFE_FLOAT) -- BCNM KEY ITEM TO ENTER BCNM
-        player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.LIFE_FLOAT)
+        npcUtil.giveKeyItem(player, xi.ki.LIFE_FLOAT)
         player:setCharVar('AgainstAllOddsTimer', getMidnight())
     end
 end

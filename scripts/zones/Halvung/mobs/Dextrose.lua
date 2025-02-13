@@ -1,11 +1,11 @@
 -----------------------------------
 -- Area: Halvung
---  ZNM: Dextrose
+--   NM: Dextrose (ZNM T2)
 -----------------------------------
 mixins = {require('scripts/mixins/rage')}
-
 require('scripts/globals/pathfind')
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local EbonyIDs = {
@@ -68,6 +68,7 @@ local function PickupMeal(mob, mealID)
 end
 
 entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 900)
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
     mob:setMobMod(xi.mobMod.GIL_MIN, 4500)
     mob:setMobMod(xi.mobMod.GIL_MAX, 7500)

@@ -114,7 +114,7 @@ namespace petutils
                 Pet->name.insert(0, (const char*)_sql->GetData(1));
 
                 uint16 sqlModelID[10];
-                memcpy(&sqlModelID, _sql->GetData(2), 20);
+                std::memcpy(&sqlModelID, _sql->GetData(2), 20);
                 Pet->look = look_t(sqlModelID);
 
                 Pet->minLevel  = (uint8)_sql->GetIntData(3);
@@ -571,8 +571,8 @@ namespace petutils
         }
 
         PMob->baseSpeed      = petStats->speed;
-        PMob->speed          = petStats->speed;
         PMob->animationSpeed = petStats->speed;
+        PMob->UpdateSpeed();
 
         PMob->UpdateHealth();
         PMob->health.tp = 0;
@@ -1118,7 +1118,9 @@ namespace petutils
         }
         else if (PMaster->GetSJob() == JOB_SMN)
         {
-            PPet->SetMLevel(PMaster->GetSLevel());
+            mLvl = PMaster->GetSLevel();
+
+            PPet->SetMLevel(mLvl);
         }
         else if ((charutils::HasItem(PChar, 14656) == true) && (petID == PETID_WATERSPIRIT)) // Check if Player has Poseidon Ring & PetID == Water Spirit
         {
@@ -1395,7 +1397,8 @@ namespace petutils
         // TODO: make pets use entity flags
         PPet->m_flags = 0x0000008B;
         // Just sit, do nothing
-        PPet->speed = 0;
+        PPet->baseSpeed = 0;
+        PPet->UpdateSpeed();
 
         FinalizePetStatistics(PMaster, PPet);
     }
@@ -1649,6 +1652,7 @@ namespace petutils
                 if ((state && state->GetAbility()->getID() == ABILITY_LEAVE) || PChar->loc.zoning || PChar->isDead())
                 {
                     PMob->PEnmityContainer->Clear();
+                    PMob->SetBattleTargetID(0);
                     PMob->m_OwnerID.clean();
                     PMob->updatemask |= UPDATE_STATUS;
                 }

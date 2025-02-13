@@ -1,8 +1,8 @@
 -----------------------------------
 -- Area: Ceizak Battlegrounds
--- NPC: Root
+-- NPC: Knotted Root
 -----------------------------------
-
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

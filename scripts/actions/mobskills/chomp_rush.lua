@@ -22,7 +22,6 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local crit           = 0.00
     local attmod         = 1
     local info           = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, tpEffect1, 1.5, 2, 2.50, tpEffect2, 1, 2, 3, crit, attmod)
-    local info           = xi.mobskills.mobPhysicalMove(mob, target, skill, numhits, accmod, dmgmod, xi.mobskills.magicalTpBonus.NO_EFFECT)
     local dmg            = xi.mobskills.mobFinalAdjustments(info.dmg, mob, skill, target, xi.attackType.PHYSICAL, xi.damageType.SLASHING, info.hitslanded)
     
     local master = mob:getMaster()

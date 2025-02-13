@@ -46,14 +46,14 @@ entity.onMobFight = function(mob, target)
     elseif os.time() > runAway and moving == 1 and
     (math.floor(mob:getXPos()) > -247 and math.floor(mob:getXPos()) < -244) and
     (math.floor(mob:getZPos()) > 39 and math.floor(mob:getZPos()) < 43) then
-        mob:setSpeed(0)
+        mob:setBaseSpeed(0)
         mob:setLocalVar('twohour_tp', mob:getTP())
         mob:useMobAbility(624) -- 2hr dust cloud
         mob:messageText(target, ID.text.KURREA_SLURPS, false)
         mob:setLocalVar('moving', 2)
         mob:timer(4000, function(mobArg)
             mobArg:setLocalVar('moving', 0)
-            mobArg:setSpeed(40)
+            mobArg:setBaseSpeed(40)
             mobArg:setMagicCastingEnabled(true)
             mobArg:setMobAbilityEnabled(true)
             mobArg:setLocalVar('runAway', os.time() + math.random(20, 30))

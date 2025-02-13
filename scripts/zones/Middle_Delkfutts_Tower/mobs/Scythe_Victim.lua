@@ -7,8 +7,8 @@ mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
 local entity = {}
 
-entity.onMobFight = function(mob)
-    -- mob:setMod(xi.mod.SILENCERESBUILD, 500)
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
 end
 
 entity.onMobDeath = function(mob, player, optParams)

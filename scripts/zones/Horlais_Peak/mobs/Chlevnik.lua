@@ -7,6 +7,7 @@
 local entity = {}
 
 entity.onMobSpawn = function(mob)
+    mob:addImmunity(xi.immunity.SILENCE)
     mob:setAnimationSub(3)
     mob:setUnkillable(true)
     mob:addMod(xi.mod.ATT, 150)

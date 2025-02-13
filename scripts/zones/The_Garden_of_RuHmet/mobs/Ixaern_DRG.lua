@@ -8,6 +8,8 @@ local ID = zones[xi.zone.THE_GARDEN_OF_RUHMET]
 local entity = {}
 
 entity.onMobSpawn = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
+
     local mobId = mob:getID()
     local x = mob:getXPos()
     local y = mob:getYPos()

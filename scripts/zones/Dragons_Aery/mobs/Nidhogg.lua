@@ -10,8 +10,11 @@ local entity = {}
 
 entity.onMobSpawn = function(mob)
     mob:setLocalVar('[rage]timer', 3600) -- 60 minutes
-    mob:setMobMod(xi.mobMod.WEAPON_BONUS, 50) -- Level 90 + 50 = 140 Base Weapon Damage
     mob:setMobMod(xi.mobMod.NO_MOVE, 0)
+    mob:setMobMod(xi.mobMod.WEAPON_BONUS, 48) -- 140 total weapon damage
+    mob:setMod(xi.mod.ATT, 445)
+    mob:setMod(xi.mod.ACC, 444)
+    mob:setMod(xi.mod.EVA, 327)
 
     -- mob:setMobMod(xi.mobMod.DRAW_IN, 1) -- TODO: DRAW_IN Now Handled In Lua
     mob:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 20)

@@ -32,7 +32,7 @@ class SelfEmoteModule : public CPPModule
                 {
                     const auto emoteID   = static_cast<Emote>(emID);
                     const auto emoteMode = static_cast<EmoteMode>(emMode);
-                    PChar->pushPacket(new CCharEmotionPacket(PChar, PTarget->id, PTarget->targid, emoteID, emoteMode, 0));
+                    PChar->pushPacket(std::make_unique<CCharEmotionPacket>(PChar, PTarget->id, PTarget->targid, emoteID, emoteMode, 0));
                 }
             }
         };

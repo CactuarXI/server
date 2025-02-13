@@ -2,7 +2,7 @@
 -- Area: Yorcia Weald
 -- NPC: Gnarled Rampart
 -----------------------------------
-
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

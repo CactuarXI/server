@@ -13,6 +13,9 @@ zoneObject.onInitialize = function(zone)
     
     xi.voidwalker.zoneOnInit(zone)
     xi.cactuarRegimes.initializeBooks(zone)
+
+    -- A Chocobo Riding Game finish line
+    zone:registerTriggerArea(1, 218.533, 20, 484.50, 0, 0, 0)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -33,11 +36,20 @@ zoneObject.onZoneIn = function(player, prevZone)
     return cs
 end
 
+zoneObject.afterZoneIn = function(player)
+    xi.chocoboGame.handleMessage(player)
+end
+
 zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranking, isConquestAlliance)
-    xi.conq.onConquestUpdate(zone, updatetype, influence, owner, ranking, isConquestAlliance)
+    xi.conquest.onConquestUpdate(zone, updatetype, influence, owner, ranking, isConquestAlliance)
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
+    local triggerAreaID = triggerArea:GetTriggerAreaID()
+
+    if triggerAreaID == 1 and player:hasStatusEffect(xi.effect.MOUNTED) then
+        xi.chocoboGame.onTriggerAreaEnter(player)
+    end
 end
 
 zoneObject.onGameHour = function(zone)
@@ -67,6 +79,7 @@ zoneObject.onEventUpdate = function(player, csid, option, npc)
 end
 
 zoneObject.onEventFinish = function(player, csid, option, npc)
+    xi.chocoboGame.onEventFinish(player, csid)
 end
 
 return zoneObject

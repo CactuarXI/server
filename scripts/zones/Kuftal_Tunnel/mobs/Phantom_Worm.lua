@@ -6,14 +6,16 @@ local kuftalGlobal = require('scripts/zones/Kuftal_Tunnel/globals')
 local ID = zones[xi.zone.KUFTAL_TUNNEL]
 
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 1800)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
     mob:addMod(xi.mod.REGEN, 50)
 end
 
 entity.onMobSpawn = function(mob)
+    mob:addImmunity(xi.immunity.SILENCE)
     local npc = GetNPCByID(ID.npc.PHANTOM_WORM_QM)
     npc:clearTimerQueue()
     npc:setStatus(xi.status.DISAPPEAR)

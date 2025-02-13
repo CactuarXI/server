@@ -53,6 +53,10 @@ local changeToRings = function(mob)
             mob:setLocalVar('changeTime', mob:getBattleTime())
 end
 
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
+end
+
 entity.onMobSpawn = function(mob)
     -- Set AnimationSub to 0, put it in pot form
     -- Change it's damage resists. Pot for take
@@ -76,10 +80,13 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.SLASH_SDT, 0)
     mob:setMod(xi.mod.PIERCE_SDT, 0)
     mob:setMod(xi.mod.IMPACT_SDT, 1000)
+
     -- Set the magic resists. It always takes no damage from direct magic
-    mob:setMod(xi.mod.UDMGMAGIC, -10000)
-    -- Confirmed on retail that breath damage does not work
-    mob:setMod(xi.mod.UDMGBREATH, -10000)
+    for element = xi.element.FIRE, xi.element.DARK do
+        mob:setMod(xi.combat.element.getElementalMEVAModifier(element), 0)
+        mob:setMod(xi.combat.element.getElementalSDTModifier(element), 10000)
+    end
+
     mob:setAutoAttackEnabled(true)
     mob:setMobAbilityEnabled(true)
     mob:setMod(xi.mod.ATT, 553)

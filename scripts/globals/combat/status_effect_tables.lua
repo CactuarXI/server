@@ -19,14 +19,14 @@ xi.combat.statusEffect = xi.combat.statusEffect or {}
 -- Table column names.
 local column =
 {
-    nullifiedByEffect  = 1, -- [effect] is nullified by { effect }. In other words, [effect] cant be applied because { effect } is active.
-    nullifiesTheEffect = 2, -- TODO: IMPLEMENT. [effect] nullifies { effect }.
-    associatedElement  = 3, -- Players and most effects dont have "effect resistance ranks", so they always use the effect "associated element" "resistance rank".
-    associatedImmunity = 4, -- Detected by "Completely resists" message. Cant immunobreak/resistance-hack it.
-    resistTraitMod     = 5, -- Detected by "Resist!" message. Cant immunobreak/resistance-hack it if triggered.
-    resistanceRankMod  = 6, -- TODO: IMPLEMENT. For mobs, status effects can either: Use an specific status effect ressistance rank OR use their associated element resistance rank.
-    magicEvasionMod    = 7,
-    immunobreakMod     = 8,
+    EFFECT_NULLIFIED_BY = 1, -- [effect] is nullified by { effect }. In other words, [effect] cant be applied because { effect } is active.
+    EFFECT_NULLIFIES    = 2, -- TODO: IMPLEMENT. [effect] nullifies { effect }.
+    EFFECT_ELEMENT      = 3, -- Players and most effects dont have "effect resistance ranks", so they always use the effect "associated element" "resistance rank".
+    EFFECT_IMMUNITY     = 4, -- Detected by "Completely resists" message. Cant immunobreak/resistance-hack it.
+    MOD_RESIST_TRAIT    = 5, -- Detected by "Resist!" message. Cant immunobreak/resistance-hack it if triggered.
+    MOD_RESIST_RANK     = 6, -- TODO: IMPLEMENT. For mobs, status effects can either: Use an specific status effect ressistance rank OR use their associated element resistance rank.
+    MOD_MAGIC_EVASION   = 7,
+    MOD_IMMUNOBREAK     = 8,
 }
 
 -- Table associating an status effect with their corresponding immunobreak, MEVA and resistance modifiers and immunities.
@@ -65,7 +65,7 @@ xi.combat.statusEffect.getNullificatingEffect = function(effectId)
 
     -- Fetch effect ID from table if entry exists.
     if xi.combat.statusEffect.dataTable[effectToCheck] then
-        return xi.combat.statusEffect.dataTable[effectToCheck][column.nullifiedByEffect]
+        return xi.combat.statusEffect.dataTable[effectToCheck][column.EFFECT_NULLIFIED_BY]
     end
 
     return 0
@@ -77,7 +77,7 @@ xi.combat.statusEffect.getEffectToRemove = function(effectId)
 
     -- Fetch effect ID from table if entry exists.
     if xi.combat.statusEffect.dataTable[effectToCheck] then
-        return xi.combat.statusEffect.dataTable[effectToCheck][column.nullifiesTheEffect]
+        return xi.combat.statusEffect.dataTable[effectToCheck][column.EFFECT_NULLIFIES]
     end
 
     return 0
@@ -95,7 +95,7 @@ xi.combat.statusEffect.getAssociatedElement = function(effectId, actionElement)
 
     -- Fetch element from table if entry exists.
     if xi.combat.statusEffect.dataTable[effectToCheck] then
-        return xi.combat.statusEffect.dataTable[effectToCheck][column.associatedElement]
+        return xi.combat.statusEffect.dataTable[effectToCheck][column.EFFECT_ELEMENT]
     end
 
     -- Assume the effect "element" is the same as the action element.
@@ -117,7 +117,7 @@ xi.combat.statusEffect.getAssociatedImmunity = function(effectId, actionElement)
 
     -- Fetch immunity from table if entry exists.
     if xi.combat.statusEffect.dataTable[effectToCheck] then
-        return xi.combat.statusEffect.dataTable[effectToCheck][column.associatedImmunity]
+        return xi.combat.statusEffect.dataTable[effectToCheck][column.EFFECT_IMMUNITY]
     end
 
     return 0
@@ -129,7 +129,7 @@ xi.combat.statusEffect.getAssociatedResistTraitModifier = function(effectId)
 
     -- Fetch modifier ID from table if entry exists.
     if xi.combat.statusEffect.dataTable[effectToCheck] then
-        return xi.combat.statusEffect.dataTable[effectToCheck][column.resistTraitMod]
+        return xi.combat.statusEffect.dataTable[effectToCheck][column.MOD_RESIST_TRAIT]
     end
 
     return 0
@@ -141,7 +141,7 @@ xi.combat.statusEffect.getAssociatedResistanceRankModifier = function(effectId)
 
     -- Fetch modifier ID from table if entry exists.
     if xi.combat.statusEffect.dataTable[effectToCheck] then
-        return xi.combat.statusEffect.dataTable[effectToCheck][column.resistanceRankMod]
+        return xi.combat.statusEffect.dataTable[effectToCheck][column.MOD_RESIST_RANK]
     end
 
     return 0
@@ -153,7 +153,7 @@ xi.combat.statusEffect.getAssociatedMagicEvasionModifier = function(effectId)
 
     -- Fetch modifier ID from table if entry exists.
     if xi.combat.statusEffect.dataTable[effectToCheck] then
-        return xi.combat.statusEffect.dataTable[effectToCheck][column.magicEvasionMod]
+        return xi.combat.statusEffect.dataTable[effectToCheck][column.MOD_MAGIC_EVASION]
     end
 
     return 0
@@ -165,7 +165,7 @@ xi.combat.statusEffect.getAssociatedImmunobreakModifier = function(effectId)
 
     -- Fetch modifier ID from table if entry exists.
     if xi.combat.statusEffect.dataTable[effectToCheck] then
-        return xi.combat.statusEffect.dataTable[effectToCheck][column.immunobreakMod]
+        return xi.combat.statusEffect.dataTable[effectToCheck][column.MOD_IMMUNOBREAK]
     end
 
     return 0

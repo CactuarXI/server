@@ -45,6 +45,8 @@ zones[xi.zone.PASHHOW_MARSHLANDS] =
         VOIDWALKER_BREAK_KI           = 11842, -- The <keyitem> shatters into tiny fragments.
         VOIDWALKER_OBTAIN_KI          = 11843, -- Obtained key item: <keyitem>!
         COMMON_SENSE_SURVIVAL         = 12827, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+
+        TIME_ELAPSED                  = 8615,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
     },
 
     mob =

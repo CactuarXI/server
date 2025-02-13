@@ -45,7 +45,7 @@ end
 entity.onMobSpawn = function(mob)
     mob:setLocalVar('target', math.random(1,5))
     mob:setMod(xi.mod.REGEN, 50)
-    mob:setSpeed(60)
+    mob:setBaseSpeed(60)
 end
 
 entity.onMobEngage = function(mob)

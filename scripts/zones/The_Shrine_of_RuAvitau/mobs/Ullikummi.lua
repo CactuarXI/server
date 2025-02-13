@@ -3,13 +3,15 @@
 --  Mob: Ullikummi
 -----------------------------------
 local ID = zones[xi.zone.THE_SHRINE_OF_RUAVITAU]
-require('scripts/globals/mobs')
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 -- TODO: Heavy Strike should ALWAYS knockback its target regardless of if it hits or does damage.
 
 entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
+
     mob:addListener('WEAPONSKILL_USE', 'ULLI_WEAPONSKILL_USE', function(mobArg, target, wsid, tp, action)
         if action:getParam(target:getID()) > 1 then
             mobArg:resetEnmity(target)

@@ -2,6 +2,7 @@
 -- Area: Dragons Aery
 --  Mob: Darter
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)

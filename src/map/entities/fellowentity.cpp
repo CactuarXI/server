@@ -71,7 +71,7 @@ void CFellowEntity::PostTick()
             // clang-format off
             PMaster->ForParty([this](auto PMember)
             {
-                static_cast<CCharEntity*>(PMember)->pushPacket(new CCharHealthPacket(this));
+                static_cast<CCharEntity*>(PMember)->pushPacket<CCharHealthPacket>(this);
             });
             // clang-format on
         }
@@ -129,7 +129,7 @@ void CFellowEntity::OnAbility(CAbilityState& state, action_t& action)
         if (battleutils::IsParalyzed(this))
         {
             // display paralyzed
-            loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
+            loc.zone->PushPacket(this, CHAR_INRANGE_SELF, std::make_unique<CMessageBasicPacket>(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
             return;
         }
 

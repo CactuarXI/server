@@ -8,6 +8,10 @@ require('scripts/quests/i_can_hear_a_rainbow')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
+    -- A Chocobo Riding Game finish line
+    zone:registerTriggerArea(1, -119.92, 10, -520.08, 0, 0, 0)
+
+    UpdateNMSpawnPoint(ID.mob.DUKE_DECAPOD)
     xi.cactuarRegimes.initializeBooks(zone)
     xi.mob.nmTODPersistCache(zone, ID.mob.DUKE_DECAPOD)
 end
@@ -36,11 +40,20 @@ zoneObject.onZoneIn = function(player, prevZone)
     return cs
 end
 
+zoneObject.afterZoneIn = function(player)
+    xi.chocoboGame.handleMessage(player)
+end
+
 zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranking, isConquestAlliance)
-    xi.conq.onConquestUpdate(zone, updatetype, influence, owner, ranking, isConquestAlliance)
+    xi.conquest.onConquestUpdate(zone, updatetype, influence, owner, ranking, isConquestAlliance)
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
+    local triggerAreaID = triggerArea:GetTriggerAreaID()
+
+    if triggerAreaID == 1 and player:hasStatusEffect(xi.effect.MOUNTED) then
+        xi.chocoboGame.onTriggerAreaEnter(player)
+    end
 end
 
 zoneObject.onEventUpdate = function(player, csid, option, npc)
@@ -56,6 +69,8 @@ zoneObject.onEventFinish = function(player, csid, option, npc)
         player:completeMission(xi.mission.log_id.ASA, xi.mission.id.asa.BURGEONING_DREAD)
         player:addMission(xi.mission.log_id.ASA, xi.mission.id.asa.THAT_WHICH_CURDLES_BLOOD)
     end
+
+    xi.chocoboGame.onEventFinish(player, csid)
 end
 
 return zoneObject

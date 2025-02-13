@@ -8,6 +8,7 @@ local ID = zones[xi.zone.THE_SHRINE_OF_RUAVITAU]
 local entity = {}
 
 entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
 end
 

@@ -47,6 +47,8 @@ zones[xi.zone.SAUROMUGUE_CHAMPAIGN] =
         LEARNS_SPELL                  = 12497, -- <name> learns <spell>!
         UNCANNY_SENSATION             = 12499, -- You are assaulted by an uncanny sensation.
         COMMON_SENSE_SURVIVAL         = 12506, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+
+        TIME_ELAPSED                  = 7659,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
     },
     mob =
     {

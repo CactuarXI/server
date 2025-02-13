@@ -15,6 +15,7 @@ local entity = {}
 
 entity.onMobSpawn = function(mob)
     -- Set Mods
+    mob:addImmunity(xi.immunity.GRAVITY)
     mob:setMod(xi.mod.GRAVITYRES, 100)
     mob:setMod(xi.mod.BINDRES, 50)
     mob:setMod(xi.mod.STUNRES, 50)

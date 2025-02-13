@@ -7194,15 +7194,15 @@ INSERT INTO `mob_spawn_points` VALUES (16912854,'Ruphuabo','Ru\'phuabo',54,480.1
 INSERT INTO `mob_spawn_points` VALUES (16912855,'Ruphuabo','Ru\'phuabo',54,476.961,-1.279,-560.968,247);
 INSERT INTO `mob_spawn_points` VALUES (16912856,'Ruphuabo','Ru\'phuabo',54,477.169,-1.295,-560.921,247);
 INSERT INTO `mob_spawn_points` VALUES (16912857,'Ruphuabo','Ru\'phuabo',54,477.550,-1.328,-561.215,242);
-INSERT INTO `mob_spawn_points` VALUES (16912858,'Qnxzomit_jol','Qn\'xzomit',61,482.157,-1.504,-561.017,92);
-INSERT INTO `mob_spawn_points` VALUES (16912859,'Qnxzomit_jol','Qn\'xzomit',61,478.351,-1.358,-561.169,31);
-INSERT INTO `mob_spawn_points` VALUES (16912860,'Qnxzomit_jol','Qn\'xzomit',61,479.613,-1.395,-561.400,46);
-INSERT INTO `mob_spawn_points` VALUES (16912861,'Qnxzomit_jol','Qn\'xzomit',61,480.343,-1.461,-562.054,250);
-INSERT INTO `mob_spawn_points` VALUES (16912862,'Qnxzomit_jol','Qn\'xzomit',61,480.538,-1.380,-561.452,4);
-INSERT INTO `mob_spawn_points` VALUES (16912863,'Qnxzomit_jol','Qn\'xzomit',61,480.093,-1.473,-561.951,252);
-INSERT INTO `mob_spawn_points` VALUES (16912864,'Qnxzomit_jol','Qn\'xzomit',61,479.049,-1.470,-560.512,248);
-INSERT INTO `mob_spawn_points` VALUES (16912865,'Qnxzomit_jol','Qn\'xzomit',61,478.548,-1.473,-560.292,40);
-INSERT INTO `mob_spawn_points` VALUES (16912866,'Qnxzomit_jol','Qn\'xzomit',61,477.643,-1.564,-561.005,26);
+INSERT INTO `mob_spawn_points` VALUES (16912858,'Qnxzomit_jol','Qn\'xzomit',62,482.157,-1.504,-561.017,92);
+INSERT INTO `mob_spawn_points` VALUES (16912859,'Qnxzomit_jol','Qn\'xzomit',62,478.351,-1.358,-561.169,31);
+INSERT INTO `mob_spawn_points` VALUES (16912860,'Qnxzomit_jol','Qn\'xzomit',62,479.613,-1.395,-561.400,46);
+INSERT INTO `mob_spawn_points` VALUES (16912861,'Qnxzomit_jol','Qn\'xzomit',62,480.343,-1.461,-562.054,250);
+INSERT INTO `mob_spawn_points` VALUES (16912862,'Qnxzomit_jol','Qn\'xzomit',62,480.538,-1.380,-561.452,4);
+INSERT INTO `mob_spawn_points` VALUES (16912863,'Qnxzomit_jol','Qn\'xzomit',62,480.093,-1.473,-561.951,252);
+INSERT INTO `mob_spawn_points` VALUES (16912864,'Qnxzomit_jol','Qn\'xzomit',62,479.049,-1.470,-560.512,248);
+INSERT INTO `mob_spawn_points` VALUES (16912865,'Qnxzomit_jol','Qn\'xzomit',62,478.548,-1.473,-560.292,40);
+INSERT INTO `mob_spawn_points` VALUES (16912866,'Qnxzomit_jol','Qn\'xzomit',62,477.643,-1.564,-561.005,26);
 INSERT INTO `mob_spawn_points` VALUES (16912867,'Qnhpemde','Qn\'hpemde',55,480.014,-1.804,-560.765,13);
 INSERT INTO `mob_spawn_points` VALUES (16912868,'Qnhpemde','Qn\'hpemde',55,479.857,-1.848,-560.908,10);
 INSERT INTO `mob_spawn_points` VALUES (16912869,'Qnhpemde','Qn\'hpemde',55,479.691,-1.850,-560.698,41);
@@ -8277,7 +8277,7 @@ INSERT INTO `mob_spawn_points` VALUES (16928954,'Enhanced_Pugil','Enhanced Pugil
 INSERT INTO `mob_spawn_points` VALUES (16928955,'Enhanced_Pugil','Enhanced Pugil',50,-420.000,-80.500,-143.500,64);
 INSERT INTO `mob_spawn_points` VALUES (16928956,'Enhanced_Pugil','Enhanced Pugil',50,-423.500,-80.500,-140.000,128);
 INSERT INTO `mob_spawn_points` VALUES (16928957,'Enhanced_Pugil','Enhanced Pugil',50,-410.000,-78.500,-130.000,96);
-INSERT INTO `mob_spawn_points` VALUES (16928958,'Armoury_Crate_Western','Armoury Crate',136,-600.000,85.000,-120.000,64);
+
 INSERT INTO `mob_spawn_points` VALUES (16928959,'Enhanced_Vulture','Enhanced Vulture',51,-600.000,84.500,-124.000,64);
 INSERT INTO `mob_spawn_points` VALUES (16928960,'Enhanced_Vulture','Enhanced Vulture',51,-602.000,84.500,-120.000,64);
 INSERT INTO `mob_spawn_points` VALUES (16928961,'Enhanced_Vulture','Enhanced Vulture',51,-598.000,84.500,-120.000,64);
@@ -39493,7 +39493,7 @@ INSERT INTO `mob_spawn_points` VALUES (17236176,'Evil_Eye','Evil Eye',4,-233.593
 INSERT INTO `mob_spawn_points` VALUES (17236177,'Evil_Eye','Evil Eye',4,-255.674,-14.83,-17.943,184);
 INSERT INTO `mob_spawn_points` VALUES (17236178,'Evil_Eye','Evil Eye',4,-236.923,-12.164,-33.878,93);
 INSERT INTO `mob_spawn_points` VALUES (17236179,'Evil_Eye','Evil Eye',4,-242.547,-11.594,16.76,126);
-INSERT INTO `mob_spawn_points` VALUES (17236180,'Shadow_Eye','Shadow Eye',24,-238.000,-12.000,83.000,127);
+INSERT INTO `mob_spawn_points` VALUES (17236180,'Shadow_Eye','Shadow Eye',24,-236.734,-11.177,-23.543,127);
 INSERT INTO `mob_spawn_points` VALUES (17236181,'Demon_Pawn','Demon Pawn',10,-228.561,-10.890,-127.956,63);
 INSERT INTO `mob_spawn_points` VALUES (17236182,'Demon_Pawn','Demon Pawn',10,-283.275,-20.379,-81.644,108);
 INSERT INTO `mob_spawn_points` VALUES (17236183,'Demon_Wizard','Demon Wizard',19,-277.136,-20.172,-122.657,127);

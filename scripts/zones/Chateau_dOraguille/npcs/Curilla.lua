@@ -41,9 +41,6 @@ local trustMemory = function(player)
     return memories
 end
 
-entity.onTrade = function(player, npc, trade)
-end
-
 entity.onTrigger = function(player, npc)
     local rank3 = player:getRank(player:getNation()) >= 3 and 1 or 0
 

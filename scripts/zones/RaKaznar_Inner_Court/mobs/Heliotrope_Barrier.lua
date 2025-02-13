@@ -2,7 +2,7 @@
 -- Area: RaKaznar Inner Court
 -- NPC: Heliotrope Barrier
 -----------------------------------
-
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

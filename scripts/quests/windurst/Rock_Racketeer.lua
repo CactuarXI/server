@@ -25,7 +25,7 @@ quest.sections =
         check = function(player, status, vars)
             return status == xi.questStatus.QUEST_AVAILABLE and
                 player:getFameLevel(xi.fameArea.WINDURST) >= 3 and
-                player:hasCompletedQuest(xi.questLog.WINDURST, xi.quest.id.windurst.MIHGO_S_AMIGO) and
+                player:hasCompletedQuest(xi.questLog.WINDURST, xi.quest.id.windurst.MIHGOS_AMIGO) and
                 player:getCurrentMission(xi.mission.log_id.WINDURST) ~= xi.mission.id.windurst.LOST_FOR_WORDS and
                 quest:getMustZone(player) == false
         end,

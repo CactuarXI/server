@@ -46,7 +46,7 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.TRIPLE_ATTACK, 20)
     mob:setMod(xi.mod.UDMGMAGIC, -4000)
     mob:setMod(xi.mod.REGAIN, 1000)
-    mob:setSpeed(70)
+    mob:setBaseSpeed(70)
     mob:setMagicCastingEnabled(true)
     mob:setMobAbilityEnabled(true)
 

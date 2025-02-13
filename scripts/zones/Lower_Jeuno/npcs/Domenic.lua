@@ -6,9 +6,6 @@
 ---@type TNpcEntity
 local entity = {}
 
-entity.onTrade = function(player, npc, trade)
-end
-
 entity.onTrigger = function(player, npc)
     -- if player:hasCompletedQuest(xi.questLog.JEUNO, xi.quest.id.jeuno.BEYOND_INFINITY) then
     if player:hasCompletedQuest(xi.questLog.JEUNO, xi.quest.id.jeuno.SHATTERING_STARS) then -- Enables Warps for 75 Cap
@@ -16,9 +13,6 @@ entity.onTrigger = function(player, npc)
     else
         player:startEvent(10116)
     end
-end
-
-entity.onEventUpdate = function(player, csid, option, npc)
 end
 
 entity.onEventFinish = function(player, csid, option, npc)

@@ -10,6 +10,7 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
     mob:setMod(xi.mod.SILENCERES, 95)
     mob:setMod(xi.mod.LULLABYRES, 95)
 end

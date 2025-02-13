@@ -4,13 +4,8 @@
 -- Involved in Quest: Unforgiven
 -- !pos 110.714 -40.856 -53.154 26
 -----------------------------------
-local ID = zones[xi.zone.TAVNAZIAN_SAFEHOLD]
------------------------------------
 ---@type TNpcEntity
 local entity = {}
-
-entity.onTrade = function(player, npc, trade)
-end
 
 entity.onTrigger = function(player, npc)
 end

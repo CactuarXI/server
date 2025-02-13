@@ -1,10 +1,15 @@
 -----------------------------------
 -- Area: Palborough Mines
---   NM: Ni'Ghu Nestfender
+--   NM: Ni'Ghu_Nestfender
 -----------------------------------
 mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
+
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
+end
 
 entity.onMobFight = function(mob, target)
     if mob:getHPP() < 35 then

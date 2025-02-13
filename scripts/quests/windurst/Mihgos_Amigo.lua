@@ -7,7 +7,7 @@
 -- Varun      : !pos 7.8  -3.5 -10.064 241
 -----------------------------------
 
-local quest = Quest:new(xi.questLog.WINDURST, xi.quest.id.windurst.MIHGO_S_AMIGO)
+local quest = Quest:new(xi.questLog.WINDURST, xi.quest.id.windurst.MIHGOS_AMIGO)
 
 local gilPerTrade = 200
 

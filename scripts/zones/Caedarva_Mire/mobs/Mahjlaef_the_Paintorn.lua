@@ -1,16 +1,13 @@
 -----------------------------------
--- Area: Caedarva Mire (79)
---  ZNM: Mahjlaef the Paintorn
--- !pos 698 -7.453 520 79
--- Author: Chiefy
+-- Area: Caedarva Mire
+--  Mob: Mahjlaef the Paintorn (ZNM T3)
 -----------------------------------
 --Spell list 550 base, 551 2shield, 552 1shield
 --TODO: Needs a listener if mind purge is stunned. It will still use it after the stun.
 -----------------------------------
-
-require('scripts/globals/magic')
 mixins = {require('scripts/mixins/rage')}
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
@@ -37,7 +34,7 @@ entity.onMobWeaponSkill = function(mob, target, skill)
 local Shielded = mob:getLocalVar('Shielded')
     if skill:getID() == 1965 then -- Immortal Shield
         mob:setLocalVar('Shielded', 1)
-    end
+end
 end
 
 entity.onMobFight = function(mob, target)

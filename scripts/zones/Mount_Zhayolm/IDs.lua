@@ -41,6 +41,8 @@ zones[xi.zone.MOUNT_ZHAYOLM] =
         DRAWS_NEAR                    = 7583, -- Something draws near!
         HOMEPOINT_SET                 = 8732, -- Home point set!
         UNITY_WANTED_BATTLE_INTERACT  = 8790, -- Those who have accepted % must pay # Unity accolades to participate. The content for this Wanted battle is #. [Ready to begin?/You do not have the appropriate object set, so your rewards will be limited.]
+
+        YOU_HAVE_A_BADGE              = 7350, -- You have a %? Let me have a closer look at that...
     },
     mob =
     {

@@ -9,7 +9,7 @@ local ID = zones[xi.zone.THE_SHRINE_OF_RUAVITAU]
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    if npcUtil.tradeHas(trade, { 1404, 1405, 1406, 1407 }) then
+    if npcUtil.tradeHas(trade, { xi.item.SEAL_OF_GENBU, xi.item.SEAL_OF_BYAKKO, xi.item.SEAL_OF_SEIRYU, xi.item.SEAL_OF_SUZAKU }) then
         player:startEvent(101)
     end
 end
@@ -18,13 +18,12 @@ entity.onTrigger = function(player, npc)
     player:startEvent(100)
 end
 
-entity.onEventUpdate = function(player, csid, option, npc)
-end
-
 entity.onEventFinish = function(player, csid, option)
+    local npc = GetNPCByID(ID.npc.KIRIN_QM)
     if
+        npc and
         csid == 101 and
-        npcUtil.popFromQM(player, GetNPCByID(ID.npc.KIRIN_QM), ID.mob.KIRIN, { claim = true })
+        npcUtil.popFromQM(player, npc, ID.mob.KIRIN, { claim = true })
     then
         player:confirmTrade()
     end

@@ -2,7 +2,7 @@
 -- Area: Moh Gates
 -- NPC: Knotted Root
 -----------------------------------
-
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

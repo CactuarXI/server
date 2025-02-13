@@ -32,7 +32,7 @@ entity.onTrade = function(player, npc, trade)
             npc:setLocalVar('speed', player:getSpeed())
             npc:setLocalVar('playerID', player:getID())
             -- Lock player from moving
-            player:setSpeed(0)
+            player:setBaseSpeed(0)
             --player:startEvent(100)
 
             player:timer(2000, function(playerArg)
@@ -43,7 +43,7 @@ entity.onTrade = function(player, npc, trade)
                     playerArg1:timer(5000, function(playerArg2)
                         playerArg2:messageSpecial(ID.text.CORAL_KEY_BREAKS, 0, xi.item.CORAL_CREST_KEY)
                         npc:setLocalVar('canTradeSecondKey', 0)
-                        player:setSpeed(npc:getLocalVar('speed'))
+                        player:setBaseSpeed(npc:getLocalVar('speed'))
                         playerArg2:confirmTrade()
                     end)
                 end)
@@ -52,9 +52,6 @@ entity.onTrade = function(player, npc, trade)
             player:messageSpecial(ID.text.CANNOT_TRADE_NOW)
         end
     end
-end
-
-entity.onEventUpdate = function(player, csid, option, npc)
 end
 
 entity.onEventFinish = function(player, csid, option, npc)

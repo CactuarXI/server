@@ -198,6 +198,7 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.GIL_MAX, 5000)
     --mob:setMobMod(xi.mobMod.MP_BASE, 5000)
     setupHarlequin(mob)
+    mob:addImmunity(xi.immunity.SILENCE)
 end
 
 entity.onMobSpawn = function(mob)

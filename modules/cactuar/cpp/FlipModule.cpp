@@ -38,25 +38,25 @@ class FlipModule : public CPPModule
                     if (flipstate == 0) // not flipped
                     {
                         flipstate = 1; // let's flip
-                        PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, "Flip enabled. You may now equip items allowed by your sub job.", "Server"));
+                        PChar->pushPacket(std::make_unique<CChatMessagePacket>(PChar, MESSAGE_SYSTEM_3, "Flip enabled. You may now equip items allowed by your sub job.", "Server"));
                     }
 
                     else if (flipstate == 1) // flipped
                     {
                         flipstate = 0; // let's unflip
-                        PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, "Flip disabled. You may now equip items allowed by your main job.", "Server"));
+                        PChar->pushPacket(std::make_unique<CChatMessagePacket>(PChar, MESSAGE_SYSTEM_3, "Flip disabled. You may now equip items allowed by your main job.", "Server"));
                     }
 
                     else if (flipstate == 2) // dw workaround
                     {
                         flipstate = 3; // let's flip with dw workaround still enabled
-                        PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, "Flip enabled. You may now equip items allowed by your sub job.", "Server"));
+                        PChar->pushPacket(std::make_unique<CChatMessagePacket>(PChar, MESSAGE_SYSTEM_3, "Flip enabled. You may now equip items allowed by your sub job.", "Server"));
                     }
 
                     else if (flipstate == 3) // dw workaround while flipped
                     {
                         flipstate = 2; // let's unflip but leave dw up
-                        PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, "Flip disabled. You may now equip items allowed by your main job.", "Server"));
+                        PChar->pushPacket(std::make_unique<CChatMessagePacket>(PChar, MESSAGE_SYSTEM_3, "Flip disabled. You may now equip items allowed by your main job.", "Server"));
                     }
                 }
 
@@ -65,30 +65,30 @@ class FlipModule : public CPPModule
                     if (flipstate == 0) // not flipped
                     {
                         flipstate = 2; // let's set DWWA
-                        PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, "Subjob has been ghosted to be NIN to allow dual wielding.", "Server"));
+                        PChar->pushPacket(std::make_unique<CChatMessagePacket>(PChar, MESSAGE_SYSTEM_3, "Subjob has been ghosted to be NIN to allow dual wielding.", "Server"));
                     }
 
                     else if (flipstate == 1) // flipped
                     {
                         flipstate = 3; // let's set DWWA and keep flip on
-                        PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, "Subjob has been ghosted to be NIN to allow dual wielding.", "Server"));
+                        PChar->pushPacket(std::make_unique<CChatMessagePacket>(PChar, MESSAGE_SYSTEM_3, "Subjob has been ghosted to be NIN to allow dual wielding.", "Server"));
                     }
 
                     else if (flipstate == 2) // dw workaround
                     {
                         flipstate = 0; // let's undo DWWA
-                        PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, "Dual wield disabled. Your jobs have been reset to normal state.", "Server"));
+                        PChar->pushPacket(std::make_unique<CChatMessagePacket>(PChar, MESSAGE_SYSTEM_3, "Dual wield disabled. Your jobs have been reset to normal state.", "Server"));
                     }
 
                     else if (flipstate == 3) // dw workaround with flip enabled
                     {
                         flipstate = 1; // let's undo DWWA but keep flip on
-                        PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_3, "Dual wield disabled. Your jobs have been reset to normal state.", "Server"));
+                        PChar->pushPacket(std::make_unique<CChatMessagePacket>(PChar, MESSAGE_SYSTEM_3, "Dual wield disabled. Your jobs have been reset to normal state.", "Server"));
                     }
                 }
 
                 charutils::SetCharVar(PChar, "JobFlipState", flipstate);
-                PChar->pushPacket(new CCharStatsPacket(PChar, false));
+                PChar->pushPacket(std::make_unique<CCharStatsPacket>(PChar, false));
 
                 return;
             }

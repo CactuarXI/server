@@ -1,10 +1,11 @@
 -----------------------------------
 -- Area: Mount Zhayolm
---  ZNM: Anantaboga
+--  Mob: Anantaboga (ZNM T2)
 -----------------------------------
 mixins = {require('scripts/mixins/rage')}
 
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 entity.onMobInitialize = function(mob)
@@ -25,7 +26,7 @@ entity.onMobSpawn = function(mob)
         if effect:getEffectType() == xi.effect.SILENCE then
             mob:setMobMod(xi.mobMod.SKILL_LIST, 5298)
             mob:setMod(xi.mod.REGAIN, 200)
-        end
+end
     end)
 
     mob:addListener('EFFECT_LOSE', 'SILENCE_WAS_HERE', function(mob, effect)
@@ -44,7 +45,7 @@ entity.onMobRoam = function(mob)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)

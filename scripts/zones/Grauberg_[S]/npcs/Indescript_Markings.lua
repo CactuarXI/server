@@ -8,15 +8,12 @@ local ID = zones[xi.zone.GRAUBERG_S]
 ---@type TNpcEntity
 local entity = {}
 
-entity.onTrade = function(player, npc, trade)
-end
-
 entity.onTrigger = function(player, npc)
     local gownQuestProgress = player:getCharVar('AF_SCH_BODY')
 
     player:delStatusEffect(xi.effect.SNEAK)
 
-    -- SCH AF Quest - Boots
+    -- SCH AF Quest - Body
     if
         npc:getID() == ID.npc.INDESCRIPT_MARKINGS and -- Second markings are bcnm entrance
         gownQuestProgress > 0 and
@@ -32,7 +29,7 @@ entity.onTrigger = function(player, npc)
             [1] = { -517, -167, 209 },
             [2] = { -492, -168, 190 },
             [3] = { -464, -166, 241 },
-            [4] = { -442, -156, 182 },
+            [4] = { -442, -151, 182 },
             [5] = { -433, -151, 162 },
             [6] = { -416, -143, 146 },
             [7] = { -535, -167, 227 },
@@ -45,12 +42,6 @@ entity.onTrigger = function(player, npc)
     else
         player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
     end
-end
-
-entity.onEventUpdate = function(player, csid, option, npc)
-end
-
-entity.onEventFinish = function(player, csid, option, npc)
 end
 
 return entity

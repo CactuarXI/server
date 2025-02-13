@@ -15,6 +15,7 @@ end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.ICE_SPIKES, math.random(15, 30), 0, 60))
+
     local effect1 = mob:getStatusEffect(xi.effect.ICE_SPIKES)
     if effect1 then
         effect1:delEffectFlag(xi.effectFlag.DISPELABLE)

@@ -7,8 +7,10 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMod(xi.mod.REGAIN, 1000)
-    mob:setSpeed(100)
+    mob:setBaseSpeed(100)
     mob:setMobMod(xi.mobMod.SIGHT_RANGE, 30)
+    mob:setMobMod(xi.mobMod.GIL_MIN, 17986)
+    mob:setMobMod(xi.mobMod.GIL_MAX, 27482)
 end
 
 entity.onMobSpawn = function(mob)

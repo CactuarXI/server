@@ -2,7 +2,7 @@
 -- Area: Foret De Hennetiel
 -- NPC: Broadleaf Palm
 -----------------------------------
-
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

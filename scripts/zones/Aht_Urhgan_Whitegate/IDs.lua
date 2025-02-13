@@ -77,17 +77,23 @@ zones[xi.zone.AHT_URHGAN_WHITEGATE] =
         COMMON_SENSE_SURVIVAL         = 14321, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
 
         NYZUL_COMPLETE                = 5186,  -- Congratulations. Please speak to Sorrowful Sage to confirm your current number of Nyzul tokens.
-        NYZUL_FAIL                    = 5187,  -- Your mission was not successful.  I regret to inform you that the Imperial Army does not officially recognize your efforts within this Assault area.
+        NYZUL_FAIL                    = 5187,  -- Your mission was not successful. I regret to inform you that the Imperial Army does not officially recognize your efforts within this Assault area.
         SM_PROMOTION                  = 6170,  -- <Player Name≻ has been promoted to Sergeant Major
+        PROMOTION_SERGEANT_MAJOR      = 6170, -- <name> has been promoted to Sergeant Major!
         PFC_PROMOTION                 = 6259,  -- <Player Name≻ has been promoted to Private First Class
         SP_PROMOTION                  = 6311,  -- <Player Name≻ has been promoted to Superior Private
         LC_PROMOTION                  = 6677,  -- <Player Name> has been promoted to Lance Corporal
         C_PROMOTION                   = 6763,  -- <Player Name> has been promoted to Corporal
         S_PROMOTION                   = 7736,  -- <player> has been promoted to Sergeant!
+        PROMOTION_SERGEANT            = 7736,  -- <player> has been promoted to Sergeant!
         FL_PROMOTION                  = 9558,  -- <Player Name≻ has been promoted to First Lieutenant!
+        FIRST_LIEUTENANT              = 9558, -- <player> has been promoted to First Lieutenant!
         CPT_PROMOTION                 = 9559,  -- <Player Name≻ has been promoted to Captain!
         SL_PROMOTION                  = 12037, -- <Player Name≻ has been promoted to Second Lieutenant!
         CS_PROMOTION                  = 12341, -- <Player Name≻ has been promoted to Chief Sergeant!
+
+        -- TODO: Shift
+        IMPERIAL_AUTHORIZATION        = 4600,  -- Confirming Imperial authorization... You are authorized to use the runic portal.
     },
     mob =
     {

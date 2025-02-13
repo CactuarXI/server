@@ -2,7 +2,7 @@
 -- Area: Outer RaKaznar
 -- NPC: Amaranth Barrier
 -----------------------------------
-
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

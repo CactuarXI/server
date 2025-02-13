@@ -2,7 +2,7 @@
 -- Area: Kamihr Drifts
 -- NPC: Icy Palisade
 -----------------------------------
-
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

@@ -6,9 +6,6 @@
 ---@type TNpcEntity
 local entity = {}
 
-entity.onTrade = function(player, npc, trade)
-end
-
 entity.onTrigger = function(player, npc)
     if player:getCharVar('Quest[0][67]Stage') > os.time() then
         player:startEvent(43)
@@ -22,9 +19,6 @@ entity.onTrigger = function(player, npc)
             player:startEvent(47)
         end
     end
-end
-
-entity.onEventUpdate = function(player, csid, option, npc)
 end
 
 entity.onEventFinish = function(player, csid, option, npc)

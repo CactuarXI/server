@@ -30,6 +30,7 @@ zones[xi.zone.MAMOOK] =
         KEYS_SHATTER                  = 8120, -- The <item> shatters...The <item> shatters...The <item> shatters...
         GULOOL_ENGAGE                 = 8153, -- See it, can we? Yes, see it, we can. Mamool Ja, it is not. No scales, does it have. And so, the Imperial tongue, we speak?
         GULOOL_DEAD                   = 8154, -- Dead, am I? And you? Dead as well, am I. Then finished, we are...
+        PECULIAR_SENSATION            = 8113, -- % is overcome by a peculiar sensation.
     },
     mob =
     {

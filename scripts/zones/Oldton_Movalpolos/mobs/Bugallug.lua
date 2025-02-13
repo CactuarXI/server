@@ -6,6 +6,9 @@
 ---@type TMobEntity
 local entity = {}
 
+entity.onMobSpawn = function(mob)
+    mob:addImmunity(xi.immunity.GRAVITY)
+end
 entity.onMobEngage = function(mob)
     -- Immediately uses Bionic Boost and Heavy Whisk
     mob:useMobAbility(359)

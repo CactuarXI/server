@@ -8,7 +8,7 @@ mixins = { require('scripts/mixins/families/orobon') }
 local entity = {}
 
 entity.onMobSpawn = function(mob)
-    mob:setSpeed(40) -- Reportedly has lower movement speed
+    mob:setBaseSpeed(40) -- Reportedly has lower movement speed
 end
 
 entity.onMobDeath = function(mob, player, optParams)

@@ -24,10 +24,12 @@ zones[xi.zone.LA_VAULE_S] =
         GATHERED_DAWNDROPS_LIGHT      = 8347, -- The gathered dawndrops unleash a brilliant light, melding together to form <keyitem>!
         RETRACED_ALL_JUNCTIONS        = 8348, -- You have retraced all junctions of eventualities. Hasten back to where Cait Sith and Lilisette await.
 
-        -- TODO: Shift IDs
-
         TIME_IN_THE_BATTLEFIELD_IS_UP = 7687, -- Your time in the battlefield is up! Now exiting...
         PARTY_MEMBERS_ARE_ENGAGED     = 7702, -- The battlefield where your party members are engaged in combat is locked. Access is denied.
+        ENTERING_THE_BATTLEFIELD_FOR  = 8061, -- Entering the battlefield for [Splitting Heirs (S)/Purple, The New Black/The Blood-bathed Crown]!
+        MEMBERS_OF_YOUR_PARTY         = 7993, -- Currently, # members of your party (including yourself) have clearance to enter the battlefield.
+        MEMBERS_OF_YOUR_ALLIANCE      = 7994, -- Currently, # members of your alliance (including yourself) have clearance to enter the battlefield.
+        TIME_LIMIT_FOR_THIS_BATTLE_IS = 7996, -- The time limit for this battle is <number> minutes.
     },
     mob =
     {

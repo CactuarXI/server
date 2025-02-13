@@ -9,15 +9,16 @@ require('scripts/missions/amk/helpers')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
+    UpdateNMSpawnPoint(ID.mob.KING_VINEGARROON)
     -- NM Persistence
     xi.mob.nmTODPersistCache(zone, ID.mob.KING_VINEGARROON)
 
-    xi.bmt.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
+    xi.beastmenTreasure.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
     xi.cactuarRegimes.initializeBooks(zone)
 end
 
 zoneObject.onGameDay = function()
-    xi.bmt.updatePeddlestox(xi.zone.WESTERN_ALTEPA_DESERT, ID.npc.PEDDLESTOX)
+    xi.beastmenTreasure.updatePeddlestox(xi.zone.WESTERN_ALTEPA_DESERT, ID.npc.PEDDLESTOX)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -44,7 +45,7 @@ zoneObject.onZoneIn = function(player, prevZone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranking, isConquestAlliance)
-    xi.conq.onConquestUpdate(zone, updatetype, influence, owner, ranking, isConquestAlliance)
+    xi.conquest.onConquestUpdate(zone, updatetype, influence, owner, ranking, isConquestAlliance)
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
@@ -60,30 +61,55 @@ zoneObject.onEventFinish = function(player, csid, option, npc)
 end
 
 zoneObject.onZoneWeatherChange = function(weather)
+    -- HNM King Vinegarroon only spawns during earth weather
+    local kvMob = GetMobByID(ID.mob.KING_VINEGARROON)
 
-    local dahu = GetMobByID(ID.mob.DAHU)
-    if
-        not dahu:isSpawned() and 
-        os.time() > dahu:getLocalVar('cooldown') and
-        (weather == xi.weather.DUST_STORM or weather == xi.weather.SAND_STORM)
-    then
-        DisallowRespawn(dahu:getID(), false)
-        dahu:setRespawnTime(math.random(30, 150)) -- pop 30-150 sec after earth weather starts
+    if kvMob then
+        local kvRespawn = kvMob:getRespawnTime()
+
+        if weather == xi.weather.DUST_STORM or weather == xi.weather.SAND_STORM then
+            DisallowRespawn(kvMob:getID(), false)
+
+            -- Low percent chance spawn on single earth weather
+            if
+                weather == xi.weather.DUST_STORM and
+                kvRespawn == 0 and
+                math.random(0, 100) <= 10
+            then
+                SpawnMob(kvMob:getID())
+            -- Guaranteed spawn during double earth
+            elseif
+                weather == xi.weather.SAND_STORM and
+                kvRespawn == 0
+            then
+                SpawnMob(kvMob:getID())
+            end
+        else
+            DisallowRespawn(kvMob:getID(), true)
+        end
     end
 
-    local kingV = GetMobByID(ID.mob.KING_VINEGARROON)
-    local kvre = GetServerVariable('\\[SPAWN\\]17289575')
-    
-    if not kingV:isSpawned() and os.time() > kvre and weather == xi.weather.DUST_STORM then
-        -- 10% chance for KV pop at start of single earth weather
-        local chance = math.random(1, 10)
-        if chance == 1 then
-            DisallowRespawn(kingV:getID(), false)
-            SpawnMob(ID.mob.KING_VINEGARROON)
+    -- NM Dahu only spawns during fire or earth weather
+    local dahu = GetMobByID(ID.mob.DAHU)
+    local validWeather =
+    {
+        xi.weather.DUST_STORM,
+        xi.weather.SAND_STORM,
+        xi.weather.HOT_SPELL,
+        xi.weather.HEAT_WAVE,
+    }
+
+    if dahu then
+        if utils.contains(weather, validWeather) then
+            DisallowRespawn(dahu:getID(), false)
+
+            -- Spawn if respawn is up
+            if dahu:getRespawnTime() == 0 then
+                SpawnMob(dahu:getID())
+            end
+        else
+            DisallowRespawn(dahu:getID(), true)
         end
-    elseif not kingV:isSpawned() and os.time() > kvre and weather == xi.weather.SAND_STORM then
-        DisallowRespawn(kingV:getID(), false)
-        SpawnMob(ID.mob.KING_VINEGARROON)
     end
 end
 

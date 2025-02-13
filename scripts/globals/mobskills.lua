@@ -102,11 +102,24 @@ local function MobTakeAoEShadow(mob, target, max)
     return math.random(1, max)
 end
 
+--[[local function fTP(tp, ftp1, ftp2, ftp3)
+    tp = math.max(tp, 1000)
+
+    if tp >= 1000 and tp < 1500 then
+        return ftp1 + (((ftp2 - ftp1) / 500) * (tp - 1000))
+    elseif tp >= 1500 and tp <= 3000 then
+        -- generate a straight line between ftp2 and ftp3 and find point @ tp
+        return ftp2 + (((ftp3 - ftp2) / 1500) * (tp - 1500))
+    end
+
+    return 1 -- no ftp mod
+end]]
+
 -- helper function to handle a single hit and check for parrying, guarding, and blocking
 local function handleSinglePhysicalHit(mob, target, hitdamage, hitslanded, finaldmg, tpEffect, minRatio, maxRatio)
     -- if a non-ranged physical mobskill then can parry or guard
     if
-        tpEffect == xi.mobskills.magicalTpBonus.RANGED or
+        tpEffect == xi.mobskills.physicalTpBonus.RANGED or
         (not xi.combat.physical.isParried(target, mob) and
         not xi.combat.physical.isGuarded(target, mob))
     then
@@ -387,8 +400,15 @@ end
 -- tpEffect  : Defined in xi.mobskills.physicalTpBonus
 -- tpEffect2 : Defined in xi.mobskills.physicalTpBonus
 -----------------------------------
-xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmgMod, tpEffect1, tpEffect1_ftp100, tpEffect1_ftp200, tpEffect1_ftp300, tpEffect2, tpEffect2_ftp100, tpEffect2_ftp200, tpEffect2_ftp300, critPerc, attMod)
+xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmgMod, tpEffect1, tpEffect1_ftp100, tpEffect1_ftp200, tpEffect1_ftp300, tpEffect2, tpEffect2_ftp100, tpEffect2_ftp200, tpEffect2_ftp300, critPerc, attMod, isCannonball)
     local returninfo    = {}
+
+    -- TODO: Added in LSB Sync
+    --[[ mobs use fSTR (but with special calculation in the called function)
+    local fSTR = xi.combat.physical.calculateMeleeStatFactor(mob, target)
+    if tpEffect == xi.mobskills.physicalTpBonus.RANGED then
+        fSTR = xi.combat.physical.calculateRangedStatFactor(mob, target)
+    end]]
 
     -- nil checks
 
@@ -494,6 +514,10 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
         -- hitrate = xi.weaponskills.getRangedHitRate(mob, target, 0, 0) TODO: Need to build out in weaponskills or physical utilities.
     end]]
 
+    --[[work out min and max cRatio -- TODO: LSB MERGE
+    local maxRatio = ratio
+    local minRatio = ratio - 0.375]]
+
     ----------------------------------
     -- Calculate base damage for a single hit.
     ----------------------------------
@@ -562,11 +586,16 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
     end
 
     local weaponType = mob:getWeaponSkillType(xi.slot.MAIN)
+    local applyLevelCorrection = xi.combat.levelCorrection.isLevelCorrectedZone(mob)
+    -- local weaponType           = xi.skill.NONE -- use NONE for mobs
+    -- local attMod               = 1             -- TODO: implement attack boosts for mobskills
+    -- local canCrit              = false         -- TODO: implement which skills can crit
+    local isCannonball         = isCannonball or false
     local pdif = 0
 
     if chance <= firstHitChance then -- First hit
         local isCrit = math.random() < critRate
-        pdif = xi.combat.physical.calculateMeleePDIF(mob, target, weaponType, attMod, isCrit)
+        pdif = xi.combat.physical.calculateMeleePDIF(mob, target, weaponType, attMod, isCrit, applyLevelCorrection, false, 0, false, isCannonball)
         finaldmg = finaldmg + hitdamage * pdif
         finaldmg = xi.weaponskills.handleBlock(mob, target, finaldmg) -- (ASB)
         hitslanded = hitslanded + 1
@@ -593,7 +622,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
 
         if chance <= hitrate then
             local isCrit = math.random() < critRate
-            pdif = xi.combat.physical.calculateMeleePDIF(mob, target, weaponType, attMod, isCrit)
+            pdif = xi.combat.physical.calculateMeleePDIF(mob, target, weaponType, attMod, isCrit, applyLevelCorrection, false, 0, false, isCannonball)
             finaldmg = finaldmg + (hitdamage * pdif)
             finaldmg = xi.weaponskills.handleBlock(mob, target, finaldmg) -- (ASB)
             hitslanded = hitslanded + 1
@@ -805,7 +834,7 @@ xi.mobskills.applyPlayerResistance = function(actor, effectId, target, diff, bon
         bonusMacc = bonusMacc + diff
     end
 
-    return xi.combat.magicHitRate.calculateResistRate(actor, target, 0, xi.skill.NONE, element, 0, effectId, bonusMacc)
+    return xi.combat.magicHitRate.calculateResistRate(actor, target, 0, xi.skill.NONE, 0, element, 0, effectId, bonusMacc)
 end
 
 xi.mobskills.mobAddBonuses = function(actor, target, damage, element, skill) -- used for SMN magical bloodpacts, despite the name.

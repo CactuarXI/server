@@ -29,6 +29,10 @@ local dayToSkin =
     [xi.day.DARKSDAY]     = { 1168 },
 }
 
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
+end
+
 entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
     mob:setMobMod(xi.mobMod.MAGIC_COOL, 30)

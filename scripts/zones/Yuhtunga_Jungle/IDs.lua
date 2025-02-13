@@ -52,6 +52,8 @@ zones[xi.zone.YUHTUNGA_JUNGLE] =
         UNITY_WANTED_BATTLE_INTERACT  = 7940,  -- Those who have accepted % must pay # Unity accolades to participate. The content for this Wanted battle is #. [Ready to begin?/You do not have the appropriate object set, so your rewards will be limited.]
         REGIME_REGISTERED             = 10056, -- New training regime registered!
         COMMON_SENSE_SURVIVAL         = 12050, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+
+        TIME_ELAPSED                  = 7849,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
     },
     mob =
     {

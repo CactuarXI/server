@@ -963,8 +963,8 @@ INSERT INTO `item_latents` VALUES (14448,10,6,1,71);     -- VIT+6 when HP >71%
 INSERT INTO `item_latents` VALUES (14449,10,7,1,71);     -- VIT+7 when HP >71%
 
 -- Nanban Kariginu
-INSERT INTO `item_latents` VALUES(14465,68,10,49,4468); -- EVA +10 with Pamama Food Active
-INSERT INTO `item_latents` VALUES(14465,25,1,49,4468);  -- ACC +1 with Pamama Food Active
+INSERT INTO `item_latents` VALUES (14465,68,10,49,4468); -- EVA +10 with Pamama Food Active
+INSERT INTO `item_latents` VALUES (14465,25,1,49,4468);  -- ACC +1 with Pamama Food Active
 
 INSERT INTO `item_latents` VALUES (14500,68,10,13,58);  -- WAR AF2 +1 Body Reduces evasion penalty by 10 if Aggressor Active
 INSERT INTO `item_latents` VALUES (14509,8,8,10,0);

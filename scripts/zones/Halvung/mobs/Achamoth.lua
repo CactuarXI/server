@@ -1,13 +1,13 @@
 -----------------------------------
---   Area: Halvung
---    Mob: T3 ZNM - Achamoth
--- Author: Spaceballs
+-- Area: Halvung
+--   NM: Achamoth (ZNM T3)
 -----------------------------------
-
 mixins ={require('scripts/mixins/job_special'),
 require('scripts/mixins/rage')}
+-----------------------------------
 
 
+---@type TMobEntity
 local entity = {}
 local ID = zones[xi.zone.HALVUNG]
 
@@ -103,7 +103,7 @@ entity.onMobFight = function(mob, target)
 end
 
 
-entity.onMobDeath = function(mob)
+entity.onMobDeath = function(mob, player, optParams)
     despawnAdds(mob)
 end
 

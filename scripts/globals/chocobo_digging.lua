@@ -206,16 +206,16 @@ local digInfo =
         },
         [diggingLayer.BORE] = -- Set: Bones
         {
-            [ 1] = { xi.item.BONE_CHIP,                150, xi.craftRank.AMATEUR    },
-            [ 2] = { xi.item.HANDFUL_OF_FISH_SCALES,   150, xi.craftRank.AMATEUR    },
-            [ 3] = { xi.item.SEASHELL,                 150, xi.craftRank.RECRUIT    },
-            [ 4] = { xi.item.HIGH_QUALITY_PUGIL_SCALE,  50, xi.craftRank.INITIATE   },
-            [ 5] = { xi.item.TITANICTUS_SHELL,          50, xi.craftRank.APPRENTICE },
-            [ 6] = { xi.item.DEMON_HORN,                10, xi.craftRank.JOURNEYMAN },
-            [ 7] = { xi.item.HANDFUL_OF_WYVERN_SCALES,   5, xi.craftRank.CRAFTSMAN  },
-            [ 8] = { xi.item.TURTLE_SHELL,               5, xi.craftRank.CRAFTSMAN  },
-            [ 9] = { xi.item.DEMON_SKULL,                1, xi.craftRank.ARTISAN    },
-            [10] = { xi.item.HANDFUL_OF_DRAGON_SCALES,   1, xi.craftRank.ARTISAN    },
+            [ 1] = { xi.item.BONE_CHIP,                 150, xi.craftRank.AMATEUR    },
+            [ 2] = { xi.item.HANDFUL_OF_FISH_SCALES,    150, xi.craftRank.AMATEUR    },
+            [ 3] = { xi.item.SEASHELL,                  150, xi.craftRank.RECRUIT    },
+            [ 4] = { xi.item.HIGH_QUALITY_PUGIL_SCALES,  50, xi.craftRank.INITIATE   },
+            [ 5] = { xi.item.TITANICTUS_SHELL,           50, xi.craftRank.APPRENTICE },
+            [ 6] = { xi.item.DEMON_HORN,                 10, xi.craftRank.JOURNEYMAN },
+            [ 7] = { xi.item.HANDFUL_OF_WYVERN_SCALES,    5, xi.craftRank.CRAFTSMAN  },
+            [ 8] = { xi.item.TURTLE_SHELL,                5, xi.craftRank.CRAFTSMAN  },
+            [ 9] = { xi.item.DEMON_SKULL,                 1, xi.craftRank.ARTISAN    },
+            [10] = { xi.item.HANDFUL_OF_DRAGON_SCALES,    1, xi.craftRank.ARTISAN    },
         },
     },
 
@@ -816,16 +816,16 @@ local digInfo =
         },
         [diggingLayer.BORE] = -- Set: Bones
         {
-            [ 1] = { xi.item.BONE_CHIP,                150, xi.craftRank.AMATEUR    },
-            [ 2] = { xi.item.HANDFUL_OF_FISH_SCALES,   150, xi.craftRank.AMATEUR    },
-            [ 3] = { xi.item.SEASHELL,                 150, xi.craftRank.RECRUIT    },
-            [ 4] = { xi.item.HIGH_QUALITY_PUGIL_SCALE,  50, xi.craftRank.INITIATE   },
-            [ 5] = { xi.item.TITANICTUS_SHELL,          50, xi.craftRank.APPRENTICE },
-            [ 6] = { xi.item.DEMON_HORN,                10, xi.craftRank.JOURNEYMAN },
-            [ 7] = { xi.item.HANDFUL_OF_WYVERN_SCALES,   5, xi.craftRank.CRAFTSMAN  },
-            [ 8] = { xi.item.TURTLE_SHELL,               5, xi.craftRank.CRAFTSMAN  },
-            [ 9] = { xi.item.DEMON_SKULL,                1, xi.craftRank.ARTISAN    },
-            [10] = { xi.item.HANDFUL_OF_DRAGON_SCALES,   1, xi.craftRank.ARTISAN    },
+            [ 1] = { xi.item.BONE_CHIP,                 150, xi.craftRank.AMATEUR    },
+            [ 2] = { xi.item.HANDFUL_OF_FISH_SCALES,    150, xi.craftRank.AMATEUR    },
+            [ 3] = { xi.item.SEASHELL,                  150, xi.craftRank.RECRUIT    },
+            [ 4] = { xi.item.HIGH_QUALITY_PUGIL_SCALES,  50, xi.craftRank.INITIATE   },
+            [ 5] = { xi.item.TITANICTUS_SHELL,           50, xi.craftRank.APPRENTICE },
+            [ 6] = { xi.item.DEMON_HORN,                 10, xi.craftRank.JOURNEYMAN },
+            [ 7] = { xi.item.HANDFUL_OF_WYVERN_SCALES,    5, xi.craftRank.CRAFTSMAN  },
+            [ 8] = { xi.item.TURTLE_SHELL,                5, xi.craftRank.CRAFTSMAN  },
+            [ 9] = { xi.item.DEMON_SKULL,                 1, xi.craftRank.ARTISAN    },
+            [10] = { xi.item.HANDFUL_OF_DRAGON_SCALES,    1, xi.craftRank.ARTISAN    },
         },
     },
 
@@ -1008,16 +1008,16 @@ local digInfo =
         },
         [diggingLayer.BORE] = -- Set: Bones
         {
-            [ 1] = { xi.item.BONE_CHIP,                150, xi.craftRank.AMATEUR    },
-            [ 2] = { xi.item.HANDFUL_OF_FISH_SCALES,   150, xi.craftRank.AMATEUR    },
-            [ 3] = { xi.item.SEASHELL,                 150, xi.craftRank.RECRUIT    },
-            [ 4] = { xi.item.HIGH_QUALITY_PUGIL_SCALE,  50, xi.craftRank.INITIATE   },
-            [ 5] = { xi.item.TITANICTUS_SHELL,          50, xi.craftRank.APPRENTICE },
-            [ 6] = { xi.item.DEMON_HORN,                10, xi.craftRank.JOURNEYMAN },
-            [ 7] = { xi.item.HANDFUL_OF_WYVERN_SCALES,   5, xi.craftRank.CRAFTSMAN  },
-            [ 8] = { xi.item.TURTLE_SHELL,               5, xi.craftRank.CRAFTSMAN  },
-            [ 9] = { xi.item.DEMON_SKULL,                1, xi.craftRank.ARTISAN    },
-            [10] = { xi.item.HANDFUL_OF_DRAGON_SCALES,   1, xi.craftRank.ARTISAN    },
+            [ 1] = { xi.item.BONE_CHIP,                 150, xi.craftRank.AMATEUR    },
+            [ 2] = { xi.item.HANDFUL_OF_FISH_SCALES,    150, xi.craftRank.AMATEUR    },
+            [ 3] = { xi.item.SEASHELL,                  150, xi.craftRank.RECRUIT    },
+            [ 4] = { xi.item.HIGH_QUALITY_PUGIL_SCALES,  50, xi.craftRank.INITIATE   },
+            [ 5] = { xi.item.TITANICTUS_SHELL,           50, xi.craftRank.APPRENTICE },
+            [ 6] = { xi.item.DEMON_HORN,                 10, xi.craftRank.JOURNEYMAN },
+            [ 7] = { xi.item.HANDFUL_OF_WYVERN_SCALES,    5, xi.craftRank.CRAFTSMAN  },
+            [ 8] = { xi.item.TURTLE_SHELL,                5, xi.craftRank.CRAFTSMAN  },
+            [ 9] = { xi.item.DEMON_SKULL,                 1, xi.craftRank.ARTISAN    },
+            [10] = { xi.item.HANDFUL_OF_DRAGON_SCALES,    1, xi.craftRank.ARTISAN    },
         },
     },
 
@@ -1559,16 +1559,16 @@ local digInfo =
         },
         [diggingLayer.BORE] = -- Set: Bones
         {
-            [ 1] = { xi.item.BONE_CHIP,                150, xi.craftRank.AMATEUR    },
-            [ 2] = { xi.item.HANDFUL_OF_FISH_SCALES,   150, xi.craftRank.AMATEUR    },
-            [ 3] = { xi.item.SEASHELL,                 150, xi.craftRank.RECRUIT    },
-            [ 4] = { xi.item.HIGH_QUALITY_PUGIL_SCALE,  50, xi.craftRank.INITIATE   },
-            [ 5] = { xi.item.TITANICTUS_SHELL,          50, xi.craftRank.APPRENTICE },
-            [ 6] = { xi.item.DEMON_HORN,                10, xi.craftRank.JOURNEYMAN },
-            [ 7] = { xi.item.HANDFUL_OF_WYVERN_SCALES,   5, xi.craftRank.CRAFTSMAN  },
-            [ 8] = { xi.item.TURTLE_SHELL,               5, xi.craftRank.CRAFTSMAN  },
-            [ 9] = { xi.item.DEMON_SKULL,                1, xi.craftRank.ARTISAN    },
-            [10] = { xi.item.HANDFUL_OF_DRAGON_SCALES,   1, xi.craftRank.ARTISAN    },
+            [ 1] = { xi.item.BONE_CHIP,                 150, xi.craftRank.AMATEUR    },
+            [ 2] = { xi.item.HANDFUL_OF_FISH_SCALES,    150, xi.craftRank.AMATEUR    },
+            [ 3] = { xi.item.SEASHELL,                  150, xi.craftRank.RECRUIT    },
+            [ 4] = { xi.item.HIGH_QUALITY_PUGIL_SCALES,  50, xi.craftRank.INITIATE   },
+            [ 5] = { xi.item.TITANICTUS_SHELL,           50, xi.craftRank.APPRENTICE },
+            [ 6] = { xi.item.DEMON_HORN,                 10, xi.craftRank.JOURNEYMAN },
+            [ 7] = { xi.item.HANDFUL_OF_WYVERN_SCALES,    5, xi.craftRank.CRAFTSMAN  },
+            [ 8] = { xi.item.TURTLE_SHELL,                5, xi.craftRank.CRAFTSMAN  },
+            [ 9] = { xi.item.DEMON_SKULL,                 1, xi.craftRank.ARTISAN    },
+            [10] = { xi.item.HANDFUL_OF_DRAGON_SCALES,    1, xi.craftRank.ARTISAN    },
         },
     },
 
@@ -1604,16 +1604,16 @@ local digInfo =
         },
         [diggingLayer.BORE] = -- Set: Bones
         {
-            [ 1] = { xi.item.BONE_CHIP,                150, xi.craftRank.AMATEUR    },
-            [ 2] = { xi.item.HANDFUL_OF_FISH_SCALES,   150, xi.craftRank.AMATEUR    },
-            [ 3] = { xi.item.SEASHELL,                 150, xi.craftRank.RECRUIT    },
-            [ 4] = { xi.item.HIGH_QUALITY_PUGIL_SCALE,  50, xi.craftRank.INITIATE   },
-            [ 5] = { xi.item.TITANICTUS_SHELL,          50, xi.craftRank.APPRENTICE },
-            [ 6] = { xi.item.DEMON_HORN,                10, xi.craftRank.JOURNEYMAN },
-            [ 7] = { xi.item.HANDFUL_OF_WYVERN_SCALES,   5, xi.craftRank.CRAFTSMAN  },
-            [ 8] = { xi.item.TURTLE_SHELL,               5, xi.craftRank.CRAFTSMAN  },
-            [ 9] = { xi.item.DEMON_SKULL,                1, xi.craftRank.ARTISAN    },
-            [10] = { xi.item.HANDFUL_OF_DRAGON_SCALES,   1, xi.craftRank.ARTISAN    },
+            [ 1] = { xi.item.BONE_CHIP,                 150, xi.craftRank.AMATEUR    },
+            [ 2] = { xi.item.HANDFUL_OF_FISH_SCALES,    150, xi.craftRank.AMATEUR    },
+            [ 3] = { xi.item.SEASHELL,                  150, xi.craftRank.RECRUIT    },
+            [ 4] = { xi.item.HIGH_QUALITY_PUGIL_SCALES,  50, xi.craftRank.INITIATE   },
+            [ 5] = { xi.item.TITANICTUS_SHELL,           50, xi.craftRank.APPRENTICE },
+            [ 6] = { xi.item.DEMON_HORN,                 10, xi.craftRank.JOURNEYMAN },
+            [ 7] = { xi.item.HANDFUL_OF_WYVERN_SCALES,    5, xi.craftRank.CRAFTSMAN  },
+            [ 8] = { xi.item.TURTLE_SHELL,                5, xi.craftRank.CRAFTSMAN  },
+            [ 9] = { xi.item.DEMON_SKULL,                 1, xi.craftRank.ARTISAN    },
+            [10] = { xi.item.HANDFUL_OF_DRAGON_SCALES,    1, xi.craftRank.ARTISAN    },
         },
     },
 
@@ -1684,16 +1684,16 @@ local digInfo =
         },
         [diggingLayer.BORE] = -- Set: Bones
         {
-            [ 1] = { xi.item.BONE_CHIP,                150, xi.craftRank.AMATEUR    },
-            [ 2] = { xi.item.HANDFUL_OF_FISH_SCALES,   150, xi.craftRank.AMATEUR    },
-            [ 3] = { xi.item.SEASHELL,                 150, xi.craftRank.RECRUIT    },
-            [ 4] = { xi.item.HIGH_QUALITY_PUGIL_SCALE,  50, xi.craftRank.INITIATE   },
-            [ 5] = { xi.item.TITANICTUS_SHELL,          50, xi.craftRank.APPRENTICE },
-            [ 6] = { xi.item.DEMON_HORN,                10, xi.craftRank.JOURNEYMAN },
-            [ 7] = { xi.item.HANDFUL_OF_WYVERN_SCALES,   5, xi.craftRank.CRAFTSMAN  },
-            [ 8] = { xi.item.TURTLE_SHELL,               5, xi.craftRank.CRAFTSMAN  },
-            [ 9] = { xi.item.DEMON_SKULL,                1, xi.craftRank.ARTISAN    },
-            [10] = { xi.item.HANDFUL_OF_DRAGON_SCALES,   1, xi.craftRank.ARTISAN    },
+            [ 1] = { xi.item.BONE_CHIP,                 150, xi.craftRank.AMATEUR    },
+            [ 2] = { xi.item.HANDFUL_OF_FISH_SCALES,    150, xi.craftRank.AMATEUR    },
+            [ 3] = { xi.item.SEASHELL,                  150, xi.craftRank.RECRUIT    },
+            [ 4] = { xi.item.HIGH_QUALITY_PUGIL_SCALES,  50, xi.craftRank.INITIATE   },
+            [ 5] = { xi.item.TITANICTUS_SHELL,           50, xi.craftRank.APPRENTICE },
+            [ 6] = { xi.item.DEMON_HORN,                 10, xi.craftRank.JOURNEYMAN },
+            [ 7] = { xi.item.HANDFUL_OF_WYVERN_SCALES,    5, xi.craftRank.CRAFTSMAN  },
+            [ 8] = { xi.item.TURTLE_SHELL,                5, xi.craftRank.CRAFTSMAN  },
+            [ 9] = { xi.item.DEMON_SKULL,                 1, xi.craftRank.ARTISAN    },
+            [10] = { xi.item.HANDFUL_OF_DRAGON_SCALES,    1, xi.craftRank.ARTISAN    },
         },
     },
 
@@ -1850,16 +1850,16 @@ local digInfo =
         },
         [diggingLayer.BORE] = -- Set: Bones
         {
-            [ 1] = { xi.item.BONE_CHIP,                150, xi.craftRank.AMATEUR    },
-            [ 2] = { xi.item.HANDFUL_OF_FISH_SCALES,   150, xi.craftRank.AMATEUR    },
-            [ 3] = { xi.item.SEASHELL,                 150, xi.craftRank.RECRUIT    },
-            [ 4] = { xi.item.HIGH_QUALITY_PUGIL_SCALE,  50, xi.craftRank.INITIATE   },
-            [ 5] = { xi.item.TITANICTUS_SHELL,          50, xi.craftRank.APPRENTICE },
-            [ 6] = { xi.item.DEMON_HORN,                10, xi.craftRank.JOURNEYMAN },
-            [ 7] = { xi.item.HANDFUL_OF_WYVERN_SCALES,   5, xi.craftRank.CRAFTSMAN  },
-            [ 8] = { xi.item.TURTLE_SHELL,               5, xi.craftRank.CRAFTSMAN  },
-            [ 9] = { xi.item.DEMON_SKULL,                1, xi.craftRank.ARTISAN    },
-            [10] = { xi.item.HANDFUL_OF_DRAGON_SCALES,   1, xi.craftRank.ARTISAN    },
+            [ 1] = { xi.item.BONE_CHIP,                 150, xi.craftRank.AMATEUR    },
+            [ 2] = { xi.item.HANDFUL_OF_FISH_SCALES,    150, xi.craftRank.AMATEUR    },
+            [ 3] = { xi.item.SEASHELL,                  150, xi.craftRank.RECRUIT    },
+            [ 4] = { xi.item.HIGH_QUALITY_PUGIL_SCALES,  50, xi.craftRank.INITIATE   },
+            [ 5] = { xi.item.TITANICTUS_SHELL,           50, xi.craftRank.APPRENTICE },
+            [ 6] = { xi.item.DEMON_HORN,                 10, xi.craftRank.JOURNEYMAN },
+            [ 7] = { xi.item.HANDFUL_OF_WYVERN_SCALES,    5, xi.craftRank.CRAFTSMAN  },
+            [ 8] = { xi.item.TURTLE_SHELL,                5, xi.craftRank.CRAFTSMAN  },
+            [ 9] = { xi.item.DEMON_SKULL,                 1, xi.craftRank.ARTISAN    },
+            [10] = { xi.item.HANDFUL_OF_DRAGON_SCALES,    1, xi.craftRank.ARTISAN    },
         },
     },
 
@@ -2335,25 +2335,33 @@ local function  handleDiggingLayer(player, zoneId, currentLayer)
         local isElementalOreZone = elementalOreZoneTable[player:getZoneID()] or false
 
         -- Crystals and Clusters.
-        if diggingWeatherTable[weather] then
+        randomRoll = math.random(1, 1000) * rollMultiplier
+        if
+            diggingWeatherTable[weather] and
+            randomRoll <= 100
+        then
             table.insert(dTableItemIds, #dTableItemIds + 1, diggingWeatherTable[weather][1]) -- Insert item ID to table.
         end
 
         -- Geodes / Colored Rocks.
+        randomRoll = math.random(1, 1000) * rollMultiplier
         if
             diggingDayTable[currentDay] and
-            playerRank >= xi.craftRank.NOVICE
+            playerRank >= xi.craftRank.NOVICE and
+            randomRoll <= 100
         then
             table.insert(dTableItemIds, #dTableItemIds + 1, diggingDayTable[currentDay][1]) -- Insert item ID to table.
         end
 
         -- Elemenal Ores.
+        randomRoll = math.random(1, 1000) * rollMultiplier
         if
             diggingDayTable[currentDay] and
             playerRank >= xi.craftRank.CRAFTSMAN and
             isElementalOreZone and
             weather ~= xi.weather.NONE and
-            moon >= 7 and moon <= 21
+            moon >= 7 and moon <= 21 and
+            randomRoll <= 100
         then
             table.insert(dTableItemIds, #dTableItemIds + 1, diggingDayTable[currentDay][2]) -- Insert item ID to table.
         end

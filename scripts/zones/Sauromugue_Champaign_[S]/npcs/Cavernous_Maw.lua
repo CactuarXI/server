@@ -9,9 +9,6 @@ local ID = zones[xi.zone.SAUROMUGUE_CHAMPAIGN_S]
 ---@type TNpcEntity
 local entity = {}
 
-entity.onTrade = function(player, npc, trade)
-end
-
 entity.onTrigger = function(player, npc)
     -- if the player has this maw teleport already, has an adventuring fellow, but does not have wotg adventuring fellow access, time to get it
     local hasMaw = player:hasTeleport(xi.teleport.type.PAST_MAW, 2)

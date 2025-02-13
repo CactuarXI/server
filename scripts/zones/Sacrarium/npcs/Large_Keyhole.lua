@@ -29,17 +29,11 @@ entity.onTrade = function(player, npc, trade)
             GetNPCByID(npc:getID() - 1):openDoor(15)
             smallKeyhole:setLocalVar('canTradeSecondKey', 0)
             -- Unlock player holding the first key
-            GetPlayerByID(smallKeyhole:getLocalVar('player')):setSpeed(smallKeyhole:getLocalVar('speed'))
+            GetPlayerByID(smallKeyhole:getLocalVar('player')):setBaseSpeed(smallKeyhole:getLocalVar('speed'))
         else
             player:messageSpecial(ID.text.CANNOT_TRADE_NOW)
         end
     end
-end
-
-entity.onEventUpdate = function(player, csid, option, npc)
-end
-
-entity.onEventFinish = function(player, csid, option, npc)
 end
 
 return entity

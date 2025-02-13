@@ -1,10 +1,11 @@
 -----------------------------------
 -- Area: Alzadaal Undersea Ruins
---  ZNM: Wulgaru
+--  Mob: Wulgaru (ZMN T2)
 -----------------------------------
 mixins = {require('scripts/mixins/rage')}
 
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local PathingPoints = {
@@ -53,7 +54,7 @@ entity.onMobSpawn = function(mob)
     -- shirtless phase might just not happen
     if math.random() > 0.5 then
         mob:setLocalVar('hppShirtless', math.random(5, 50))
-    end
+end
 end
 
 entity.onMobFight = function(mob, target)
@@ -116,7 +117,7 @@ entity.onMobWeaponSkill = function(target, mob, skill)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 return entity

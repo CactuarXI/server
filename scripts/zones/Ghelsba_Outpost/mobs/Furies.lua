@@ -18,7 +18,4 @@ entity.onMobEngage = function(mob)
     mob:setMobMod(xi.mobMod.NO_MOVE, 0)
 end
 
-entity.onMobDeath = function(mob, player, optParams)
-end
-
 return entity

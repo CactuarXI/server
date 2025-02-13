@@ -36,7 +36,7 @@ local points =
 entity.onMobSpawn = function(mob)
     mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.STANDBACK))
     mob:setMod(xi.mod.REGAIN, 1000)
-    mob:setSpeed(90)
+    mob:setBaseSpeed(90)
 end
 
 entity.onMobFight = function(mob)

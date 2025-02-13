@@ -105,6 +105,7 @@
 #include "utils/moduleutils.h"
 #include "utils/serverutils.h"
 #include "utils/synergyutils.h"
+#include "utils/synthutils.h"
 #include "utils/zoneutils.h"
 
 void ReportErrorToPlayer(CBaseEntity* PEntity, std::string const& message = "") noexcept
@@ -239,6 +240,7 @@ namespace luautils
         lua.set_function("RoeParseTimed", &roeutils::ParseTimedSchedule);
         lua.set_function("GetSynergyRecipeByID", &luautils::GetSynergyRecipeByID);
         lua.set_function("GetSynergyRecipeByTrade", &luautils::GetSynergyRecipeByTrade);
+        lua.set_function("ReloadSynthRecipes", &synthutils::LoadSynthRecipes);
 
         // Fishing Contest Functions
         lua.set_function("GetFishingContest", &luautils::GetFishingContest);
@@ -1103,7 +1105,7 @@ namespace luautils
         TracyZoneScoped;
         if (CBaseEntity* PNpc = zoneutils::GetEntity(npcid, TYPE_NPC))
         {
-            PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, new CEntityVisualPacket(PNpc, command));
+            PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, std::make_unique<CEntityVisualPacket>(PNpc, command));
         }
     }
 
@@ -2199,8 +2201,8 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        ShowTrace("luautils::OnEventUpdate: {} ({}), string: {}",
-                  PChar->getName(), PChar->loc.zone->getName(), updateString);
+        ShowTraceFmt("luautils::OnEventUpdate: {} ({}), string: {}",
+                     PChar->getName(), PChar->loc.zone->getName(), updateString);
 
         EventPrep* previousPrep = PChar->eventPreparation;
         PChar->eventPreparation = PChar->currentEvent;
@@ -4297,7 +4299,7 @@ namespace luautils
         auto name     = PMob->getName();
         auto filename = fmt::format("./scripts/zones/{}/mobs/{}.lua", zone, name);
 
-        ShowTrace("luautils::OnSteal: {} ({}) -> {}", PChar->getName(), zone, name);
+        ShowTraceFmt("luautils::OnSteal: {} ({}) -> {}", PChar->getName(), zone, name);
 
         auto onStealFramework = lua["InteractionGlobal"]["onSteal"];
         auto onSteal          = GetCacheEntryFromFilename(filename)["onSteal"];
@@ -5588,6 +5590,7 @@ namespace luautils
 
         if (_sql->SetAutoCommit(false) && _sql->TransactionStart())
         {
+            // NOTE: This will trigger SQL trigger: delivery_box_insert
             const char* Query = "INSERT INTO delivery_box (charid, box, itemid, quantity, senderid, sender) VALUES ("
                                 "%u, "     // Player ID
                                 "1, "      // Box ID == 1

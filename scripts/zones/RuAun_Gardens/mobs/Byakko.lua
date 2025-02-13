@@ -24,6 +24,13 @@ entity.onMobSpawn = function(mob)
     GetNPCByID(ID.npc.PORTAL_OFFSET + 8):setAnimation(xi.anim.CLOSE_DOOR)
 end
 
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
+    mob:setMobMod(xi.mobMod.GIL_MIN, 1500)
+    mob:setMobMod(xi.mobMod.GIL_MAX, 30000)
+end
+
 entity.onMobEngage = function(mob, target)
     mob:messageText(mob, ID.text.SKY_GOD_OFFSET + 11)
     mob:timer(5000, function(mobArg)

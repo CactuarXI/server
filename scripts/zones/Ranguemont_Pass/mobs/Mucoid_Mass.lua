@@ -13,6 +13,10 @@ entity.onAdditionalEffect = function(mob, target, damage)
     return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.BLIND)
 end
 
+entity.onMobSpawn = function(mob)
+    mob:addImmunity(xi.immunity.SILENCE)
+end
+
 entity.onMobDeath = function(mob, player, optParams)
     xi.hunts.checkHunt(mob, player, 345)
 end

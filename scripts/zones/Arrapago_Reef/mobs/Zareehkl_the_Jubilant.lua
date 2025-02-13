@@ -1,10 +1,11 @@
 -----------------------------------
 -- Area: Arrapago Reef
---   NM: Zareehkl the Jubilant
+--   NM: Zareehkl the Jubilant (ZNM T2)
 -----------------------------------
-mixins = { 
-require('scripts/mixins/families/qutrub'),
-require('scripts/mixins/job_special')
+mixins =
+{ 
+    require('scripts/mixins/families/qutrub'),
+    require('scripts/mixins/job_special')
 }
 
 -----------------------------------

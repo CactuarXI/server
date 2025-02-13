@@ -12,6 +12,7 @@ local entity = {}
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.NO_DROPS, 1)
     mob:setMobMod(xi.mobMod.ALLI_HATE, 30)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
     mob:addListener('WEAPONSKILL_STATE_ENTER', 'PRUDENCE_MIMIC_START', function(mobArg, skillID)
         local prudenceIDs = { ID.mob.JAILER_OF_PRUDENCE, ID.mob.JAILER_OF_PRUDENCE + 1 }
         if mobArg:getLocalVar('[JoP]mimic') ~= 1 and mobArg:isAlive() then

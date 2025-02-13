@@ -44,8 +44,7 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
-    mob:setSpeed(50 * 0.05) -- ~5% of normal movementspeed
-    mob:setMobMod(xi.mobMod.SPEED_BOOST_MULT, 100) -- No in combat speed boost.
+    mob:setBaseSpeed(xi.settings.map.BASE_SPEED * 0.05) -- ~5% of normal movementspeed
     mob:setMod(xi.mod.REGEN, 3)
     mob:setLocalVar('mobElement', math.random(1, 8))
     mob:addMod(mevaList[mob:getLocalVar('mobElement')][1], -250)

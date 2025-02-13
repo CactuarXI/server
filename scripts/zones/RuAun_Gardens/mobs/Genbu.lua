@@ -25,6 +25,9 @@ end
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
+    mob:setMobMod(xi.mobMod.GIL_MIN, 1500)
+    mob:setMobMod(xi.mobMod.GIL_MAX, 30000)
 end
 
 entity.onMobEngage = function(mob, target)

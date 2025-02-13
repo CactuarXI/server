@@ -6,6 +6,7 @@ mixins = {require('scripts/mixins/rage')}
 
 require('scripts/globals/utils')
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 
 local function getSwole(mob)
@@ -92,16 +93,16 @@ entity.onMobFight = function(mob, target)
                 mob:setLocalVar('nextChange', 0)
                 mob:useMobAbility(597)
             end
-        end
     end
-end
+            end
+        end
 
 entity.onMobDisengage = function(mob)
     -- pause phase changes
     mob:setLocalVar('nextChange', 0)
-end
+    end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)

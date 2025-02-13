@@ -22,6 +22,7 @@ entity.onMobSpawn = function(mob)
             { id = xi.jsa.MANAFONT, hpp = math.random(50, 80) },
         },
     })
+    mob:addImmunity(xi.immunity.SILENCE)
     mob:setAnimationSub(0)
     mob:setMobMod(xi.mobMod.NO_MOVE, 1)
     mob:setAutoAttackEnabled(true)

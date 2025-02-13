@@ -29,7 +29,7 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
         for i = 4, 1, -1 do
             if not GetMobByID(id + i):isSpawned() then
                 GetMobByID(id + i):setSpawn(pos.x, pos.y, pos.z)
-                SpawnMob(id + i):updateEnmity(mob:getTarget())
+                SpawnMob(id + i):updateEnmity(target)
                 break
             end
         end

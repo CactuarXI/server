@@ -53,8 +53,12 @@ zones[xi.zone.WEST_RONFAURE] =
         NO_COMBINATION                = 8067,  -- You were unable to enter a combination.
         REGIME_REGISTERED             = 10433, -- New training regime registered!
         COMMON_SENSE_SURVIVAL         = 12434, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
-        AAVELEON_DIALOG              = 7351,  -- Many orcs are nearby. They prey upon the weak, so do not venture far...unless you can handle them.
-        COLMAIE_DIALOG               = 7342,  -- Orcish scouts lurk in the shadows. Consider yourself warned!
+        AAVELEON_DIALOG               = 7351,  -- Many orcs are nearby. They prey upon the weak, so do not venture far...unless you can handle them.
+        COLMAIE_DIALOG                = 7342,  -- Orcish scouts lurk in the shadows. Consider yourself warned!
+
+        PALCOMONDAU_DIALOG            = 7389,  -- Let me be! I must patrol the road to Ghelsba.
+        ZOVRIACE_DIALOG               = 7393,  -- Let me be! I return to Southgate with word on La Theine.
+        TIME_ELAPSED                  = 8052,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
     },
     mob =
     {

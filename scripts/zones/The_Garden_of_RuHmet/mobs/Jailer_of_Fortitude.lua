@@ -9,6 +9,10 @@ mixins = { require('scripts/mixins/job_special') }
 ---@type TMobEntity
 local entity = {}
 
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
+end
+
 entity.onMobSpawn = function(mob)
     -- Change animation to humanoid w/ prismatic core
     mob:setAnimationSub(1)
@@ -16,6 +20,8 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.ATT, 716)
     mob:setMod(xi.mod.DEF, 836)
     mob:setMod(xi.mod.EVA, 250)
+    mob:setMod(xi.mod.UDMGPHYS, -9500)
+    mob:setMod(xi.mod.UDMGRANGE, -9500)
 end
 
 entity.onMobEngage = function(mob, target)

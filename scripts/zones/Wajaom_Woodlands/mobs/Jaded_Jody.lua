@@ -12,7 +12,7 @@ local entity = {}
 
 entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.SLEEPRES, 75)
-    mob:setSpeed(60)
+    mob:setBaseSpeed(60)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)

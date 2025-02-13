@@ -88,7 +88,7 @@ void CFellowController::DoCombatTick(time_point tick)
             std::unique_ptr<CBasicPacket> err;
             if (!POwner->CanAttack(PTarget, err))
             {
-                if (POwner->speed > 0)
+                if (POwner->GetSpeed() > 0)
                 {
                     POwner->PAI->PathFind->PathAround(PTarget->loc.p, 3.0f, PATHFLAG_WALLHACK | PATHFLAG_RUN);
                     POwner->PAI->PathFind->FollowPath(tick);
@@ -120,7 +120,7 @@ void CFellowController::DoRoamTick(time_point tick)
         {
             POwner->PAI->PathFind->FollowPath(tick);
         }
-        else if (POwner->speed > 0)
+        else if (POwner->GetSpeed() > 0)
         {
             POwner->PAI->PathFind->StepTo(POwner->PMaster->loc.p, RoamDistance);
         }

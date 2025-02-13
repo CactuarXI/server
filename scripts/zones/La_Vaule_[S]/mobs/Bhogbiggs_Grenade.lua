@@ -14,7 +14,7 @@ entity.onMobSpawn = function(mob)
     mob:setMagicCastingEnabled(false)
     mob:setMobMod(xi.mobMod.TARGET_DISTANCE_OFFSET, 50)
     mob:setMobMod(xi.mobMod.SPEED_BOOST_MULT, 100)
-    mob:setSpeed(35)
+    mob:setBaseSpeed(35)
     -- mob:addStatusEffect(xi.effect.WEIGHT, 30, 0, 180)
 end
 

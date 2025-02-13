@@ -16,6 +16,14 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
+    xi.mix.jobSpecial.config(mob, {
+        specials =
+        {
+            { id = xi.jsa.MANAFONT, hpp = math.random(50, 80) },
+        },
+    })
+
+    mob:addImmunity(xi.immunity.SILENCE)
     mob:setAnimationSub(0)
     mob:setMobMod(xi.mobMod.NO_MOVE, 1)
     mob:setAutoAttackEnabled(true)

@@ -59,6 +59,9 @@ zones[xi.zone.LA_THEINE_PLATEAU] =
         LEARNS_SPELL                  = 12327, -- <name> learns <spell>!
         UNCANNY_SENSATION             = 12329, -- You are assaulted by an uncanny sensation.
         COMMON_SENSE_SURVIVAL         = 12336, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+
+        -- TODO: ID Shift
+        TIME_ELAPSED                  = 7846,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
     },
     mob =
     {

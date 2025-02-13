@@ -567,8 +567,6 @@ public:
     uint16 RATT(uint8 skill, float distance, uint16 bonusSkill = 0, bool withDistanceCorrection = true);
     uint16 RACC(uint8 skill, float distance, uint16 bonusSkill = 0, bool withDistanceCorrection = true);
 
-    uint8 UpdateSpeed(bool run = false);
-
     bool isDead();
     bool isAlive();
     bool isInAdoulin();
@@ -598,6 +596,7 @@ public:
     uint8 GetMPP() const;
     int32 GetMaxMP() const;
     void  UpdateHealth(); // recalculation of the maximum amount of hp and mp, as well as adjusting their current values
+    uint8 UpdateSpeed(bool run = false) override;
 
     int16  GetWeaponDelay(bool tp);              // returns delay of combined weapons
     float  GetMeleeRange() const;                // returns the distance considered to be within melee range of the entity
@@ -705,6 +704,8 @@ public:
         m_battleTarget = id;
     }
     CBattleEntity* GetBattleTarget();
+
+    bool hasEnmityEXPENSIVE() const; // Returns true if own notoriety container is not empty or mob in zone has entity listed as battle target
 
     /* State callbacks */
     /* Auto attack */

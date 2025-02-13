@@ -2,7 +2,7 @@
 -- Area: Morimar Basalt Fields
 -- NPC: Root
 -----------------------------------
-
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

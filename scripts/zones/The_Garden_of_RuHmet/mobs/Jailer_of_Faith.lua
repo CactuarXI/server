@@ -39,6 +39,8 @@ local closeFlower = function(mob)
 end
 
 entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 900)
+
     mob:addListener('TAKE_DAMAGE', 'FAITH_TAKE_DAMAGE', function(mobArg, amount, attacker, attackType, damageType)
         if attackType == xi.attackType.PHYSICAL then
             mobArg:setLocalVar('PhysicalDamage', mobArg:getLocalVar('PhysicalDamage') + amount)

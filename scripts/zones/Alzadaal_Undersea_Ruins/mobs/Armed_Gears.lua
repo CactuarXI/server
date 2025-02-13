@@ -89,6 +89,9 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.GIL_MIN, 3000)
     mob:setMobMod(xi.mobMod.GIL_MAX, 5000)
     mob:setMod(xi.mod.UFASTCAST, 50)
+    mob:addMod(xi.mod.MDEF, 60)
+    mob:addMod(xi.mod.DEF, 60)
+    mob:setAnimationSub(0)
 end
 
 entity.onMobSpawn = function(mob)

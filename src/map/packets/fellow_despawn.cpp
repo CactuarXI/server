@@ -45,7 +45,7 @@ CFellowDespawnPacket::CFellowDespawnPacket(CBaseEntity* PEntity)
     ref<float>(0x10)       = PEntity->loc.p.y;
     ref<float>(0x14)       = PEntity->loc.p.z;
     ref<uint16>(0x18)      = PEntity->loc.p.moving;
-    ref<uint8>(0x1C)       = PEntity->speed;
+    ref<uint8>(0x1C)       = PEntity->baseSpeed;
     ref<uint8>(0x1D)       = PEntity->animationSpeed;
     CFellowEntity* PFellow = (CFellowEntity*)PEntity;
     ref<uint8>(0x1E)       = PFellow->GetHPP();
@@ -56,7 +56,7 @@ CFellowDespawnPacket::CFellowDespawnPacket(CBaseEntity* PEntity)
     ref<uint8>(0x28)       = 0x48;
     ref<uint8>(0x2B)       = 0x02;
     ref<uint16>(0x30)      = PEntity->look.size;
-    memcpy(data + (0x30), &PEntity->look, sizeof(look_t));
+    std::memcpy(buffer_.data() + (0x30), &PEntity->look, sizeof(look_t));
     // memcpy(data + (0x44), PEntity->GetName().c_str(), PEntity->name.size());
 
     auto name       = PEntity->packetName;
@@ -64,7 +64,7 @@ CFellowDespawnPacket::CFellowDespawnPacket(CBaseEntity* PEntity)
     auto maxLength  = std::min<size_t>(name.size(), PacketNameLength);
 
     // Make sure to zero-out the existing name area of the packet
-    auto start = data + nameOffset;
+    auto start = buffer_.data() + nameOffset;
     auto size  = this->getSize();
     std::memset(start, 0U, size);
 

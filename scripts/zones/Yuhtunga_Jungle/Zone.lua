@@ -19,14 +19,16 @@ zoneObject.onInitialize = function(zone)
     xi.mob.nmTODPersistCache(zone, ID.mob.TURTLERIDER)
     xi.mob.nmTODPersistCache(zone, ID.mob.BAYAWAK)
 
-    xi.conq.setRegionalConquestOverseers(zone:getRegionID())
+    -- A Chocobo Riding Game finish line
+    zone:registerTriggerArea(1, -485.54, 5, -379.19, 0, 0, 0)
 
-    xi.helm.initZone(zone, xi.helmType.LOGGING)
+    xi.conquest.setRegionalConquestOverseers(zone:getRegionID())
+
     xi.helm.initZone(zone, xi.helmType.HARVESTING)
     updateRainHarvesting(xi.status.DISAPPEAR)
     xi.cactuarRegimes.initializeBooks(zone)
 
-    xi.bmt.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
+    xi.beastmenTreasure.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
 
     GetMobByID(ID.mob.TURTLERIDER):setRespawnTime(math.random(900, 10800))
 
@@ -34,11 +36,11 @@ zoneObject.onInitialize = function(zone)
 end
 
 zoneObject.onGameDay = function()
-    xi.bmt.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
+    xi.beastmenTreasure.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranking, isConquestAlliance)
-    xi.conq.onConquestUpdate(zone, updatetype, influence, owner, ranking, isConquestAlliance)
+    xi.conquest.onConquestUpdate(zone, updatetype, influence, owner, ranking, isConquestAlliance)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -64,7 +66,16 @@ zoneObject.onZoneIn = function(player, prevZone)
     return cs
 end
 
+zoneObject.afterZoneIn = function(player)
+    xi.chocoboGame.handleMessage(player)
+end
+
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
+    local triggerAreaID = triggerArea:GetTriggerAreaID()
+
+    if triggerAreaID == 1 and player:hasStatusEffect(xi.effect.MOUNTED) then
+        xi.chocoboGame.onTriggerAreaEnter(player)
+    end
 end
 
 zoneObject.onEventUpdate = function(player, csid, option, npc)
@@ -74,6 +85,7 @@ zoneObject.onEventUpdate = function(player, csid, option, npc)
 end
 
 zoneObject.onEventFinish = function(player, csid, option, npc)
+    xi.chocoboGame.onEventFinish(player, csid)
 end
 
 zoneObject.onZoneWeatherChange = function(weather)

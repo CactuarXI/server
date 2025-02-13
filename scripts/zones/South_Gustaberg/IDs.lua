@@ -38,6 +38,8 @@ zones[xi.zone.SOUTH_GUSTABERG] =
         NO_COMBINATION                = 7544, -- You were unable to enter a combination.
         UNITY_WANTED_BATTLE_INTERACT  = 7606, -- Those who have accepted % must pay # Unity accolades to participate. The content for this Wanted battle is #. [Ready to begin?/You do not have the appropriate object set, so your rewards will be limited.]
         REGIME_REGISTERED             = 9905, -- New training regime registered!
+
+        TIME_ELAPSED                  = 7688, -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
     },
     mob =
     {

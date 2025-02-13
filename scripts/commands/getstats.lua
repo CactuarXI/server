@@ -71,6 +71,8 @@ commandObj.onTrigger = function(player, option)
             player:printToPlayer(string.format('Food Accuracy%% bonus: %i ', target:getMod(xi.mod.FOOD_ACCP)), xi.msg.channel.SYSTEM_3)
             player:printToPlayer(string.format('Accuracy Base: %i ', target:getMod(xi.mod.ACC)), xi.msg.channel.SYSTEM_3)
             player:printToPlayer(string.format('Total Accuracy: %i ', target:getStat(xi.mod.ACC)), xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('Attack Base: %i ', target:getMod(xi.mod.ATT)), xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('Total Attack: %i ', target:getStat(xi.mod.ATT)), xi.msg.channel.SYSTEM_3)
             player:printToPlayer(string.format('Weapon Delay: %i ', math.ceil((target:getDelay() / 1000) * 60)), xi.msg.channel.SYSTEM_3)
             player:printToPlayer(string.format('Main Weap Dmg: %i ', target:getWeaponDmg()), xi.msg.channel.SYSTEM_3)
             player:printToPlayer(string.format('RAccuracy Base: %i ', target:getMod(xi.mod.RACC)), xi.msg.channel.SYSTEM_3)
@@ -109,11 +111,11 @@ commandObj.onTrigger = function(player, option)
                         end
                     end
 
-                    message = message .. ' SDT: ' ..         target:getMod(xi.combat.element.specificDmgTakenMod[v])
-                    message = message .. ' resRank: ' ..     target:getMod(xi.combat.element.resistRankMod[v])
-                    message = message .. ' Null%: ' ..       target:getMod(xi.combat.element.nullMod[v])
-                    message = message .. ' Absorb%: ' ..     target:getMod(xi.combat.element.absorbMod[v])
-                    message = message .. ' MEva: ' ..        target:getMod(xi.combat.element.elementalMagicEva[v])
+                    message = message .. ' SDT: ' ..         target:getMod(xi.combat.element.getElementalSDTModifier(v))
+                    message = message .. ' resRank: ' ..     target:getMod(xi.combat.element.getElementalResistanceRankModifier(v))
+                    message = message .. ' Null%: ' ..       target:getMod(xi.combat.element.getElementalNullificationModifier(v))
+                    message = message .. ' Absorb%: ' ..     target:getMod(xi.combat.element.getElementalAbsorptionModifier(v))
+                    message = message .. ' MEva: ' ..        target:getMod(xi.combat.element.getElementalMEVAModifier(v))
                     eleMessages[v] = message
                 end
             end

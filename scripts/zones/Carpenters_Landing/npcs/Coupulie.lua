@@ -9,9 +9,6 @@ require('scripts/globals/barge')
 local entity = {}
 local eventId = 32
 
-entity.onTrade = function(player, npc, trade)
-end
-
 entity.onTrigger = function(player, npc)
     xi.barge.ticketshopOnTrigger(player, eventId)
 end

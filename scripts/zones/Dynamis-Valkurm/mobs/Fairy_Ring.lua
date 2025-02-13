@@ -14,8 +14,10 @@ local entity = {}
 entity.onMobSpawn = function(mob)
     mob:setAutoAttackEnabled(true)
     mob:setMobAbilityEnabled(true)
-    mob:setMobSkillAttack(5368)
-    mob:setMobMod(xi.mobMod.BREATH_ATTACK_LINEAR, 1)
+    -- mob:setMobSkillAttack(5368)
+    -- mob:setMobMod(xi.mobMod.BREATH_ATTACK_LINEAR, 1)
+    mob:setBaseSpeed(70)
+    mob:setMobSkillAttack(2008) -- use mephitic spare as its auto attack
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
 end

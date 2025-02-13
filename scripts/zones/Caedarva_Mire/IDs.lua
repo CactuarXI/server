@@ -48,6 +48,7 @@ zones[xi.zone.CAEDARVA_MIRE] =
         LEG_STUCK                     = 7358, -- Your leg is stuck in the swampy ground!
         DIG_THROW_AWAY                = 7070, -- You dig up <item>, but your inventory is full. You regretfully throw the <item> away.
         FIND_NOTHING                  = 7072, -- You dig and you dig, but find nothing.
+        YOU_HAVE_A_BADGE              = 7350, -- You have a %? Let me have a closer look at that...
     },
     mob =
     {

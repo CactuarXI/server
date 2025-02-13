@@ -2,7 +2,7 @@
 -- Area: Cirdas Caverns
 -- NPC: Knotted Root
 -----------------------------------
-
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

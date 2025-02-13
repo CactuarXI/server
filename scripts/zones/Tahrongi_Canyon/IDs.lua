@@ -58,6 +58,8 @@ zones[xi.zone.TAHRONGI_CANYON] =
         LEARNS_SPELL                  = 11936, -- <name> learns <spell>!
         UNCANNY_SENSATION             = 11938, -- You are assaulted by an uncanny sensation.
         COMMON_SENSE_SURVIVAL         = 11945, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+
+        TIME_ELAPSED                  = 7716,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
     },
     mob =
     {

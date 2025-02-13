@@ -8,11 +8,12 @@ mixins = { require('scripts/mixins/job_special') }
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
 end
 
 entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.STORETP, 500)
+    mob:addImmunity(xi.immunity.STUN)
 end
 
 entity.onMobFight = function(mob, target)

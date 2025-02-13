@@ -87,9 +87,9 @@ local spawnSharks = function(mob)
     local phuaboDn = {}
     for i = ID.mob.JAILER_OF_LOVE + 1, ID.mob.JAILER_OF_LOVE + 9 do
         local phuabo = GetMobByID(i)
-        if phuabo:isAlive() then
+        if phuabo and phuabo:isAlive() then
             table.insert(phuaboUp, i)
-        elseif not phuabo:isSpawned() then
+        elseif phuabo and not phuabo:isSpawned() then
             table.insert(phuaboDn, i)
         end
     end
@@ -124,6 +124,7 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
     mob:addMod(xi.mod.REGEN, 260)
     mob:setMod(xi.mod.DMGMAGIC, -5000) -- starts the fight with -50% magic damage taken, reduced to 25% after regen is taken off.
     mob:setMod(xi.mod.ATT, 452)
@@ -133,7 +134,7 @@ entity.onMobSpawn = function(mob)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.GRAVITY)
     mob:addImmunity(xi.immunity.BIND)
-    mob:addImmunity(xi.immunity.STUN)
+    -- mob:addImmunity(xi.immunity.STUN)
     mob:addImmunity(xi.immunity.SILENCE)
     mob:addImmunity(xi.immunity.PARALYZE)
     mob:addImmunity(xi.immunity.BLIND)
@@ -146,7 +147,7 @@ entity.onMobSpawn = function(mob)
     xi.mix.jobSpecial.config(mob, {
         specials =
         {
-            {id = xi.jsa.ASTRAL_FLOW, hpp = math.random(45, 55)},
+            { id = xi.jsa.ASTRAL_FLOW, hpp = math.random(45, 55) },
         },
     })
 end
@@ -163,6 +164,7 @@ entity.onMobEngage = function(mob, target)
 end
 
 entity.onMobFight = function(mob, target)
+    mob:setAnimationSub(2)
     -- reduce regen after nine Xzomits and Hpemdes (total of both) groups are killed
     if
         mob:getLocalVar('JoL_Regen_Reduction') == 0 and
@@ -254,19 +256,19 @@ entity.onMobWeaponSkill = function(target, mob, skill)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     local jailerKills = player:getLocalVar('Cactuar_JOL_KILLS')
     player:setLocalVar('Cactuar_JOL_KILLS', jailerKills + 1)
     for i = ID.mob.JAILER_OF_LOVE + 1, ID.mob.JAILER_OF_LOVE + 27 do
         local pet = GetMobByID(i)
-        if pet:isSpawned() then
+        if pet and pet:isSpawned() then
             DespawnMob(i)
         end
     end
 end
 
 entity.onMobDespawn = function(mob)
-    if math.random(100) <= 25 then -- 25% chance to spawn Absolute Virtue
+    --if math.random(1, 100) <= 25 then -- 25% chance to spawn Absolute Virtue
         local highestEnmityTarget = nil
         local highestEnmity = -1
 
@@ -289,11 +291,11 @@ entity.onMobDespawn = function(mob)
                 end
             end
         end
-        --[[SpawnMob(ID.mob.ABSOLUTE_VIRTUE)
+        SpawnMob(ID.mob.ABSOLUTE_VIRTUE)
         if highestEnmityTarget then
             GetMobByID(ID.mob.ABSOLUTE_VIRTUE):updateEnmity(highestEnmityTarget)
-        end]]
-    end
+        end
+    --end
 end
 
 return entity

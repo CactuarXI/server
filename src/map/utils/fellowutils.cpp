@@ -471,8 +471,8 @@ namespace fellowutils
 
             PMaster->loc.zone->InsertPET(PFellow);
             PMaster->m_PFellow = PFellow;
-            PMaster->pushPacket(new CCharUpdatePacket(PMaster));
-            PMaster->pushPacket(new CCharSyncPacket(PMaster));
+            PMaster->pushPacket<CCharUpdatePacket>(PMaster);
+            PMaster->pushPacket<CCharSyncPacket>(PMaster);
             luautils::OnMobSpawn(PFellow);
 
             // apply stats from previous zone if this fellow is being transfered
@@ -486,7 +486,7 @@ namespace fellowutils
                 _sql->Query("UPDATE char_fellow SET kills = 0, maxTime = %u WHERE charid = %u", GetMaxTime(PMaster), PMaster->id);
                 if (PMaster->GetLocalVar("triggerFellow") == 0)
                     PMaster->pushPacket(
-                        new CMessageSpecialPacket(PFellow, GetMessageOffset(PMaster->getZone()) + FELLOWMESSAGEOFFSET_CALL + GetPersonalityOffset(PMaster)));
+                        std::make_unique<CMessageSpecialPacket>(PFellow, GetMessageOffset(PMaster->getZone()) + FELLOWMESSAGEOFFSET_CALL + GetPersonalityOffset(PMaster)));
             }
         }
         else
@@ -1055,7 +1055,7 @@ namespace fellowutils
 
                         SaveFellowExp(PMaster, currentLvl, currentExp);
                         // fellow levels up
-                        PFellow->loc.zone->PushPacket(PFellow, CHAR_INRANGE_SELF, new CMessageCombatPacket(PFellow, PMob, currentLvl, 0, 9));
+                        PFellow->loc.zone->PushPacket(PFellow, CHAR_INRANGE_SELF, std::make_unique<CMessageCombatPacket>(PFellow, PMob, currentLvl, 0, 9));
                         PFellow->updatemask |= UPDATE_HP;
                         PFellow->SetLocalVar("mpNotice", 0);
                         return;
@@ -1108,7 +1108,7 @@ namespace fellowutils
             else if (kills == maxKills)
             {
                 TriggerFellowChat(PMaster, FELLOWCHAT_LEAVE); // Last Kill Leaving
-                PMaster->loc.zone->PushPacket(PMaster, CHAR_INRANGE_SELF, new CFellowDespawnPacket(PMaster->m_PFellow));
+                PMaster->loc.zone->PushPacket(PMaster, CHAR_INRANGE_SELF, std::make_unique<CFellowDespawnPacket>(PMaster->m_PFellow));
                 PMaster->RemoveFellow();
             }
             const char* Query;
@@ -1287,7 +1287,7 @@ namespace fellowutils
         else if (option == FELLOWCHAT_LEAVE)
             message = FELLOWMESSAGEOFFSET_LEAVE;
 
-        PChar->pushPacket(new CMessageSpecialPacket(PChar->m_PFellow, MessageOffset + message + GetPersonalityOffset(PChar), param));
+        PChar->pushPacket(std::make_unique<CMessageSpecialPacket>(PChar->m_PFellow, MessageOffset + message + GetPersonalityOffset(PChar), param));
     }
 
     void AttackTarget(CBattleEntity* PMaster, CBattleEntity* PTarget)

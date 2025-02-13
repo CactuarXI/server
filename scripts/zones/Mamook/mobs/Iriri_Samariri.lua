@@ -77,6 +77,10 @@ entity.onMobDespawn = function(mob)
     end
 end
 
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
+end
+
 entity.onMobDeath = function(mob, player, optParams)
     local mobId = mob:getID()
     for i = mobId + 1, mobId + 4 do

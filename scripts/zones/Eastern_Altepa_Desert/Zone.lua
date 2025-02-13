@@ -14,13 +14,13 @@ zoneObject.onInitialize = function(zone)
      xi.mob.nmTODPersistCache(zone, ID.mob.CACTROT_RAPIDO)
      xi.mob.nmTODPersistCache(zone, ID.mob.CENTURIO_XII_I)
 
-    xi.conq.setRegionalConquestOverseers(zone:getRegionID())
+    xi.conquest.setRegionalConquestOverseers(zone:getRegionID())
     xi.chocobo.initZone(zone)
     xi.cactuarRegimes.initializeBooks(zone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranking, isConquestAlliance)
-    xi.conq.onConquestUpdate(zone, updatetype, influence, owner, ranking, isConquestAlliance)
+    xi.conquest.onConquestUpdate(zone, updatetype, influence, owner, ranking, isConquestAlliance)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

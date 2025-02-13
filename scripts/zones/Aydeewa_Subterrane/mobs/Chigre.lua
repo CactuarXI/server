@@ -17,8 +17,8 @@ end
 
 entity.onMobSpawn = function(mob)
     mob:setLocalVar('[rage]timer', 3600) -- 60 minutes
-    mob:setMod(xi.mod.LULLABYRES, 100)
-    mob:setMod(xi.mod.SLEEPRES, 100)
+    mob:addImmunity(xi.immunity.GRAVITY)
+    mob:addImmunity(xi.immunity.BIND)
 end
 
 entity.onMobDeath = function(mob, player, optParams)

@@ -2,7 +2,7 @@
 -- Area: Ceizak Battlegrounds
 -- NPC: Root
 -----------------------------------
-
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

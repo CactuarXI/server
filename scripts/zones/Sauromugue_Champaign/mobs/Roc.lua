@@ -12,6 +12,8 @@ mixins =
 local entity = {}
 
 entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.GIL_MIN, 15000)
+    mob:setMobMod(xi.mobMod.GIL_MAX, 30000)
 end
 
 entity.onMobSpawn = function(mob)

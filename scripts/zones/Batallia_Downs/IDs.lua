@@ -55,6 +55,8 @@ zones[xi.zone.BATALLIA_DOWNS] =
         RAPTOR_SECOND_WIND            = 12998, -- The raptor has gained a second wind!
         MEET_SYRILLIA                 = 12999, -- Meet up with Syrillia.
         RAPTOR_SPEEDS_OFF             = 13000, -- The raptor speeds off into the sunset...
+
+        TIME_ELAPSED                  = 7690,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
     },
     mob =
     {

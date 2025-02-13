@@ -29,8 +29,9 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
             skill:setSkillchainProps(xi.skillchainType.LIQUEFACTION, xi.skillchainType.NONE, xi.skillchainType.NONE)
         end
     end
-    
-    xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, xi.effect.DEFENSE_DOWN, 30, 0, 300)
+
+    local duration = math.random(120, 180)
+    xi.mobskills.mobPhysicalStatusEffectMove(mob, target, skill, xi.effect.DEFENSE_DOWN, 30, 0, duration)
 
     target:takeDamage(dmg, mob, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
     return dmg

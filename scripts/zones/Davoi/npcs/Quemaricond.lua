@@ -29,19 +29,10 @@ entity.onSpawn = function(npc)
     npc:pathThrough(pathNodes, xi.path.flag.PATROL)
 end
 
-entity.onTrade = function(player, npc, trade)
-end
-
 entity.onTrigger = function(player, npc)
     player:showText(npc, ID.text.QUEMARICOND_DIALOG)
     npc:clearPath(true)
     npc:timer(2000, function(npcArg) npc:continuePath() end)
-end
-
-entity.onEventUpdate = function(player, csid, option, npc)
-end
-
-entity.onEventFinish = function(player, csid, option, npc)
 end
 
 return entity

@@ -1,12 +1,11 @@
 -----------------------------------
---   Area: Aydeewa Subterrane
---    Mob: T3 ZNM - Nosferatu
--- Author: Spaceballs
+-- Area: Aydeewa Subterrane
+--  ZNM: Nosferatu (ZNM T3)
 -----------------------------------
-mixins = {require('scripts/mixins/job_special'),
-require('scripts/mixins/rage')}
-
+mixins = { require('scripts/mixins/job_special'),
+require('scripts/mixins/rage') }
 -----------------------------------
+---@type TMobEntity
 local entity = {}
 local ID = zones[xi.zone.AYDEEWA_SUBTERRANE]
 
@@ -112,7 +111,7 @@ entity.onMobDespawn = function(mob)
     despawnAdds(mob)
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     despawnAdds(mob)
 end
 

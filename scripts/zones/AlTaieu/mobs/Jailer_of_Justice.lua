@@ -22,6 +22,10 @@ local spawnXzomit = function(mob, xzomit)
     end)
 end
 
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
+end
+
 entity.onMobSpawn = function(mob)
     mob:setLocalVar('familiarTrigger', math.random(40, 60))
     mob:setLocalVar('canCharm', os.time() + 240)

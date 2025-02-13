@@ -15,7 +15,7 @@ end
 
 entity.onMobSpawn = function(mob)
     mob:setLocalVar('timer', os.time() + 30)
-    mob:setSpeed(30)
+    mob:setBaseSpeed(30)
 end
 
 entity.onMobWeaponSkill = function(target, mob, skill)

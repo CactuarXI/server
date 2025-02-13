@@ -50,6 +50,8 @@ zones[xi.zone.NORTH_GUSTABERG] =
         VOIDWALKER_BREAK_KI           = 11530, -- The <keyitem> shatters into tiny fragments.
         VOIDWALKER_OBTAIN_KI          = 11531, -- Obtained key item: <keyitem>!
         COMMON_SENSE_SURVIVAL         = 12477, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+
+        TIME_ELAPSED                  = 8189,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
     },
     mob =
     {

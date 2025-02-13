@@ -8,6 +8,8 @@ mixins = { require('scripts/mixins/job_special') }
 local entity = {}
 
 entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.GIL_MIN, 1000)
+    mob:setMobMod(xi.mobMod.GIL_MAX, 3000)
     mob:setMod(xi.mod.PARALYZERES, 80)
 end
 

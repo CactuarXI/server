@@ -10,6 +10,7 @@ zoneObject.onInitialize = function(zone)
     zone:registerTriggerArea(1, -84.302, 6.5, -120.997, -77, 7.5, -114) -- Used for stairs teleport -85.1, 7, -119.9
 
     -- NM Persistence
+    UpdateNMSpawnPoint(ID.mob.BARBASTELLE)
     xi.mob.nmTODPersistCache(zone, ID.mob.VRTRA)
     xi.mob.nmTODPersistCache(zone, ID.mob.BARBASTELLE)
 
@@ -32,7 +33,7 @@ zoneObject.onZoneIn = function(player, prevZone)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranking, isConquestAlliance)
-    xi.conq.onConquestUpdate(zone, updatetype, influence, owner, ranking, isConquestAlliance)
+    xi.conquest.onConquestUpdate(zone, updatetype, influence, owner, ranking, isConquestAlliance)
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)

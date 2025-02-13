@@ -2,7 +2,7 @@
 -- Area: Marjami Ravine
 -- NPC: Monolithic Boulder
 -----------------------------------
-
+---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)

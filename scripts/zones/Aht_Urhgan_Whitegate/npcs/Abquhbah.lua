@@ -5,9 +5,6 @@
 ---@type TNpcEntity
 local entity = {}
 
-entity.onTrade = function(player, npc, trade)
-end
-
 entity.onTrigger = function(player, npc)
     local promotion = player:getCharVar('AssaultPromotion')
     local rank = 0
@@ -25,12 +22,6 @@ entity.onTrigger = function(player, npc)
     end
     player:printToPlayer('You currently have '.. promotion ..'/25 promotion points.', xi.msg.channel.SYSTEM_3)
     player:startEvent(255, rank)
-end
-
-entity.onEventUpdate = function(player, csid, option, npc)
-end
-
-entity.onEventFinish = function(player, csid, option, npc)
 end
 
 return entity

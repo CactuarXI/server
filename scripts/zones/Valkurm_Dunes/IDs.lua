@@ -46,6 +46,10 @@ zones[xi.zone.VALKURM_DUNES] =
         UNITY_WANTED_BATTLE_INTERACT   = 8154,  -- Those who have accepted % must pay # Unity accolades to participate. The content for this Wanted battle is #. [Ready to begin?/You do not have the appropriate object set, so your rewards will be limited.]
         REGIME_REGISTERED              = 10270, -- New training regime registered!
         COMMON_SENSE_SURVIVAL          = 12324, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+
+        YOU_SENSE_AN_EVIL_PRESENCE     = 7725,  -- You sense an evil presence...
+        WHAT_DO_YOU_THINK              = 7727,  -- What do you think you are doing!?
+        TIME_ELAPSED                   = 7807,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
     },
     mob =
     {

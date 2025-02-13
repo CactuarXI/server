@@ -8,6 +8,7 @@
 local entity = {}
 
 entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
     mob:setMod(xi.mod.LULLABYRES, 90)
 end
 

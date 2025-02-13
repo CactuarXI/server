@@ -279,6 +279,18 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight, bo
         hasSneak     = PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK);
     }
 
+    // Illusion effect seems to ignore true detection (true sound Porrogos don't aggro with Illusion up)
+    // Additionally, mobs that would normally aggro you via sound that also ignore illusion must also ignore you with illusion if you have sneak up,
+    // Fish in Mamook will see you through Illusion but not if you have sneak up
+    if (PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ILLUSION))
+    {
+        if (!PMob->getMobMod(MOBMOD_SEES_THROUGH_ILLUSION))
+        {
+            hasInvisible = true;
+            hasSneak     = true;
+        }
+    }
+
     bool isTargetAndInRange = PMob->GetBattleTargetID() == PTarget->targid && currentDistance <= PMob->GetMeleeRange();
 
     if (detectSight && !hasInvisible && currentDistance < PMob->getMobMod(MOBMOD_SIGHT_RANGE) && facing(PMob->loc.p, PTarget->loc.p, 64))
@@ -754,7 +766,7 @@ void CMobController::Move()
 
         if (((currentDistance > closeDistance) || move) && PMob->PAI->CanFollowPath())
         {
-            if (PMob->speed != 0 && PMob->getMobMod(MOBMOD_NO_MOVE) == 0 && m_Tick >= m_LastSpecialTime)
+            if (PMob->GetSpeed() != 0 && PMob->getMobMod(MOBMOD_NO_MOVE) == 0 && m_Tick >= m_LastSpecialTime)
             {
                 // attempt to teleport to target (if in range)
                 if (PMob->getMobMod(MOBMOD_TELEPORT_TYPE) == 2)
@@ -779,7 +791,7 @@ void CMobController::Move()
                             PMob->PAI->PathFind->PathInRange(PTarget->loc.p, closeDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN);
                         }
                     }
-                    else if (distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10)
+                    else if (!isWithinDistance(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p, 2.5f))
                     {
                         // try to find path towards target
                         PMob->PAI->PathFind->PathInRange(PTarget->loc.p, closeDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN);
@@ -1466,7 +1478,7 @@ bool CMobController::IsSpecialSkillReady(float currentDistance)
         bonusTime = -10;
     }
 
-    snapshotBonus = (PMob->getBigMobMod(MOBMOD_SPECIAL_COOL) - bonusTime) * (PMob->getMod(Mod::SNAP_SHOT) / 100);
+    snapshotBonus = (PMob->getBigMobMod(MOBMOD_SPECIAL_COOL) - bonusTime) * (PMob->getMod(Mod::SNAPSHOT) / 100);
 
     return m_Tick >= m_LastSpecialTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_SPECIAL_COOL) - bonusTime - snapshotBonus);
 }

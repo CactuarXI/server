@@ -1,7 +1,6 @@
 -----------------------------------
 -- Area: La Theine Plateau
 --  NPC: Faurbellant
--- Type: Quest NPC
 -- Involved in Quest: Gates of Paradise
 -- !pos 484 24 -89 102
 -----------------------------------
@@ -9,9 +8,6 @@ local ID = zones[xi.zone.LA_THEINE_PLATEAU]
 -----------------------------------
 ---@type TNpcEntity
 local entity = {}
-
-entity.onTrade = function(player, npc, trade)
-end
 
 entity.onTrigger = function(player, npc)
 end

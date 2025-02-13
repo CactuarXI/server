@@ -7,7 +7,7 @@
 local ID = zones[xi.zone.SOUTHERN_SAN_DORIA]
 -----------------------------------
 
-local quest = Quest:new(xi.questLog.SANDORIA, xi.quest.id.sandoria.THE_MERCHANT_S_BIDDING)
+local quest = Quest:new(xi.questLog.SANDORIA, xi.quest.id.sandoria.THE_MERCHANTS_BIDDING)
 
 quest.reward =
 {

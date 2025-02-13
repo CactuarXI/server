@@ -1,13 +1,13 @@
 -----------------------------------
---   Area: Mount Zhayolm
---    Mob: T3 ZNM - Khromasoul Bhurborlor (Chromesole Bulbasaur)
--- Author: Spaceballs
+-- Area: Mount Zhayolm
+--  Mob: Khromasoul Bhurborlor (ZNM T3)
 -----------------------------------
 mixins = {require('scripts/mixins/job_special'),
 require('scripts/mixins/rage')}
 
 -----------------------------------
 local ID = zones[xi.zone.MOUNT_ZHAYOLM]
+---@type TMobEntity
 local entity = {}
 
 local function despawnAdds(mob) 
@@ -109,7 +109,7 @@ entity.onMobDespawn = function(mob)
     despawnAdds(mob)
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     despawnAdds(mob)
 end
 

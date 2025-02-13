@@ -7,6 +7,7 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1) -- 'Has additional effect: Drain'
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
     mob:setMod(xi.mod.UFASTCAST, 50) -- 'His spells have very fast cast, my guess would be close to 50% less casting time.'
     mob:setMod(xi.mod.SILENCERES, 80)
     mob:setMod(xi.mod.PARALYZERES, 80)
