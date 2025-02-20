@@ -44,6 +44,8 @@ zones[xi.zone.WESTERN_ALTEPA_DESERT] =
         UNITY_WANTED_BATTLE_INTERACT  = 7708,  -- Those who have accepted % must pay # Unity accolades to participate. The content for this Wanted battle is #. [Ready to begin?/You do not have the appropriate object set, so your rewards will be limited.]
         REGIME_REGISTERED             = 9824,  -- New training regime registered!
         COMMON_SENSE_SURVIVAL         = 11813, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+
+        FOUND_ITEM_WITH_EASE          = 7309,  -- It appears your chocobo found this item with ease.
     },
     mob =
     {

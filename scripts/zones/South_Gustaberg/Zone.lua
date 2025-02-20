@@ -12,7 +12,7 @@ zoneObject.onInitialize = function(zone)
     -- NM Persistence
     xi.mob.nmTODPersistCache(zone, ID.mob.TOCOCO)
     -- A Chocobo Riding Game finish line
-    zone:registerTriggerArea(1, 580.074, 5, -307.355, 0, 0, 0)
+    zone:registerCylindricalTriggerArea(1, 580.074, -307.355, 5)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -42,7 +42,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranki
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
-    local triggerAreaID = triggerArea:GetTriggerAreaID()
+    local triggerAreaID = triggerArea:getTriggerAreaID()
 
     if triggerAreaID == 1 and player:hasStatusEffect(xi.effect.MOUNTED) then
         xi.chocoboGame.onTriggerAreaEnter(player)

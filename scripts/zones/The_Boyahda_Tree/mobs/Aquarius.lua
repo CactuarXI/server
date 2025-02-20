@@ -7,12 +7,16 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+    mob:setMobMod(xi.mobMod.GIL_MIN, 18000)
+    mob:setMobMod(xi.mobMod.GIL_MAX, 18000)
 end
 
 entity.onMobSpawn = function(mob)
-    mob:addMod(xi.mod.DEFP, 50)
-    mob:addMod(xi.mod.ACC, -50)
-    mob:addMod(xi.mod.ATTP, 50)
+    mob:addImmunity(xi.immunity.LIGHT_SLEEP)
+    mob:addImmunity(xi.immunity.DARK_SLEEP)
+    mob:addImmunity(xi.immunity.POISON)
+    mob:setMod(xi.mod.UDMGPHYS, -5000)
+    mob:setMod(xi.mod.UDMGRANGE, -5000)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)

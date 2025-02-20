@@ -67,7 +67,7 @@ entity.onMobFight = function(mob, target)
 
                 -- reset hate on all mobs attacking player
                 for _, aggro in pairs(target:getNotorietyList()) do
-                    aggro:clearEnmity(target)
+                    aggro:clearEnmityForEntity(target)
                 end
 
                 for i = 1, #lootTable do

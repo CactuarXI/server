@@ -4,34 +4,37 @@
 -----------------------------------
 mixins =
 {
+    require('scripts/mixins/job_special'),
     require('scripts/mixins/families/imp'),
-    require('scripts/mixins/job_special')
 }
 -----------------------------------
 ---@type TMobEntity
 local entity = {}
 
+entity.onMobSpawn = function(mob)
+    xi.mix.jobSpecial.config(mob, {
+        specials =
+        {
+            { id = xi.jsa.MANAFONT, hpp = math.random(10, 50) },
+        },
+    })
 
-entity.onMobInitialize = function(mob)
-    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
-end
-
-entity.onMobEngage = function(mob, target)
-    mob:useMobAbility(1710, target)
-end
-
-entity.onMobFight = function(mob, target)
-    local battleTime = mob:getBattleTime()
-
-    if mob:getLocalVar('jaTime') < battleTime then
-        if mob:getHPP() > 20 then
-            mob:setLocalVar('jaTime', battleTime + math.random(10, 60))
-            mob:useMobAbility(1710, target)
-        else
-            mob:setLocalVar('jaTime', battleTime + math.random(5, 10))
-            mob:useMobAbility(1711, target)
+    mob:setTP(3000)
+    mob:setMobSkillAttack(0)
+    mob:setMagicCastingEnabled(true)
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
+    mob:setMobMod(xi.mobMod.GIL_MAX, -1)
+    mob:setLocalVar('tp_spam', math.random(5, 15))
+    mob:addListener('COMBAT_TICK', 'BUKKI_TICK', function(mobArg)
+        if
+            mobArg:getHPP() <= mobArg:getLocalVar('tp_spam') and
+            mobArg:getLocalVar('tp_spam') > 0
+        then
+            mobArg:setLocalVar('tp_spam', 0)
+            mobArg:setMagicCastingEnabled(false)
+            mobArg:setMobSkillAttack(788)
         end
-    end
+    end)
 end
 
 entity.onMobDeath = function(mob, player, optParams)

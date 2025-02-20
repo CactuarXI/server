@@ -15,7 +15,7 @@ zoneObject.onInitialize = function(zone)
     xi.mob.nmTODPersistCache(zone, ID.mob.LAMIE_NO9)
     xi.mob.nmTODPersistCache(zone, ID.mob.EURYALE)
     -- xi.mob.nmTODPersistCache(zone, ID.mob.LAMIA_NO19) -- This is controled via player.lua global.
-    zone:registerTriggerArea(1, -462, -4, -420, -455, -1, -392) -- approach the Cutter
+    zone:registerCuboidTriggerArea(1, -462, -4, -420, -455, -1, -392) -- approach the Cutter
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

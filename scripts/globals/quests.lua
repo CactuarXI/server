@@ -659,8 +659,9 @@ xi.quest.id =
         WHEN_THE_BOW_BREAKS              = 45, -- + Converted
         FIST_OF_THE_PEOPLE               = 46, -- + Converted
         SOOTHING_WATERS                  = 47, -- + Converted
+        EMBERS_OF_HIS_PAST               = 48, -- + Converted
         -- JP ENTRIES OR INVALID
-        THE_PRANKSTER                    = 60,
+        THE_PRANKSTER                    = 60, -- + Converted
         DELIVERING_THE_GOODS             = 61, -- + Converted
         VANISHING_ACT                    = 62, -- + Converted
         STRIKING_A_BALANCE               = 63, -- + Converted

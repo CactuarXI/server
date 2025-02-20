@@ -100,7 +100,6 @@
 #include "packets/blacklist_edit_response.h"
 #include "packets/campaign_map.h"
 #include "packets/change_music.h"
-#include "packets/char.h"
 #include "packets/char_abilities.h"
 #include "packets/char_appearance.h"
 #include "packets/char_check.h"
@@ -116,8 +115,8 @@
 #include "packets/char_skills.h"
 #include "packets/char_spells.h"
 #include "packets/char_stats.h"
+#include "packets/char_status.h"
 #include "packets/char_sync.h"
-#include "packets/char_update.h"
 #include "packets/chat_message.h"
 #include "packets/chocobo_digging.h"
 #include "packets/conquest_map.h"
@@ -597,7 +596,7 @@ void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PCh
     TracyZoneScoped;
     TracyZoneCString("Player Sync");
 
-    if (PChar->status != STATUS_TYPE::SHUTDOWN && PChar->status != STATUS_TYPE::DISAPPEAR)
+    if (PChar->status != STATUS_TYPE::SHUTDOWN && PChar->status != STATUS_TYPE::DISAPPEAR && !PChar->pendingPositionUpdate)
     {
         float  newX        = data.ref<float>(0x04);
         float  newY        = data.ref<float>(0x08);
@@ -682,8 +681,8 @@ void SmallPacket0x016(map_session_data_t* const PSession, CCharEntity* const PCh
 
     if (targid == PChar->targid)
     {
-        PChar->updateCharPacket(PChar, ENTITY_SPAWN, UPDATE_ALL_CHAR);
-        PChar->pushPacket<CCharUpdatePacket>(PChar);
+        PChar->updateEntityPacket(PChar, ENTITY_SPAWN, UPDATE_ALL_CHAR);
+        PChar->pushPacket<CCharStatusPacket>(PChar);
     }
     else
     {
@@ -697,7 +696,7 @@ void SmallPacket0x016(map_session_data_t* const PSession, CCharEntity* const PCh
             {
                 if (!PCharEntity->m_isGMHidden)
                 {
-                    PChar->updateCharPacket(PCharEntity, ENTITY_SPAWN, UPDATE_ALL_CHAR);
+                    PChar->updateEntityPacket(PCharEntity, ENTITY_SPAWN, UPDATE_ALL_CHAR);
                 }
                 else
                 {
@@ -1125,7 +1124,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
             PChar->updatemask |= UPDATE_HP;
             PChar->StatusEffectContainer->DelStatusEffectSilent(EFFECT_MOUNTED);
             // Workaround for a bug where dismounting out of update range would cause the character to stop rendering.
-            PChar->loc.zone->UpdateCharPacket(PChar, ENTITY_UPDATE, UPDATE_HP);
+            PChar->loc.zone->UpdateEntityPacket(PChar, ENTITY_UPDATE, UPDATE_HP);
         }
         break;
         case 0x13: // tractor menu
@@ -1135,23 +1134,10 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                 // PChar->PBattleAI->SetCurrentAction(ACTION_RAISE_MENU_SELECTION);
                 PChar->loc.p           = PChar->m_StartActionPos;
                 PChar->loc.destination = PChar->getZone();
+                PChar->status          = STATUS_TYPE::DISAPPEAR;
                 PChar->loc.boundary    = 0;
                 PChar->clearPacketList();
-
-                // This is a stopgap until we determine a better solution of how add the member
-                // back to the battlefield member list after the zone.
-                if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_BATTLEFIELD))
-                {
-                    PChar->status = STATUS_TYPE::INVISIBLE;
-                    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, std::make_unique<CPositionPacket>(PChar));
-                    PChar->updatemask |= UPDATE_POS;
-                    PChar->status = STATUS_TYPE::NORMAL;
-                }
-                else
-                {
-                    PChar->status = STATUS_TYPE::DISAPPEAR;
-                    charutils::SendToZone(PChar, 2, zoneutils::GetZoneIPP(PChar->loc.destination));
-                }
+                charutils::SendToZone(PChar, 2, zoneutils::GetZoneIPP(PChar->loc.destination));
             }
 
             PChar->m_hasTractor = 0;
@@ -2280,16 +2266,12 @@ void SmallPacket0x03D(map_session_data_t* const PSession, CCharEntity* const PCh
         PChar->pushPacket<CBlacklistEditResponsePacket>(0, "", 0x02);
     };
 
-    // Attempt to locate the character by their name
-    const auto rset = db::preparedStmt("SELECT charid, accid FROM chars WHERE charname = ? LIMIT 1", name);
-    if (!rset || rset->rowsCount() != 1 || !rset->next())
+    const auto [charid, accid] = charutils::getCharIdAndAccountIdFromName(name);
+    if (!charid)
     {
         sendFailPacket();
         return;
     }
-
-    uint32 charid = rset->get<uint32>("charid");
-    uint32 accid  = rset->get<uint32>("accid");
 
     // User is trying to add someone to their blacklist
     if (cmd == 0x00)
@@ -2780,10 +2762,7 @@ void SmallPacket0x058(map_session_data_t* const PSession, CCharEntity* const PCh
 void SmallPacket0x059(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket& data)
 {
     TracyZoneScoped;
-    if (PChar->animation == ANIMATION_SYNTH)
-    {
-        synthutils::sendSynthDone(PChar);
-    }
+    // Do nothing. This is handled in synth state.
 }
 
 /************************************************************************
@@ -2893,14 +2872,16 @@ void SmallPacket0x05C(map_session_data_t* const PSession, CCharEntity* const PCh
 
         if (updatePosition)
         {
-            PChar->loc.p.x        = data.ref<float>(0x04);
-            PChar->loc.p.y        = data.ref<float>(0x08);
-            PChar->loc.p.z        = data.ref<float>(0x0C);
-            PChar->loc.p.rotation = data.ref<uint8>(0x1F);
+            position_t newPos = {
+                data.ref<float>(0x04),
+                data.ref<float>(0x08),
+                data.ref<float>(0x0C),
+                0,
+                data.ref<uint8>(0x1F),
+            };
+            PChar->pushPacket<CPositionPacket>(PChar, newPos, POSMODE::EVENT);
+            // PChar->pushPacket<CCSPositionPacket>(PChar); // Same as CPositionPacket? When is this one sent?
         }
-
-        PChar->pushPacket<CCSPositionPacket>(PChar);
-        PChar->pushPacket<CPositionPacket>(PChar);
     }
     PChar->pushPacket<CReleasePacket>(PChar, RELEASE_TYPE::EVENT);
 }
@@ -3242,7 +3223,7 @@ void SmallPacket0x060(map_session_data_t* const PSession, CCharEntity* const PCh
 void SmallPacket0x061(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket& data)
 {
     TracyZoneScoped;
-    PChar->pushPacket<CCharUpdatePacket>(PChar);
+    PChar->pushPacket<CCharStatusPacket>(PChar);
     PChar->pushPacket<CCharHealthPacket>(PChar);
     PChar->pushPacket<CCharStatsPacket>(PChar, false); // Umeboshi "resetflips"
     PChar->pushPacket<CCharSkillsPacket>(PChar);
@@ -3654,12 +3635,10 @@ void SmallPacket0x071(map_session_data_t* const PSession, CCharEntity* const PCh
                 {
                     const auto victimName = escapeString(asStringFromUntrustedSource(data[0x0C], 15));
 
-                    int32 ret = _sql->Query("SELECT charid FROM chars WHERE charname = '%s'", victimName);
-                    if (ret != SQL_ERROR && _sql->NumRows() == 1 && _sql->NextRow() == SQL_SUCCESS)
+                    if (const auto victimId = charutils::getCharIdFromName(victimName))
                     {
-                        uint32 id = _sql->GetUIntData(0);
-                        if (_sql->Query("DELETE FROM accounts_parties WHERE partyid = %u AND charid = %u", PChar->id, id) == SQL_SUCCESS &&
-                            _sql->AffectedRows())
+                        const auto [rset, affectedRows] = db::preparedStmtWithAffectedRows("DELETE FROM accounts_parties WHERE partyid = ? AND charid = ?", PChar->id, victimId);
+                        if (rset && affectedRows)
                         {
                             ShowDebug("%s has removed %s from party", PChar->getName(), victimName);
 
@@ -3676,7 +3655,7 @@ void SmallPacket0x071(map_session_data_t* const PSession, CCharEntity* const PCh
                             }
 
                             // Notify the player they were just kicked -- they are no longer in the DB and party/alliance reloads won't notify them.
-                            ref<uint32>(reloadData, 0) = id;
+                            ref<uint32>(reloadData, 0) = victimId;
                             message::send(MSG_PLAYER_KICK, reloadData, sizeof(reloadData), nullptr);
                         }
                     }
@@ -3752,22 +3731,21 @@ void SmallPacket0x071(map_session_data_t* const PSession, CCharEntity* const PCh
                 if (!PVictim && PChar->PParty->m_PAlliance->getMainParty() == PChar->PParty)
                 {
                     const auto victimName = escapeString(asStringFromUntrustedSource(data[0x0C], 15));
+                    uint32     allianceID = PChar->PParty->m_PAlliance->m_AllianceID;
 
-                    uint32 allianceID = PChar->PParty->m_PAlliance->m_AllianceID;
-
-                    int32 ret = _sql->Query("SELECT charid FROM chars WHERE charname = '%s'", victimName);
-                    if (ret != SQL_ERROR && _sql->NumRows() == 1 && _sql->NextRow() == SQL_SUCCESS)
+                    if (const auto victimId = charutils::getCharIdFromName(victimName))
                     {
-                        uint32 charid = _sql->GetUIntData(0);
-                        ret           = _sql->Query(
-                            "SELECT partyid FROM accounts_parties WHERE charid = %u AND allianceid = %u AND partyflag & %d",
-                            charid, PChar->PParty->m_PAlliance->m_AllianceID, PARTY_LEADER | PARTY_SECOND | PARTY_THIRD);
-                        if (ret != SQL_ERROR && _sql->NumRows() == 1 && _sql->NextRow() == SQL_SUCCESS)
+                        const auto rset = db::preparedStmt(
+                            "SELECT partyid FROM accounts_parties WHERE charid = ? AND allianceid = ? AND partyflag & ?",
+                            victimId, PChar->PParty->m_PAlliance->m_AllianceID, PARTY_LEADER | PARTY_SECOND | PARTY_THIRD);
+
+                        FOR_DB_SINGLE_RESULT(rset)
                         {
-                            uint32 partyid = _sql->GetUIntData(0);
-                            if (_sql->Query("UPDATE accounts_parties SET allianceid = 0, partyflag = partyflag & ~%d WHERE partyid = %u",
-                                            PARTY_SECOND | PARTY_THIRD, partyid) == SQL_SUCCESS &&
-                                _sql->AffectedRows())
+                            uint32 partyid = rset->get<uint32>("partyid");
+
+                            const auto [rset2, affectedRows] = db::preparedStmtWithAffectedRows("UPDATE accounts_parties SET allianceid = 0, partyflag = partyflag & ~? WHERE partyid = ?",
+                                                                                                PARTY_SECOND | PARTY_THIRD, partyid);
+                            if (rset2 && affectedRows)
                             {
                                 ShowDebug("%s has removed %s party from alliance", PChar->getName(), victimName);
 
@@ -5021,7 +4999,7 @@ void SmallPacket0x0BE(map_session_data_t* const PSession, CCharEntity* const PCh
                     PChar->UpdateHealth();
                     PChar->addHP(PChar->GetMaxHP());
                     PChar->addMP(PChar->GetMaxMP());
-                    PChar->pushPacket<CCharUpdatePacket>(PChar);
+                    PChar->pushPacket<CCharStatusPacket>(PChar);
                     PChar->pushPacket<CCharStatsPacket>(PChar, true); // Umeboshi "resetflips"
                     PChar->pushPacket<CCharSkillsPacket>(PChar);
                     PChar->pushPacket<CCharRecastPacket>(PChar);
@@ -5262,7 +5240,7 @@ void SmallPacket0x0C4(map_session_data_t* const PSession, CCharEntity* const PCh
             PChar->pushPacket<CInventoryItemPacket>(PItemLinkshell, LocationID, SlotID);
         }
         PChar->pushPacket<CInventoryFinishPacket>();
-        PChar->pushPacket<CCharUpdatePacket>(PChar);
+        PChar->pushPacket<CCharStatusPacket>(PChar);
     }
 }
 
@@ -5546,7 +5524,7 @@ void SmallPacket0x0DC(map_session_data_t* const PSession, CCharEntity* const PCh
         charutils::SaveCharStats(PChar);
         charutils::SavePlayerSettings(PChar);
         PChar->pushPacket<CMenuConfigPacket>(PChar);
-        PChar->pushPacket<CCharUpdatePacket>(PChar);
+        PChar->pushPacket<CCharStatusPacket>(PChar);
         PChar->pushPacket<CCharSyncPacket>(PChar);
     }
 }
@@ -6719,6 +6697,7 @@ void SmallPacket0x100(map_session_data_t* const PSession, CCharEntity* const PCh
 
             // If removing RemoveAllEquipment, please add a charutils::CheckUnarmedItem(PChar) if main hand is empty.
             puppetutils::LoadAutomaton(PChar);
+
             if (mjob == JOB_BLU)
             {
                 blueutils::LoadSetSpells(PChar);
@@ -6749,6 +6728,7 @@ void SmallPacket0x100(map_session_data_t* const PSession, CCharEntity* const PCh
 
             charutils::CheckEquipLogic(PChar, SCRIPT_CHANGESJOB, prevsjob);
             puppetutils::LoadAutomaton(PChar);
+
             if (sjob == JOB_BLU)
             {
                 blueutils::LoadSetSpells(PChar);
@@ -6801,7 +6781,7 @@ void SmallPacket0x100(map_session_data_t* const PSession, CCharEntity* const PCh
         charutils::SaveCharStats(PChar);
 
         PChar->pushPacket<CCharJobsPacket>(PChar, true); // Umeboshi "resetflips"
-        PChar->pushPacket<CCharUpdatePacket>(PChar);
+        PChar->pushPacket<CCharStatusPacket>(PChar);
         PChar->pushPacket<CCharStatsPacket>(PChar, true); // Umeboshi "resetflips"
         PChar->pushPacket<CCharSkillsPacket>(PChar);
         PChar->pushPacket<CCharRecastPacket>(PChar);
@@ -6933,8 +6913,14 @@ void SmallPacket0x102(map_session_data_t* const PSession, CCharEntity* const PCh
             }
         }
     }
-    else if ((PChar->GetMJob() == JOB_PUP || PChar->GetSJob() == JOB_PUP) && job == JOB_PUP && PChar->PAutomaton != nullptr && PChar->PPet == nullptr)
+    else if ((PChar->GetMJob() == JOB_PUP || PChar->GetSJob() == JOB_PUP) && job == JOB_PUP)
     {
+        if (dynamic_cast<CAutomatonEntity*>(PChar->PPet))
+        {
+            // Client already prints an error about not being able to do this without our intervention
+            return;
+        }
+
         uint8 attachment = data.ref<uint8>(0x04);
 
         if (attachment == 0x00)
@@ -6953,12 +6939,12 @@ void SmallPacket0x102(map_session_data_t* const PSession, CCharEntity* const PCh
             if (data.ref<uint8>(0x0C) != 0)
             {
                 puppetutils::setHead(PChar, data.ref<uint8>(0x0C));
-                puppetutils::LoadAutomatonStats(PChar);
+                petutils::CalculateAutomatonStats(PChar, PChar->PPet);
             }
             else if (data.ref<uint8>(0x0D) != 0)
             {
                 puppetutils::setFrame(PChar, data.ref<uint8>(0x0D));
-                puppetutils::LoadAutomatonStats(PChar);
+                petutils::CalculateAutomatonStats(PChar, PChar->PPet);
             }
             else
             {
@@ -6971,6 +6957,7 @@ void SmallPacket0x102(map_session_data_t* const PSession, CCharEntity* const PCh
                 }
             }
         }
+
         PChar->pushPacket<CCharJobExtraPacket>(PChar, true);
         PChar->pushPacket<CCharJobExtraPacket>(PChar, false);
         puppetutils::SaveAutomaton(PChar);
@@ -7561,7 +7548,7 @@ void SmallPacket0x11B(map_session_data_t* const PSession, CCharEntity* const PCh
     PChar->m_jobMasterDisplay = data.ref<uint8>(0x04) > 0;
 
     charutils::SaveJobMasterDisplay(PChar);
-    PChar->pushPacket<CCharUpdatePacket>(PChar);
+    PChar->pushPacket<CCharStatusPacket>(PChar);
 }
 
 /************************************************************************

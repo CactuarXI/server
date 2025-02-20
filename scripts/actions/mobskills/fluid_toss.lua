@@ -13,6 +13,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
+-- TODO: can crit
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local numhits   = 1
     local accmod    = 1

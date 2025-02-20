@@ -471,7 +471,7 @@ namespace fellowutils
 
             PMaster->loc.zone->InsertPET(PFellow);
             PMaster->m_PFellow = PFellow;
-            PMaster->pushPacket<CCharUpdatePacket>(PMaster);
+            // PMaster->pushPacket<CCharUpdatePacket>(PMaster);
             PMaster->pushPacket<CCharSyncPacket>(PMaster);
             luautils::OnMobSpawn(PFellow);
 

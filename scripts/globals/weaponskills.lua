@@ -432,7 +432,7 @@ local function getSingleHitDamage(attacker, target, dmg, ftp, wsParams, calcPara
     if calcParams.attackType == xi.attackType.PHYSICAL then
         -- attacker:printToArea(string.format('%s\'s weapon skill scores a critical hit!', attacker:getName()), xi.msg.channel.SYSTEM_3, 1)
         -- calcParams.pdif = xi.weaponskills.generatePdif(calcParams.ccritratio[1], calcParams.ccritratio[2], true)
-        xi.combat.physical.calculateMeleePDIF(attacker, target, calcParams.attackInfo.weaponType, atkMultiplier, criticalHit, applyLevelCorrection, ignoresDefense, ignoreDefMultiplier, true, calcParams.attackInfo.slot)
+        xi.combat.physical.calculateMeleePDIF(attacker, target, calcParams.attackInfo.weaponType, atkMultiplier, criticalHit, applyLevelCorrection, ignoresDefense, ignoreDefMultiplier, true, calcParams.attackInfo.slot, false)
         if calcParams.criticalHit == true then
             local criticalHitsLanded          = attacker:getLocalVar('[criticalHitsLanded]')
             local criticalHitsLandedIncrement = 0

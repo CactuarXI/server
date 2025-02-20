@@ -16,9 +16,9 @@ zoneObject.onInitialize = function(zone)
     func.herculesTreeOnGameHour()
 
     -- Barge Regions (100%)
-    zone:registerTriggerArea(1, -271, 38, 533, 0, 0, 0)        -- Barge at north landing
-    zone:registerTriggerArea(2, 233, -15, -555, 270, 15, -500) -- Barge at south landing
-    zone:registerTriggerArea(3, -115, 28, 82, 0, 0, 0)         -- Barge as central landing
+    zone:registerCuboidTriggerArea(1, -271, 38, 533, 0, 0, 0)        -- Barge at north landing
+    zone:registerCuboidTriggerArea(2, 233, -15, -555, 270, 15, -500) -- Barge at south landing
+    zone:registerCuboidTriggerArea(3, -115, 28, 82, 0, 0, 0)         -- Barge as central landing
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -52,11 +52,11 @@ zoneObject.onGameHour = function(zone)
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
-    xi.barge.aboard(player, triggerArea:GetTriggerAreaID(), true)
+    xi.barge.aboard(player, triggerArea:getTriggerAreaID(), true)
 end
 
 zoneObject.onTriggerAreaLeave = function(player, triggerArea)
-    xi.barge.aboard(player, triggerArea:GetTriggerAreaID(), false)
+    xi.barge.aboard(player, triggerArea:getTriggerAreaID(), false)
 end
 
 zoneObject.onTransportEvent = function(player, transport)

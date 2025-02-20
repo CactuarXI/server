@@ -4,8 +4,8 @@
 -- Range is 13.5 yalms.
 -- Piercing damage Ranged Attack.
 -- Secondary modifiers: INT: 20%.
--- Additional Effect: Poison is 3 HP/tick.
--- Poison effect may not always process.
+-- Additional Effect: Poison is based on level
+-- Poison effect may resist
 -- Removes all Shadow Images on the target.
 -----------------------------------
 ---@type TMobSkill
@@ -19,6 +19,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 1
 end
 
+-- TODO: can crit
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     mob:setAnimationSub(1)
     local numhits = 1

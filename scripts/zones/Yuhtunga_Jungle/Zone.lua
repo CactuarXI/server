@@ -20,7 +20,7 @@ zoneObject.onInitialize = function(zone)
     xi.mob.nmTODPersistCache(zone, ID.mob.BAYAWAK)
 
     -- A Chocobo Riding Game finish line
-    zone:registerTriggerArea(1, -485.54, 5, -379.19, 0, 0, 0)
+    zone:registerCylindricalTriggerArea(1, -485.54, -379.19, 5)
 
     xi.conquest.setRegionalConquestOverseers(zone:getRegionID())
 
@@ -71,7 +71,7 @@ zoneObject.afterZoneIn = function(player)
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
-    local triggerAreaID = triggerArea:GetTriggerAreaID()
+    local triggerAreaID = triggerArea:getTriggerAreaID()
 
     if triggerAreaID == 1 and player:hasStatusEffect(xi.effect.MOUNTED) then
         xi.chocoboGame.onTriggerAreaEnter(player)

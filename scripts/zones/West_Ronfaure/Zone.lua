@@ -11,7 +11,7 @@ zoneObject.onInitialize = function(zone)
     --NM Persistence
     xi.mob.nmTODPersistCache(zone, ID.mob.AMANITA)
     -- A Chocobo Riding Game finish line
-    zone:registerTriggerArea(1, -135.60, 8, 264.53, 0, 0, 0)
+    zone:registerCylindricalTriggerArea(1, -135.60, 264.53, 8)
 
     xi.conquest.setRegionalConquestOverseers(zone:getRegionID())
     xi.cactuarRegimes.initializeBooks(zone)
@@ -44,7 +44,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranki
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
-    local triggerAreaID = triggerArea:GetTriggerAreaID()
+    local triggerAreaID = triggerArea:getTriggerAreaID()
 
     if triggerAreaID == 1 and player:hasStatusEffect(xi.effect.MOUNTED) then
         xi.chocoboGame.onTriggerAreaEnter(player)

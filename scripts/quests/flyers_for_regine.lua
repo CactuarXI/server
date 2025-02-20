@@ -50,8 +50,8 @@ quests.flyers_for_regine.initZone = function(zone)
     local data = npcData[zone:getID()]
 
     if data then
-        for k, v in pairs(data) do
-            zone:registerTriggerArea(v.triggerArea, v.x, 10, v.z, 0, 0, 0)
+        for _, v in pairs(data) do
+            zone:registerCylindricalTriggerArea(v.triggerArea, v.x, v.z, 10)
         end
     end
 end
@@ -62,7 +62,7 @@ quests.flyers_for_regine.onTriggerAreaEnter = function(player, triggerArea)
         os.time() > player:getLocalVar('regineTimer')
     then
         local zoneId        = player:getZoneID()
-        local triggerAreaId = triggerArea:GetTriggerAreaID()
+        local triggerAreaId = triggerArea:getTriggerAreaID()
         local data          = npcData[zoneId]
 
         if data then

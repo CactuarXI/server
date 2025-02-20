@@ -312,7 +312,7 @@ INSERT INTO `traits` VALUES (41,'arcana killer',8,25,1,232,8,NULL,0);
 INSERT INTO `traits` VALUES (41,'arcana killer',8,86,2,232,10,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (50,'resist paralyze',8,20,1,242,10,NULL,0);
 INSERT INTO `traits` VALUES (50,'resist paralyze',8,40,2,242,15,NULL,0);
-INSERT INTO `traits` VALUES (50,'resist paralyze',8,50,3,242,20,NULL,0);
+INSERT INTO `traits` VALUES (50,'resist paralyze',8,60,3,242,20,NULL,0);
 INSERT INTO `traits` VALUES (50,'resist paralyze',8,75,4,242,25,NULL,0);
 INSERT INTO `traits` VALUES (50,'resist paralyze',8,81,5,242,30,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (79,'muted soul',8,75,1,0,0,'TOAU',2500);

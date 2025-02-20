@@ -13,6 +13,17 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
+local onMasterDeath = function(mob)
+    if mob:hasPet() then
+        local pet = mob:getPet()
+        if pet ~= nil then
+            if not pet:isEngaged() then
+                DespawnMob(pet:getID(), 2)
+            end
+        end
+    end
+end
+
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     mob:entityAnimationPacket('casm')
     mob:timer(3000, function(mobArg)
@@ -23,6 +34,8 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     end)
 
     skill:setMsg(xi.msg.basic.NONE)
+    mob:addListener('DEATH', 'BEASTMASTER_DEATH', onMasterDeath)
+    mob:addListener('DESPAWN', 'BEASTMASTER_DESPAWN', onMasterDeath)
 
     return 0
 end

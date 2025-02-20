@@ -34,10 +34,13 @@ zones[xi.zone.WAJAOM_WOODLANDS] =
         DRAWS_NEAR                    = 8523, -- Something draws near!
         COMMON_SENSE_SURVIVAL         = 9641, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
         UNITY_WANTED_BATTLE_INTERACT  = 9705, -- Those who have accepted % must pay # Unity accolades to participate. The content for this Wanted battle is #. [Ready to begin?/You do not have the appropriate object set, so your rewards will be limited.]
+
+        ITEM_RETURNED                 = 6402, -- A <item ID> is returned to you.
+        FOUND_ITEM_WITH_EASE          = 7147,  -- It appears your chocobo found this item with ease.
     },
     mob =
     {
-        CHIGOES                =
+        CHIGOES =
         {
             ['Marid'] = GetTableOfIDs('Chigoe', 5),
         },
@@ -84,6 +87,7 @@ zones[xi.zone.WAJAOM_WOODLANDS] =
     npc =
     {
         HARVESTING = GetTableOfIDs('Harvesting_Point'),
+        HOOFPRINT  = GetFirstID('Warhorse_Hoofprint'),
     },
 }
 

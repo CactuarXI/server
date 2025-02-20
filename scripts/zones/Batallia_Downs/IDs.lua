@@ -57,6 +57,7 @@ zones[xi.zone.BATALLIA_DOWNS] =
         RAPTOR_SPEEDS_OFF             = 13000, -- The raptor speeds off into the sunset...
 
         TIME_ELAPSED                  = 7690,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
+        FOUND_ITEM_WITH_EASE          = 7331,  -- It appears your chocobo found this item with ease.
     },
     mob =
     {

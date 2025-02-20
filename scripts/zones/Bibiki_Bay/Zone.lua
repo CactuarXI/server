@@ -9,11 +9,10 @@ require('scripts/globals/exp_controller')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    zone:registerTriggerArea(1,  474, -10,  667,  511, 10,  708) -- Manaclipper while docked at Sunset Docks
-    zone:registerTriggerArea(2, -410, -10, -385, -371, 10, -343) -- Manaclipper while docked at Purgonorgo Isle
+    zone:registerCuboidTriggerArea(1,  474, -10,  667,  511, 10,  708) -- Manaclipper while docked at Sunset Docks
+    zone:registerCuboidTriggerArea(2, -410, -10, -385, -371, 10, -343) -- Manaclipper while docked at Purgonorgo Isle
     xi.exp_controller.onInitialize(zone)
     xi.cactuarRegimes.initializeBooks(zone)
-
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -39,11 +38,11 @@ zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranki
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
-    xi.manaclipper.aboard(player, triggerArea:GetTriggerAreaID(), true)
+    xi.manaclipper.aboard(player, triggerArea:getTriggerAreaID(), true)
 end
 
 zoneObject.onTriggerAreaLeave = function(player, triggerArea)
-    xi.manaclipper.aboard(player, triggerArea:GetTriggerAreaID(), false)
+    xi.manaclipper.aboard(player, triggerArea:getTriggerAreaID(), false)
 end
 
 zoneObject.onTransportEvent = function(player, transport)

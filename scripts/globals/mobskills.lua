@@ -394,7 +394,7 @@ end
 -----------------------------------
 -- Mob Physical Abilities
 -- accMod    : linear multiplier for accuracy (1 default)
--- dmgMod    : linear multiplier for damage (1 default)
+-- dmgMod    : linear multiplier for damage (1 default) -- TODO: Rename to ftp to reflect LSB
 -- attMod    : linear multiplier for attack (1 default)
 -- critPerc  : Base Crit rate for the weapon skill.
 -- tpEffect  : Defined in xi.mobskills.physicalTpBonus
@@ -403,6 +403,8 @@ end
 xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmgMod, tpEffect1, tpEffect1_ftp100, tpEffect1_ftp200, tpEffect1_ftp300, tpEffect2, tpEffect2_ftp100, tpEffect2_ftp200, tpEffect2_ftp300, critPerc, attMod, isCannonball)
     local returninfo    = {}
 
+
+    -- local lvldiff = math.max(0, mob:getMainLvl() - target:getMainLvl())
     -- TODO: Added in LSB Sync
     --[[ mobs use fSTR (but with special calculation in the called function)
     local fSTR = xi.combat.physical.calculateMeleeStatFactor(mob, target)

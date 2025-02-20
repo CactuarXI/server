@@ -1,27 +1,27 @@
 -----------------------------------
 -- The Die is Cast
+-- Random Ring
 -----------------------------------
 -- Log ID: 6, Quest ID: 16
--- Ratihb            !pos 75.225 -6 -137.2 50
--- Ekhu Pesshyadha   !pos -14 1 95 50
--- Jijiroon          !pos 15 0 -32 53
--- qm9               !pos 311 -3.374 170.124 54
+-- Ratihb: !pos 75.225 -6.000 -137.203 50
+-- Ekhu Pesshyadha: !pos -13.043 0.999 103.423 50
+-- Jijiroon: !pos 15.913 0.000 -32.676 53
+-- qm9: !pos 311.088 -3.674 170.124 54
 -----------------------------------
-local arrapagoID = zones[xi.zone.ARRAPAGO_REEF]
------------------------------------
+
+local ID = zones[xi.zone.ARRAPAGO_REEF]
 local quest = Quest:new(xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.THE_DIE_IS_CAST)
 
 quest.reward =
 {
-    item = xi.item.RANDOM_RING,
+    item  = xi.item.RANDOM_RING,
 }
 
 quest.sections =
 {
     {
         check = function(player, status, vars)
-            return status == xi.questStatus.QUEST_AVAILABLE and
-            player:getQuestStatus(xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.LUCK_OF_THE_DRAW) ~= xi.questStatus.QUEST_AVAILABLE -- accepted or complete
+            return status == xi.questStatus.QUEST_AVAILABLE
         end,
 
         [xi.zone.AHT_URHGAN_WHITEGATE] =
@@ -36,56 +36,32 @@ quest.sections =
             },
         },
     },
-
     {
         check = function(player, status, vars)
-            return status == xi.questStatus.QUEST_ACCEPTED
+            return status == xi.questStatus.QUEST_ACCEPTED and
+            vars.Prog == 0
         end,
 
         [xi.zone.AHT_URHGAN_WHITEGATE] =
         {
-            ['Ratihb'] =
-            {
-                onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 5 then
-                        return quest:progressEvent(593)
-                    end
-                end,
-            },
-
-            ['Ekhu_Pesshyadha'] =
-            {
-                onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 0 then
-                        return quest:progressEvent(592)
-                    end
-                end,
-            },
 
             onEventFinish =
             {
                 [592] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 1)
                 end,
-
-                [593] = function(player, csid, option, npc)
-                    if quest:complete(player) then
-                        player:delKeyItem(xi.ki.BAG_OF_GOLD_PIECES)
-                    end
-                end,
             },
         },
+    },
+    {
+        check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_ACCEPTED and
+            vars.Prog == 1
+        end,
 
         [xi.zone.NASHMAU] =
         {
-            ['Jijiroon'] =
-            {
-                onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 1 then
-                        return quest:progressEvent(245, 1, 791, 5, 538, 9)
-                    end
-                end,
-            },
+            ['Jijiroon'] = quest:progressEvent(245),
 
             onEventFinish =
             {
@@ -94,21 +70,38 @@ quest.sections =
                 end,
             },
         },
+    },
+    {
+        check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_ACCEPTED and
+            vars.Prog == 2
+        end,
+
+        [xi.zone.ARRAPAGO_REEF] =
+        {
+            ['qm9'] = quest:progressEvent(212),
+
+            onEventFinish =
+            {
+                [212] = function(player, csid, option, npc)
+                    quest:setVar(player, 'Prog', 3)
+                end,
+            },
+        },
+    },
+    {
+        check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_ACCEPTED and
+            vars.Prog == 3
+        end,
 
         [xi.zone.ARRAPAGO_REEF] =
         {
             ['qm9'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 2 then
-                        return quest:progressEvent(212)
-                    elseif
-                        quest:getVar(player, 'Prog') == 3 and
-                        npcUtil.popFromQM(player, npc, arrapagoID.mob.BUKKI, { claim = true, hide = 0 })
-                    then
-                        return quest:messageSpecial(arrapagoID.text.FEEL_A_CHILL)
-                    elseif quest:getVar(player, 'Prog') == 4 then
-                        return quest:progressEvent(213)
+                    if npcUtil.popFromQM(player, npc, ID.mob.BUKKI, { hide = 0 }) then
+                        return quest:messageSpecial(ID.text.SPINE_CHILL)
                     end
                 end,
             },
@@ -116,21 +109,46 @@ quest.sections =
             ['Bukki'] =
             {
                 onMobDeath = function(mob, player, optParams)
-                    if quest:getVar(player, 'Prog') == 3 then
-                        quest:setVar(player, 'Prog', 4)
-                    end
+                    quest:setVar(player, 'Prog', 4)
                 end,
             },
+        },
+    },
+    {
+        check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_ACCEPTED and
+            vars.Prog == 4
+        end,
+
+        [xi.zone.ARRAPAGO_REEF] =
+        {
+            ['qm9'] = quest:progressEvent(213),
 
             onEventFinish =
             {
-                [212] = function(player, csid, option, npc)
-                    quest:setVar(player, 'Prog', 3)
-                end,
-
                 [213] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 5)
                     npcUtil.giveKeyItem(player, xi.ki.BAG_OF_GOLD_PIECES)
+                end,
+            },
+        },
+    },
+    {
+        check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_ACCEPTED and
+            vars.Prog == 5
+        end,
+
+        [xi.zone.AHT_URHGAN_WHITEGATE] =
+        {
+            ['Ratihb'] = quest:progressEvent(593),
+
+            onEventFinish =
+            {
+                [593] = function(player, csid, option, npc)
+                    if quest:complete(player) then
+                        player:delKeyItem(xi.ki.BAG_OF_GOLD_PIECES)
+                    end
                 end,
             },
         },

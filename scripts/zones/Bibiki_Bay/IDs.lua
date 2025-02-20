@@ -48,6 +48,7 @@ zones[xi.zone.BIBIKI_BAY] =
         MTICKET_ADDED                 = 7504, -- Ticket # was/were added to your xxxx
         SHEN_QM                       = 7618, -- Innumerable shrimp shells are floating in the water here.
         SHEN_SPAWN                    = 7619, -- The <item> begins skimming quietly across the surface of the water. What's this!? An enormous creature is chasing after it from below!!!
+        FOUND_ITEM_WITH_EASE          = 7365, -- It appears your chocobo found this item with ease.
     },
     mob =
     {

@@ -57,6 +57,7 @@ zones[xi.zone.KONSCHTAT_HIGHLANDS] =
         COMMON_SENSE_SURVIVAL         = 11916, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
 
         TIME_ELAPSED                  = 7542,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
+        FOUND_ITEM_WITH_EASE          = 7313,  -- It appears your chocobo found this item with ease.
     },
     mob =
     {

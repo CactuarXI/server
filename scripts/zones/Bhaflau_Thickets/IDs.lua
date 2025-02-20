@@ -39,9 +39,8 @@ zones[xi.zone.BHAFLAU_THICKETS] =
 
         GIGANTIC_WARHORSE             = 6400, -- You find the hoofprint of a gigantic warhorse...≺Prompt≻
         PLACE_QUARTZ                  = 6401, -- You set the ≺Possible Special Code: 01≻≺Possible Special Code: 05≻3≺BAD CHAR: 8280≻≺BAD CHAR: 80≻≺BAD CHAR: 80≻ in the warhorse hoofprint.≺Prompt≻
-
-        -- TODO: ID Shift
         YOU_HAVE_A_BADGE              = 7354, -- You have a %? Let me have a closer look at that...
+        FOUND_ITEM_WITH_EASE          = 7147, -- It appears your chocobo found this item with ease.
     },
     mob =
     {
@@ -56,6 +55,7 @@ zones[xi.zone.BHAFLAU_THICKETS] =
         LIVIDROOT_AMOOSHAH = GetFirstID('Lividroot_Amooshah'),
         MAHISHASURA        = GetFirstID('Mahishasura'),
         NIS_PUK            = GetFirstID('Nis_Puk'),
+        PLAGUE_CHIGOE      = GetFirstID('Plague_Chigoe'),
 
         CHIGOE_POOLS =
         {
@@ -89,6 +89,7 @@ zones[xi.zone.BHAFLAU_THICKETS] =
     npc =
     {
         HARVESTING = GetTableOfIDs('Harvesting_Point'),
+        HOOFPRINT  = GetFirstID('Warhorse_Hoofprint'),
     },
 }
 

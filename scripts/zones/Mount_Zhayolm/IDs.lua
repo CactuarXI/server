@@ -43,6 +43,7 @@ zones[xi.zone.MOUNT_ZHAYOLM] =
         UNITY_WANTED_BATTLE_INTERACT  = 8790, -- Those who have accepted % must pay # Unity accolades to participate. The content for this Wanted battle is #. [Ready to begin?/You do not have the appropriate object set, so your rewards will be limited.]
 
         YOU_HAVE_A_BADGE              = 7350, -- You have a %? Let me have a closer look at that...
+        NOTHING_OUT_OF_ORDINARY       = 7371, -- There is nothing out of the ordinary here.
     },
     mob =
     {
@@ -74,7 +75,8 @@ zones[xi.zone.MOUNT_ZHAYOLM] =
     },
     npc =
     {
-        MINING = GetTableOfIDs('Mining_Point'),
+        HOOFPRINT = GetFirstID('Warhorse_Hoofprint'),
+        MINING    = GetTableOfIDs('Mining_Point'),
     },
 }
 

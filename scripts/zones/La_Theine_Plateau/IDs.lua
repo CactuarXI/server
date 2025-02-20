@@ -62,6 +62,7 @@ zones[xi.zone.LA_THEINE_PLATEAU] =
 
         -- TODO: ID Shift
         TIME_ELAPSED                  = 7846,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
+        FOUND_ITEM_WITH_EASE          = 7313,  -- It appears your chocobo found this item with ease.
     },
     mob =
     {

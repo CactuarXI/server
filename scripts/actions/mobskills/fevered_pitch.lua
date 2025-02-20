@@ -6,6 +6,7 @@
 ---@type TMobSkill
 local mobskillObject = {}
 
+-- TODO: should only use in 4 leg mode
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
         -- animsub 1 = standing, animsub 0 = all fours
         if mob:getAnimationSub() == 1 then

@@ -9,7 +9,7 @@ require('scripts/missions/amk/helpers')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    zone:registerTriggerArea(1, -484, 10, 292, 0, 0, 0) -- Sets Mark for 'Under Oath' Quest cutscene.
+    zone:registerCylindricalTriggerArea(1, -484, 292, 10) -- Sets Mark for "Under Oath" Quest cutscene.
 
     -- NM Persistence
     xi.mob.nmTODPersistCache(zone, ID.mob.METEORMAULER)
@@ -61,7 +61,7 @@ end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
     if
-        triggerArea:GetTriggerAreaID() == 1 and
+        triggerArea:getTriggerAreaID() == 1 and
         player:getCharVar('UnderOathCS') == 7
     then
         -- Quest: Under Oath - PLD AF3

@@ -53,6 +53,8 @@ zones[xi.zone.THE_SANCTUARY_OF_ZITAH] =
         UNITY_WANTED_BATTLE_INTERACT  = 8157,  -- Those who have accepted % must pay # Unity accolades to participate. The content for this Wanted battle is #. [Ready to begin?/You do not have the appropriate object set, so your rewards will be limited.]
         REGIME_REGISTERED             = 10273, -- New training regime registered!
         COMMON_SENSE_SURVIVAL         = 12262, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+
+        FOUND_ITEM_WITH_EASE          = 7651,  -- It appears your chocobo found this item with ease.
     },
     mob =
     {

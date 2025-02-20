@@ -150,7 +150,7 @@ entity.onMobDeath = function(mob, player, optParams)
     local bcnmAllies = mob:getBattlefield():getAllies()
     for i, v in pairs(bcnmAllies) do
         if not v:getTarget() then
-            v:clearEnmity(mob)
+            v:clearEnmityForEntity(mob)
         end
     end
 end

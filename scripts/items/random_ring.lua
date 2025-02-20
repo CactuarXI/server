@@ -4,6 +4,7 @@
 -- Item Effect: DEX + 1~8
 -- Duration: 30 Minutes
 -----------------------------------
+---@type TItem
 local itemObject = {}
 
 itemObject.onItemCheck = function(target, item, param, caster)
@@ -42,6 +43,7 @@ itemObject.onEffectGain = function(target, effect)
 end
 
 itemObject.onEffectLose = function(target, effect)
+    target:delMod(xi.mod.DEX, effect:getPower())
 end
 
 return itemObject

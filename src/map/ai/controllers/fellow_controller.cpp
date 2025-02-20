@@ -28,7 +28,7 @@ This file is part of DarkStar-server source code.
 #include "../../entities/charentity.h"
 #include "../../entities/baseentity.h"
 #include "../../entities/fellowentity.h"
-#include "../../packets/char.h"
+//#include "../../packets/char.h"
 #include "../../status_effect_container.h"
 #include "../ai_container.h"
 

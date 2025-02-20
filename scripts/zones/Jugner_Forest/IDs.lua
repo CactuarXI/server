@@ -55,6 +55,7 @@ zones[xi.zone.JUGNER_FOREST] =
         FOREBODING                    = 8021,  -- A sense of foreboding fills the air...
 
         TIME_ELAPSED                  = 8485,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
+        FOUND_ITEM_WITH_EASE          = 7805,  -- It appears your chocobo found this item with ease.
     },
 
     mob =

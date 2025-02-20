@@ -122,7 +122,7 @@ xi.teleport.destination =
     [ids.A_REM]                 = { -579.000,   -0.050, -100.000, 192,  72 },
     [ids.B_REM]                 = {  620.000,    0.000, -260.640,  72,  72 }, -- (R)
     [ids.S_REM]                 = {  580.000,    0.000,  500.000, 192,  72 }, -- (R)
---  [ids.Z_REM]                 = {  000.000,    0.000,  000.000, 000,  72 },
+    [ids.Z_REM]                 = { -580.000,    0.000, -433.000,  64,  72 },
     [ids.MAAT]                  = {   11.000,    3.000,  117.000,   0, 243 },
     [ids.EXITPROMMEA]           = {  179.000,   35.000,  256.000,  63, 117 },
     [ids.EXITPROMHOLLA]         = {  337.000,   19.000,  -60.000, 125, 102 },
@@ -570,12 +570,12 @@ xi.teleport.clearEnmityList = function(player)
     local pet = player:getPet()
 
     for _, entry in pairs(player:getNotorietyList()) do
-        entry:clearEnmity(player) -- reset hate on player after teleporting
+        entry:clearEnmityForEntity(player) -- reset hate on player after teleporting
     end
 
     if pet ~= nil then
         for _, entry in pairs(pet:getNotorietyList()) do
-            entry:clearEnmity(pet) -- reset hate on player after teleporting
+            entry:clearEnmityForEntity(pet) -- reset hate on player after teleporting
         end
     end
 end

@@ -59,6 +59,7 @@ zones[xi.zone.WEST_RONFAURE] =
         PALCOMONDAU_DIALOG            = 7389,  -- Let me be! I must patrol the road to Ghelsba.
         ZOVRIACE_DIALOG               = 7393,  -- Let me be! I return to Southgate with word on La Theine.
         TIME_ELAPSED                  = 8052,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
+        FOUND_ITEM_WITH_EASE          = 7331,  -- It appears your chocobo found this item with ease.
     },
     mob =
     {

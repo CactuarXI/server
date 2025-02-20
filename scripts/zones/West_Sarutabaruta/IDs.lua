@@ -59,6 +59,8 @@ zones[xi.zone.WEST_SARUTABARUTA] =
         VOIDWALKER_BREAK_KI           = 11361, -- The <keyitem> shatters into tiny fragments.
         VOIDWALKER_OBTAIN_KI          = 11362, -- Obtained key item: <keyitem>!
         COMMON_SENSE_SURVIVAL         = 12345, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+
+        FOUND_ITEM_WITH_EASE          = 7150,  -- It appears your chocobo found this item with ease.
     },
 
     mob =

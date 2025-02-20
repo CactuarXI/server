@@ -16,6 +16,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 1
 end
 
+-- TODO: can crit
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     mob:setAnimationSub(3)
 

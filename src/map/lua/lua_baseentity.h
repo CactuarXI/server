@@ -25,6 +25,7 @@
 #include "common/cbasetypes.h"
 #include "luautils.h"
 #include "packets/message_standard.h"
+#include "packets/position.h"
 
 class CBaseEntity;
 class CCharEntity;
@@ -96,7 +97,7 @@ public:
 
     void updateEvent(sol::variadic_args va);
     void updateEventString(sol::variadic_args va); // (string, string, string, string, uint32, ...)
-    auto getEventTarget() -> std::optional<CLuaBaseEntity>;
+    auto getEventTarget() -> CBaseEntity*;
     bool isInEvent();       // Returns true if the player is in an event
     void release();         // Stops event
     bool startSequence();   // Flags the player as being in a sequence
@@ -110,7 +111,7 @@ public:
     // Object Identification
     uint32 getID();
     uint16 getTargID();
-    auto   getCursorTarget() -> std::optional<CLuaBaseEntity>;
+    auto   getCursorTarget() -> CBaseEntity*;
 
     uint8 getObjType() const;
 
@@ -178,7 +179,7 @@ public:
     bool  isBehind(CLuaBaseEntity const* target, sol::object const& angleArg);  // true if you're behind the input target
     bool  isBeside(CLuaBaseEntity const* target, sol::object const& angleArg);  // true if you're to the side of the input target
 
-    auto   getZone(sol::object const& arg0) -> std::optional<CLuaZone>;
+    auto   getZone(sol::object const& arg0) -> CZone*;
     uint16 getZoneID();
     auto   getZoneName() -> std::string;
     bool   hasVisitedZone(uint16 zone);
@@ -187,9 +188,12 @@ public:
     uint8  getContinentID();
     bool   isInMogHouse();
 
-    uint32 getPlayerTriggerAreaInZone();
-    void   updateToEntireZone(uint8 statusID, uint8 animation, sol::object const& matchTime); // Forces an update packet to update the NPC entity zone-wide
+    bool isPlayerInTriggerArea(uint32 triggerAreaId);
+    void onPlayerTriggerAreaEnter(uint32 triggerAreaId);
+    void onPlayerTriggerAreaLeave(uint32 triggerAreaId);
+    void clearPlayerTriggerAreas();
 
+    void updateToEntireZone(uint8 statusID, uint8 animation, sol::object const& matchTime); // Forces an update packet to update the NPC entity zone-wide
     void sendEntityUpdateToPlayer(CLuaBaseEntity* entityToUpdate, uint8 entityUpdate, uint8 updateMask);
     void sendEmptyEntityUpdateToPlayer(CLuaBaseEntity* entityToUpdate);
 
@@ -204,6 +208,7 @@ public:
     uint8 getRotPos();
     void  setRotation(uint8 rotation);
 
+    void positionSpecial(std::map<std::string, float> pos, POSMODE mode);
     void setPos(sol::variadic_args va);
     void warp();
     void teleport(std::map<std::string, float> pos, sol::object const& arg1); // Set Entity position (without entity despawn/spawn packets)
@@ -224,7 +229,7 @@ public:
 
     // Items
     uint16 getEquipID(SLOTTYPE slot);
-    auto   getEquippedItem(uint8 slot) -> std::optional<CLuaItem>;
+    auto   getEquippedItem(uint8 slot) -> CItem*;
     bool   hasEquipped(uint16 equipmentID); // Returns true if item is equipped in any slot
     bool   hasItem(uint16 itemID, sol::object const& location);
     uint32 getItemCount(uint16 itemID);
@@ -233,9 +238,9 @@ public:
     bool   delContainerItems(sol::object const& containerID);
     bool   addUsedItem(uint16 itemID);
     bool   addTempItem(uint16 itemID, sol::object const& arg1);
-    uint8  getWornUses(uint16 itemID);                                                      // Check if the item is already worn
-    uint8  incrementItemWear(uint16 itemID);                                                // Increment the item's worn value and returns it
-    auto   findItem(uint16 itemID, sol::object const& location) -> std::optional<CLuaItem>; // Like hasItem, but returns the item object (nil if not found)
+    uint8  getWornUses(uint16 itemID);                                     // Check if the item is already worn
+    uint8  incrementItemWear(uint16 itemID);                               // Increment the item's worn value and returns it
+    auto   findItem(uint16 itemID, sol::object const& location) -> CItem*; // Like hasItem, but returns the item object (nil if not found)
 
     void createShop(uint8 size, sol::object const& arg1);
     void addShopItem(uint16 itemID, double rawPrice, sol::object const& arg2, sol::object const& arg3);
@@ -243,15 +248,17 @@ public:
     bool breakLinkshell(std::string const& lsname);
     bool addLinkpearl(std::string const& lsname, bool equip);
 
-    auto addSoulPlate(std::string const& name, uint8 fauna, uint8 subOfInterest, uint8 ecoSystem, uint8 zeni, uint16 skillIndex, uint8 fp) -> std::optional<CLuaItem>;
+    auto addSoulPlate(std::string const& name, uint8 fauna, uint8 subOfInterest, uint8 ecoSystem, uint8 zeni, uint16 skillIndex, uint8 fp) -> CItem*;
 
     // Trading
     uint8 getContainerSize(uint8 locationID);
     void  changeContainerSize(uint8 locationID, int8 newSize); // Increase/Decreases container size
     uint8 getFreeSlotsCount(sol::object const& locID);         // Gets value of free slots in Entity inventory
     void  confirmTrade();                                      // Complete trade with an npc, only removing confirmed items
-    void  tradeComplete(sol::object const& shouldTakeItems);   // Complete trade with an npc
-    auto  getTrade() -> std::optional<CLuaTradeContainer>;
+    // void  tradeComplete(sol::object const& shouldTakeItems);   // Complete trade with an npc
+    // auto  getTrade() -> std::optional<CLuaTradeContainer>;
+    void  tradeComplete();                                     // Complete trade with an npc
+    auto  getTrade() -> CTradeContainer*;
 
     // Equipping
     bool canEquipItem(uint16 itemID, sol::object const& chkLevel);
@@ -270,7 +277,7 @@ public:
     void clearGearSetMods();
 
     // Storing
-    auto  getStorageItem(uint8 container, uint8 slotID, uint8 equipID) -> std::optional<CLuaItem>;
+    auto  getStorageItem(uint8 container, uint8 slotID, uint8 equipID) -> CItem*;
     uint8 storeWithPorterMoogle(uint16 slipId, sol::table const& extraTable, sol::table const& storableItemIdsTable);
     auto  getRetrievableItemsForSlip(uint16 slipId) -> sol::table;
     void  retrieveItemFromSlip(uint16 slipId, uint16 itemId, uint16 extraId, uint8 extraData);
@@ -543,8 +550,8 @@ public:
     auto   getPartyWithTrusts() -> sol::table;
     uint8  getPartySize(sol::object const& arg0);
     bool   hasPartyJob(uint8 job);
-    auto   getPartyMember(uint8 member, uint8 allianceparty) -> std::optional<CLuaBaseEntity>;
-    auto   getPartyLeader() -> std::optional<CLuaBaseEntity>;
+    auto   getPartyMember(uint8 member, uint8 allianceparty) -> CBaseEntity*;
+    auto   getPartyLeader() -> CBaseEntity*;
     uint32 getLeaderID();
     uint32 getPartyLastMemberJoinedTime();
     void   forMembersInRange(float range, sol::function function);
@@ -567,7 +574,7 @@ public:
     uint8 checkDifficulty(CLuaBaseEntity* PLuaBaseEntity);
 
     // Instances
-    auto getInstance() -> std::optional<CLuaInstance>;
+    auto getInstance() -> CInstance*;
     void setInstance(CLuaInstance* PLuaInstance);
     void createInstance(uint16 instanceID);
     void instanceEntry(CLuaBaseEntity* PLuaBaseEntity, uint32 response);
@@ -577,7 +584,7 @@ public:
     uint16 copyConfrontationEffect(uint16 targetID); // copy confrontation effect, param = targetEntity:getTargID()
 
     // Battlefields
-    auto  getBattlefield() -> std::optional<CLuaBattlefield>;                                                                      // returns CBattlefield* or nullptr if not available
+    auto  getBattlefield() -> CBattlefield*;                                                                                       // returns CBattlefield* or nullptr if not available
     int32 getBattlefieldID();                                                                                                      // returns entity->PBattlefield->GetID() or -1 if not available
     uint8 registerBattlefield(sol::object const& arg0, sol::object const& arg1, sol::object const& arg2, sol::object const& arg3); // attempt to register a battlefield, returns BATTLEFIELD_RETURNCODE
     bool  battlefieldAtCapacity(int battlefieldID);                                                                                // returns 1 if this battlefield is full
@@ -617,7 +624,7 @@ public:
     void triggerListener(std::string const& eventName, sol::variadic_args args);
     bool hasListener(std::string const& eventName);
 
-    auto getEntity(uint16 targetID) -> std::optional<CLuaBaseEntity>;
+    auto getEntity(uint16 targetID) -> CBaseEntity*;
     bool canChangeState();
 
     void wakeUp();
@@ -651,7 +658,6 @@ public:
     void  updateClaim(sol::object const& entity);
     bool  hasEnmity();
     auto  getNotorietyList() -> sol::table;
-    void  clearEnmity(CLuaBaseEntity* PEntity); // clears player enmity from notoriety list
     void  setClaimable(bool claimable);
     bool  getClaimable();
     void  clearEnmityForEntity(CLuaBaseEntity* PEntity);
@@ -659,15 +665,15 @@ public:
     // Status Effects
     bool   addStatusEffect(sol::variadic_args va);
     bool   addStatusEffectEx(sol::variadic_args va);
-    // auto   getStatusEffect(uint16 StatusID, sol::object const& SubType) -> std::optional<CLuaStatusEffect>; OLD
-    auto  getStatusEffect(uint16 StatusID, sol::object const& SubType, sol::object const& SourceType, sol::object const& SourceTypeParam) -> std::optional<CLuaStatusEffect>;
-    auto   getItemEnchantmentEffect(sol::object const& ItemID) -> std::optional<CLuaStatusEffect>;
+    auto   getStatusEffect(uint16 StatusID, sol::object const& SubType, sol::object const& SourceType, sol::object const& SourceTypeParam) -> CStatusEffect*;
+    auto   getItemEnchantmentEffect(sol::object const& ItemID) -> CStatusEffect*;
+    auto   getStatusEffectBySource(uint16 StatusID, EffectSourceType SourceType, uint16 SourceTypeParam) -> CStatusEffect*;
     auto   getStatusEffects() -> sol::table;
     int16  getStatusEffectElement(uint16 statusId);
     bool   canGainStatusEffect(uint16 effect, sol::object const& powerObj);
     bool   hasStatusEffect(uint16 StatusID, sol::object const& SubType);
     // uint16 hasStatusEffectByFlag(uint16 StatusID); OLD
-    bool  hasStatusEffectByFlag(uint16 StatusID);
+    bool   hasStatusEffectByFlag(uint16 StatusID);
     uint8  countEffect(uint16 StatusID);     // Gets the number of effects of a specific type on the entity
     uint8  countEffectBySubID(uint16 StatusID, uint32 SubID); // Gets the number of effects of a specific type on the entity
     uint8  countEffectWithFlag(uint32 flag); // Gets the number of effects with a flag on the entity
@@ -764,7 +770,7 @@ public:
     void spawnPet(sol::object const& arg0);
     void despawnPet();
 
-    auto   spawnTrust(uint16 trustId) -> std::optional<CLuaBaseEntity>;
+    auto   spawnTrust(uint16 trustId) -> CBaseEntity*;
     void   clearTrusts();
     uint32 getTrustID();
     void   trustPartyMessage(uint32 message_id);
@@ -777,11 +783,11 @@ public:
 
     bool   hasPet();
     bool   hasJugPet();
-    auto   getPet() -> std::optional<CLuaBaseEntity>;
+    auto   getPet() -> CBaseEntity*;
     uint32 getPetID();
     bool   isAutomaton();
     bool   isAvatar();
-    auto   getMaster() -> std::optional<CLuaBaseEntity>;
+    auto   getMaster() -> CBaseEntity*;
     uint8  getPetElement();
     void   setPet(sol::object const& petObj);
     uint8  getMinimumPetLevel(); // Returns the minimum level of the pet, such as level 23 for Courier Carrie or 0 if non applicable.
@@ -820,7 +826,7 @@ public:
     uint8 getActiveManeuverCount();
     void  removeOldestManeuver();
     void  removeAllManeuvers();
-    auto  getAttachment(uint8 slotId) -> std::optional<CLuaItem>;
+    auto  getAttachment(uint8 slotId) -> CItem*;
     auto  getAttachments() -> sol::table;
     void  setAttachment(uint8 attachmentItemID, uint8 slotID);
     void  updateAttachments();
@@ -904,10 +910,10 @@ public:
     uint32 getPixieHate();
     void   setPixieHate(uint32 pixieHate);
 
-    auto getTarget() -> std::optional<CLuaBaseEntity>;
+    auto getTarget() -> CBaseEntity*;
     void updateTarget(); // Force mob to update target from enmity container (ie after updateEnmity)
     auto getEnmityList() -> sol::table;
-    auto getTrickAttackChar(CLuaBaseEntity* PLuaBaseEntity) -> std::optional<CLuaBaseEntity>; // true if TA target is available
+    auto getTrickAttackChar(CLuaBaseEntity* PLuaBaseEntity) -> CBaseEntity*; // true if TA target is available
 
     bool actionQueueEmpty();
 

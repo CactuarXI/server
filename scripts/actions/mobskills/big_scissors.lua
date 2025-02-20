@@ -9,6 +9,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
+-- TODO: nightmare crabs ignore shadows
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local numhits   = 1
     local accmod    = 1

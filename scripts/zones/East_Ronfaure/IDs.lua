@@ -52,6 +52,8 @@ zones[xi.zone.EAST_RONFAURE] =
         VOIDWALKER_OBTAIN_KI          = 11057, -- Obtained key item: <keyitem>!
         LEARNS_SPELL                  = 11947, -- <name> learns <spell>!
         UNCANNY_SENSATION             = 11949, -- You are assaulted by an uncanny sensation.
+
+        FOUND_ITEM_WITH_EASE          = 7331,  -- It appears your chocobo found this item with ease.
     },
 
     mob =

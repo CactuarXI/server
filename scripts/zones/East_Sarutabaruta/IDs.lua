@@ -37,6 +37,7 @@ zones[xi.zone.EAST_SARUTABARUTA] =
         REGIME_REGISTERED             = 9931, -- New training regime registered!
 
         TIME_ELAPSED                  = 7714, -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
+        FOUND_ITEM_WITH_EASE          = 7309, -- It appears your chocobo found this item with ease.
     },
     mob =
     {

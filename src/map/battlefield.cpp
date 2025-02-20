@@ -933,7 +933,7 @@ void CBattlefield::handleDeath(CBaseEntity* PEntity)
 
             if (group.deathCallback.valid())
             {
-                auto result = group.deathCallback(CLuaBattlefield(this), CLuaBaseEntity(PEntity), deathCount);
+                auto result = group.deathCallback(this, PEntity, deathCount);
                 if (!result.valid())
                 {
                     sol::error err = result;
@@ -943,7 +943,7 @@ void CBattlefield::handleDeath(CBaseEntity* PEntity)
 
             if (group.allDeathCallback.valid() && deathCount >= group.mobIds.size())
             {
-                auto result = group.allDeathCallback(CLuaBattlefield(this), CLuaBaseEntity(PEntity));
+                auto result = group.allDeathCallback(this, PEntity);
                 if (!result.valid())
                 {
                     sol::error err = result;
@@ -953,7 +953,7 @@ void CBattlefield::handleDeath(CBaseEntity* PEntity)
 
             if (group.randomDeathCallback.valid() && mobId == group.randomMobId)
             {
-                auto result = group.randomDeathCallback(CLuaBattlefield(this), CLuaBaseEntity(PEntity));
+                auto result = group.randomDeathCallback(this, PEntity);
                 if (!result.valid())
                 {
                     sol::error err = result;

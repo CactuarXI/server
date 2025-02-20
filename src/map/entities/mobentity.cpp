@@ -700,6 +700,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
     auto AddItemToPool = [this, PChar](uint16 ItemID)
     {
         PChar->PTreasurePool->AddItem(ItemID, this);
+        PAI->EventHandler.triggerListener("TREASUREPOOL", CLuaBaseEntity(this), CLuaBaseEntity(PChar), ItemID);
     };
 
     DropList_t* dropList = itemutils::GetDropList(m_DropID);
@@ -711,7 +712,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 
         LootContainer loot(dropList);
 
-        PAI->EventHandler.triggerListener("ITEM_DROPS", CLuaBaseEntity(this), CLuaLootContainer(&loot));
+        PAI->EventHandler.triggerListener("ITEM_DROPS", this, &loot);
 
         // clang-format off
         loot.ForEachGroup([&](const DropGroup_t& group)
@@ -1145,7 +1146,7 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
     luautils::OnMobDespawn(this);
     PAI->ClearActionQueue();
     // #event despawn
-    PAI->EventHandler.triggerListener("DESPAWN", CLuaBaseEntity(this));
+    PAI->EventHandler.triggerListener("DESPAWN", this);
 }
 
 void CMobEntity::Die()

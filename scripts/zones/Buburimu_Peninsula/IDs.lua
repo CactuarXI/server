@@ -47,7 +47,9 @@ zones[xi.zone.BUBURIMU_PENINSULA] =
         UNITY_WANTED_BATTLE_INTERACT   = 8180,  -- Those who have accepted % must pay # Unity accolades to participate. The content for this Wanted battle is #. [Ready to begin?/You do not have the appropriate object set, so your rewards will be limited.]
         REGIME_REGISTERED              = 10296, -- New training regime registered!
         COMMON_SENSE_SURVIVAL          = 12317, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+
         TIME_ELAPSED                   = 7885,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
+        FOUND_ITEM_WITH_EASE           = 7350,  -- It appears your chocobo found this item with ease.
     },
     mob =
     {

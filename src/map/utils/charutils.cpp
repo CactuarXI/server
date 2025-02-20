@@ -20,6 +20,7 @@
 */
 
 #include "common/logging.h"
+#include "common/macros.h"
 #include "common/socket.h"
 #include "common/sql.h"
 #include "common/timer.h"
@@ -48,8 +49,8 @@
 #include "packets/char_recast.h"
 #include "packets/char_skills.h"
 #include "packets/char_stats.h"
+#include "packets/char_status.h"
 #include "packets/char_sync.h"
-#include "packets/char_update.h"
 #include "packets/chat_message.h"
 #include "packets/conquest_map.h"
 #include "packets/delivery_box.h"
@@ -884,7 +885,7 @@ namespace charutils
         BuildingCharTraitsTable(PChar);
 
         // Order matters as this uses merits and JP gifts.
-        puppetutils::LoadAutomaton(PChar); // Take care not to reset petZoningInfo with this call
+        puppetutils::LoadAutomaton(PChar);
 
         PChar->animation = (HP == 0 ? ANIMATION_DEATH : ANIMATION_NONE);
 
@@ -1460,7 +1461,7 @@ namespace charutils
         PChar->pushPacket<CCharSkillsPacket>(PChar);
         PChar->pushPacket<CCharRecastPacket>(PChar);
         PChar->pushPacket<CCharAbilitiesPacket>(PChar);
-        PChar->pushPacket<CCharUpdatePacket>(PChar);
+        PChar->pushPacket<CCharStatusPacket>(PChar);
         PChar->pushPacket<CMenuMeritPacket>(PChar);
         PChar->pushPacket<CMonipulatorPacket1>(PChar);
         PChar->pushPacket<CMonipulatorPacket2>(PChar);
@@ -3258,6 +3259,8 @@ namespace charutils
 
         uint8 meritIndex = 0;
 
+        bool automatonSkillUpdated = false;
+
         // Iterate over skill IDs (offsetting by 79 to get modifier ID)
         for (int32 i = 1; i < 48; ++i)
         {
@@ -3338,10 +3341,8 @@ namespace charutils
             }
             else if (i >= SKILL_AUTOMATON_MELEE && i <= SKILL_AUTOMATON_MAGIC)
             {
-                if (PChar->PAutomaton)
-                {
-                    maxMainSkill = battleutils::GetMaxSkill(1, PChar->GetMLevel()); // A+ capped down to the Automaton's rating
-                }
+                // TODO: does this need to change if you are /PUP?
+                maxMainSkill = battleutils::GetMaxSkill(1, PChar->GetMLevel()); // A+ capped down to the Automaton's rating
             }
 
             skillBonus += PChar->PMeritPoints->GetMeritValue(skillMerit[meritIndex], PChar);
@@ -3419,6 +3420,32 @@ namespace charutils
                 }
                 PChar->WorkingSkills.skill[i] = static_cast<uint16>(skillBonus) | 0x8000; // New value AND Blue text.
             }
+
+            // Automaton skills are special (especially with magic...)
+            if (i >= SKILL_AUTOMATON_MELEE && i <= SKILL_AUTOMATON_MAGIC)
+            {
+                if (auto PAutomaton = dynamic_cast<CAutomatonEntity*>(PChar->PPet))
+                {
+                    switch (i)
+                    {
+                        case SKILL_AUTOMATON_MAGIC:
+                            PAutomaton->WorkingSkills.skill[i] = PChar->WorkingSkills.skill[i];
+
+                            PAutomaton->WorkingSkills.skill[SKILL_HEALING_MAGIC]    = PChar->WorkingSkills.skill[i];
+                            PAutomaton->WorkingSkills.skill[SKILL_ENHANCING_MAGIC]  = PChar->WorkingSkills.skill[i];
+                            PAutomaton->WorkingSkills.skill[SKILL_ENFEEBLING_MAGIC] = PChar->WorkingSkills.skill[i];
+                            PAutomaton->WorkingSkills.skill[SKILL_ELEMENTAL_MAGIC]  = PChar->WorkingSkills.skill[i];
+                            PAutomaton->WorkingSkills.skill[SKILL_DARK_MAGIC]       = PChar->WorkingSkills.skill[i];
+                            break;
+
+                        default:
+                            PAutomaton->WorkingSkills.skill[i] = PChar->WorkingSkills.skill[i];
+                            break;
+                    }
+
+                    automatonSkillUpdated = true;
+                }
+            }
         }
 
         for (int32 i = 48; i < 58; ++i)
@@ -3434,6 +3461,12 @@ namespace charutils
         for (int32 i = 58; i < 64; ++i)
         {
             PChar->WorkingSkills.skill[i] = 0xFFFF;
+        }
+
+        // Update skills menu
+        if (automatonSkillUpdated)
+        {
+            PChar->pushPacket<CCharJobExtraPacket>(PChar, PChar->GetMJob() == JOB_PUP);
         }
     }
 
@@ -4995,7 +5028,7 @@ namespace charutils
                 BuildingCharWeaponSkills(PChar);
 
                 PChar->pushPacket<CCharJobsPacket>(PChar, true); // Umeboshi "resetflips"
-                PChar->pushPacket<CCharUpdatePacket>(PChar);
+                PChar->pushPacket<CCharStatusPacket>(PChar);
                 PChar->pushPacket<CCharSkillsPacket>(PChar);
                 PChar->pushPacket<CCharRecastPacket>(PChar);
                 PChar->pushPacket<CCharAbilitiesPacket>(PChar);
@@ -5176,7 +5209,7 @@ namespace charutils
             }
         }
 
-        PChar->PAI->EventHandler.triggerListener("EXPERIENCE_POINTS", CLuaBaseEntity(PChar), CLuaBaseEntity(PMob), exp);
+        PChar->PAI->EventHandler.triggerListener("EXPERIENCE_POINTS", PChar, PMob, exp);
 
         // Player levels up
         if ((currentExp + exp) >= GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) && !onLimitMode)
@@ -5209,10 +5242,7 @@ namespace charutils
                     BuildingCharAbilityTable(PChar);
                     BuildingCharTraitsTable(PChar);
                     BuildingCharWeaponSkills(PChar);
-                    if (PChar->PAutomaton != nullptr && PChar->PAutomaton != PChar->PPet)
-                    {
-                        puppetutils::LoadAutomatonStats(PChar);
-                    }
+                    puppetutils::LoadAutomaton(PChar);
                 }
                 PChar->PLatentEffectContainer->CheckLatentsJobLevel();
 
@@ -5241,7 +5271,7 @@ namespace charutils
                 SaveCharExp(PChar, PChar->GetMJob());
 
                 PChar->pushPacket<CCharJobsPacket>(PChar, true); // Umeboshi "resetflips"
-                PChar->pushPacket<CCharUpdatePacket>(PChar);
+                PChar->pushPacket<CCharStatusPacket>(PChar);
                 PChar->pushPacket<CCharSkillsPacket>(PChar);
                 PChar->pushPacket<CCharRecastPacket>(PChar);
                 PChar->pushPacket<CCharAbilitiesPacket>(PChar);
@@ -7295,16 +7325,43 @@ namespace charutils
         return spawnlist->find(entity->id) != spawnlist->end();
     }
 
-    uint32 getCharIdFromName(std::string const& name)
+    uint32 getCharIdFromName(const std::string& name)
     {
         TracyZoneScoped;
 
-        auto ret = _sql->Query("SELECT charid FROM chars WHERE charname = '%s' LIMIT 1", name.c_str());
-        if (ret != SQL_ERROR && _sql->NumRows() != 0 && _sql->NextRow() == SQL_SUCCESS)
+        const auto rset = db::preparedStmt("SELECT charid FROM chars WHERE charname = ? LIMIT 1", name);
+        FOR_DB_SINGLE_RESULT(rset)
         {
-            return _sql->GetUIntData(0);
+            return rset->get<uint32>("charid");
         }
+
         return 0;
+    }
+
+    uint32 getAccountIdFromName(const std::string& name)
+    {
+        TracyZoneScoped;
+
+        const auto rset = db::preparedStmt("SELECT accid FROM chars WHERE charname = ? LIMIT 1", name);
+        FOR_DB_SINGLE_RESULT(rset)
+        {
+            return rset->get<uint32>("accid");
+        }
+
+        return 0;
+    }
+
+    auto getCharIdAndAccountIdFromName(const std::string& name) -> std::pair<uint32, uint32>
+    {
+        TracyZoneScoped;
+
+        const auto rset = db::preparedStmt("SELECT charid, accid FROM chars WHERE charname = ? LIMIT 1", name);
+        FOR_DB_SINGLE_RESULT(rset)
+        {
+            return { rset->get<uint32>("charid"), rset->get<uint32>("accid") };
+        }
+
+        return { 0, 0 };
     }
 
     void forceSynthCritFail(const std::string& sourceFunction, CCharEntity* PChar)

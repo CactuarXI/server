@@ -8,20 +8,20 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     -- The Afflictor System (ID, X, Radius, Z) for curse
-    zone:registerTriggerArea( 1, -163, 15, -137,    0,  0,   0) -- The Afflictor, Map 1, G-10
-    zone:registerTriggerArea( 2, -209, 15, -131,    0,  0,   0) -- The Afflictor, Map 1, F-10
+    zone:registerCylindricalTriggerArea( 1, -163, 15, -137,    0,  0,   0) -- The Afflictor, Map 1, G-10
+    zone:registerCylindricalTriggerArea( 2, -209, 15, -131,    0,  0,   0) -- The Afflictor, Map 1, F-10
     -- afflictor 3 and 4 have areas on map above them, so we won't use cylinders and use box regions instead.
-    zone:registerTriggerArea( 3, -150, 16,   10, -130, 28,  32) -- The Afflictor, Map 2, G-8
-    zone:registerTriggerArea( 4,  251, 30,  130,  271, 50, 150) -- The Afflictor, Map 2, L-6
-    zone:registerTriggerArea( 5,  340, 15,  100,    0,  0,   0) -- The Afflictor, Map 2, M-7, north-west
-    zone:registerTriggerArea( 6,  380, 15,   60,    0,  0,   0) -- The Afflictor, Map 2, M-7, south-east
+    zone:registerCuboidTriggerArea( 3, -150, 16,   10, -130, 28,  32) -- The Afflictor, Map 2, G-8
+    zone:registerCuboidTriggerArea( 4,  251, 30,  130,  271, 50, 150) -- The Afflictor, Map 2, L-6
+    zone:registerCylindricalTriggerArea( 5,  340, 15,  100,    0,  0,   0) -- The Afflictor, Map 2, M-7, north-west
+    zone:registerCylindricalTriggerArea( 6,  380, 15,   60,    0,  0,   0) -- The Afflictor, Map 2, M-7, south-east
     -- The Afflictor Warning Message
-    zone:registerTriggerArea( 7, -163, 30, -137,    0,  0,   0) -- The Afflictor, Map 1, G-10
-    zone:registerTriggerArea( 8, -209, 30, -131,    0,  0,   0) -- The Afflictor, Map 1, F-10
-    zone:registerTriggerArea( 9, -140, 30,   20,    0,  0,   0) -- The Afflictor, Map 2, G-8
-    zone:registerTriggerArea(10,  261, 30,  140,    0,  0,   0) -- The Afflictor, Map 2, L-6
-    zone:registerTriggerArea(11,  340, 30,  100,    0,  0,   0) -- The Afflictor, Map 2, M-7, north-west
-    zone:registerTriggerArea(12,  380, 30,   60,    0,  0,   0) -- The Afflictor, Map 2, M-7, south-east
+    zone:registerCylindricalTriggerArea( 7, -163, 30, -137,    0,  0,   0) -- The Afflictor, Map 1, G-10
+    zone:registerCylindricalTriggerArea( 8, -209, 30, -131,    0,  0,   0) -- The Afflictor, Map 1, F-10
+    zone:registerCylindricalTriggerArea( 9, -140, 30,   20,    0,  0,   0) -- The Afflictor, Map 2, G-8
+    zone:registerCylindricalTriggerArea(10,  261, 30,  140,    0,  0,   0) -- The Afflictor, Map 2, L-6
+    zone:registerCylindricalTriggerArea(11,  340, 30,  100,    0,  0,   0) -- The Afflictor, Map 2, M-7, north-west
+    zone:registerCylindricalTriggerArea(12,  380, 30,   60,    0,  0,   0) -- The Afflictor, Map 2, M-7, south-east
 
     xi.treasure.initZone(zone)
 end
@@ -45,7 +45,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranki
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
-    local triggerAreaID = triggerArea:GetTriggerAreaID()
+    local triggerAreaID = triggerArea:getTriggerAreaID()
     local yPos     = player:getYPos()
     local time     = os.time()
 
@@ -63,7 +63,7 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
     then
         if not player:hasStatusEffect(xi.effect.CURSE_I) then
             if not player:hasStatusEffect(xi.effect.SILENCE) then
-                GetNPCByID(ID.npc.AFFLICTOR_BASE + (triggerArea:GetTriggerAreaID() -1)):entityAnimationPacket('main', player)
+                GetNPCByID(ID.npc.AFFLICTOR_BASE + (triggerArea:getTriggerAreaID() -1)):entityAnimationPacket('main', player)
                 player:setLocalVar('inRegion', time + 11) -- Start timer. We set it here to prevent double message.
                 player:addStatusEffect(xi.effect.CURSE_I, 75, 0, 120)
                 player:messageSpecial(ID.text.FEEL_NUMB)
@@ -94,7 +94,7 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onTriggerAreaLeave = function(player, triggerArea)
-    local triggerAreaID = triggerArea:GetTriggerAreaID()
+    local triggerAreaID = triggerArea:getTriggerAreaID()
     local yPos      = player:getYPos()
 
     if

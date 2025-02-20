@@ -84,7 +84,10 @@ xi.petId =
 
     --  Puppetmaster
     AUTOMATON             = 69,
-
+    HARLEQUINFRAME        = 69,
+    VALOREDGEFRAME        = 70,
+    SHARPSHOTFRAME        = 71,
+    STORMWAKERFRAME       = 72,
     --  Geomancer
     LUOPAN                = 75,
 }

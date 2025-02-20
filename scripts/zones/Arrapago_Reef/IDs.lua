@@ -48,7 +48,7 @@ zones[xi.zone.ARRAPAGO_REEF] =
         COMMON_SENSE_SURVIVAL         = 9791, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
 
         ASSAULT_START_OFFSET          = 7454, -- Max MP Down removed for <name>.
-        FEEL_A_CHILL                  = 8377, -- You feel a chill run down your spine!
+        SPINE_CHILL                   = 8377, -- You feel a chill run down your spine!
         KEYHOLE                       = 8548, -- Fragments of bone, claws, and teeth are scattered around the gate...
         KEYS_SHATTER                  = 8549, -- The <item> shatters... The <item> shatters... The <item> shatters...
         SENSE_OF_FOREBODING           = 8570, -- You feel an eerie sense of foreboding...
@@ -57,6 +57,7 @@ zones[xi.zone.ARRAPAGO_REEF] =
     {
         APKALLU_NPC           = GetFirstID('Arrapago_Apkallu'),
         BLOODY_BONES          = GetFirstID('Bloody_Bones'),
+        BUKKI                 = GetFirstID('Bukki'),
         MEDUSA                = GetFirstID('Medusa'),
         LIL_APKALLU           = GetFirstID('Lil_Apkallu'),
         VELIONIS              = GetFirstID('Velionis'),

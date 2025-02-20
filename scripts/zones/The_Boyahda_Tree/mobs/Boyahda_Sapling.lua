@@ -2,6 +2,7 @@
 -- Area: The Boyahda Tree
 --  Mob: Boyahda Sapling
 -- Note: PH for Leshonki
+-- TODO: 3 PHs should be in a spawning group that only one of them can be up at a time
 -----------------------------------
 local ID = zones[xi.zone.THE_BOYAHDA_TREE]
 -----------------------------------
@@ -17,13 +18,24 @@ local leshonkiPHTable =
     [ID.mob.LESHONKI + 2] = ID.mob.LESHONKI, -- -223.8 14.267 96.920
 }
 
+local leshonkiSpawnPoints =
+{
+    { x = -220.500, y = 13.621, z = 73.357 },
+    { x = -209.231, y = 14.243, z = 66.595 },
+    { x = -211.494, y = 13.755, z = 59.057 },
+    { x = -224.433, y = 13.898, z = 55.985 },
+}
+
 entity.onMobDeath = function(mob, player, optParams)
     -- xi.regime.checkRegime(player, mob, 725, 1, xi.regime.type.GROUNDS)
     xi.cactuarRegimes.checkRegime(player, mob, 7, 1, xi.regime.type.FIELDS)
 end
 
 entity.onMobDespawn = function(mob)
-    xi.mob.phOnDespawn(mob, leshonkiPHTable, 5, 3600) -- 1 hour
+    local params = {}
+    params.dayOnly = true
+    params.spawnPoints = leshonkiSpawnPoints
+    xi.mob.phOnDespawn(mob, leshonkiPHTable, 5, 3600, params) -- 1 hour
 end
 
 return entity

@@ -17,18 +17,19 @@ zoneObject.onInitialize = function(zone)
     xi.helm.initZone(zone, xi.helmType.LOGGING)
 
     -- Swamp trigger areas (Map 1)
-    zone:registerTriggerArea(1, 305, 2.5, -380, 0, 0, 0) -- South swamp (J-8)
-    zone:registerTriggerArea(2, 300, 2.5, -370, 0, 0, 0) -- South swamp (J-8)
-    zone:registerTriggerArea(3, 300, 2.5, -345, 0, 0, 0) -- North swamp (J-8)
-    zone:registerTriggerArea(4, 460, 2.5, -340, 0, 0, 0) -- South swamp (K-8)
-    zone:registerTriggerArea(5, 462, 2.5, -303, 0, 0, 0) -- North swamp (K-8)
-    zone:registerTriggerArea(6, 140, 2.5, -178, 0, 0, 0) -- Swamp (I-7)
+    zone:registerCuboidTriggerArea(1, 305, 2.5, -380, 0, 0, 0) -- South swamp (J-8)
+    zone:registerCuboidTriggerArea(2, 300, 2.5, -370, 0, 0, 0) -- South swamp (J-8)
+    zone:registerCuboidTriggerArea(3, 300, 2.5, -345, 0, 0, 0) -- North swamp (J-8)
+    zone:registerCuboidTriggerArea(4, 460, 2.5, -340, 0, 0, 0) -- South swamp (K-8)
+    zone:registerCuboidTriggerArea(5, 462, 2.5, -303, 0, 0, 0) -- North swamp (K-8)
+    zone:registerCuboidTriggerArea(6, 140, 2.5, -178, 0, 0, 0) -- Swamp (I-7)
 
     -- Swamp trigger areas (Map 2)
-    zone:registerTriggerArea(7, -378, 2.5, -143, 0, 0, 0) -- Swamp (I-7)
-    zone:registerTriggerArea(8, -421, 2.5, -184, 0, 0, 0) -- Swamp (I-7)
+    zone:registerCuboidTriggerArea(7, -378, 2.5, -143, 0, 0, 0) -- Swamp (I-7)
+    zone:registerCuboidTriggerArea(8, -421, 2.5, -184, 0, 0, 0) -- Swamp (I-7)
 
     xi.cactuarRegimes.initializeBooks(zone)
+    xi.darkRider.addHoofprints(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -61,7 +62,7 @@ zoneObject.afterZoneIn = function(player)
 end
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
-    local trigID = triggerArea:GetTriggerAreaID()
+    local trigID = triggerArea:getTriggerAreaID()
     local effect = xi.effect.WEIGHT
     local power  = 50
     local msg    = zones[player:getZoneID()].text.LEG_STUCK
@@ -102,6 +103,14 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
         end
 
         player:setLocalVar('ZikkoCooldown', os.time() + 300)
+    end
+end
+
+zoneObject.onGameHour = function(zone)
+    xi.darkRider.onGameHour(zone)
+
+    if VanadielHour() == 0 then
+        xi.darkRider.addHoofprints(zone)
     end
 end
 
