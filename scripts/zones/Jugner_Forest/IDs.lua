@@ -53,9 +53,9 @@ zones[xi.zone.JUGNER_FOREST] =
         DUG_UP                        = 8019,  -- Something was dug up here...
         PRETERNATURAL_FORCES          = 8020,  -- For some reason, you are unable to investigate this spot. There is a preternatural force at work here...
         FOREBODING                    = 8021,  -- A sense of foreboding fills the air...
-
         TIME_ELAPSED                  = 8485,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
         FOUND_ITEM_WITH_EASE          = 7805,  -- It appears your chocobo found this item with ease.
+        SIGNPOST_NEW                  = 7887,  -- The signpost looks as good as new!
     },
 
     mob =
@@ -110,6 +110,7 @@ zones[xi.zone.JUGNER_FOREST] =
     {
         OVERSEER_BASE = GetFirstID('Chaplion_RK'),
         LOGGING       = GetTableOfIDs('Logging_Point'),
+        SIGNPOST      = GetTableOfIDs('Signpost'),
     },
 }
 

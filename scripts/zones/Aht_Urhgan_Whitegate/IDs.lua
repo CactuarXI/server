@@ -91,8 +91,6 @@ zones[xi.zone.AHT_URHGAN_WHITEGATE] =
         CPT_PROMOTION                 = 9559,  -- <Player Name≻ has been promoted to Captain!
         SL_PROMOTION                  = 12037, -- <Player Name≻ has been promoted to Second Lieutenant!
         CS_PROMOTION                  = 12341, -- <Player Name≻ has been promoted to Chief Sergeant!
-
-        -- TODO: Shift
         IMPERIAL_AUTHORIZATION        = 4600,  -- Confirming Imperial authorization... You are authorized to use the runic portal.
     },
     mob =

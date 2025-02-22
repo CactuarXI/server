@@ -12,6 +12,7 @@ zones[xi.zone.BHAFLAU_THICKETS] =
         ITEM_OBTAINED                 = 6390, -- Obtained: <item>.
         GIL_OBTAINED                  = 6391, -- Obtained <number> gil.
         KEYITEM_OBTAINED              = 6393, -- Obtained key item: <keyitem>.
+        WARHORSE_HOOFPRINT            = 6400, -- You find the hoofprint of a gigantic warhorse...
         FELLOW_MESSAGE_OFFSET         = 6419, -- I'm ready. I suppose.
         CARRIED_OVER_POINTS           = 7001, -- You have carried over <number> login point[/s].
         LOGIN_CAMPAIGN_UNDERWAY       = 7002, -- The [/January/February/March/April/May/June/July/August/September/October/November/December] <number> Login Campaign is currently underway!
@@ -41,6 +42,7 @@ zones[xi.zone.BHAFLAU_THICKETS] =
         PLACE_QUARTZ                  = 6401, -- You set the ≺Possible Special Code: 01≻≺Possible Special Code: 05≻3≺BAD CHAR: 8280≻≺BAD CHAR: 80≻≺BAD CHAR: 80≻ in the warhorse hoofprint.≺Prompt≻
         YOU_HAVE_A_BADGE              = 7354, -- You have a %? Let me have a closer look at that...
         FOUND_ITEM_WITH_EASE          = 7147, -- It appears your chocobo found this item with ease.
+        WELLSPRING                    = 7653, -- The water in this spring is an unusual color...
     },
     mob =
     {

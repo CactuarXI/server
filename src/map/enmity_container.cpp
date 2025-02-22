@@ -182,11 +182,12 @@ void CEnmityContainer::UpdateEnmity(CBattleEntity* PEntity, int32 CE, int32 VE, 
     {
         int16 THlevel = std::min<int16>(8, PEntity->getMod(Mod::TREASURE_HUNTER));
 
-        // Enforce TH8 as max for THF main and TH4 as non-THF main
+        /* Enforce TH8 as max for THF main and TH4 as non-THF main
         if (PEntity->GetMJob() != JOB_THF)
         {
             THlevel = std::min<int16>(4, PEntity->getMod(Mod::TREASURE_HUNTER));
         }
+        */
 
         if (m_EnmityHolder->m_THLvl < THlevel)
         {

@@ -1566,7 +1566,7 @@ xi.cactuarRegimes.checkRegime = function(player, mob, regimeId, index, regimeTyp
     -- Award EXP for page completion
     -- Player must be equal or greater than REGIME_REWARD_THRESHOLD levels below the minimum suggested level
     if player:getMainLvl() >= math.max(1, trainingData.min_level - xi.settings.main.REGIME_REWARD_THRESHOLD) then
-        player:addExp((reward * rewardModifier) * xi.settings.main.BOOK_EXP_RATE)
+        player:addExpRaw((reward * rewardModifier) * xi.settings.main.BOOK_EXP_RATE)
     end
 
     -- repeating regimes

@@ -122,7 +122,7 @@ zones[xi.zone.SOUTHERN_SAN_DORIA] =
         YOU_FIND_A_WELL                = 7910,  -- You find a well.
         DONT_NEED_MORE_WATER           = 7912,  -- You don't need any more water.
         I_THANK_YOU_ADVENTURER         = 7914,  -- I thank you, kind adventurer. His Majesty, the late king, thanks you, too.
-
+        TAUMILA_DIALOG                 = 7989,  -- I am Taumila, the owner of this establishment. Talk to the lady behind the counter if you wish to make a purchase.
     },
     mob =
     {

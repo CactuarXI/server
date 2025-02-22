@@ -5310,6 +5310,246 @@ namespace charutils
         }
     }
 
+     /************************************************************************
+     *                                                                       *
+     *  Add experience points to the specified character (No main.EXP_RATE)      *
+     *                                                                       *
+     ************************************************************************/
+
+    void AddExperiencePointsRaw(bool expFromRaise, CCharEntity* PChar, CBaseEntity* PMob, uint32 exp, EMobDifficulty mobCheck, bool isexpchain)
+    {
+        TracyZoneScoped;
+
+        if (PChar->isDead())
+        {
+            return;
+        }
+
+        if (!expFromRaise)
+        {
+            exp = (uint32)(exp);
+            // exp = charutils::AddExpBonus(PChar, exp);
+        }
+        uint16 currentExp  = PChar->jobs.exp[PChar->GetMJob()];
+        bool   onLimitMode = false;
+
+        // Incase player de-levels to 74 on the field
+        if (PChar->MeritMode && PChar->jobs.job[PChar->GetMJob()] > 74 && !expFromRaise)
+        {
+            onLimitMode = true;
+        }
+
+        // we check if the player is level capped and max exp..
+        if (PChar->jobs.job[PChar->GetMJob()] > 74 && PChar->jobs.job[PChar->GetMJob()] >= PChar->jobs.genkai &&
+            PChar->jobs.exp[PChar->GetMJob()] == GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) - 1)
+        {
+            onLimitMode = true;
+        }
+
+        // exp added from raise shouldn't display a message. Don't need a message for zero exp either
+        if (!expFromRaise && exp > 0)
+        {
+            if (mobCheck >= EMobDifficulty::EvenMatch && isexpchain)
+            {
+                if (PChar->expChain.chainNumber != 0)
+                {
+                    if (onLimitMode)
+                    {
+                        PChar->pushPacket<CMessageCombatPacket>(PChar, PChar, exp, PChar->expChain.chainNumber, 372);
+                    }
+                    else
+                    {
+                        PChar->pushPacket<CMessageCombatPacket>(PChar, PChar, exp, PChar->expChain.chainNumber, 253);
+                    }
+                }
+                else
+                {
+                    if (onLimitMode)
+                    {
+                        PChar->pushPacket<CMessageCombatPacket>(PChar, PChar, exp, 0, 371);
+                    }
+                    else
+                    {
+                        PChar->pushPacket<CMessageCombatPacket>(PChar, PChar, exp, 0, 8);
+                    }
+                }
+                PChar->expChain.chainNumber++;
+            }
+            else
+            {
+                if (onLimitMode)
+                {
+                    PChar->pushPacket<CMessageCombatPacket>(PChar, PChar, exp, 0, 371);
+                }
+                else
+                {
+                    PChar->pushPacket<CMessageCombatPacket>(PChar, PChar, exp, 0, 8);
+                }
+            }
+        }
+
+        if (onLimitMode)
+        {
+            // add limit points
+            if (PChar->PMeritPoints->AddLimitPoints(exp))
+            {
+                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, std::make_unique<CMessageCombatPacket>(PChar, PMob, PChar->PMeritPoints->GetMeritPoints(), 0, 50));
+            }
+        }
+        else
+        {
+            // add normal exp
+            PChar->jobs.exp[PChar->GetMJob()] += exp;
+        }
+
+        if (!expFromRaise)
+        {
+            REGION_TYPE region = PChar->loc.zone->GetRegionID();
+
+            // Should this user be awarded conquest points..
+            if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SIGNET) && (region >= REGION_TYPE::RONFAURE && region <= REGION_TYPE::JEUNO))
+            {
+                // Add influence for the players region..
+                conquest::AddConquestPoints(PChar, exp);
+            }
+
+            // Should this user be awarded imperial standing..
+            if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SANCTION) && (region >= REGION_TYPE::WEST_AHT_URHGAN && region <= REGION_TYPE::ALZADAAL))
+            {
+                charutils::AddPoints(PChar, "imperial_standing", (int32)(exp * 0.1f));
+                PChar->pushPacket<CConquestPacket>(PChar);
+            }
+
+            // Should this user be awarded allied notes..
+            if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SIGIL) && (region >= REGION_TYPE::RONFAURE_FRONT && region <= REGION_TYPE::VALDEAUNIA_FRONT))
+            {
+                charutils::AddPoints(PChar, "allied_notes", (int32)(exp * 0.1f));
+                PChar->pushPacket<CConquestPacket>(PChar);
+            }
+
+            // Cruor Drops in Abyssea zones.
+            uint16 Pzone = PChar->getZone();
+            if (zoneutils::GetCurrentRegion(Pzone) == REGION_TYPE::ABYSSEA)
+            {
+                uint16 TextID = luautils::GetTextIDVariable(Pzone, "CRUOR_OBTAINED");
+                // uint32 Total  = charutils::GetPoints(PChar, "cruor");
+                // uint32 Cruor  = 0; // Need to work out how to do cruor chains, until then no cruor will drop unless this line is customized for non retail play.
+
+                if (TextID == 0)
+                {
+                    ShowWarning("Failed to fetch Cruor Message ID for zone: %i", Pzone);
+                }
+
+                // TODO: Implement this once formula for Cruor attainment is implemented
+                // if (Cruor >= 1)
+                // {
+                //     PChar->pushPacket<CMessageSpecialPacket>(PChar, TextID, Cruor, Total + Cruor, 0, 0);
+                //     charutils::AddPoints(PChar, "cruor", Cruor);
+                // }
+            }
+        }
+
+        PChar->PAI->EventHandler.triggerListener("EXPERIENCE_POINTS", PChar, PMob, exp);
+
+        // Player levels up
+        if ((currentExp + exp) >= GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) && !onLimitMode)
+        {
+            if (PChar->jobs.job[PChar->GetMJob()] >= PChar->jobs.genkai)
+            {
+                PChar->jobs.exp[PChar->GetMJob()] = GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]) - 1;
+                if (PChar->PParty && PChar->PParty->GetSyncTarget() == PChar)
+                {
+                    PChar->PParty->SetSyncTarget("", MsgStd::LevelSyncRemoveIneligibleExp);
+                }
+            }
+            else
+            {
+                PChar->jobs.exp[PChar->GetMJob()] -= GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()]);
+                if (PChar->jobs.exp[PChar->GetMJob()] >= GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()] + 1))
+                {
+                    PChar->jobs.exp[PChar->GetMJob()] = GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()] + 1) - 1;
+                }
+                PChar->jobs.job[PChar->GetMJob()] += 1;
+
+                if (PChar->m_LevelRestriction == 0 || PChar->m_LevelRestriction > PChar->GetMLevel())
+                {
+                    PChar->SetMLevel(PChar->jobs.job[PChar->GetMJob()]);
+                    PChar->SetSLevel(PChar->jobs.job[PChar->GetSJob()]);
+
+                    jobpointutils::RefreshGiftMods(PChar);
+                    BuildingCharSkillsTable(PChar);
+                    CalculateStats(PChar);
+                    BuildingCharAbilityTable(PChar);
+                    BuildingCharTraitsTable(PChar);
+                    BuildingCharWeaponSkills(PChar);
+                    puppetutils::LoadAutomaton(PChar);
+                }
+                PChar->PLatentEffectContainer->CheckLatentsJobLevel();
+
+                if (PChar->PParty != nullptr)
+                {
+                    if (PChar->PParty->GetSyncTarget() == PChar)
+                    {
+                        PChar->PParty->RefreshSync();
+                    }
+                    PChar->PParty->ReloadParty();
+                }
+
+                PChar->UpdateHealth();
+
+                if (!expFromRaise)
+                {
+                    // Level up animation and message
+                    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, std::make_unique<CMessageCombatPacket>(PChar, PMob, PChar->jobs.job[PChar->GetMJob()], 0, 9));
+                    // Set HP and MP to max range
+                    PChar->health.hp = PChar->GetMaxHP();
+                    PChar->health.mp = PChar->GetMaxMP();
+                }
+
+                SaveCharStats(PChar);
+                SaveCharJob(PChar, PChar->GetMJob());
+                SaveCharExp(PChar, PChar->GetMJob());
+
+                PChar->pushPacket<CCharJobsPacket>(PChar, true); // Umeboshi "resetflips"
+                PChar->pushPacket<CCharStatusPacket>(PChar);
+                PChar->pushPacket<CCharSkillsPacket>(PChar);
+                PChar->pushPacket<CCharRecastPacket>(PChar);
+                PChar->pushPacket<CCharAbilitiesPacket>(PChar);
+                PChar->pushPacket<CMenuMeritPacket>(PChar);
+                PChar->pushPacket<CMonipulatorPacket1>(PChar);
+                PChar->pushPacket<CMonipulatorPacket2>(PChar);
+                PChar->pushPacket<CCharJobExtraPacket>(PChar, true);
+                PChar->pushPacket<CCharJobExtraPacket>(PChar, true);
+                PChar->pushPacket<CCharSyncPacket>(PChar);
+
+                // PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CMessageCombatPacket(PChar, PMob, PChar->jobs.job[PChar->GetMJob()], 0, 9));
+                PChar->pushPacket<CCharStatsPacket>(PChar, true); // Umeboshi "resetflips"
+
+                luautils::OnPlayerLevelUp(PChar);
+                roeutils::event(ROE_EVENT::ROE_LEVELUP, PChar, RoeDatagramList{});
+                PChar->updatemask |= UPDATE_HP;
+                return;
+            }
+        }
+
+        SaveCharStats(PChar);
+        SaveCharJob(PChar, PChar->GetMJob());
+        SaveCharExp(PChar, PChar->GetMJob());
+        PChar->pushPacket<CCharStatsPacket>(PChar, true); // Umeboshi "resetflips"
+
+        if (onLimitMode)
+        {
+            PChar->pushPacket<CMenuMeritPacket>(PChar);
+            PChar->pushPacket<CMonipulatorPacket1>(PChar);
+            PChar->pushPacket<CMonipulatorPacket2>(PChar);
+        }
+
+        if (PMob != PChar) // Only mob kills count for gain EXP records
+        {
+            roeutils::event(ROE_EXPGAIN, PChar, RoeDatagram("exp", exp));
+        }
+    }
+
     /************************************************************************
      *                                                                       *
      *  Establish a restriction of character level                           *
@@ -7373,8 +7613,7 @@ namespace charutils
         // interrupted in some way, such as by being attacked or moving to another area (e.g. ship docking).
 
         ShowWarning("%s: %s attempting to zone in the middle of a synth, failing their synth!", sourceFunction, PChar->getName());
-        PChar->setModifier(Mod::SYNTH_MATERIAL_LOSS, -1000); // Force crit fail
-        synthutils::doSynthFail(PChar, true);
+        synthutils::doSynthCriticalFail(PChar);
 
         PChar->CraftContainer->Clean(); // Clean to reset m_ItemCount to 0
     }

@@ -1,22 +1,15 @@
 -----------------------------------
 -- The Rumor
 -----------------------------------
--- !addquest 0 61
--- Novalmauge: !gotoid 17461510
+-- Log ID: 0, Quest ID: 61
 -----------------------------------
-require('scripts/globals/interaction/quest')
-require('scripts/globals/npc_util')
-require('scripts/globals/quests')
-
-local ID = zones[xi.zone.BOSTAUNIEUX_OUBLIETTE]
+-- Novalmauge !pos 70 -24 21 167
 -----------------------------------
 
 local quest = Quest:new(xi.questLog.SANDORIA, xi.quest.id.sandoria.THE_RUMOR)
 
 quest.reward =
 {
-    fame = 30,
-    fameArea = xi.fameArea.SANDORIA,
     item = xi.item.SCROLL_OF_DRAIN,
 }
 
@@ -25,20 +18,16 @@ quest.sections =
     {
         check = function(player, status, vars)
             return status == xi.questStatus.QUEST_AVAILABLE and
-            player:getFameLevel(xi.fameArea.SANDORIA) >= 3 and
-            player:getMainLvl() >= 10
+                player:getFameLevel(xi.fameArea.SANDORIA) >= 3 and
+                player:getMainLvl() >= 10
         end,
 
         [xi.zone.BOSTAUNIEUX_OUBLIETTE] =
         {
-            ['Novalmauge'] = quest:progressEvent(13),
-
-            onEventUpdate =
+            ['Novalmauge'] =
             {
-                [13] = function(player, csid, option, npc)
-                    if option == 0 then
-                        player:updateEvent(13, 0)
-                    end
+                onTrigger = function(player, npc)
+                    return quest:progressEvent(13)
                 end,
             },
 
@@ -50,7 +39,7 @@ quest.sections =
                     end
                 end,
             },
-        },
+        }
     },
 
     {
@@ -62,14 +51,12 @@ quest.sections =
         {
             ['Novalmauge'] =
             {
+                onTrigger = quest:event(11),
+
                 onTrade = function(player, npc, trade)
                     if npcUtil.tradeHasExactly(trade, xi.item.VIAL_OF_BEASTMAN_BLOOD) then
                         return quest:progressEvent(12)
                     end
-                end,
-
-                onTrigger = function(player, npc)
-                    return quest:event(11)
                 end,
             },
 
@@ -77,26 +64,20 @@ quest.sections =
             {
                 [12] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:tradeComplete()
+                        player:confirmTrade()
                     end
                 end,
             },
         },
     },
-
     {
-        check = function(player, status, vars)
-            return status == xi.questStatus.QUEST_COMPLETED
+        check = function(player, status)
+            return status == xi.quest.status.COMPLETED
         end,
 
         [xi.zone.BOSTAUNIEUX_OUBLIETTE] =
         {
-            ['Novalmauge'] =
-            {
-                onTrigger = function(player, npc)
-                    return quest:event(14):replaceDefault()
-                end,
-            },
+            ['Novalmauge'] = quest:event(14):replaceDefault(),
         },
     },
 }

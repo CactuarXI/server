@@ -16,6 +16,7 @@ end
 
 entity.onMobSpawn = function(mob)
     mob:setLocalVar('maxBabies', 4)
+    xi.promyvion.emptyOnMobSpawn(mob, xi.promyvion.mobType.GORGER)
 end
 
 entity.onMobWeaponSkillPrepare = function(mob, target)

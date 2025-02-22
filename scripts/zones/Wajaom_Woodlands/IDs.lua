@@ -37,6 +37,8 @@ zones[xi.zone.WAJAOM_WOODLANDS] =
 
         ITEM_RETURNED                 = 6402, -- A <item ID> is returned to you.
         FOUND_ITEM_WITH_EASE          = 7147,  -- It appears your chocobo found this item with ease.
+        WELLSPRING                    = 7451, -- The water in this spring is an unusual color...
+        WARHORSE_HOOFPRINT            = 6400, -- You find the hoofprint of a gigantic warhorse...
     },
     mob =
     {
@@ -88,6 +90,7 @@ zones[xi.zone.WAJAOM_WOODLANDS] =
     {
         HARVESTING = GetTableOfIDs('Harvesting_Point'),
         HOOFPRINT  = GetFirstID('Warhorse_Hoofprint'),
+        WELLSPRING = GetFirstID('Mythralline_Wellspring')
     },
 }
 

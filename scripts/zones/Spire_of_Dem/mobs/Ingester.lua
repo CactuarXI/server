@@ -5,13 +5,17 @@
 -----------------------------------
 mixins =
 {
-    require('scripts/mixins/families/empty_terroanima'),
+    require('scripts/mixins/families/empty_terroanima')
 }
 -----------------------------------
 local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+end
+
+entity.onMobSpawn = function(mob)
+    xi.promyvion.emptyOnMobSpawn(mob, xi.promyvion.mobType.GORGER)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)

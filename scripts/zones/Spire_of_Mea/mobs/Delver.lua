@@ -13,6 +13,10 @@ entity.onMobInitialize = function(mob)
     mob:setMod(xi.mod.STORETP, 0)
 end
 
+entity.onMobSpawn = function(mob)
+    xi.promyvion.emptyOnMobSpawn(mob, xi.promyvion.mobType.CRAVER)
+end
+
 entity.onMobFight = function(mob, target)
     if mob:getHPP() <= 25 then
         mob:setMod(xi.mod.STORETP, 50)

@@ -976,7 +976,7 @@ namespace synthutils
      *                                                                         *
      **************************************************************************/
 
-    void doSynthFail(CCharEntity* PChar, bool isCriticalFail)
+    void doSynthFail(CCharEntity* PChar)
     {
         // Break material calculations.
         if (PChar->CraftContainer->getCraftType() != CRAFT_SYNTHESIS_NO_LOSS) // If it's a synth where no materials can be lost, skip break calculations.
@@ -987,17 +987,87 @@ namespace synthutils
         // Push "Synthesis failed" messages.
         uint16 currentZone = PChar->loc.zone->GetID();
 
-        const auto message = isCriticalFail ? SYNTH_FAIL_CRITICAL : SYNTH_FAIL;
+        if (currentZone &&
+            currentZone != ZONE_MONORAIL_PRE_RELEASE &&
+            currentZone != ZONE_49 &&
+            currentZone < MAX_ZONEID)
+        {
+            PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, std::make_unique<CSynthResultMessagePacket>(PChar, SYNTH_FAIL));
+        }
+
+        PChar->pushPacket<CSynthMessagePacket>(PChar, SYNTH_FAIL, 29695);
+    }
+
+    /**************************************************************************
+     *                                                                         *
+     *  Synthesis critically failed.                                           *
+     *  Triggered by zoning or disconnect mid craft.                           *
+     *                                                                         *
+     **************************************************************************/
+
+    void doSynthCriticalFail(CCharEntity* PChar)
+    {
+        // Loop variables
+        uint8 invSlotID  = PChar->CraftContainer->getInvSlotID(1);
+        uint8 nextSlotID = 0;
+        uint8 lostCount  = 0;
+        uint8 totalCount = 0;
+
+        // Loop through craft container items.
+        for (uint8 slotID = 1; slotID <= 8; ++slotID)
+        {
+            if (slotID != 8)
+            {
+                nextSlotID = PChar->CraftContainer->getInvSlotID(slotID + 1);
+            }
+
+            PChar->CraftContainer->setQuantity(slotID, 0);
+            lostCount++;
+            totalCount++;
+
+            if (invSlotID != nextSlotID)
+            {
+                CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(invSlotID);
+
+                if (PItem != nullptr)
+                {
+                    PItem->setSubType(ITEM_UNLOCKED);
+                    PItem->setReserve(PItem->getReserve() - totalCount);
+                    totalCount = 0;
+
+                    if (lostCount > 0)
+                    {
+                        charutils::UpdateItem(PChar, LOC_INVENTORY, invSlotID, -(int32)lostCount);
+                        lostCount = 0;
+                    }
+                    else
+                    {
+                        PChar->pushPacket<CInventoryAssignPacket>(PItem, INV_NORMAL);
+                    }
+                }
+                invSlotID = nextSlotID;
+            }
+
+            nextSlotID = 0;
+
+            if (invSlotID == 0xFF)
+            {
+                break;
+            }
+        }
+
+        // Push "Synthesis failed" messages.
+        uint16 currentZone = PChar->loc.zone->GetID();
 
         if (currentZone &&
             currentZone != ZONE_MONORAIL_PRE_RELEASE &&
             currentZone != ZONE_49 &&
             currentZone < MAX_ZONEID)
         {
-            PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, std::make_unique<CSynthResultMessagePacket>(PChar, message));
+            PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, std::make_unique<CSynthResultMessagePacket>(PChar, SYNTH_FAIL_CRITICAL));
         }
 
-        PChar->pushPacket<CSynthMessagePacket>(PChar, message, 29695);
+        PChar->pushPacket<CSynthMessagePacket>(PChar, SYNTH_FAIL_CRITICAL, 29695);
     }
 
     /*********************************************************************
@@ -1163,7 +1233,7 @@ namespace synthutils
 
         if (m_synthResult == SYNTHESIS_FAIL)
         {
-            doSynthFail(PChar, false);
+            doSynthFail(PChar);
         }
         else
         {

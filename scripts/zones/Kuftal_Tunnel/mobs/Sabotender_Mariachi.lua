@@ -5,25 +5,32 @@
 ---@type TMobEntity
 local entity = {}
 
-local updateRegen = function(mob)
+-- 1% per tick regen during the day
+local mobRegen = function(mob)
     local hour = VanadielHour()
-    if hour >= 4 and hour < 20 then
-        mob:setMod(xi.mod.REGEN, 25)
+    if hour >= 6 and hour < 18 then
+        mob:setMod(xi.mod.REGEN, 80)
     else
         mob:setMod(xi.mod.REGEN, 0)
     end
 end
 
-entity.onMobSpawn = function(mob)
-    updateRegen(mob)
+entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.GIL_MIN, 15000)
+    mob:setMobMod(xi.mobMod.GIL_MAX, 15000)
 end
 
-entity.onMobFight = function(mob)
-    updateRegen(mob)
+entity.onMobSpawn = function(mob)
+    mob:addImmunity(xi.immunity.DARK_SLEEP)
+    mob:addImmunity(xi.immunity.LIGHT_SLEEP)
 end
 
 entity.onMobRoam = function(mob)
-    updateRegen(mob)
+    mobRegen(mob)
+end
+
+entity.onMobFight = function(mob, target)
+    mobRegen(mob)
 end
 
 entity.onMobDeath = function(mob, player, optParams)

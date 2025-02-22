@@ -5,18 +5,13 @@
 ---@type TMobEntity
 local entity = {}
 
-local updateRegen = function(mob)
+local function mobRegen(mob)
     local hour = VanadielHour()
-    local regen = mob:getMod(xi.mod.REGEN)
 
-    if hour > 3 and hour < 20 then -- daytime between 4:00 and 20:00
-        if regen ~= 125 then
-            mob:setMod(xi.mod.REGEN, 125)
-        end
+    if hour >= 6 and hour <= 20 then
+        mob:setMod(xi.mod.REGEN, 125)
     else
-        if regen ~= 250 then
-            mob:setMod(xi.mod.REGEN, 250)
-        end
+        mob:setMod(xi.mod.REGEN, 250)
     end
 end
 
@@ -29,13 +24,16 @@ entity.onAdditionalEffect = function(mob, target, damage)
     return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.PETRIFY, { chance = 100 })
 end
 
-entity.onMobDisengage = function(mob)
+entity.onMobRoam = function(mob)
+    local weather = mob:getWeather()
     if
-        not (mob:getWeather() == xi.weather.DUST_STORM or
-        mob:getWeather() == xi.weather.SAND_STORM)
+        weather ~= xi.weather.DUST_STORM and
+        weather ~= xi.weather.SAND_STORM
     then
         DespawnMob(mob:getID())
     end
+
+    mobRegen(mob)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
@@ -110,19 +108,14 @@ entity.onMobFight = function(mob, target)
         }
     }
 
-    updateRegen(mob)
+    mobRegen(mob)
     utils.arenaDrawIn(mob, target, drawInTableNorth)
     utils.arenaDrawIn(mob, target, drawInTableSouth)
 end
 
-entity.onMobRoam = function(mob)
-    updateRegen(mob)
-    if
-        not (mob:getWeather() == xi.weather.DUST_STORM or
-        mob:getWeather() == xi.weather.SAND_STORM)
-    then
-        DespawnMob(mob:getID())
-    end
+entity.onMobDespawn = function(mob)
+    UpdateNMSpawnPoint(mob:getID())
+    mob:setRespawnTime(math.random(75600, 86400)) -- 21 to 24 hours
 end
 
 return entity

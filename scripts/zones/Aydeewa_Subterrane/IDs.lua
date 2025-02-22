@@ -30,17 +30,19 @@ zones[xi.zone.AYDEEWA_SUBTERRANE] =
         MUSHROOM_INTO_MONSTER         = 7416, -- The mushroom has grown into a monster!
         MUSHROOM_GROWN_A_BIT          = 7417, -- The mushroom seems to have grown a bit.
         MUSHROOM_NO_MORE_FERT         = 7418, -- The mushroom does not need any more fertilizer now.
+        NO_MORE_SPROUTS               = 7706, -- However, you cannot carry any more sprouts.
     },
     mob =
     {
         BLUESTREAK_GYUGYUROON = GetFirstID('Bluestreak_Gyugyuroon'),
+        CHIGRE                = GetFirstID('Chigre'),
         NOSFERATU             = GetFirstID('Nosferatu'),
         PANDEMONIUM_WARDEN    = GetFirstID('Pandemonium_Warden'), -- 2 Copies: +0, +1
-        CHIGRE                = GetFirstID('Chigre'),
         CRYSTAL_EATER         = 17056155,
     },
     npc =
     {
+        MUSHROOM_PATCH = GetFirstID('Mushroom_Patch')
     },
 }
 

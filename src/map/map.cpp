@@ -125,12 +125,6 @@ namespace
     uint32 TotalPacketsDelayedPerTick = 0U;
 } // namespace
 
-/************************************************************************
- *                                                                       *
- *  mapsession_getbyipp                                                  *
- *                                                                       *
- ************************************************************************/
-
 map_session_data_t* mapsession_getbyipp(uint64 ipp)
 {
     TracyZoneScoped;
@@ -146,11 +140,20 @@ map_session_data_t* mapsession_getbyipp(uint64 ipp)
     return nullptr;
 }
 
-/************************************************************************
- *                                                                       *
- *  mapsession_createsession                                             *
- *                                                                       *
- ************************************************************************/
+map_session_data_t* mapsession_getbychar(CCharEntity* PChar)
+{
+    TracyZoneScoped;
+
+    for (const auto& [_, session] : map_session_list)
+    {
+        if (PChar && session->PChar->id == PChar->id)
+        {
+            return session;
+        }
+    }
+
+    return nullptr;
+}
 
 map_session_data_t* mapsession_createsession(uint32 ip, uint16 port)
 {
@@ -335,6 +338,8 @@ int32 do_init(int32 argc, char** argv)
     CTaskMgr::getInstance()->AddTask("map_cleanup", server_clock::now(), nullptr, CTaskMgr::TASK_INTERVAL, 5s, map_cleanup);
     CTaskMgr::getInstance()->AddTask("garbage_collect", server_clock::now(), nullptr, CTaskMgr::TASK_INTERVAL, 15min, map_garbage_collect);
     CTaskMgr::getInstance()->AddTask("persist_server_vars", server_clock::now(), nullptr, CTaskMgr::TASK_INTERVAL, 1min, serverutils::PersistVolatileServerVars);
+
+    zoneutils::TOTDChange(CVanaTime::getInstance()->GetCurrentTOTD()); // This tells the zones to spawn stuff based on time of day conditions (such as undead at night)
 
     ShowInfo("do_init: Removing expired database variables");
     uint32 currentTimestamp = CVanaTime::getInstance()->getSysTime();
@@ -944,6 +949,13 @@ int32 parse(int8* buff, size_t* buffsize, sockaddr_in* from, map_session_data_t*
             {
                 ShowWarning("[PacketGuard] Caught mismatch between player substate and recieved packet: Player: %s - Packet: %03hX",
                             PChar->getName(), SmallPD_Type);
+                // TODO: Plug in optional jailutils usage
+                continue; // skip this packet
+            }
+
+            if (settings::get<bool>("map.PACKETGUARD_ENABLED") && !PacketGuard::PacketsArrivingInCorrectOrder(PChar, SmallPD_Type))
+            {
+                ShowWarning("[PacketGuard] Caught out-of-order packet: Player: %s - Packet: %03hX", PChar->getName(), SmallPD_Type);
                 // TODO: Plug in optional jailutils usage
                 continue; // skip this packet
             }

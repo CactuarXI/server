@@ -107,8 +107,16 @@ namespace mobutils
 
     uint16 GetMagicEvasion(CMobEntity* PMob)
     {
-        uint8 mEvaRank = PMob->evaRank;
-        return GetBaseSkill(PMob, mEvaRank);
+        uint8 mlvl = std::min<uint8>(PMob->GetMLevel(), 99);
+
+        // Assume trusts have G rank meva like players
+        if (PMob->objtype == TYPE_TRUST)
+        {
+            return battleutils::GetMaxSkill(12, mlvl);
+        }
+
+        // Mobs have rank C magic evasion
+        return battleutils::GetMaxSkill(7, mlvl);
     }
 
     /************************************************************************

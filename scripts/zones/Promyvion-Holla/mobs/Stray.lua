@@ -2,16 +2,11 @@
 -- Area: Promyvion-Holla
 --   NM: Stray
 -----------------------------------
-mixins =
-{
-    require('scripts/mixins/families/empty')
-}
------------------------------------
 ---@type TMobEntity
 local entity = {}
 
 entity.onMobSpawn = function(mob)
-    xi.promyvion.strayOnMobSpawn(mob)
+    xi.promyvion.emptyOnMobSpawn(mob, xi.promyvion.mobType.STRAY)
 end
 
 entity.onMobDeath = function(mob, player, optParams)

@@ -32,6 +32,7 @@ return {
     ['Legata']               = { event = 35 },
     ['Lotte']                = { event = 564 },
     ['Luthiaque']            = { event = 658 },
+    ['Maugie']               = { event =  46 },
     ['Melledanne']           = { event = 943 },
     ['Ophelia']              = { event = 751 },
     ['Phillone']             = { event = 29 },

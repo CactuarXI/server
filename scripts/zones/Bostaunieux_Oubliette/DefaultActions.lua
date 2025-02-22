@@ -22,6 +22,6 @@ return {
     ['_4nk']         = { special = ID.text.SEEMS_LOCKED },
     ['Chumia']       = { text    = ID.text.CHUMIA_DIALOG },
     ['Couchatorage'] = { event   = 9 },
-    ['Novalmauge']   = { event = 10 },
+    ['Novalmauge']   = { event   = 10 },
     ['qm1']          = { special = ID.text.NOTHING_OUT_OF_ORDINARY },
 }

@@ -1220,7 +1220,8 @@ namespace battleutils
                     finaldamage > 0 &&
                     isFirstSwing &&
                     PDefender->objtype == TYPE_MOB &&
-                    PChar->GetMJob() == JOB_THF &&
+                    PChar->GetMJob() == JOB_THF ||
+                    PChar->GetSJob() == JOB_THF  &&
                     PChar->hasTrait(TRAITTYPE::TRAIT_TREASURE_HUNTER)) // TH trait as a requirement is assumed, but likely. Could this just be a level 15 check instead?
                 {
                     auto PMob = dynamic_cast<CMobEntity*>(PDefender);

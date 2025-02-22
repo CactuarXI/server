@@ -2,14 +2,10 @@
 -- Promotion: Corporal
 -- Log ID: 6, Quest ID: 93
 -- Naja Salaheem !pos 26 -8 -45.5 50
+-- LogID: 6 QuestID: 93
 -----------------------------------
+
 local quest = Quest:new(xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.PROMOTION_CORPORAL)
------------------------------------
-local ahtUrhganID = zones[xi.zone.AHT_URHGAN_WHITEGATE]
-local bhaflauID = zones[xi.zone.BHAFLAU_THICKETS]
-local mireID = zones[xi.zone.CAEDARVA_MIRE]
-local mountzID = zones[xi.zone.MOUNT_ZHAYOLM]
-local waojoamID = zones[xi.zone.WAJAOM_WOODLANDS]
 
 quest.reward =
 {
@@ -41,32 +37,13 @@ quest.sections =
     },
     {
         check = function(player, status, vars)
-            return status == xi.questStatus.QUEST_ACCEPTED
+            return status == xi.questStatus.QUEST_ACCEPTED and
+            player:hasKeyItem(xi.ki.QUARTZ_TRANSMITTER)
         end,
 
         [xi.zone.AHT_URHGAN_WHITEGATE] =
         {
-            ['Naja_Salaheem'] =
-            {
-                onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 0 then
-                        return quest:event(5047):importantOnce()
-                    elseif quest:getVar(player, 'Prog') == 1 then
-                        return quest:progressEvent(5046, { text_table = 0 })
-                    end
-                end,
-            },
-
-            onEventFinish =
-            {
-                [5046] = function(player, csid, option, npc)
-                    if quest:complete(player) then
-                        player:setCharVar('AssaultPromotion', 0)
-                        player:delKeyItem(xi.ki.LC_WILDCAT_BADGE)
-                        player:messageSpecial(ahtUrhganID.text.C_PROMOTION)
-                    end
-                end,
-            },
+            ['Naja_Salaheem'] = quest:progressEvent(5047, { text_table = 0 }):oncePerZone(),
         },
 
         [xi.zone.BHAFLAU_THICKETS] =
@@ -74,50 +51,72 @@ quest.sections =
             ['Warhorse_Hoofprint'] =
             {
                 onTrigger = function(player, npc)
-                    if player:hasKeyItem(xi.ki.QUARTZ_TRANSMITTER) then
-                        player:delKeyItem(xi.ki.QUARTZ_TRANSMITTER)
-                        quest:setVar(player, 'Prog', 1)
-                        return quest:messageSpecial(bhaflauID.text.PLACE_QUARTZ, xi.ki.QUARTZ_TRANSMITTER):replaceDefault()
-                    end
+                    player:delKeyItem(xi.ki.QUARTZ_TRANSMITTER)
+                    quest:setVar(player, 'Prog', 2)
+                    return quest:messageSpecial(zones[player:getZoneID()].text.WARHORSE_HOOFPRINT + 1, xi.ki.QUARTZ_TRANSMITTER)
                 end,
-            }
+            },
         },
         [xi.zone.CAEDARVA_MIRE] =
         {
             ['Warhorse_Hoofprint'] =
             {
                 onTrigger = function(player, npc)
-                    if player:hasKeyItem(xi.item.QUARTZ_TRANSMITTER) then
-                        player:delKeyItem(xi.ki.QUARTZ_TRANSMITTER)
-                        quest:setVar(player, 'Prog', 1)
-                        return player:messageSpecial(mireID.text.PLACE_QUARTZ, xi.ki.QUARTZ_TRANSMITTER):replaceDefault()
-                    end
+                    player:delKeyItem(xi.ki.QUARTZ_TRANSMITTER)
+                    quest:setVar(player, 'Prog', 4)
+                    return quest:messageSpecial(zones[player:getZoneID()].text.WARHORSE_HOOFPRINT + 1, xi.ki.QUARTZ_TRANSMITTER)
                 end,
-            }        },
+            },
+        },
         [xi.zone.MOUNT_ZHAYOLM] =
         {
             ['Warhorse_Hoofprint'] =
             {
                 onTrigger = function(player, npc)
-                    if player:hasKeyItem(xi.item.QUARTZ_TRANSMITTER) then
-                        player:delKeyItem(xi.ki.QUARTZ_TRANSMITTER)
-                        quest:setVar(player, 'Prog', 1)
-                        return player:messageSpecial(mountzID.text.PLACE_QUARTZ, xi.ki.QUARTZ_TRANSMITTER):replaceDefault()
-                    end
+                    player:delKeyItem(xi.ki.QUARTZ_TRANSMITTER)
+                    quest:setVar(player, 'Prog', 3)
+                    return quest:messageSpecial(zones[player:getZoneID()].text.WARHORSE_HOOFPRINT + 1, xi.ki.QUARTZ_TRANSMITTER)
                 end,
-            }        },
+            },
+        },
         [xi.zone.WAJAOM_WOODLANDS] =
         {
             ['Warhorse_Hoofprint'] =
             {
                 onTrigger = function(player, npc)
-                    if player:hasKeyItem(xi.item.QUARTZ_TRANSMITTER) then
-                        player:delKeyItem(xi.ki.QUARTZ_TRANSMITTER)
-                        quest:setVar(player, 'Prog', 1)
-                        return player:messageSpecial(waojoamID.text.PLACE_QUARTZ, xi.ki.QUARTZ_TRANSMITTER):replaceDefault()
+                    player:delKeyItem(xi.ki.QUARTZ_TRANSMITTER)
+                    quest:setVar(player, 'Prog', 1)
+                    return quest:messageSpecial(zones[player:getZoneID()].text.WARHORSE_HOOFPRINT + 1, xi.ki.QUARTZ_TRANSMITTER)
+                end,
+            },
+        },
+
+    },
+    {
+        check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_ACCEPTED and
+            not player:hasKeyItem(xi.ki.QUARTZ_TRANSMITTER)
+        end,
+
+        [xi.zone.AHT_URHGAN_WHITEGATE] =
+        {
+            ['Naja_Salaheem'] =
+            {
+                onTrigger = function(player, npc)
+                    local hoofprintZone = quest:getVar(player, 'Prog')
+                    return quest:progressEvent(5046, { [0] = hoofprintZone, text_table = 0 })
+                end,
+            },
+
+            onEventFinish =
+            {
+                [5046] = function(player, csid, option, npc)
+                    if quest:complete(player) then
+                        player:setVar('AssaultPromotion', 0)
+                        player:delKeyItem(xi.ki.LC_WILDCAT_BADGE)
                     end
                 end,
-            }
+            },
         },
     },
 }

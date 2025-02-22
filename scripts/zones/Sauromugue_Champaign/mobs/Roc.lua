@@ -5,7 +5,7 @@
 mixins =
 {
     require('scripts/mixins/rage'),
-    require('scripts/mixins/job_special'),
+    require('scripts/mixins/job_special')
 }
 -----------------------------------
 ---@type TMobEntity
@@ -41,7 +41,9 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
-    xi.mob.nmTODPersist(mob, math.random(75600, 86400)) -- 21 to 24 hours
+    UpdateNMSpawnPoint(mob:getID())
+    mob:setRespawnTime(math.random(3600, 7200)) -- 1 to 2 hours
+    -- xi.mob.nmTODPersist(mob, math.random(75600, 86400)) -- 21 to 24 hours
 end
 
 return entity

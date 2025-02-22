@@ -5,10 +5,14 @@
 -----------------------------------
 mixins =
 {
-    require('scripts/mixins/families/empty_terroanima'),
+    require('scripts/mixins/families/empty_terroanima')
 }
 -----------------------------------
 local entity = {}
+
+entity.onMobSpawn = function(mob)
+    xi.promyvion.emptyOnMobSpawn(mob, xi.promyvion.mobType.CRAVER)
+end
 
 entity.onMobEngage = function(mob)
     mob:setLocalVar('timer', os.time() + math.random(20, 90))

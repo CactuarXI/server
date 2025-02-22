@@ -16,6 +16,9 @@ end
 
 entity.onMobSpawn = function(mob)
     mob:addImmunity(xi.immunity.SILENCE)
+    mob:addImmunity(xi.immunity.DARK_SLEEP)
+    mob:addImmunity(xi.immunity.LIGHT_SLEEP)
+    mob:addMod(xi.mod.REGEN, 35)
     local npc = GetNPCByID(ID.npc.PHANTOM_WORM_QM)
     npc:clearTimerQueue()
     npc:setStatus(xi.status.DISAPPEAR)

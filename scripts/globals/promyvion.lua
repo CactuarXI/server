@@ -1,6 +1,11 @@
+-----------------------------------
+-- Promyvion global file
+-----------------------------------
+require('scripts/globals/combat/element_tables')
+-----------------------------------
 xi = xi or {}
 xi.promyvion = xi.promyvion or {}
-
+-----------------------------------
 local demID   = zones[xi.zone.PROMYVION_DEM]
 local hollaID = zones[xi.zone.PROMYVION_HOLLA]
 local meaID   = zones[xi.zone.PROMYVION_MEA]
@@ -9,6 +14,35 @@ local vahzlID = zones[xi.zone.PROMYVION_VAHZL]
 -----------------------------------
 -- Information Tables
 -----------------------------------
+xi.promyvion.mobType =
+{
+    WANDERER =  1,
+    STRAY    =  2,
+    WEEPER   =  3,
+    SEETHER  =  4,
+    THINKER  =  5,
+    GORGER   =  6,
+    CRAVER   =  7,
+    DRIFTER  =  8,
+    LAMENTER =  9,
+    RAGER    = 10,
+}
+
+-- Contains model IDs and subAnimations, in elemental order, per mob type.
+local mobTable =
+{
+    [xi.promyvion.mobType.WANDERER] = { { 1108,  6 }, { 1110,  5 }, { 1110,  6 }, { 1107,  6 }, { 1107,  5 }, { 1106,  6 }, { 1108,  5 }, { 1106,  5 } },
+    [xi.promyvion.mobType.STRAY   ] = { { 1108, 14 }, { 1110, 13 }, { 1110, 14 }, { 1107, 14 }, { 1107, 13 }, { 1106, 14 }, { 1108, 13 }, { 1106, 13 } },
+    [xi.promyvion.mobType.WEEPER  ] = { { 1114,  6, 5402 }, { 1115,  5, 5403 }, { 1115,  6, 5404 }, { 1113,  6, 5405 }, { 1113,  5, 5406 }, { 1112,  6, 5407 }, { 1114,  5, 5408 }, { 1112,  5, 5409 } },
+    [xi.promyvion.mobType.SEETHER ] = { { 1120,  6 }, { 1121,  5 }, { 1121,  6 }, { 1119,  6 }, { 1119,  5 }, { 1117,  6 }, { 1120,  5 }, { 1117,  5 } },
+    [xi.promyvion.mobType.THINKER ] = { { 1126, 14 }, { 1127, 13 }, { 1127, 14 }, { 1124, 14 }, { 1124, 13 }, { 1123, 14 }, { 1126, 13 }, { 1123, 13 } },
+    [xi.promyvion.mobType.GORGER  ] = { { 1131, 14 }, { 1132, 13 }, { 1132, 14 }, { 1130, 14 }, { 1130, 13 }, { 1129, 14 }, { 1131, 13 }, { 1129, 13 } },
+    [xi.promyvion.mobType.CRAVER  ] = { { 1137, 14 }, { 1138, 13 }, { 1138, 14 }, { 1135, 14 }, { 1135, 13 }, { 1134, 14 }, { 1137, 13 }, { 1134, 13 } },
+    [xi.promyvion.mobType.DRIFTER ] = { { 3616,  6 }, { 3617,  5 }, { 3617,  6 }, { 3615,  6 }, { 3615,  5 }, { 3614,  6 }, { 3616,  5 }, { 3614,  5 } },
+    [xi.promyvion.mobType.LAMENTER] = { { 3621,  6 }, { 3622,  5 }, { 3622,  6 }, { 3620,  6 }, { 3620,  5 }, { 3619,  6 }, { 3621,  5 }, { 3619,  5 } },
+    [xi.promyvion.mobType.RAGER   ] = { { 3626,  6 }, { 3627,  5 }, { 3627,  6 }, { 3625,  6 }, { 3625,  5 }, { 3624,  6 }, { 3626,  5 }, { 3624,  5 } },
+}
+
 local receptacleInfoTable =
 {
     [xi.zone.PROMYVION_DEM] =
@@ -188,15 +222,69 @@ xi.promyvion.handlePortal = function(player, npcId, eventId)
 end
 
 -----------------------------------
--- Stray global functions
+-- Mob global functions (Element setup)
 -----------------------------------
-xi.promyvion.strayOnMobSpawn = function(mob)
-    -- Strays only use animation-sub 13 and 14.
-    -- They, however, use diferent models and said model has a color set, each alligned to an element.
-    -- TODO: Investigate elements depending on model and animation-sub.
-    local animationSub = 13 + math.random(0, 1)
+xi.promyvion.emptyOnMobSpawn = function(mob, mobType)
+    local element    = math.random(xi.element.FIRE, xi.element.DARK)
+    local opposite   = xi.combat.element.getOppositeElement(element)
+    local complement = xi.element.NONE
 
-    mob:setAnimationSub(animationSub)
+    if element == xi.element.WATER then
+        complement = xi.element.FIRE
+    elseif element < xi.element.WATER then
+        complement = element + 1
+    end
+
+    -- Setup resistances.
+    for i = xi.element.FIRE, xi.element.DARK do
+        local resRankModId = xi.combat.element.getElementalResistanceRankModifier(i)
+        local value        = 0
+
+        if
+            i == element or
+            i == complement
+        then
+            value = 11
+        elseif i == opposite then
+            value = -3
+        end
+
+        mob:setMod(resRankModId, value)
+    end
+
+    -- Set Models and handle Stray mobType exceptions
+    if
+        mob:getZone():getID() == xi.zone.PROMYVION_VAHZL and
+        mobType == xi.promyvion.mobType.STRAY
+    then
+        local chance = math.random(1, 10) -- Pick a random Empty type
+        if chance == 1 then -- Weeper
+            mob:setMobMod(xi.mobMod.SKILL_LIST, mobTable[xi.promyvion.mobType.WEEPER][element][3])
+            mob:setModelId(mobTable[xi.promyvion.mobType.WEEPER][element][1])
+            mob:setAnimationSub(mobTable[xi.promyvion.mobType.WEEPER][element][2])
+            -- print('STRAY Weeper')
+        elseif chance == 2 then -- Seether
+            mob:setModelId(mobTable[xi.promyvion.mobType.SEETHER][element][1])
+            mob:setAnimationSub(mobTable[xi.promyvion.mobType.SEETHER][element][2])
+            mob:setMobMod(xi.mobMod.SKILL_LIST, 220)
+            -- print('STRAY Seether')
+        else -- Stray
+            mob:setModelId(mobTable[xi.promyvion.mobType.STRAY][element][1])
+            mob:setAnimationSub(mobTable[xi.promyvion.mobType.STRAY][element][2])
+            mob:setMobMod(xi.mobMod.SKILL_LIST, 255)
+            -- print('STRAY Wanderer')
+        end
+    else
+        -- Set model and animationSub for everything else
+        mob:setModelId(mobTable[mobType][element][1])
+        mob:setAnimationSub(mobTable[mobType][element][2])
+    end
+
+    -- If mobType is Weeper, assign the skill list based on mob element
+    -- Weepers have a mob skill named: "Memory of <Element>" that is based on their element
+    if mobType == xi.promyvion.mobType.WEEPER then
+        mob:setMobMod(xi.mobMod.SKILL_LIST, mobTable[mobType][element][3])
+    end
 end
 
 -----------------------------------
@@ -205,6 +293,7 @@ end
 xi.promyvion.receptacleOnMobInitialize = function(mob)
     mob:setAutoAttackEnabled(false) -- Receptacles only use TP moves.
     mob:addMod(xi.mod.DEF, 55)
+    -- mob:setMod(xi.mod.DESPAWN_TIME_REDUCTION, 10) -- TODO: Properly time in retail and then adjust timers for portal opening, decorations, etc...
 end
 
 xi.promyvion.receptacleOnMobSpawn = function(mob)

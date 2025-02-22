@@ -8821,6 +8821,26 @@ void CLuaBaseEntity::addExp(uint32 exp)
 }
 
 /************************************************************************
+ *  Function: addExpRaw()
+ *  Purpose : Adds a set amount of XP to the player (No main.EXP_RATE)
+ *  Example : player:addExp(math.random(500,1000))
+ *  Notes   :
+ ************************************************************************/
+
+void CLuaBaseEntity::addExpRaw(uint32 exp)
+{
+    if (m_PBaseEntity->objtype != TYPE_PC)
+    {
+        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
+        return;
+    }
+
+    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+
+    charutils::AddExperiencePointsRaw(false, PChar, m_PBaseEntity, exp);
+}
+
+/************************************************************************
  *  Function: addCapacityPoints()
  *  Purpose : Adds a set amount of Capacity Points to the player
  *  Example : player:addCapacity(1000)
@@ -19948,6 +19968,7 @@ void CLuaBaseEntity::Register()
 
     // Player Points
     SOL_REGISTER("addExp", CLuaBaseEntity::addExp);
+    SOL_REGISTER("addExpRaw", CLuaBaseEntity::addExpRaw);
     SOL_REGISTER("delExp", CLuaBaseEntity::delExp);
     SOL_REGISTER("getMerit", CLuaBaseEntity::getMerit);
     SOL_REGISTER("getMeritCount", CLuaBaseEntity::getMeritCount);

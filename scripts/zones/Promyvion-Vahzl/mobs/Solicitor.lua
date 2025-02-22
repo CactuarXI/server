@@ -12,6 +12,7 @@ entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 240)
     mob:setMod(xi.mod.DOUBLE_ATTACK, 20)
     mob:setMod(xi.mod.STORETP, 100)
+    xi.promyvion.emptyOnMobSpawn(mob, xi.promyvion.mobType.CRAVER)
 end
 
 entity.onMobWeaponSkillPrepare = function(mob, target)

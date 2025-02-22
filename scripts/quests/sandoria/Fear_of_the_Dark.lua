@@ -2,20 +2,15 @@
 -- Fear of the Dark
 -----------------------------------
 -- Log ID: 0, Quest ID: 78
--- Secodiand : !pos -160 -0 137 231 Starts and Finishes
 -----------------------------------
-require('scripts/globals/interaction/quest')
-require('scripts/globals/npc_util')
-require('scripts/globals/quests')
-
+-- Secodiand : !pos -160 -0 137 231
+-----------------------------------
 
 local quest = Quest:new(xi.questLog.SANDORIA, xi.quest.id.sandoria.FEAR_OF_THE_DARK)
 
 quest.reward =
 {
-    fame = 30,
-    gil = 200 * xi.settings.main.GIL_RATE,
-    fameArea = xi.fameArea.SANDORIA,
+    gil = 200,
 }
 
 quest.sections =
@@ -27,12 +22,7 @@ quest.sections =
 
         [xi.zone.NORTHERN_SAN_DORIA] =
         {
-            ['Secodiand'] =
-            {
-                onTrigger = function(player, npc)
-                    return quest:progressEvent(19)
-                end,
-            },
+            ['Secodiand'] = quest:progressEvent(19),
 
             onEventFinish =
             {
@@ -44,7 +34,6 @@ quest.sections =
             },
         },
     },
-
     {
         check = function(player, status, vars)
             return status >= xi.questStatus.QUEST_ACCEPTED
@@ -55,25 +44,23 @@ quest.sections =
             ['Secodiand'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.BAT_WING, 2 } }) then
+                    if npcUtil.tradeHas(trade, { { xi.item.BAT_WING, 2 } }) then
                         return quest:progressEvent(18)
                     end
-                end,
-
-                onTrigger = function(player, npc)
-                    return quest:event(17):replaceDefault()
                 end,
             },
 
             onEventFinish =
             {
                 [18] = function(player, csid, option, npc)
-                    player:tradeComplete()
-                    if player:getQuestStatus(quest.areaId, quest.questId) == xi.questStatus.QUEST_COMPLETED then
-                        -- Quest is repeatable but only gives 5 fame per turn in instead of the 30 for the original completion
-                        quest.reward.fame = 5
+                    if player:getQuestStatus(xi.questLog.SANDORIA, xi.quest.id.sandoria.FEAR_OF_THE_DARK) == xi.questStatus.QUEST_ACCEPTED then
+                        quest:complete(player)
+                    else
+                        npcUtil.giveCurrency(player, 'gil', 200)
+                        player:addFame(xi.fameArea.SANDORIA, 5)
                     end
-                    quest:complete(player)
+
+                    player:confirmTrade()
                 end,
             },
         },

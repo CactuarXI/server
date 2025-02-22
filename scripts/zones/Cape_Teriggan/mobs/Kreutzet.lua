@@ -30,18 +30,6 @@ entity.onMobWeaponSkill = function(target, mob, skill)
     end
 end
 
-entity.onMobDisengage = function(mob)
-    if
-        not (mob:getWeather() == xi.weather.WIND or
-        mob:getWeather() == xi.weather.GALES)
-    then
-        DespawnMob(mob:getID())
-    end
-end
-
-entity.onMobDeath = function(mob, player, optParams)
-end
-
 entity.onMobDespawn = function(mob)
     xi.mob.nmTODPersist(mob, math.random(32400, 43200)) -- 9 to 12 hours
     DisallowRespawn(mob:getID(), true) -- prevents accidental 'pop' during no wind weather and immediate despawn
