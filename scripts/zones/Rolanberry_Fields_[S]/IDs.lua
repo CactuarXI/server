@@ -32,6 +32,8 @@ zones[xi.zone.ROLANBERRY_FIELDS_S] =
         COMMON_SENSE_SURVIVAL         = 9262, -- It appears that you have arrived at a new survival guide provided by the Servicemen's Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
         DIG_THROW_AWAY                = 7093, -- You dig up <item>, but your inventory is full. You regretfully throw the <item> away.
         FIND_NOTHING                  = 7095, -- You dig and you dig, but find nothing.
+
+        I_CANNOT_HELP_YOU_NOW         = 7235, -- I cannot help you now. I have other orders to carry out.
     },
     mob =
     {

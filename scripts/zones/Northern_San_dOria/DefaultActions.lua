@@ -14,7 +14,7 @@ return {
     ['Capiria']           = { text = ID.text.CAPIRIA_DIALOG },
     ['Charlaimagnat']     = { event = 702 },
     ['Charmealaut']       = { event = 768 },
-    ['Chasalvige']        = { event = 6 },
+    ['Chasalvige']        = { event =   6 },
     ['Coullene']          = { text = ID.text.COULLENE_DIALOG },
     ['Danngogg']          = { event = 540 },
     ['Dapraugeant']       = { event = 532 },

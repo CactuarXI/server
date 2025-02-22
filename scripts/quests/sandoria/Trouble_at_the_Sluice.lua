@@ -1,24 +1,16 @@
 -----------------------------------
 -- Trouble at the Sluice
 -----------------------------------
--- !addquest 0 68
--- Belgidiveau: !pos -98 0 69 231
--- Novalmauge : !pos 70 -24 21 167
+-- Log ID: 0, Quest ID: 68
 -----------------------------------
-
-
-require('scripts/globals/npc_util')
-require('scripts/globals/quests')
-
-require('scripts/globals/interaction/quest')
+-- Belgidiveau : !pos -98 0 69 231
+-- Novalmauge  : !pos 70 -24 21 167
 -----------------------------------
 
 local quest = Quest:new(xi.questLog.SANDORIA, xi.quest.id.sandoria.TROUBLE_AT_THE_SLUICE)
 
 quest.reward =
 {
-    fame = 30,
-    fameArea = xi.fameArea.SANDORIA,
     item = xi.item.HEAVY_AXE,
 }
 
@@ -27,8 +19,8 @@ quest.sections =
     {
         check = function(player, status, vars)
             return status == xi.questStatus.QUEST_AVAILABLE and
-                player:getFameLevel(xi.fameArea.SANDORIA) >= 3 and
-                player:hasCompletedQuest(xi.questLog.SANDORIA, xi.quest.id.sandoria.THE_RUMOR)
+                player:getQuestStatus(xi.questLog.SANDORIA, xi.quest.id.sandoria.THE_RUMOR) == xi.questStatus.QUEST_COMPLETED and
+                player:getFameLevel(xi.fameArea.SANDORIA) >= 3
         end,
 
         [xi.zone.NORTHERN_SAN_DORIA] =
@@ -40,31 +32,79 @@ quest.sections =
                 [57] = function(player, csid, option, npc)
                     if option == 0 then
                         quest:begin(player)
-                        quest:setVar(player, 'Prog', 1)
                     end
                 end,
             },
         },
     },
-
     {
         check = function(player, status, vars)
-            return status == xi.questStatus.QUEST_ACCEPTED
+            return status == xi.questStatus.QUEST_ACCEPTED and
+                not player:hasKeyItem(xi.ki.NEUTRALIZER) and
+                vars.Prog == 0
         end,
 
         [xi.zone.NORTHERN_SAN_DORIA] =
         {
-            ['Belgidiveau'] =
+            ['Belgidiveau'] = quest:event(55),
+        },
+
+        [xi.zone.BOSTAUNIEUX_OUBLIETTE] =
+        {
+            ['Novalmauge'] = quest:progressEvent(15),
+
+            onEventFinish =
             {
-                onTrigger = function(player, npc)
-                    if not player:hasKeyItem(xi.ki.NEUTRALIZER) then
-                        return quest:event(55)
-                    elseif player:hasKeyItem(xi.ki.NEUTRALIZER) then
-                        return quest:progressEvent(56)
+                [15] = function(player, csid, option, npc)
+                    quest:setVar(player, 'Prog', 1)
+                end,
+            },
+        },
+    },
+    {
+        check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_ACCEPTED and
+                not player:hasKeyItem(xi.ki.NEUTRALIZER) and
+                vars.Prog == 1
+        end,
+
+        [xi.zone.NORTHERN_SAN_DORIA] =
+        {
+            ['Belgidiveau'] = quest:event(55),
+        },
+
+        [xi.zone.BOSTAUNIEUX_OUBLIETTE] =
+        {
+            ['Novalmauge'] =
+            {
+                onTrade = function(player, npc, trade)
+                    if npcUtil.tradeHas(trade, xi.item.DAHLIA) then
+                        return quest:progressEvent(17)
                     end
                 end,
 
+                onTrigger = quest:event(16),
             },
+
+            onEventFinish =
+            {
+                [17] = function(player, csid, option, npc)
+                    if npcUtil.giveKeyItem(player, xi.ki.NEUTRALIZER) then
+                        player:confirmTrade()
+                    end
+                end,
+            },
+        },
+    },
+    {
+        check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_ACCEPTED and
+                player:hasKeyItem(xi.ki.NEUTRALIZER)
+        end,
+
+        [xi.zone.NORTHERN_SAN_DORIA] =
+        {
+            ['Belgidiveau'] = quest:progressEvent(56),
 
             onEventFinish =
             {
@@ -72,44 +112,6 @@ quest.sections =
                     if quest:complete(player) then
                         player:delKeyItem(xi.ki.NEUTRALIZER)
                     end
-                end,
-            },
-        },
-
-        [xi.zone.BOSTAUNIEUX_OUBLIETTE] =
-        {
-            ['Novalmauge'] =
-            {
-
-                onTrade = function(player, npc, trade)
-                    if
-                        quest:getVar(player, 'Prog') == 2 and
-                        npcUtil.tradeHasExactly(trade, xi.item.DAHLIA)
-                    then
-                        return quest:progressEvent(17)
-                    end
-                end,
-
-                onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 1 then
-                        return quest:progressEvent(15)
-                    elseif quest:getVar(player, 'Prog') == 2 then
-                        return quest:event(16)
-                    else
-                        return quest:event(10)
-                    end
-                end,
-            },
-
-            onEventFinish =
-            {
-                [15] = function(player, csid, option, npc)
-                    quest:setVar(player, 'Prog', 2)
-                end,
-
-                [17] = function(player, csid, option, npc)
-                    player:tradeComplete()
-                    npcUtil.giveKeyItem(player, xi.ki.NEUTRALIZER)
                 end,
             },
         },

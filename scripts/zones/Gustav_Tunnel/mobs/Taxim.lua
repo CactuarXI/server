@@ -6,6 +6,8 @@
 local entity = {}
 
 entity.onMobInitialize = function(mob)
+    mob:setMobMod(xi.mobMod.GIL_MIN, 3600)
+    mob:setMobMod(xi.mobMod.GIL_MAX, 3600)
     mob:setMod(xi.mod.ICE_MEVA, 1000)
 end
 
