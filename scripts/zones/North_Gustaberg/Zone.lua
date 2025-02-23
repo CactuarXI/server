@@ -12,8 +12,8 @@ zoneObject.onInitialize = function(zone)
     xi.voidwalker.zoneOnInit(zone)
     xi.cactuarRegimes.initializeBooks(zone)
     
-    --NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.BEDROCK_BARRY)
+    -- NM Persistence
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.BEDROCK_BARRY)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

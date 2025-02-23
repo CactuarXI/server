@@ -13,7 +13,7 @@ zoneObject.onInitialize = function(zone)
 
     UpdateNMSpawnPoint(ID.mob.DUKE_DECAPOD)
     xi.cactuarRegimes.initializeBooks(zone)
-    xi.mob.nmTODPersistCache(zone, ID.mob.DUKE_DECAPOD)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.DUKE_DECAPOD)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

@@ -14,11 +14,11 @@ zoneObject.onInitialize = function(zone)
     zone:registerCuboidTriggerArea(4, -34, 17, 45, -30, 18, 51)  -- map 4 NE porter
 
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.LIKHO)
-    xi.mob.nmTODPersistCache(zone, ID.mob.MARQUIS_ALLOCEN)
-    xi.mob.nmTODPersistCache(zone, ID.mob.MARQUIS_AMON)
-    xi.mob.nmTODPersistCache(zone, ID.mob.DUKE_HABORYM)
-    xi.mob.nmTODPersistCache(zone, ID.mob.GRAND_DUKE_BATYM)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.LIKHO)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.MARQUIS_ALLOCEN)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.MARQUIS_AMON)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.DUKE_HABORYM)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.GRAND_DUKE_BATYM)
 
     xi.treasure.initZone(zone)
 end

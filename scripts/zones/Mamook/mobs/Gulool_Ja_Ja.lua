@@ -47,6 +47,7 @@ entity.onMobFight = function(mob, target)
         end
 
         if
+            pet and
             pet:isAlive() and
             pet:getCurrentAction() == xi.act.ROAMING
         then
@@ -78,7 +79,7 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
-    xi.mob.nmTODPersist(mob, math.random(75600, 86400)) -- 21 to 24 Hours
+    -- xi.mob.nmTODPersist(mob, math.random(75600, 86400)) -- 21 to 24 Hours
 end
 
 return entity

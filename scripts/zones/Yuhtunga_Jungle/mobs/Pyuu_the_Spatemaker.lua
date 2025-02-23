@@ -16,21 +16,18 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
-    -- Uses Jumping Thrust following a cast of Waterga III
-    mob:addListener('MAGIC_STATE_EXIT', 'PYUU_MAGIC_EXIT', function(mobArg, spell)
-        if spell:getID() == 201 then
-            mob:useMobAbility(770)
-        end
-    end)
-end
-
-entity.onMobSpawn = function(mob)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.GRAVITY)
     mob:addImmunity(xi.immunity.BIND)
     mob:addImmunity(xi.immunity.SILENCE)
     mob:setMod(xi.mod.STORETP, 25)
+    -- Uses Jumping Thrust following a cast of Waterga III
+    mob:addListener('MAGIC_STATE_EXIT', 'PYUU_MAGIC_EXIT', function(mobArg, spell)
+        if spell:getID() == 201 then
+            mob:useMobAbility(770)
+        end
+    end)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)

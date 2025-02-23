@@ -39,7 +39,7 @@ entity.onMobWeaponSkill = function(target, mob, skill)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
-    xi.mob.nmTODPersist(mob, 259200) -- 3 Days
+    -- xi.mob.nmTODPersist(mob, 259200) -- 3 Days
 end
 
 entity.onMobDespawn = function(mob)

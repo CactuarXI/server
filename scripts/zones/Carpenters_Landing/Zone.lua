@@ -9,7 +9,7 @@ require('scripts/globals/barge')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    xi.mob.nmTODPersistCache(zone, ID.mob.TEMPEST_TIGON)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.TEMPEST_TIGON)
 
     xi.helm.initZone(zone, xi.helmType.LOGGING)
     xi.cactuarRegimes.initializeBooks(zone)

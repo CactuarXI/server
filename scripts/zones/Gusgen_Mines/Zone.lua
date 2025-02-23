@@ -8,7 +8,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.JUGGLER_HECATOMB)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.JUGGLER_HECATOMB)
 
     xi.treasure.initZone(zone)
     xi.helm.initZone(zone, xi.helmType.MINING)

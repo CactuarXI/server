@@ -9,12 +9,12 @@ local zoneObject = {}
 zoneObject.onInitialize = function(zone)
     xi.helm.initZone(zone, xi.helmType.LOGGING)
     
-    xi.mob.nmTODPersistCache(zone, ID.mob.HUNDREDFACED_HAPOOL_JA)
-    xi.mob.nmTODPersistCache(zone, ID.mob.DRAGONSCALED_BUGAAL_JA)
-    xi.mob.nmTODPersistCache(zone, ID.mob.DARTING_KACHAAL_JA)
-    xi.mob.nmTODPersistCache(zone, ID.mob.DEVOUT_RADOL_JA)
-    xi.mob.nmTODPersistCache(zone, ID.mob.GULOOL_JA_JA)
-    xi.mob.nmTODPersistCache(zone, ID.mob.VENOMFANG)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.HUNDREDFACED_HAPOOL_JA)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.DRAGONSCALED_BUGAAL_JA)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.DARTING_KACHAAL_JA)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.DEVOUT_RADOL_JA)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.GULOOL_JA_JA)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.VENOMFANG)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

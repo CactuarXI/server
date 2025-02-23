@@ -44,7 +44,7 @@ end
 
 entity.onMobDespawn = function(mob)
     UpdateNMSpawnPoint(mob:getID())
-    xi.mob.nmTODPersist(mob, math.random(3600, 4200)) -- 60~70 min repop.
+    -- xi.mob.nmTODPersist(mob, math.random(3600, 4200)) -- 60~70 min repop.
 end
 
 return entity

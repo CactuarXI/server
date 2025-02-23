@@ -65,7 +65,7 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onMobDespawn = function(mob)
-    xi.mob.nmTODPersist(mob, math.random(75600, 77400)) -- 21 to 21.5 hours
+    -- xi.mob.nmTODPersist(mob, math.random(75600, 77400)) -- 21 to 21.5 hours
     DespawnMob(ID.mob.BRIGHT_HANDED_KUNBERRY + 1)
     DespawnMob(ID.mob.BRIGHT_HANDED_KUNBERRY + 2)
 end

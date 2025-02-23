@@ -8,7 +8,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.COGTOOTH_SKAGNOGG)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.COGTOOTH_SKAGNOGG)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

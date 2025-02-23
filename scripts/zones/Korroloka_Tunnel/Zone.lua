@@ -12,8 +12,8 @@ zoneObject.onInitialize = function(zone)
     zone:registerCylindricalTriggerArea(2, -101, -114, 7) -- Center Pool
     zone:registerCylindricalTriggerArea(3, -112, -103, 3) -- Right Pool
 
-    --NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.THOON)
+    -- NM Persistence
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.THOON)
 
     xi.helm.initZone(zone, xi.helmType.EXCAVATION)
     xi.cactuarRegimes.initializeBooks(zone)

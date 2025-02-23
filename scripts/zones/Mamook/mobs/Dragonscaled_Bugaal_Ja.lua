@@ -72,6 +72,7 @@ entity.onMobFight = function(mob, target)
         local bugard = GetMobByID(mob:getID() + i)
 
         if
+            bugard and
             bugard:isAlive() and
             bugard:getCurrentAction() == xi.action.ROAMING
         then
@@ -85,7 +86,7 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
-    xi.mob.nmTODPersist(mob, math.random(100800, 259200)) -- 28 to 72 hours
+    -- xi.mob.nmTODPersist(mob, math.random(100800, 259200)) -- 28 to 72 hours
 end
 
 return entity

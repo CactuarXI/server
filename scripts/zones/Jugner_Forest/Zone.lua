@@ -12,8 +12,8 @@ zoneObject.onInitialize = function(zone)
     zone:registerCylindricalTriggerArea(1, -484, 292, 10) -- Sets Mark for "Under Oath" Quest cutscene.
 
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.METEORMAULER)
-    xi.mob.nmTODPersistCache(zone, ID.mob.FRAELISSA)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.METEORMAULER)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.FRAELISSA)
     for offset = 1, 10 do
         xi.mob.nmTODPersistCache(zone, ID.mob.KING_ARTHRO - offset)
     end

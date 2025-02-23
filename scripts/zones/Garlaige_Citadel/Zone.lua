@@ -26,9 +26,9 @@ zoneObject.onInitialize = function(zone)
     zone:registerCuboidTriggerArea(22, -131.5, -1, 322, -129, 1, 324.5)
 
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.OLD_TWO_WINGS)
-    xi.mob.nmTODPersistCache(zone, ID.mob.SKEWER_SAM)
-    xi.mob.nmTODPersistCache(zone, ID.mob.SERKET)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.OLD_TWO_WINGS)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.SKEWER_SAM)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.SERKET)
     
     UpdateNMSpawnPoint(ID.mob.SKEWER_SAM)
     GetMobByID(ID.mob.SKEWER_SAM):setRespawnTime(math.random(900, 10800))

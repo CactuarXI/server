@@ -7,7 +7,7 @@ local ID = zones[xi.zone.LABYRINTH_OF_ONZOZO]
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    xi.mob.nmTODPersistCache(zone, ID.mob.MYSTICMAKER_PROFBLIX)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.MYSTICMAKER_PROFBLIX)
 
     xi.treasure.initZone(zone)
     xi.cactuarRegimes.initializeBooks(zone)

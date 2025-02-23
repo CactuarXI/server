@@ -250,6 +250,7 @@ xi.player.onPlayerDeath = function(player)
 
         local lamiaNo19 = GetMobByID(ID.mob.LAMIA_NO19)
         local lamiaNo19TOD = GetServerVariable('[SPAWN]16998868')
+        -- local lamiaNo19TOD = GetServerVariable('[Respawn]Lamia_No19')
         if
             player:getXPos() > -273 and
             player:getXPos() < 83 and

@@ -9,7 +9,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     --NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.AMANITA)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.AMANITA)
     -- A Chocobo Riding Game finish line
     zone:registerCylindricalTriggerArea(1, -135.60, 264.53, 8)
 

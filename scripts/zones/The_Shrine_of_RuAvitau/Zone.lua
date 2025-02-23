@@ -10,8 +10,8 @@ zoneObject.onInitialize = function(zone)
     xi.cactuarRegimes.initializeBooks(zone)
 
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.MOTHER_GLOBE)
-    xi.mob.nmTODPersistCache(zone, ID.mob.FAUST)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.MOTHER_GLOBE)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.FAUST)
 
     -- MAP 1
     zone:registerCuboidTriggerArea(1, -21, 29, -61, -16, 31, -57)      --> F (H-10)

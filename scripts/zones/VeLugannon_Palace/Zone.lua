@@ -8,7 +8,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.ZIPACNA)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.ZIPACNA)
 
     xi.treasure.initZone(zone)
     xi.cactuarRegimes.initializeBooks(zone)

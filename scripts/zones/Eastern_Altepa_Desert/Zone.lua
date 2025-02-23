@@ -9,10 +9,10 @@ require('scripts/missions/amk/helpers')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-     -- NM Persistence
-     xi.mob.nmTODPersistCache(zone, ID.mob.NANDI)
-     xi.mob.nmTODPersistCache(zone, ID.mob.CACTROT_RAPIDO)
-     xi.mob.nmTODPersistCache(zone, ID.mob.CENTURIO_XII_I)
+    -- NM Persistence
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.NANDI)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.CACTROT_RAPIDO)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.CENTURIO_XII_I)
 
     xi.conquest.setRegionalConquestOverseers(zone:getRegionID())
     xi.chocobo.initZone(zone)

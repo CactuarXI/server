@@ -9,9 +9,9 @@ require('scripts/missions/amk/helpers')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.HIGHLANDER_LIZARD)
-    xi.mob.nmTODPersistCache(zone, ID.mob.GHILLIE_DHU)
+    -- NM Persistence
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.HIGHLANDER_LIZARD)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.GHILLIE_DHU)
 
     xi.chocobo.initZone(zone)
     xi.voidwalker.zoneOnInit(zone)

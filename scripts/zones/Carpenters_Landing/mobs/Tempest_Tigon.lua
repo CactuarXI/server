@@ -82,7 +82,7 @@ end
 
 entity.onMobDespawn = function(mob)
     xi.mob.updateNMSpawnPoint(mob, spawnPoints)
-    xi.mob.nmTODPersist(ID.mob.TEMPEST_TIGON, math.random(3600, 7200)) -- 1 to 2 hours
+    -- xi.mob.nmTODPersist(ID.mob.TEMPEST_TIGON, math.random(3600, 7200)) -- 1 to 2 hours
 end
 
 return entity

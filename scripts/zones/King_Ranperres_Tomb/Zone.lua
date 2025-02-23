@@ -11,8 +11,8 @@ zoneObject.onInitialize = function(zone)
 
     -- NM Persistence
     UpdateNMSpawnPoint(ID.mob.BARBASTELLE)
-    xi.mob.nmTODPersistCache(zone, ID.mob.VRTRA)
-    xi.mob.nmTODPersistCache(zone, ID.mob.BARBASTELLE)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.VRTRA)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.BARBASTELLE)
 
     xi.treasure.initZone(zone)
     xi.cactuarRegimes.initializeBooks(zone)

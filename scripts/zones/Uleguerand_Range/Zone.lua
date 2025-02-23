@@ -10,7 +10,7 @@ local zoneObject = {}
 zoneObject.onInitialize = function(zone)
     -- NM Persistence
     xi.mob.nmTODPersistCache(zone, ID.mob.MOUNTAIN_WORM_NM)
-    xi.mob.nmTODPersistCache(zone, ID.mob.JORMUNGAND)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.JORMUNGAND)
 
     -- ffxiclopedia's pages for Black Coney and White Coney say 7 and 5 Earth seconds respectively, in game it is very fast
     -- https://ffxiclopedia.fandom.com/wiki/Black_Coney

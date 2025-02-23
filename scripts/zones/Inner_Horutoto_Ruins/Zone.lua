@@ -13,7 +13,7 @@ zoneObject.onInitialize = function(zone)
     zone:registerCuboidTriggerArea(4, -261, -3, 182, -257, -1, 186) -- Teleport at H-6
 
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.MALTHA)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.MALTHA)
 
     xi.treasure.initZone(zone)
     xi.cactuarRegimes.initializeBooks(zone)

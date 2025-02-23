@@ -10,7 +10,7 @@ local zoneObject = {}
 zoneObject.onInitialize = function(zone)
     xi.cactuarRegimes.initializeBooks(zone)
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.TOCOCO)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.TOCOCO)
     -- A Chocobo Riding Game finish line
     zone:registerCylindricalTriggerArea(1, 580.074, -307.355, 5)
 end

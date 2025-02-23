@@ -157,7 +157,7 @@ entity.onMobDisengage = function(mob)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
-    xi.mob.nmTODPersist(mob, math.random(14400, 18000)) -- 4 to 5 hours
+    -- xi.mob.nmTODPersist(mob, math.random(14400, 18000)) -- 4 to 5 hours
     xi.hunts.checkHunt(mob, player, 539)
     player:addTitle(xi.title.SCYLLA_SKINNER)
 end

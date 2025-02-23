@@ -24,8 +24,14 @@ entity.onMobEngage = function(mob, target)
     local mobPos = mob:getPos()
     local skeletonOne = GetMobByID(mob:getID() + 1)
     local skeletonTwo = GetMobByID(mob:getID() + 2)
-    skeletonOne:setSpawn(mobPos.x + math.random(-2, 2), mobPos.y, mobPos.z + math.random(-2, 2), mobPos.rot)
-    skeletonTwo:setSpawn(mobPos.x + math.random(-2, 2), mobPos.y, mobPos.z + math.random(-2, 2), mobPos.rot)
+    if skeletonOne then
+        skeletonOne:setSpawn(mobPos.x + math.random(-2, 2), mobPos.y, mobPos.z + math.random(-2, 2), mobPos.rot)
+    end
+
+    if skeletonTwo then
+        skeletonTwo:setSpawn(mobPos.x + math.random(-2, 2), mobPos.y, mobPos.z + math.random(-2, 2), mobPos.rot)
+    end
+
     SpawnMob(mobId + 1):updateEnmity(target)
     SpawnMob(mobId + 2):updateEnmity(target)
 end

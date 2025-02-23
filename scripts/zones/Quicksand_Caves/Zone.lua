@@ -30,8 +30,8 @@ zoneObject.onInitialize = function(zone)
     zone:registerCuboidTriggerArea(34, -137, 6, -177, -135, 8, -175) -- G-7 (Map 8)
 
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.ANTICAN_CONSUL)
-    xi.mob.nmTODPersistCache(zone, ID.mob.PROCONSUL_XII)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.ANTICAN_CONSUL)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.PROCONSUL_XII)
 
     xi.treasure.initZone(zone)
     xi.cactuarRegimes.initializeBooks(zone)

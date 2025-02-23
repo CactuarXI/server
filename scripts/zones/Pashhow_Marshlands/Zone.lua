@@ -10,7 +10,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.BOWHO_WARMONGER)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.BOWHO_WARMONGER)
 
     xi.conquest.setRegionalConquestOverseers(zone:getRegionID())
     xi.voidwalker.zoneOnInit(zone)

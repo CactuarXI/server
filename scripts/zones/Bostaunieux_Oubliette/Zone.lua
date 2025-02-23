@@ -10,8 +10,8 @@ zoneObject.onInitialize = function(zone)
     xi.cactuarRegimes.initializeBooks(zone)
 
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.DREXERION_THE_CONDEMNED)
-    xi.mob.nmTODPersistCache(zone, ID.mob.PHANDURON_THE_CONDEMNED)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.DREXERION_THE_CONDEMNED)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.PHANDURON_THE_CONDEMNED)
     xi.mob.nmTODPersistCache(zone, ID.mob.BLOODSUCKER)
 
 

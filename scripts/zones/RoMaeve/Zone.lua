@@ -12,7 +12,7 @@ zoneObject.onInitialize = function(zone)
     xi.cactuarRegimes.initializeBooks(zone)
 
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.SHIKIGAMI_WEAPON)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.SHIKIGAMI_WEAPON)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranking, isConquestAlliance)

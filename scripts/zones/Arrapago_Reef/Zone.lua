@@ -8,12 +8,12 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     xi.cactuarRegimes.initializeBooks(zone)
-    xi.mob.nmTODPersistCache(zone, ID.mob.MEDUSA)
-    xi.mob.nmTODPersistCache(zone, ID.mob.MERROW_NO5)
-    xi.mob.nmTODPersistCache(zone, ID.mob.LAMIE_NO7)
-    xi.mob.nmTODPersistCache(zone, ID.mob.LAMIE_NO8)
-    xi.mob.nmTODPersistCache(zone, ID.mob.LAMIE_NO9)
-    xi.mob.nmTODPersistCache(zone, ID.mob.EURYALE)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.MEDUSA)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.MERROW_NO5)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.LAMIE_NO7)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.LAMIE_NO8)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.LAMIE_NO9)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.EURYALE)
     -- xi.mob.nmTODPersistCache(zone, ID.mob.LAMIA_NO19) -- This is controled via player.lua global.
     zone:registerCuboidTriggerArea(1, -462, -4, -420, -455, -1, -392) -- approach the Cutter
 end

@@ -15,6 +15,7 @@ local function handleAvatarSummoning(mob)
     local petRespawnTimer = mob:getLocalVar('petRespawnTimer')
     local masterTarget = mob:getTarget()
     if
+        avatar and
         os.time() > petRespawnTimer and
         not avatar:isSpawned() and
         mob:canUseAbilities() and
@@ -92,7 +93,9 @@ end
 
 entity.onMobEngage = function(mob, target)
     local avatar = GetMobByID(mob:getID() + 1)
-    avatar:updateEnmity(target)
+    if avatar then
+        avatar:updateEnmity(target)
+    end
     mob:setLocalVar('hateTimer', os.time() + math.random(27, 33))
 end
 
@@ -114,13 +117,17 @@ end
 
 entity.onMobDeath = function(mob, player, optParams)
     local avatar = GetMobByID(mob:getID() + 1)
-    avatar:setHP(0)
-    xi.mob.nmTODPersist(mob, 259200) -- 3 Days
+    if avatar then
+        avatar:setHP(0)
+    end
+    -- xi.mob.nmTODPersist(mob, 259200) -- 3 Days
 end
 
 entity.onMobDespawn = function(mob)
     local avatar = GetMobByID(mob:getID() + 1)
-    avatar:setHP(0)
+    if avatar then
+        avatar:setHP(0)
+    end
 end
 
 return entity

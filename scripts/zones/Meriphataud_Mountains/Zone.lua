@@ -10,9 +10,9 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.COO_KEJA_THE_UNSEEN)
-    xi.mob.nmTODPersistCache(zone, ID.mob.WARAXE_BEAK)
-    xi.mob.nmTODPersistCache(zone, ID.mob.CHONCHON)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.COO_KEJA_THE_UNSEEN)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.WARAXE_BEAK)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.CHONCHON)
 
     UpdateNMSpawnPoint(ID.mob.WARAXE_BEAK)
     GetMobByID(ID.mob.WARAXE_BEAK):setRespawnTime(math.random(900, 10800))

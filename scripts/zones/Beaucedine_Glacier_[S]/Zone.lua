@@ -10,8 +10,8 @@ zoneObject.onInitialize = function(zone)
     xi.voidwalker.zoneOnInit(zone)
     xi.cactuarRegimes.initializeBooks(zone)
 
-    --NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.SCYLLA)
+    -- NM Persistence
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.SCYLLA)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

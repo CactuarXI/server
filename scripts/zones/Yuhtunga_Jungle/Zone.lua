@@ -16,7 +16,7 @@ end
 
 zoneObject.onInitialize = function(zone)
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.TURTLERIDER)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.TURTLERIDER)
     xi.mob.nmTODPersistCache(zone, ID.mob.BAYAWAK)
 
     -- A Chocobo Riding Game finish line

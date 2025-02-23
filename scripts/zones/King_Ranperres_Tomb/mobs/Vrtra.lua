@@ -208,8 +208,8 @@ end
 entity.onMobDespawn = function(mob)
     -- Set Vrtra's spawnpoint and respawn time (3-5 days)
     xi.mob.updateNMSpawnPoint(mob, spawnPointTable)
-    xi.mob.nmTODPersist(mob, math.random(259200, 432000)) -- 3 to 5 days
-    -- mob:setRespawnTime(math.random(144, 240) * 1800) -- 3 to 5 days in 30 minute windows
+    -- xi.mob.nmTODPersist(mob, math.random(259200, 432000)) -- 3 to 5 days
+    mob:setRespawnTime(math.random(144, 240) * 1800) -- 3 to 5 days in 30 minute windows
 end
 
 return entity

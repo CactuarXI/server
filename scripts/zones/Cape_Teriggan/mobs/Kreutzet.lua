@@ -71,6 +71,7 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onMobRoam = function(mob)
+    local weather = mob:getWeather()
     if
         weather ~= xi.weather.WIND and
         weather ~= xi.weather.GALES
@@ -111,7 +112,6 @@ entity.onMobDespawn = function(mob)
     -- Set Kruetzet's spawnpoint and respawn time (9-12 hours)
     xi.mob.updateNMSpawnPoint(mob, spawnPoints)
     mob:setRespawnTime(math.random(32400, 43200))
-    -- xi.mob.nmTODPersist(mob, math.random(32400, 43200)) -- 9 to 12 hours
     DisallowRespawn(mob:getID(), true) -- prevents accidental 'pop' during no wind weather and immediate despawn
 end
 

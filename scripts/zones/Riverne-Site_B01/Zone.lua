@@ -9,7 +9,7 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     -- NM Persistence
-    xi.mob.nmTODPersistCache(zone, ID.mob.BOROKA)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.BOROKA)
 
     xi.exp_controller.onInitialize(zone)
     xi.cactuarRegimes.initializeBooks(zone)

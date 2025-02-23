@@ -10,11 +10,10 @@ zoneObject.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.AYNU_KAYSEY)
     GetMobByID(ID.mob.AYNU_KAYSEY):setRespawnTime(math.random(900, 10800))
     -- GetMobByID(ID.mob.KHIMAIRA):setRespawnTime(math.random(12, 36) * 3600) -- 12 to 36 hours after maintenance, in 1-hour increments
-    xi.mob.nmTODPersistCache(zone, ID.mob.ZIKKO)
     xi.mob.nmTODPersistCache(zone, ID.mob.KHIMAIRA)
     DisallowRespawn(ID.mob.ZIKKO, true) -- Spawn is controlled by players entering swamps
 
-    xi.helm.initZone(zone, xi.helmType.LOGGING)
+    -- xi.helm.initZone(zone, xi.helmType.LOGGING)
 
     -- Swamp trigger areas (Map 1)
     zone:registerCuboidTriggerArea(1, 305, 2.5, -380, 0, 0, 0) -- South swamp (J-8)
@@ -93,6 +92,7 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
         local spawn = player:getPos()
 
         if
+            zikko and
             math.random(1, 20) == 1 and
             player:getLocalVar('ZikkoCooldown') < os.time() and
             zikko:getRespawnTime() < os.time()

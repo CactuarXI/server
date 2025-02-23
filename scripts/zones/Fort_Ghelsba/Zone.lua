@@ -8,8 +8,8 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     xi.treasure.initZone(zone)
-    xi.mob.nmTODPersistCache(zone, ID.mob.ORCISH_PANZER)
-    xi.mob.nmTODPersistCache(zone, ID.mob.KEGPAUNCH_DOSHGNOSH)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.ORCISH_PANZER)
+    -- xi.mob.nmTODPersistCache(zone, ID.mob.KEGPAUNCH_DOSHGNOSH)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

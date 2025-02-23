@@ -63,7 +63,7 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
-    xi.mob.nmTODPersist(mob, 75600) -- 21 hours
+    -- xi.mob.nmTODPersist(mob, 75600) -- 21 hours
 end
 
 return entity
