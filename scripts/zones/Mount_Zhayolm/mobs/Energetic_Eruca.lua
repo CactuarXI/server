@@ -8,8 +8,8 @@ local entity = {}
 
 entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.SLEEPRES, 75)
-    mob:setMod(xi.mod.LULLABYRESBUILD, 25)
-    mob:setMod(xi.mod.SLASH_SDT, 0) -- Immune to slashing damage
+    -- mob:setMod(xi.mod.LULLABYRESBUILD, 25)
+    mob:setMod(xi.mod.SLASH_SDT, -10000) -- Immune to slashing damage
 end
 
 entity.onMobDeath = function(mob, player, optParams)

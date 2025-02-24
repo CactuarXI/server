@@ -421,7 +421,7 @@ xi.additionalEffect.procFunctions[xi.additionalEffect.procType.DAMAGE_HP_PERC] =
     local msgID     = 0
     local msgParam  = 0
     local damageType     = attacker:getWeaponDamageType(xi.slot.MAIN)
-    local physicalResist = defender:getMod(xi.mod.SLASH_SDT) / 1000
+    local physicalResist = (1 + defender:getMod(xi.mod.SLASH_SDT) / 10000)
     local damage = 0
 
     damage = math.floor(attacker.getHP(attacker) / 4)

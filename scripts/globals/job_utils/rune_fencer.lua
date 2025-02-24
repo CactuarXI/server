@@ -301,8 +301,8 @@ local function applyVallationValianceSDTMods(target, SDTTypes, power, effect, du
         local newEffect = target:getStatusEffect(effect)
 
         for _, SDT in ipairs(SDTTypes) do
-            target:addMod(SDT, power)
-            newEffect:addMod(SDT, power)
+            target:addMod(SDT, -power)
+            newEffect:addMod(SDT, -power)
         end
     end
 end
@@ -314,8 +314,8 @@ local function applyGambitSDTMods(target, SDTTypes, power, effect, duration) -- 
         local newEffect = target:getStatusEffect(effect)
 
         for _, SDT in ipairs(SDTTypes) do
-            target:addMod(SDT, power)
-            newEffect:addMod(SDT, power) -- due to order of events, this only adds mods to the container, not to the owner of the effect.
+            target:addMod(SDT, -power)
+            newEffect:addMod(SDT, -power) -- due to order of events, this only adds mods to the container, not to the owner of the effect.
         end
     end
 end

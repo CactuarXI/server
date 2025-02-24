@@ -148,9 +148,9 @@ content.groups =
         stationary = true,
         mods =
         {
-            [xi.mod.IMPACT_SDT] = 0,
-            [xi.mod.HTH_SDT   ] = 0,
-            [xi.mod.SLASH_SDT ] = 1250,
+            [xi.mod.IMPACT_SDT] = -10000,
+            [xi.mod.HTH_SDT   ] = -10000,
+            [xi.mod.SLASH_SDT ] = 2500,
         },
 
         death = function(battlefield, mob, count)
@@ -162,9 +162,9 @@ content.groups =
         stationary = true,
         mods =
         {
-            [xi.mod.IMPACT_SDT] = 0,
-            [xi.mod.HTH_SDT   ] = 0,
-            [xi.mod.SLASH_SDT ] = 1250,
+            [xi.mod.IMPACT_SDT] = -10000,
+            [xi.mod.HTH_SDT   ] = -10000,
+            [xi.mod.SLASH_SDT ] = 2500,
         },
 
         death = function(battlefield, mob, count)
@@ -183,8 +183,8 @@ content.groups =
         mobs = { 'Tieholtsodi' },
         mods =
         {
-            [xi.mod.SLASH_SDT ] = 0,
-            [xi.mod.PIERCE_SDT] = 1250,
+            [xi.mod.SLASH_SDT ] = -10000,
+            [xi.mod.PIERCE_SDT] = 2500,
         },
 
         death = function(battlefield, mob, count)
@@ -195,8 +195,8 @@ content.groups =
         mobs = { 'Adamantshell' },
         mods =
         {
-            [xi.mod.SLASH_SDT ] = 0,
-            [xi.mod.PIERCE_SDT] = 1250,
+            [xi.mod.SLASH_SDT ] = -10000,
+            [xi.mod.PIERCE_SDT] = 2500,
         },
 
         death = function(battlefield, mob, count)

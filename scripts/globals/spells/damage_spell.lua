@@ -552,8 +552,8 @@ end
 -- Mob elemental modifiers are populated by the values set in "mob_resistances.sql" (The database). SDT columns.
 -- The value of the modifiers are base 10000. Positive numbers mean less damage taken. Negative mean more damage taken.
 -- Examples:
--- A value of 5000 -> 50% LESS damage taken.
--- A value of -5000 -> 50% MORE damage taken.
+-- A value of 5000 -> 50% MORE damage taken.
+-- A value of -5000 -> 50% LESS damage taken.
 -- A word on SDT as understood in some wikis, even if they are refering to resistance and not actual SDT
 -- SDT under 50% applies a flat 1/2 *, which was for a long time confused with an additional resist tier, which, in reality, its an independent multiplier.
 -- This is understandable, because in a way, it is effectively a whole tier, but recent testing with skillchains/magic bursts after resist was removed from them, proved this.
