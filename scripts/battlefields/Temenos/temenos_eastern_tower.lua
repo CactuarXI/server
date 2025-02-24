@@ -294,10 +294,10 @@ content.groups =
         -- TODO: Verify if the Elementals here should detect sound
         mods =
         {
-            [xi.mod.SLASH_SDT   ] = 500,
-            [xi.mod.PIERCE_SDT  ] = 500,
-            [xi.mod.IMPACT_SDT  ] = 500,
-            [xi.mod.HTH_SDT     ] = 500,
+            [xi.mod.SLASH_SDT   ] = -5000,
+            [xi.mod.PIERCE_SDT  ] = -5000,
+            [xi.mod.IMPACT_SDT  ] = -5000,
+            [xi.mod.HTH_SDT     ] = -5000,
             [xi.mobMod.DETECTION] = xi.detects.HEARING,
             [xi.mod.FASTCAST    ] = 20,
         },

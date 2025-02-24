@@ -8,69 +8,77 @@ effectObject.onEffectGain = function(target, effect)
     if effect:getPower() == 1 then -- Banish/Banishga (Tier 1)
         for i = 1, #physSDT do
             local gearModifier  = 1 + (effect:getSubPower() / 100)
-            local sdtModPhys    = target:getMod(physSDT[i])
-            local reductionPhys = (1000 - sdtModPhys) * (0.50 * gearModifier)
+            local physicalSDTModifier   = physSDT[i]
+            local physicalSDTValue      = target:getMod(physicalSDTModifier)
+            local physicalSDTAdjustment  = math.floor(physicalSDTValue * (0.50 * gearModifier))
 
-           effect:addMod(physSDT[i], reductionPhys)
-           print(gearModifier)
+           effect:addMod(physicalSDTModifier, -physicalSDTAdjustment)
+           -- print(gearModifier)
         end
 
-        for i = 1, #xi.magic.specificDmgTakenMod do
+        for element = xi.element.FIRE, xi.element.DARK do
             local gearModifier   = 1 + (effect:getSubPower() / 100)
-            local sdtModMagic    = target:getMod(xi.magic.specificDmgTakenMod[i])
-            local reductionMagic = sdtModMagic * (0.50 * gearModifier)
+            local elementSDTModifier   = xi.combat.element.getElementalSDTModifier(element)
+            local elementSDTValue      = target:getMod(elementSDTModifier)
+            local elementSDTAdjustment  = math.floor(elementSDTValue * (0.50 * gearModifier))
 
-            effect:addMod(xi.magic.specificDmgTakenMod[i], -reductionMagic)
+            effect:addMod(elementSDTModifier, -elementSDTAdjustment)
         end
 
     elseif effect:getPower() == 2 then -- Banish II/Banishga II (Tier 2)
         for i = 1, #physSDT do
             local gearModifier  = 1 + (effect:getSubPower() / 100)
-            local sdtModPhys    = target:getMod(physSDT[i])
-            local reductionPhys = (1000 - sdtModPhys) * (0.70 * gearModifier)
+            local physicalSDTModifier   = physSDT[i]
+            local physicalSDTValue      = target:getMod(physicalSDTModifier)
+            local physicalSDTAdjustment  = math.floor(physicalSDTValue * (0.70 * gearModifier))
 
-            effect:addMod(physSDT[i], reductionPhys)
+            effect:addMod(physicalSDTModifier, -physicalSDTAdjustment)
         end
 
-        for i = 1, #xi.magic.specificDmgTakenMod do
+        for element = xi.element.FIRE, xi.element.DARK do
             local gearModifier   = 1 + (effect:getSubPower() / 100)
-            local sdtModMagic    = target:getMod(xi.magic.specificDmgTakenMod[i])
-            local reductionMagic = sdtModMagic * (0.70 * gearModifier)
+            local elementSDTModifier   = xi.combat.element.getElementalSDTModifier(element)
+            local elementSDTValue      = target:getMod(elementSDTModifier)
+            local elementSDTAdjustment  = math.floor(elementSDTValue * (0.70 * gearModifier))
 
-            effect:addMod(xi.magic.specificDmgTakenMod[i], -reductionMagic)
+            effect:addMod(elementSDTModifier, -elementSDTAdjustment)
         end
 
     elseif effect:getPower() == 3 then -- Banish III/Banishga III (Tier 3)
         for i = 1, #physSDT do
             local gearModifier  = 1 + (effect:getSubPower() / 100)
-            local sdtModPhys    = target:getMod(physSDT[i])
-            local reductionPhys = (1000 - sdtModPhys) * (0.90 * gearModifier)
+            local physicalSDTModifier   = physSDT[i]
+            local physicalSDTValue      = target:getMod(physicalSDTModifier)
+            local physicalSDTAdjustment  = math.floor(physicalSDTValue * (0.90 * gearModifier))
 
-            effect:addMod(physSDT[i], reductionPhys)
+            effect:addMod(physicalSDTModifier, -physicalSDTAdjustment)
         end
 
-        for i = 1, #xi.magic.specificDmgTakenMod do
+        for element = xi.element.FIRE, xi.element.DARK do
             local gearModifier   = 1 + (effect:getSubPower() / 100)
-            local sdtModMagic    = target:getMod(xi.magic.specificDmgTakenMod[i])
-            local reductionMagic = sdtModMagic * (0.90 * gearModifier)
-            effect:addMod(xi.magic.specificDmgTakenMod[i], -reductionMagic)
+            local elementSDTModifier   = xi.combat.element.getElementalSDTModifier(element)
+            local elementSDTValue      = target:getMod(elementSDTModifier)
+            local elementSDTAdjustment  = math.floor(elementSDTValue * (0.90 * gearModifier))
+            effect:addMod(elementSDTModifier, -elementSDTAdjustment)
         end
 
     elseif effect:getPower() == 4 then -- Banish IV/Banishga IV (Tier 4)
         for i = 1, #physSDT do
             local gearModifier  = 1 + (effect:getSubPower() / 100)
-            local sdtModPhys    = target:getMod(physSDT[i])
-            local reductionPhys = (1000 - sdtModPhys) * (0.95 * gearModifier)
+            local physicalSDTModifier   = physSDT[i]
+            local physicalSDTValue      = target:getMod(physicalSDTModifier)
+            local physicalSDTAdjustment  = math.floor(physicalSDTValue * (0.95 * gearModifier))
 
-           effect:addMod(physSDT[i], reductionPhys)
+           effect:addMod(physicalSDTModifier, -physicalSDTAdjustment)
         end
 
-        for i = 1, #xi.magic.specificDmgTakenMod do
+        for element = xi.element.FIRE, xi.element.DARK do
             local gearModifier   = 1 + (effect:getSubPower() / 100)
-            local sdtModMagic    = target:getMod(xi.magic.specificDmgTakenMod[i])
-            local reductionMagic = sdtModMagic * (0.95 * gearModifier)
+            local elementSDTModifier   = xi.combat.element.getElementalSDTModifier(element)
+            local elementSDTValue      = target:getMod(elementSDTModifier)
+            local elementSDTAdjustment  = math.floor(elementSDTValue * (0.95 * gearModifier))
 
-            effect:addMod(xi.magic.specificDmgTakenMod[i], -reductionMagic)
+            effect:addMod(elementSDTModifier, -elementSDTAdjustment)
         end
     end
 end

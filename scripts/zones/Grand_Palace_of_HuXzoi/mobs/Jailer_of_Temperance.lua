@@ -30,26 +30,26 @@ local chargeOptic = function(mob)
 end
 
 local changeToPot = function(mob)
-            mob:setMod(xi.mod.HTH_SDT, 1000)
-            mob:setMod(xi.mod.SLASH_SDT, 0)
-            mob:setMod(xi.mod.PIERCE_SDT, 0)
-            mob:setMod(xi.mod.IMPACT_SDT, 1000)
+            mob:setMod(xi.mod.HTH_SDT, 0)
+            mob:setMod(xi.mod.SLASH_SDT, -10000)
+            mob:setMod(xi.mod.PIERCE_SDT, -10000)
+            mob:setMod(xi.mod.IMPACT_SDT, 0)
             mob:setLocalVar('changeTime', mob:getBattleTime())
 end
 
 local changeToPole = function(mob)
-            mob:setMod(xi.mod.HTH_SDT, 0)
-            mob:setMod(xi.mod.SLASH_SDT, 0)
-            mob:setMod(xi.mod.PIERCE_SDT, 1000)
-            mob:setMod(xi.mod.IMPACT_SDT, 0)
+            mob:setMod(xi.mod.HTH_SDT, -10000)
+            mob:setMod(xi.mod.SLASH_SDT, -10000)
+            mob:setMod(xi.mod.PIERCE_SDT, 0)
+            mob:setMod(xi.mod.IMPACT_SDT, -10000)
             mob:setLocalVar('changeTime', mob:getBattleTime())
 end
 
 local changeToRings = function(mob)
-            mob:setMod(xi.mod.HTH_SDT, 0)
-            mob:setMod(xi.mod.SLASH_SDT, 1000)
-            mob:setMod(xi.mod.PIERCE_SDT, 0)
-            mob:setMod(xi.mod.IMPACT_SDT, 0)
+            mob:setMod(xi.mod.HTH_SDT, -10000)
+            mob:setMod(xi.mod.SLASH_SDT, 0)
+            mob:setMod(xi.mod.PIERCE_SDT, -10000)
+            mob:setMod(xi.mod.IMPACT_SDT, -10000)
             mob:setLocalVar('changeTime', mob:getBattleTime())
 end
 
@@ -76,10 +76,10 @@ entity.onMobSpawn = function(mob)
     -- Change animation to pot
     mob:setAnimationSub(0)
     -- Set the damage resists
-    mob:setMod(xi.mod.HTH_SDT, 1000)
-    mob:setMod(xi.mod.SLASH_SDT, 0)
-    mob:setMod(xi.mod.PIERCE_SDT, 0)
-    mob:setMod(xi.mod.IMPACT_SDT, 1000)
+    mob:setMod(xi.mod.HTH_SDT, 0)
+    mob:setMod(xi.mod.SLASH_SDT, -10000)
+    mob:setMod(xi.mod.PIERCE_SDT, -10000)
+    mob:setMod(xi.mod.IMPACT_SDT, 0)
 
     -- Set the magic resists. It always takes no damage from direct magic
     for element = xi.element.FIRE, xi.element.DARK do

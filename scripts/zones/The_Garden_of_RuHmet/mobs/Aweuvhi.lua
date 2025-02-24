@@ -20,9 +20,12 @@ entity.onMobFight = function(mob)
     local changeTime = mob:getLocalVar('changeTime')
 
     if mob:getBattleTime() - changeTime > randomTime then
-        if mob:getAnimationSub() == 2 then
+        local sdtPower = 0
+
+        if mob:getAnimationSub() == 2 then -- Change to closed.
             mob:setAnimationSub(1)
-        else
+            sdtPower = 5000 -- 50% more dmg taken.
+        else -- Change to open.
             mob:setAnimationSub(2)
         end
 
@@ -38,14 +41,11 @@ entity.onMobFight = function(mob)
             powerSDT = -10000
         end
 
-        mob:setMod(xi.mod.HTH_SDT, powerMod)
-        mob:setMod(xi.mod.SLASH_SDT, powerMod)
-        mob:setMod(xi.mod.PIERCE_SDT, powerMod)
-        mob:setMod(xi.mod.IMPACT_SDT, powerMod)
-        for element = xi.element.FIRE, xi.element.DARK do
-            mob:setMod(xi.combat.element.getElementalMEVAModifier(element), powerMod)
-            mob:setMod(xi.combat.element.getElementalSDTModifier(element), powerSDT)
-        end
+        -- Set physical SDT modifiers.
+        mob:setMod(xi.mod.HTH_SDT, sdtPower)
+        mob:setMod(xi.mod.SLASH_SDT, sdtPower)
+        mob:setMod(xi.mod.PIERCE_SDT, sdtPower)
+        mob:setMod(xi.mod.IMPACT_SDT, sdtPower)
     end
 end
 
@@ -54,7 +54,7 @@ entity.onCriticalHit = function(target)
     -- When in an open state, damage taken by the Euvhi is doubled. Inflicting a large amount of damage to an Euvhi in an open state will cause it to close.
     -- Crit is really the only thing we can do.
     if target:getAnimationSub() == 2 then
-        target:setAnimationSub(0)
+        target:setAnimationSub(1)
     end
 end
 

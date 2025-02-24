@@ -23,10 +23,6 @@ local function openFlower(mob)
     mob:setLocalVar('RangedDamage', 0)
     mob:setLocalVar('BreathDamage', 0)
     mob:delMod(xi.mod.ATTP, 10)
-    mob:setMod(xi.mod.HTH_SDT, 2000)
-    mob:setMod(xi.mod.SLASH_SDT, 2000)
-    mob:setMod(xi.mod.PIERCE_SDT, 2000)
-    mob:setMod(xi.mod.IMPACT_SDT, 2000)
     mob:setMod(xi.mod.UDMGMAGIC, 5000) -- Takes double damage from all sources when open
     mob:setMod(xi.mod.UDMGPHYS, 5000) -- Takes double damage from all sources when open
     mob:setMod(xi.mod.UDMGRANGE, 5000) -- Takes double damage from all sources when open
@@ -40,10 +36,6 @@ local function closeFlower(mob)
     mob:setLocalVar('RangedDamage', 0)
     mob:setLocalVar('BreathDamage', 0)
     mob:addMod(xi.mod.ATTP, 10) -- euvhi hits hard while flower is closed
-    mob:setMod(xi.mod.HTH_SDT, 1000)
-    mob:setMod(xi.mod.SLASH_SDT, 1000)
-    mob:setMod(xi.mod.PIERCE_SDT, 1000)
-    mob:setMod(xi.mod.IMPACT_SDT, 1000)
     mob:setMod(xi.mod.UDMGMAGIC, 0) -- Takes predicted damage when open
     mob:setMod(xi.mod.UDMGPHYS, 0) -- Takes predicted damage when open
     mob:setMod(xi.mod.UDMGRANGE, 0) -- Takes predicted damage when open
