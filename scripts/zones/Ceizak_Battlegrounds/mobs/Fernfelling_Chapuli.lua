@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Ceizak Battlegrounds
--- Mob: Bounding Chapuli
+-- Mob: Fernfelling Chapuli
 -----------------------------------
 mixins =
 {

@@ -1,6 +1,6 @@
 -----------------------------------
--- Area: Ceizak Battlegrounds
--- Mob: Bounding Chapuli
+-- Area: Sih Gates
+-- Mob: Cthonic_Chapuli
 -----------------------------------
 mixins =
 {

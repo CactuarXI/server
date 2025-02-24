@@ -2406,11 +2406,11 @@ INSERT INTO `mob_skills` VALUES (2383,294,'charm',4,0.0,7.0,2000,500,4,4,0,0,0,0
 -- INSERT INTO `mob_skills` VALUES (2386,2130,'cobra_clamp',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2387,1660,'fatal_scream',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (2388,2132,'dirty_breath',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (2389,1662,'lethal_triclip',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
+-- INSERT INTO `mob_skills` VALUES (2389,1662,'lethal_triclip',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0); -- Taurus Skill
 -- INSERT INTO `mob_skills` VALUES (2390,2134,'accursed_armor',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2391,2135,'amnesic_blast',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2392,1665,'oppressive_glare',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (2393,2137,'ritual_bind',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (2393,1666,'ritual_bind',1,0.0,15.0,2000,2000,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2394,2138,'moribund_hack',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2395,2139,'mine_blast',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2396,2140,'.',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
@@ -2962,11 +2962,11 @@ INSERT INTO `mob_skills` VALUES (2930,41,'subduction',1,0.0,15.0,2000,1000,4,0,0
 -- INSERT INTO `mob_skills` VALUES (2942,2686,'chainspell',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2943,2687,'benediction',1,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2944,2688,'manafont',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (2945,2167,'natures_meditation',1,0.0,18.0,2000,1000,1,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (2946,2168,'sensilla_blades',4,0.0,18.0,2000,1000,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (2947,2169,'tegmina_buffet',1,0.0,18.0,2000,1000,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (2948,2170,'sanguinary_slash',1,0.0,18.0,2000,1000,4,0,0,1,0,0,0);
-INSERT INTO `mob_skills` VALUES (2949,2171,'orthopterror',1,0.0,18.0,2000,1000,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (2945,2167,'natures_meditation',1,0.0,18.0,2000,2000,1,4,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (2946,2168,'sensilla_blades',4,0.0,18.0,2000,2000,4,0,0,4,0,0,0);
+INSERT INTO `mob_skills` VALUES (2947,2169,'tegmina_buffet',1,0.0,18.0,2000,2000,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (2948,2170,'sanguinary_slash',0,0.0,18.0,2000,2000,4,0,0,2,0,0,0);
+INSERT INTO `mob_skills` VALUES (2949,2171,'orthopterror',4,0.0,18.0,2000,2000,4,0,0,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (2950,2129,'tempestuous_upheaval',1,0.0,18.0,2000,2000,4,0,0,4,0,0,0);
 INSERT INTO `mob_skills` VALUES (2951,2130,'slice_n_dice',0,0.0,25.0,2000,2000,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (2952,2131,'blackout',1,0.0,18.0,2000,3000,4,0,0,0,0,0,0);
@@ -3238,9 +3238,9 @@ INSERT INTO `mob_skills` VALUES (3217,678,'savage_blade',0,0.0,7.0,2000,1500,4,0
 INSERT INTO `mob_skills` VALUES (3218,251,'villainous_rebuke',1,0.0,18.0,2000,1000,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (3219,252,'stygian_release',1,0.0,18.0,2000,1000,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (3220,2301,'infernal_bulwark',1,0.0,18.0,2000,1000,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (3221,254,'atramentous_libations',1,0.0,18.0,2000,1000,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3222,2966,'noahionto',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3223,2967,'shockiavona',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (3221,254,'atramentous_libations',1,0.0,18.0,2000,1000,4,0,0,0,0,0,0); -- Dullahan Skill
+-- INSERT INTO `mob_skills` VALUES (3222,2966,'noahionto',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0); -- Dullahan Skill
+INSERT INTO `mob_skills` VALUES (3223,2304,'shockiavona',1,0.0,18.0,2000,3000,4,0,0,0,0,0,0); -- Chapuli Skill
 -- INSERT INTO `mob_skills` VALUES (3224,2968,'hemorrhaze',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (3225,2969,'.',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (3226,2970,'.',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
