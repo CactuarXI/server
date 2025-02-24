@@ -1,6 +1,6 @@
 -----------------------------------
--- Area: Ceizak Battlegrounds
--- Mob: Bounding Chapuli
+-- Area: Yahse Hunting Grounds
+-- Mob: Shrubshredder_Chapuli
 -----------------------------------
 mixins =
 {

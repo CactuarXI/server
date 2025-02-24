@@ -2,8 +2,8 @@
 -- Area: Ceizak Battlegrounds
 -- NPC: Root
 -----------------------------------
-mixins = 
-{ 
+mixins =
+{
 require('scripts/mixins/families/orobon'),
 }
 -----------------------------------

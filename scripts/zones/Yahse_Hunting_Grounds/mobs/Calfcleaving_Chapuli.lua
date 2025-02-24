@@ -1,6 +1,6 @@
 -----------------------------------
--- Area: Ceizak Battlegrounds
--- Mob: Bounding Chapuli
+-- Area: Yahse Hunting Grounds
+-- Mob: Calfcleaving Chapuli
 -----------------------------------
 mixins =
 {
