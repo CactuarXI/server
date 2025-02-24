@@ -1,6 +1,8 @@
 -----------------------------------
 -- Area: Meriphataud Mountains [S]
 -----------------------------------
+mixins = { require('scripts/mixins/families/lynx') }
+-----------------------------------
 local entity = {}
 
 entity.onMobDeath = function(mob, player, optParams)
