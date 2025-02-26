@@ -33,7 +33,6 @@ CREATE TABLE IF NOT EXISTS `mob_skills` (
 -- Table contents for `mob_skills`
 --
 
-
 INSERT INTO `mob_skills` VALUES (1,16,'combo',0,0.0,7.0,2000,100,4,0,0,0,8,0,0);
 INSERT INTO `mob_skills` VALUES (2,17,'shoulder_tackle',0,0.0,7.0,2000,100,4,0,0,0,5,8,0);
 INSERT INTO `mob_skills` VALUES (3,18,'one_inch_punch',0,0.0,7.0,2000,100,4,0,0,0,2,0,0);
