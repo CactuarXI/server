@@ -679,6 +679,7 @@ xi.effect =
     NUKE_WALL                = 806, -- Custom effect for NM type mobs only.
     BANISH_SDT_DEBUFF        = 807, -- Handles SDT debuff on undead mobs.
     RUN_WILD                 = 808,
+    CURSE_SPIKES             = 809,
     -- 789
     -- 807-1022
     -- PLACEHOLDER           = 1023 -- The client dat file seems to have only this many 'slots', results of exceeding that are untested.
