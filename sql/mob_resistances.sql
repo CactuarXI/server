@@ -509,7 +509,6 @@ INSERT INTO `mob_resistances` VALUES (515,'Wyvern - Ajattara',0,0,0,0,0,0,0,0,0,
 INSERT INTO `mob_resistances` VALUES (516,'Gigas - Alkyoneus',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `mob_resistances` VALUES (517,'Gigas - Blizzard',0,0,0,0,0,0,0,0,0,0,0,0,0,-2,4,0,0,0,0,0,0);
 INSERT INTO `mob_resistances` VALUES (518,'Proto - Omega',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,11);
-
 INSERT INTO `mob_resistances` VALUES (601,'MemoryReceptacleENM',10000,10000,10000,10000,0,5000,5000,5000,5000,5000,5000,5000,5000,0,0,0,0,0,0,0,0);
 INSERT INTO `mob_resistances` VALUES (602,'Annihilated_Anthony',-7500,-2500,-5000,-5000,0,-3000,-1500,-2500,-2500,-2500,-2500,-3000,-1500,0,0,0,0,0,0,0,0);
 INSERT INTO `mob_resistances` VALUES (603,'Shredded_Samson',2500,-2500,-7500,-7500,0,-2500,5000,0,0,0,0,-2500,5000,0,0,0,0,0,0,0,0);

@@ -229,6 +229,7 @@ xi.mobskills.mobRangedMove = function(mob, target, skill, numHits, accMod, dmgMo
     if base < 1 then --(ASB)
         base = 1
     end
+
     ----------------------------------
     -- Calculate hitrate for mobskill.
     ----------------------------------
@@ -346,6 +347,7 @@ xi.mobskills.mobRangedMove = function(mob, target, skill, numHits, accMod, dmgMo
             -- finaldmg = xi.weaponskills.handleBlock(mob, target, finaldmg) -- (ASB)
             hitslanded = hitslanded + 1
         end
+
         hitsdone = hitsdone + 1
     end
 
@@ -480,6 +482,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
         fStr = xi.combat.physical.calculateRangedStatFactor(mob, target)
     -- else
         -- fStr = xi.mobskills.fSTR(mob:getStat(xi.mod.STR), target:getStat(xi.mod.VIT))
+
     end
     ----------------------------------
     -- Calculate Base Damage
@@ -503,6 +506,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
     if base < 1 then --(ASB)
         base = 1
     end
+
     ----------------------------------
     -- Calculate hitrate for mobskill.
     ----------------------------------
@@ -603,7 +607,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
 
     if chance <= firstHitChance then -- First hit
         local isCrit = math.random() < critRate
-        pdif = xi.combat.physical.calculateMeleePDIF(mob, target, weaponType, attMod, isCrit, applyLevelCorrection, false, 0, false, isCannonball)
+        pdif = xi.combat.physical.calculateMeleePDIF(mob, target, weaponType, attMod, isCrit, applyLevelCorrection, false, 0, false, xi.slot.MAIN, isCannonball)
         finaldmg = finaldmg + hitdamage * pdif
         finaldmg = xi.weaponskills.handleBlock(mob, target, finaldmg) -- (ASB)
         hitslanded = hitslanded + 1
@@ -623,14 +627,17 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
     while hitsdone < numHits do
         chance = math.random()
 
-        if tpEffect1 ~= xi.mobskills.physicalTpBonus.RANGED and tpEffect2 ~= xi.mobskills.physicalTpBonus.RANGED then
+        if
+            tpEffect1 ~= xi.mobskills.physicalTpBonus.RANGED and
+            tpEffect2 ~= xi.mobskills.physicalTpBonus.RANGED
+        then
             chance = xi.weaponskills.handleParry(mob, target, chance)
             chance = xi.weaponskills.handleGuard(mob, target, chance)
         end
 
         if chance <= hitrate then
             local isCrit = math.random() < critRate
-            pdif = xi.combat.physical.calculateMeleePDIF(mob, target, weaponType, attMod, isCrit, applyLevelCorrection, false, 0, false, isCannonball)
+            pdif = xi.combat.physical.calculateMeleePDIF(mob, target, weaponType, attMod, isCrit, applyLevelCorrection, false, 0, false, xi.slot.MAIN, isCannonball)
             finaldmg = finaldmg + (hitdamage * pdif)
             finaldmg = xi.weaponskills.handleBlock(mob, target, finaldmg) -- (ASB)
             hitslanded = hitslanded + 1
@@ -646,6 +653,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
                 end
             end
         end
+
         hitsdone = hitsdone + 1
     end
 
@@ -732,7 +740,6 @@ end
 -- xi.mobskills.magicalTpBonus.DMG_BONUS and TP = 200, tpvalue = 2, assume V=150  --> damage is now 150*(TP*2) / 100 = 600
 
 xi.mobskills.mobMagicalMove = function(actor, target, action, baseDamage, actionElement, damageModifier, tpEffect, tpMultiplier, ignoreresist, ftp100, ftp200, ftp300, dStatMult)
-
     if tpMultiplier == nil then
         tpMultiplier = 1
     end
@@ -1135,13 +1142,13 @@ xi.mobskills.mobDrainMove = function(mob, target, drainType, drain, attackType, 
 end
 
 xi.mobskills.mobPhysicalDrainMove = function(mob, target, skill, drainType, drain)
-
     if
         mob:getMod(xi.mod.SAVETP) > 0 and
         mob:getTP() < mob:getMod(xi.mod.SAVETP)
     then
         mob:setTP(mob:getMod(xi.mod.SAVETP))
     end
+
     -- If target has Hysteria, no message skip rest
     if mob:hasStatusEffect(xi.effect.HYSTERIA) then
         return xi.msg.basic.NONE
@@ -1189,7 +1196,6 @@ xi.mobskills.mobDrainAttribute = function(mob, target, typeEffect, power, tick, 
 end
 
 xi.mobskills.mobDrainStatusEffectMove = function(mob, target)
-
     -- If target has Hysteria, no message skip rest
     if mob:hasStatusEffect(xi.effect.HYSTERIA) then
         return xi.msg.basic.NONE
@@ -1220,6 +1226,7 @@ xi.mobskills.mobStatusEffectMove = function(mob, target, typeEffect, power, tick
     then
         mob:setTP(mob:getMod(xi.mod.SAVETP))
     end
+
     if target:canGainStatusEffect(typeEffect, power) then
         local statmod = xi.mod.INT
         local element = mob:getStatusEffectElement(typeEffect)
@@ -1246,6 +1253,7 @@ xi.mobskills.mobPhysicalStatusEffectMove = function(mob, target, skill, typeEffe
     then
         mob:setTP(mob:getMod(xi.mod.SAVETP))
     end
+
     if xi.mobskills.mobPhysicalHit(skill) then
         return xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, power, tick, duration)
     end
@@ -1261,6 +1269,7 @@ xi.mobskills.mobGazeMove = function(mob, target, typeEffect, power, tick, durati
     then
         mob:setTP(mob:getMod(xi.mod.SAVETP))
     end
+
     if
         target:isFacing(mob) and
         mob:isInfront(target)
@@ -1272,7 +1281,6 @@ xi.mobskills.mobGazeMove = function(mob, target, typeEffect, power, tick, durati
 end
 
 xi.mobskills.mobBuffMove = function(mob, typeEffect, power, tick, duration, subType, subPower)
-
     if
         mob:getMod(xi.mod.SAVETP) > 0 and
         mob:getTP() < mob:getMod(xi.mod.SAVETP)
@@ -1287,6 +1295,7 @@ xi.mobskills.mobBuffMove = function(mob, typeEffect, power, tick, duration, subT
     if subPower == nil then
         subPower = 0
     end
+
     if mob:addStatusEffect(typeEffect, power, tick, duration, subType, subPower) then
         return xi.msg.basic.SKILL_GAIN_EFFECT
     end
