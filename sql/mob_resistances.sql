@@ -449,7 +449,7 @@ INSERT INTO `mob_resistances` VALUES (454,'Tulfaire',0,2500,0,0,0,0,0,0,0,0,0,0,
 INSERT INTO `mob_resistances` VALUES (455,'Leafkin',0,0,0,0,0,0,0,0,0,0,0,0,0,-3,4,2,4,2,8,11,4);
 INSERT INTO `mob_resistances` VALUES (456,'Bztavian-Colkhab',0,2500,0,0,0,0,0,0,0,0,0,0,0,2,2,9,9,4,4,6,4);
 INSERT INTO `mob_resistances` VALUES (457,'Cehuetzi-Kumhau',0,0,0,0,0,0,0,0,0,0,0,0,0,2,9,9,4,4,4,6,2);
-INSERT INTO `mob_resistances` VALUES (458,'Raaz',0,0,0,0,0,0,0,0,0,0,0,0,0,-2,2,-1,-1,-1,-1,-1,2);
+INSERT INTO `mob_resistances` VALUES (458,'Raaz',1125,1125,-1125,-1125,0,0,0,0,0,0,0,0,0,-2,2,-1,-1,-1,-1,-1,2);
 INSERT INTO `mob_resistances` VALUES (459,'Yztarg',0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,2,7,2,1,1,1);
 INSERT INTO `mob_resistances` VALUES (460,'Waktza',0,2500,0,0,0,0,0,0,0,0,0,0,0,4,2,9,2,9,4,4,6);
 INSERT INTO `mob_resistances` VALUES (461,'Gabbrath',0,0,0,0,0,0,0,0,0,0,0,0,0,9,9,4,4,2,2,6,4);
