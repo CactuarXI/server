@@ -309,7 +309,7 @@ INSERT INTO `mob_resistances` VALUES (281,'Manticore-Kirin',0,0,0,0,0,0,0,0,0,0,
 INSERT INTO `mob_resistances` VALUES (282,'Tonberry-Grav_iton',0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-3,-1,0,-2,1,4,0);
 INSERT INTO `mob_resistances` VALUES (284,'Vampyr',0,0,0,0,0,0,0,0,0,0,0,0,0,1,4,3,3,1,1,-1,11);
 INSERT INTO `mob_resistances` VALUES (285,'Gulool Ja Ja',0,0,0,0,0,0,0,0,0,0,0,0,0,4,2,9,9,4,4,4,4);
-INSERT INTO `mob_resistances` VALUES (286,'Puk - Vulpangue - ZMN Tier 1',20000,2500,0,0,0,0,0,0,0,0,0,0,0,-1,-2,11,-1,0,-1,-1,-1);
+INSERT INTO `mob_resistances` VALUES (286,'Puk - Vulpangue - ZMN Tier 1',0,2500,0,0,0,0,0,0,0,0,0,0,0,-1,-2,11,-1,0,-1,-1,-1);
 INSERT INTO `mob_resistances` VALUES (287,'Colibri - Chamrosh - ZMN Tier 1',0,2500,0,0,0,0,0,0,0,0,0,0,0,-1,-2,6,0,-1,-1,0,-2);
 INSERT INTO `mob_resistances` VALUES (288,'Qiqirn - Cheese Hoarder - ZNM Tier 1',0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-2,2,0,-1,-1,0);
 INSERT INTO `mob_resistances` VALUES (289,'Wamouracampa - BrassBorer - ZNM Tier 1',0,0,0,0,0,0,0,0,0,0,0,0,0,11,-2,2,-1,0,-2,0,-1);
