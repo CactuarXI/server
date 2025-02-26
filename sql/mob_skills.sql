@@ -2224,10 +2224,10 @@ INSERT INTO `mob_skills` VALUES (2202,1556,'berserker_dance',0,0.0,7.0,2000,1500
 -- INSERT INTO `mob_skills` VALUES (2204,1948,'ore_lob',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2205,1565,'feathered_furore',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2206,1950,'dark_invocation',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (2207,1951,'disorienting_waul',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (2208,1952,'microspores',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (2209,1607,'blink_of_peril',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (2210,1603,'petal_pirouette',1,0.0,15.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (2207,1606,'disorienting_waul',1,0.0,12.0,2000,2000,4,0,0,0,0,0,0); -- Tiger
+INSERT INTO `mob_skills` VALUES (2208,1604,'microspores',1,0.0,12.0,2000,2000,4,0,0,0,0,0,0); -- Funguar
+INSERT INTO `mob_skills` VALUES (2209,1607,'blink_of_peril',4,0.0,12.0,2000,3000,4,0,0,0,0,0,0); -- Coeurl
+INSERT INTO `mob_skills` VALUES (2210,1603,'petal_pirouette',1,0.0,15.0,2000,1500,4,0,0,0,0,0,0); -- Mandragora
 -- INSERT INTO `mob_skills` VALUES (2211,1955,'.',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2212,1956,'.',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2213,1957,'.',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
@@ -2624,7 +2624,7 @@ INSERT INTO `mob_skills` VALUES (2586,1684,'ecliptic_meteor',1,0.0,18.0,2000,300
 -- INSERT INTO `mob_skills` VALUES (2604,1540,'gorge',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0); -- Sandworm/Glavoid
 -- INSERT INTO `mob_skills` VALUES (2605,2349,'disgorge',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2606,2350,'carousel',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (2607,2351,'agaricus',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
+-- INSERT INTO `mob_skills` VALUES (2607,2351,'agaricus',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0); -- Funguar TODO: AnimID
 -- INSERT INTO `mob_skills` VALUES (2608,2352,'terminal_sting',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2609,2353,'booming_bleat',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2610,2354,'vacant_gaze',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
@@ -2718,7 +2718,7 @@ INSERT INTO `mob_skills` VALUES (2692,1812,'royal_decree',1,0.0,18.0,2000,1000,4
 -- INSERT INTO `mob_skills` VALUES (2698,1381,'lithic_breath',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2699,2443,'tarsal_slam',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2700,2444,'enthrall',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (2701,2445,'acheron_flame',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (2701,1228,'acheron_flame',1,0.0,20.0,2000,1500,4,8,0,0,0,0,0); -- Cerberus
 -- INSERT INTO `mob_skills` VALUES (2702,2446,'terra_wing',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2703,2447,'dread_wind',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2704,2448,'questionmarks_needles',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
@@ -3147,10 +3147,10 @@ INSERT INTO `mob_skills` VALUES (3116,206,'bellatrix_of_shadows',0,0.0,7.0,2000,
 -- INSERT INTO `mob_skills` VALUES (3127,2267,'frizz',0,0.0,10.0,2000,1500,4,0,0,0,0,0,0); -- basically a spell
 -- INSERT INTO `mob_skills` VALUES (3128,2268,'astoltian_slime_hit',0,0.0,5.0,2000,0,4,0,0,0,0,0,0); -- not a melee sub exactly, rather a mobskill with no message
 -- INSERT INTO `mob_skills` VALUES (3129,2269,'astoltian_slime_run',0,0.0,7.0,2000,0,4,0,0,0,0,0,0); -- depops mob
--- INSERT INTO `mob_skills` VALUES (3130,2874,'barreling_smash',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3131,227,'sweeping_gouge',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3132,228,'zealous_snort',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3133,2877,'terrifying_snap',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (3130,2274,'barreling_smash',0,0.0,12.0,2000,3000,4,0,0,4,0,0,0); -- Raaz
+INSERT INTO `mob_skills` VALUES (3131,2275,'sweeping_gouge',4,0.0,12.0,2000,2000,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (3132,2276,'zealous_snort',0,0.0,7.0,2000,2000,1,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (3133,2277,'terrifying_snap',4,0.0,12.0,2000,2000,4,0,0,0,0,0,0); -- Raaz
 -- INSERT INTO `mob_skills` VALUES (3134,2258,'cehuetzi_melee_left',0,0.0,7.0,2000,0,4,4,0,0,0,0,0);  -- kumhau and utkux melee specials
 -- INSERT INTO `mob_skills` VALUES (3135,2259,'cehuetzi_melee_right',0,0.0,7.0,2000,0,4,4,0,0,0,0,0); -- kumhau and utkux melee specials
 -- INSERT INTO `mob_skills` VALUES (3136,2260,'cehuetzi_melee_bite',0,0.0,7.0,2000,0,4,4,0,0,0,0,0);  -- kumhau and utkux melee specials

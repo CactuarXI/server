@@ -166,7 +166,10 @@ xi.mobskills.mobRangedMove = function(mob, target, skill, numHits, accMod, dmgMo
     if
         tpEffect1_ftp100 == nil or
         tpEffect1_ftp200 == nil or
-        tpEffect1_ftp300 == nil
+        tpEffect1_ftp300 == nil or
+        tpEffect1_ftp100 == 0 or
+        tpEffect1_ftp200 == 0 or
+        tpEffect1_ftp300 == 0
     then
         -- This is what the old MobTPMod(tp) function performed. Should catch any nil references until all skills get audited.
         tpEffect1_ftp100 = 1.0
@@ -180,7 +183,10 @@ xi.mobskills.mobRangedMove = function(mob, target, skill, numHits, accMod, dmgMo
     if
         tpEffect2_ftp100 == nil or
         tpEffect2_ftp200 == nil or
-        tpEffect2_ftp300 == nil
+        tpEffect2_ftp300 == nil or
+        tpEffect1_ftp100 == 0 or
+        tpEffect1_ftp200 == 0 or
+        tpEffect1_ftp300 == 0
     then
         tpEffect2_ftp100 = 1
         -- print('tpeffect2_100 = 1')
