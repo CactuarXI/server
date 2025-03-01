@@ -2669,6 +2669,7 @@ xi.item =
     CONE_OF_SNOLL_GELATO                = 5147,
     PLATE_OF_SOLE_SUSHI                 = 5149,
     SLICE_OF_BUFFALO_MEAT               = 5152,
+    TAVNAZIAN_LIVER                     = 5154,
     JAR_OF_GROUND_WASABI                = 5164,
     ELSHIMO_COCONUT                     = 5187,
     SPRIG_OF_MISAREAUX_PARSLEY          = 5195,

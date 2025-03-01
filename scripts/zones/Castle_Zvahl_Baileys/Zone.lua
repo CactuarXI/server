@@ -1,8 +1,6 @@
 -----------------------------------
 -- Zone: Castle_Zvahl_Baileys (161)
 -----------------------------------
-local ID = zones[xi.zone.CASTLE_ZVAHL_BAILEYS]
------------------------------------
 ---@type TZone
 local zoneObject = {}
 
@@ -12,13 +10,6 @@ zoneObject.onInitialize = function(zone)
     zone:registerCuboidTriggerArea(2, -90, 17, -10, -85, 18, -5)  -- map 4 SW porter
     zone:registerCuboidTriggerArea(3, -34, 17, -10, -30, 18, -5)  -- map 4 SE porter
     zone:registerCuboidTriggerArea(4, -34, 17, 45, -30, 18, 51)  -- map 4 NE porter
-
-    -- NM Persistence
-    -- xi.mob.nmTODPersistCache(zone, ID.mob.LIKHO)
-    -- xi.mob.nmTODPersistCache(zone, ID.mob.MARQUIS_ALLOCEN)
-    -- xi.mob.nmTODPersistCache(zone, ID.mob.MARQUIS_AMON)
-    -- xi.mob.nmTODPersistCache(zone, ID.mob.DUKE_HABORYM)
-    -- xi.mob.nmTODPersistCache(zone, ID.mob.GRAND_DUKE_BATYM)
 
     xi.treasure.initZone(zone)
 end

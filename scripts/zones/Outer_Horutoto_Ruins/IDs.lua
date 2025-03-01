@@ -33,16 +33,28 @@ zones[xi.zone.OUTER_HORUTOTO_RUINS] =
         ALREADY_POSSESS_TEMP          = 8271,  -- You already possess that temporary item.
         NO_COMBINATION                = 8276,  -- You were unable to enter a combination.
         REGIME_REGISTERED             = 10354, -- New training regime registered!
+
+        IF_HAD_ORBS                   = 7356,  -- You sense that if you had <keyitem>, <keyitem>, <keyitem>, or <keyitem>, something might happen.
+        MUST_WAIT_LONGER              = 7360,  -- It appears you must wait longer to commence the battle.
+        COMMENCING_EXPERIMENT         = 7361,  -- CoMM-eN-cInG*Ex-PE-rI-MeNt.
+        INITIATING_TRANSMISSION       = 7362,  -- INi-TiAT-iNG*TRAnS-miSS-IOn*TO*PRo-FeSS-oR...
+        VENTURED_TOO_FAR              = 7363,  -- You have ventured too far from the field of battle.\nThe Confrontation will automatically disengage if you do not return.
+        CONFRONTATION_DISENGAGED      = 7364,  -- You have ventured too far from the field of battle.\n The Confrotation has been disengaged.
+        RETURNED_TO_BATTLE            = 7365,  -- You have returned to the field of battle.
+        YOU_HAVE_X_MINUTES_LEFT       = 7366,  -- You have <number> minutes (Earth time) to complete the battle.
+        YOU_HAVE_ONLY_X_SECONDS_LEFT  = 7367,  -- You have only <number> seconds (Earth time) remaining.
+        CONFRONTATION_TIME_UP         = 7369,  -- Your time for this confrontation is up...
     },
+
     mob =
     {
-        DESMODONT                  = GetFirstID('Desmodont'),
         AH_PUCH                    = GetFirstID('Ah_Puch'),
-        BALLOON_NM_OFFSET          = GetTableOfIDs('Balloon')[2], -- TODO: NM Needs audit. This only uses 2 of the NMs
-        FULL_MOON_FOUNTAIN_OFFSET  = GetFirstID('Jack_of_Cups'),
-        JESTER_WHOD_BE_KING_OFFSET = GetFirstID('Queen_of_Swords'),
         APPARATUS_ELEMENTAL        = GetFirstID('Thunder_Elemental'),
         CUSTOM_CARDIAN_OFFSET      = GetFirstID('Custom_Cardian'),
+        BALLOON_NM_OFFSET          = GetTableOfIDs('Balloon')[2], -- TODO: NM Needs audit. This only uses 2 of the NMs
+        DESMODONT                  = GetFirstID('Desmodont'),
+        FULL_MOON_FOUNTAIN_OFFSET  = GetFirstID('Jack_of_Cups'),
+        JESTER_WHOD_BE_KING_OFFSET = GetFirstID('Queen_of_Swords'),
     },
     npc =
     {

@@ -7,15 +7,10 @@
 ---@type TNpcEntity
 local entity = {}
 
-entity.onTrade = function(player, npc, trade)
-end
-
 entity.onTrigger = function(player, npc)
-    local wildcatSandy = player:getCharVar('WildcatSandy')
-
     if
         player:getQuestStatus(xi.questLog.SANDORIA, xi.quest.id.sandoria.LURE_OF_THE_WILDCAT) == xi.questStatus.QUEST_ACCEPTED and
-        not utils.mask.getBit(wildcatSandy, 7)
+        not utils.mask.getBit(player:getCharVar('WildcatSandy'), 7)
     then
         player:startEvent(807)
     end

@@ -61,6 +61,7 @@ public:
     void         SetFollowTarget(CBaseEntity* PTarget, FollowType followType);
     bool         HasFollowTarget();
     void         ClearFollowTarget();
+    bool         CheckHide(CBattleEntity* PTarget);
 
     void OnCastStopped(CMagicState& state, action_t& action);
 
@@ -70,7 +71,6 @@ protected:
     virtual void TryLink();
     int32        GetPixieHate(CBattleEntity* PTarget);
     bool         CanPursueTarget(CBattleEntity* PTarget);
-    bool         CheckHide(CBattleEntity* PTarget);
     bool         CheckLock(CBattleEntity* PTarget);
     bool         CheckDetection(CBattleEntity* PTarget);
     virtual bool CanCastSpells();

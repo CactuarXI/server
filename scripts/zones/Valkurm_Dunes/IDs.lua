@@ -51,19 +51,27 @@ zones[xi.zone.VALKURM_DUNES] =
         WHAT_DO_YOU_THINK              = 7727,  -- What do you think you are doing!?
         TIME_ELAPSED                   = 7807,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
         FOUND_ITEM_WITH_EASE           = 7331,  -- It appears your chocobo found this item with ease.
+
+        FOUL_PRESENCE                  = 7722,  -- You sense a foul presence.
     },
+
     mob =
     {
-        VALKURM_EMPEROR = GetFirstID('Valkurm_Emperor'),
-        GOLDEN_BAT      = GetFirstID('Golden_Bat'),
-        MARCHELUTE      = GetFirstID('Marchelute'),
-        DOMAN           = GetFirstID('Doman'),
-        ONRYO           = GetFirstID('Onryo'),
+        BEACH_MONK          = GetFirstID('Beach_Monk'),
+        DOMAN               = GetFirstID('Doman'),
+        GOLDEN_BAT          = GetFirstID('Golden_Bat'),
+        HEIKE_CRAB          = GetFirstID('Heike_Crab'),
+        HOUU_THE_SHOALWADER = GetFirstID('Houu_the_Shoalwader'),
+        MARCHELUTE          = GetFirstID('Marchelute'),
+        ONRYO               = GetFirstID('Onryo'),
+        VALKURM_EMPEROR     = GetFirstID('Valkurm_Emperor'),
     },
+
     npc =
     {
         SUNSAND_QM    = GetFirstID('qm1'),
         OVERSEER_BASE = GetFirstID('Quanteilleron_RK'),
+        WHM_AF1_QM    = GetFirstID('qm2')
     },
 }
 

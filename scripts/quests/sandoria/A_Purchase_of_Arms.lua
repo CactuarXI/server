@@ -5,18 +5,19 @@
 -- Helbort: !gotoid 17719353
 -- Alexius: !gotoid 17203813
 -----------------------------------
-local ID = zones[xi.zone.SOUTHERN_SAN_DORIA]
-local jugnerID = zones[xi.zone.JUGNER_FOREST]
+-- Helbort : !pos 71 -1 65 230
+-- Alexius : !pos 105 1 382 104
+-----------------------------------
+local forestID = zones[xi.zone.JUGNER_FOREST]
+local southID  = zones[xi.zone.SOUTHERN_SAN_DORIA]
+-----------------------------------
 
 local quest = Quest:new(xi.questLog.SANDORIA, xi.quest.id.sandoria.A_PURCHASE_OF_ARMS)
 
 quest.reward =
 {
-    fame = 30,
-    fameArea = xi.fameArea.SANDORIA,
-    title    = xi.title.ARMS_TRADER,
-    item     = xi.item.ELM_STAFF,
-
+    item  = xi.item.ELM_STAFF,
+    title = xi.title.ARMS_TRADER,
 }
 
 quest.sections =
@@ -24,8 +25,8 @@ quest.sections =
     {
         check = function(player, status, vars)
             return status == xi.questStatus.QUEST_AVAILABLE and
-            player:getQuestStatus(xi.questLog.SANDORIA, xi.quest.id.sandoria.FATHER_AND_SON) == xi.questStatus.QUEST_COMPLETED and
-            player:getFameLevel(xi.fameArea.SANDORIA) >= 2
+                player:getQuestStatus(xi.questLog.SANDORIA, xi.quest.id.sandoria.FATHER_AND_SON) == xi.questStatus.QUEST_COMPLETED and
+                player:getFameLevel(xi.fameArea.SANDORIA) >= 2
         end,
 
         [xi.zone.SOUTHERN_SAN_DORIA] =
@@ -35,32 +36,52 @@ quest.sections =
             onEventFinish =
             {
                 [594] = function(player, csid, option, npc)
-                    if option == 0 then
+                    if option == 0 and npcUtil.giveKeyItem(player, xi.ki.WEAPONS_ORDER) then
                         quest:begin(player)
-                        npcUtil.giveKeyItem(player, xi.ki.WEAPONS_ORDER)
                     end
                 end,
             },
         },
     },
-
     {
         check = function(player, status, vars)
-            return status == xi.questStatus.QUEST_ACCEPTED
+            return status ~= xi.questStatus.QUEST_AVAILABLE and
+                player:hasKeyItem(xi.ki.WEAPONS_ORDER)
         end,
 
         [xi.zone.SOUTHERN_SAN_DORIA] =
         {
-            ['Helbort'] =
+            ['Helbort'] = quest:message(southID.text.HELBORT_ORDERS),
+        },
+
+        [xi.zone.JUGNER_FOREST] =
+        {
+            ['Alexius'] = quest:progressEvent(5),
+
+            onEventFinish =
             {
-                onTrigger = function(player, npc)
-                    if player:hasKeyItem (xi.ki.WEAPONS_RECEIPT) then
-                        return quest:progressEvent(607)
-                    else
-                        return quest:event(593)
+                [5] = function(player, csid, option, npc)
+                    if npcUtil.giveKeyItem(player, xi.ki.WEAPONS_RECEIPT) then
+                        player:delKeyItem(xi.ki.WEAPONS_ORDER)
                     end
                 end,
             },
+        },
+    },
+    {
+        check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_AVAILABLE and
+                not player:hasKeyItem(xi.ki.WEAPONS_ORDER)
+        end,
+
+        [xi.zone.JUGNER_FOREST] =
+        {
+            ['Alexius'] = quest:message(forestID.text.ALEXIUS_ORDERS, xi.ki.WEAPONS_RECEIPT),
+        },
+
+        [xi.zone.SOUTHERN_SAN_DORIA] =
+        {
+            ['Helbort'] = quest:progressEvent(607),
 
             onEventFinish =
             {
@@ -71,28 +92,15 @@ quest.sections =
                 end,
             },
         },
+    },
+    {
+        check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_COMPLETED
+        end,
 
-        [xi.zone.JUGNER_FOREST] =
+        [xi.zone.SOUTHERN_SAN_DORIA] =
         {
-            ['Alexius'] =
-            {
-                onTrigger = function(player, npc)
-                    if player:hasKeyItem (xi.ki.WEAPONS_ORDER) then
-                        return quest:progressEvent(5)
-                    else
-                        return quest:messageSpecial(jugnerID.text.ALEXIUS_DEFAULT)
-                    end
-                end,
-            },
-
-            onEventFinish =
-            {
-                [5] = function(player, csid, option, npc)
-                    player:delKeyItem(xi.ki.WEAPONS_ORDER)
-                    npcUtil.giveKeyItem(player, xi.ki.WEAPONS_RECEIPT)
-                    quest:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.WEAPONS_RECEIPT)
-                end,
-            },
+            ['Helbort'] = quest:message(southID.text.HELBORT_ORDERS + 3)
         },
     },
 }

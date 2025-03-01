@@ -2,8 +2,6 @@
 -- Area: The Garden of Ru'Hmet
 --  Mob: Aw'euvhi
 -----------------------------------
-mixins = { require('scripts/mixins/families/euvhi') }
------------------------------------
 ---@type TMobEntity
 local entity = {}
 
@@ -14,8 +12,6 @@ end
 
 entity.onMobFight = function(mob)
     -- Forms: 0 = Closed  1 = Closed  2 = Open 3 = Closed
-    -- According to http://wiki.ffxiclopedia.org/wiki/Category:Euvhi
-    -- ..when attacked will change states every minute or so..
     local randomTime = math.random(50, 75)
     local changeTime = mob:getLocalVar('changeTime')
 
@@ -50,9 +46,6 @@ entity.onMobFight = function(mob)
 end
 
 entity.onCriticalHit = function(target)
-    -- According to http://wiki.ffxiclopedia.org/wiki/Category:Euvhi
-    -- When in an open state, damage taken by the Euvhi is doubled. Inflicting a large amount of damage to an Euvhi in an open state will cause it to close.
-    -- Crit is really the only thing we can do.
     if target:getAnimationSub() == 2 then
         target:setAnimationSub(1)
     end

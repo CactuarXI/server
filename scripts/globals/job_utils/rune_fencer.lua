@@ -302,7 +302,7 @@ local function applyVallationValianceSDTMods(target, SDTTypes, power, effect, du
 
         for _, SDT in ipairs(SDTTypes) do
             target:addMod(SDT, -power)
-            newEffect:addMod(SDT, -power)
+            newEffect:addMod(SDT, -power) -- due to order of events, this only adds mods to the container, not to the owner of the effect.
         end
     end
 end

@@ -77,11 +77,11 @@
 #include "alliance.h"
 #include "conquest_system.h"
 #include "grades.h"
+#include "ipc_client.h"
 #include "item_container.h"
 #include "latent_effect_container.h"
 #include "linkshell.h"
 #include "map.h"
-#include "message.h"
 #include "mob_modifier.h"
 #include "recast_container.h"
 #include "roe.h"
@@ -6896,11 +6896,11 @@ namespace charutils
         }
     }
 
-    void SendToZone(CCharEntity* PChar, uint8 type, uint64 ipp)
+    void SendToZone(CCharEntity* PChar, ZoningType type, uint64 ipp)
     {
         TracyZoneScoped;
 
-        if (type == 2)
+        if (type == ZoningType::Zoning)
         {
             auto ip   = (uint32)ipp;
             auto port = (uint32)(ipp >> 32);
@@ -6945,10 +6945,20 @@ namespace charutils
             _sql->Query(Query, PChar->loc.destination,
                         (PChar->m_moghouseID || PChar->loc.destination == PChar->getZone()) ? PChar->loc.prevzone : PChar->getZone(), PChar->loc.p.rotation,
                         PChar->loc.p.x, PChar->loc.p.y, PChar->loc.p.z, PChar->m_moghouseID, PChar->loc.boundary, PChar->id);
+
+            message::send(ipc::CharZone{
+                .charId            = PChar->id,
+                .destinationZoneId = PChar->loc.destination,
+            });
         }
-        else
+        else // ZoningType::Logout
         {
             SaveCharPosition(PChar);
+
+            message::send(ipc::CharZone{
+                .charId            = PChar->id,
+                .destinationZoneId = 0xFFFF, // Clear cache
+            });
         }
 
         if (PChar->shouldPetPersistThroughZoning())
@@ -6966,7 +6976,7 @@ namespace charutils
             charutils::forceSynthCritFail("SendToZone", PChar);
         }
 
-        PChar->pushPacket<CServerIPPacket>(PChar, type, ipp);
+        PChar->pushPacket<CServerIPPacket>(PChar, static_cast<uint8>(type), ipp);
 
         removeCharFromZone(PChar);
     }
@@ -6974,7 +6984,7 @@ namespace charutils
     void ForceLogout(CCharEntity* PChar)
     {
         PChar->status = STATUS_TYPE::SHUTDOWN;
-        charutils::SendToZone(PChar, 1, 0);
+        charutils::SendToZone(PChar, ZoningType::Logout, 0);
     }
 
     void ForceRezone(CCharEntity* PChar)
@@ -6985,7 +6995,7 @@ namespace charutils
 
         PChar->clearPacketList();
 
-        SendToZone(PChar, 2, zoneutils::GetZoneIPP(PChar->loc.destination));
+        SendToZone(PChar, ZoningType::Zoning, zoneutils::GetZoneIPP(PChar->loc.destination));
     }
 
     void HomePoint(CCharEntity* PChar, bool resetHPMP)
@@ -7014,7 +7024,7 @@ namespace charutils
         PChar->updatemask |= UPDATE_HP;
 
         PChar->clearPacketList();
-        SendToZone(PChar, 2, zoneutils::GetZoneIPP(PChar->loc.destination));
+        SendToZone(PChar, ZoningType::Zoning, zoneutils::GetZoneIPP(PChar->loc.destination));
     }
 
     bool AddWeaponSkillPoints(CCharEntity* PChar, SLOTTYPE slotid, int wspoints)
@@ -7060,7 +7070,13 @@ namespace charutils
         }
 
         PersistCharVar(charId, var, value, expiry);
-        message::send_charvar_update(charId, var, value, expiry);
+
+        message::send(ipc::CharVarUpdate{
+            .charId  = charId,
+            .value   = value,
+            .expiry  = expiry,
+            .varName = var,
+        });
     }
 
     void SetCharVar(CCharEntity* PChar, std::string const& var, int32 value, uint32 expiry /* = 0 */)
