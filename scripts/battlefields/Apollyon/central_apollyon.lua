@@ -23,7 +23,7 @@ local content = Limbus:new({
     requiredKeyItems = { xi.ki.COSMO_CLEANSE, { xi.ki.RED_CARD, xi.ki.BLACK_CARD }, message = ID.text.YOU_INSERT_THE_CARD_POLISHED },
     requiredItems    = { xi.item.SMALT_CHIP, xi.item.SMOKY_CHIP, xi.item.CHARCOAL_CHIP, xi.item.MAGENTA_CHIP },
     name             = 'CENTRAL_APOLLYON',
-    lootCrateId      = ID.npc.CENTRAL_LOOT_CRATE,
+    -- lootCrateId      = ID.npc.CENTRAL_LOOT_CRATE,
 })
 
 function content:onEntryEventUpdate(player, csid, option, npc)
@@ -44,7 +44,8 @@ content.groups =
         mobs       = { 'Proto-Omega' },
         stationary = true,
         death      = function(mob, count)
-            npcUtil.showCrate(GetNPCByID(ID.npc.CENTRAL_LOOT_CRATE))
+            -- npcUtil.showCrate(GetNPCByID(ID.npc.CENTRAL_LOOT_CRATE))
+            npcUtil.showCrate(GetNPCByID(ID.CENTRAL_APOLLYON.npc.LOOT_CRATE))
         end,
     },
 
@@ -56,7 +57,8 @@ content.groups =
 
 content.loot =
 {
-    [ID.npc.CENTRAL_LOOT_CRATE] =
+    -- [ID.npc.CENTRAL_LOOT_CRATE] =
+    [ID.CENTRAL_APOLLYON.npc.LOOT_CRATE] =
     {
         {
             quantity = 5,

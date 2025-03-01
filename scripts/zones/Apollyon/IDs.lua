@@ -67,6 +67,7 @@ zones[xi.zone.APOLLYON] =
     },
     npc =
     {
+        ENTRANCE_OFFSET    = 16933218,
         CENTRAL_LOOT_CRATE = GetFirstID('Central_Loot_Crate'),
         CS_LOOT_CRATE      = GetFirstID('CS_Loot_Crate'),
         NE_LOOT_CRATE      = GetFirstID('NE_Loot_Crate'),
@@ -105,6 +106,9 @@ zones[xi.zone.APOLLYON] =
                 16932879,
                 16932897,
             },
+
+
+            LOOT_CRATE = 16932909,
         },
 
         LINKED_CRATES =
@@ -146,6 +150,7 @@ zones[xi.zone.APOLLYON] =
                 16933003,
                 16933017,
             },
+            LOOT_CRATE = 16933031,
         },
     },
 
@@ -191,6 +196,7 @@ zones[xi.zone.APOLLYON] =
                 16932975,
                 16932982,
             },
+            LOOT_CRATE = 16932984,
         },
     },
 
@@ -236,11 +242,16 @@ zones[xi.zone.APOLLYON] =
                 16933110,
                 16933111,
             },
+            LOOT_CRATE = 16933112,
         },
     },
 
     CENTRAL_APOLLYON =
     {
+        npc =
+        {
+            LOOT_CRATE = 16933123,
+        },
     },
 
     CS_APOLLYON =
@@ -252,6 +263,7 @@ zones[xi.zone.APOLLYON] =
                 16933127,
                 16933128,
             },
+            LOOT_CRATE = 16933126,
         },
     },
 }
