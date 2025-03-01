@@ -20,7 +20,7 @@ local content = Limbus:new({
     requiredKeyItems = { xi.ki.COSMO_CLEANSE, xi.ki.WHITE_CARD, message = ID.text.YOU_INSERT_THE_CARD_POLISHED },
     requiredItems    = { xi.item.EMERALD_CHIP },
     name             = 'CENTRAL_TEMENOS_1ST_FLOOR',
-    lootCrateId      = ID.npc.C1_LOOT_CRATE,
+    --lootCrateId      = ID.npc.C1_LOOT_CRATE,
 })
 
 function content:handleMobPartnerDeath(mobs, battlefield, mob, count)
@@ -73,14 +73,17 @@ content.groups =
 
         mods     = { [xi.mod.REGEN] = 24 },
         allDeath = function(battlefield, mob)
-            xi.limbus.spawnFrom(mob, ID.npc.C1_LOOT_CRATE)
+            -- xi.limbus.spawnFrom(mob, ID.npc.C1_LOOT_CRATE)
+
+            xi.limbus.spawnFrom(mob, ID.CENTRAL_TEMENOS_1ST_FLOOR.npc.LOOT_CRATE)
         end
     }
 }
 
 content.loot =
 {
-    [ID.npc.C1_LOOT_CRATE] =
+    -- [ID.npc.C1_LOOT_CRATE] =
+    [ID.CENTRAL_TEMENOS_1ST_FLOOR.npc.LOOT_CRATE] =
     {
         {
             quantity = 6,

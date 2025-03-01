@@ -19,7 +19,7 @@ local content = Limbus:new({
     requiredKeyItems = { xi.ki.COSMO_CLEANSE, xi.ki.WHITE_CARD, message = ID.text.YOU_INSERT_THE_CARD_POLISHED },
     requiredItems    = { xi.item.METAL_CHIP },
     name             = 'CENTRAL_TEMENOS_BASEMENT',
-    lootCrateId      = ID.npc.CB_LOOT_CRATE,
+    -- lootCrateId      = ID.npc.CB_LOOT_CRATE,
     timeExtension    = 5,
 })
 
@@ -113,14 +113,16 @@ content.groups =
         mobs    = { 'Temenos_Ghrah' },
         spawned = false,
         death   = function(battlefield, mob, count)
-            npcUtil.showCrate(GetNPCByID(ID.npc.CB_LOOT_CRATE))
+            -- npcUtil.showCrate(GetNPCByID(ID.npc.CB_LOOT_CRATE))
+            npcUtil.showCrate(GetNPCByID(ID.CENTRAL_TEMENOS_BASEMENT.npc.LOOT_CRATE))
         end,
     }
 }
 
 content.loot =
 {
-    [ID.npc.CB_LOOT_CRATE] =
+    -- [ID.npc.CB_LOOT_CRATE] =
+    [ID.CENTRAL_TEMENOS_BASEMENT.npc.LOOT_CRATE] =
     {
         {
             quantity = 7,

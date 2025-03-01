@@ -22,7 +22,7 @@ local content = Limbus:new({
     requiredKeyItems = { xi.ki.COSMO_CLEANSE, xi.ki.WHITE_CARD, message = ID.text.YOU_INSERT_THE_CARD_POLISHED },
     requiredItems    = { xi.item.SILVER_CHIP, xi.item.CERULEAN_CHIP, xi.item.ORCHID_CHIP },
     name             = 'CENTRAL_TEMENOS_4TH_FLOOR',
-    lootCrateId      = ID.npc.C4_LOOT_CRATE,
+    -- lootCrateId      = ID.npc.C4_LOOT_CRATE,
 })
 
 local despawnGroupCrates = function(crateGroup)
@@ -145,7 +145,8 @@ content.groups =
             local pos = mob:getSpawnPos()
 
             mob:setPos(pos.x, pos.y, pos.z, 64)
-            xi.limbus.spawnFrom(mob, ID.npc.C4_LOOT_CRATE)
+            -- xi.limbus.spawnFrom(mob, ID.npc.C4_LOOT_CRATE)
+            xi.limbus.spawnFrom(mob, ID.CENTRAL_TEMENOS_4TH_FLOOR.npc.LOOT_CRATE)
         end
     },
 }
@@ -190,7 +191,8 @@ content.loot =
         },
     },
 
-    [ID.npc.C4_LOOT_CRATE] =
+    -- [ID.npc.C4_LOOT_CRATE] =
+    [ID.CENTRAL_TEMENOS_4TH_FLOOR.npc.LOOT_CRATE] =
     {
         {
             quantity = 7,

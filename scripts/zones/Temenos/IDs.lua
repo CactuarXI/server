@@ -103,6 +103,7 @@ zones[xi.zone.TEMENOS] =
                 16928806,
                 16928813,
             },
+            LOOT_CRATE = 16928830,
         },
 
         LINKED_CRATES =
@@ -160,6 +161,7 @@ zones[xi.zone.TEMENOS] =
                 16928940,
                 16928949,
             },
+            LOOT_CRATE = 16928958,
         },
     },
 
@@ -173,6 +175,7 @@ zones[xi.zone.TEMENOS] =
         },
         npc =
         {
+            LOOT_CRATE = 16929004,
             PORTAL =
             {
                 16929204,
@@ -196,10 +199,36 @@ zones[xi.zone.TEMENOS] =
         },
     },
 
+    CENTRAL_TEMENOS_1ST_FLOOR =
+    {
+        npc =
+        {
+            LOOT_CRATE = 16929045,
+        }
+    },
+
+    CENTRAL_TEMENOS_2ND_FLOOR =
+    {
+        npc =
+        {
+            LOOT_CRATE = 16929029,
+        }
+    },
+
+    CENTRAL_TEMENOS_3RD_FLOOR =
+    {
+        npc =
+        {
+            LOOT_CRATE = 16929004,
+        }
+    },
+
     CENTRAL_TEMENOS_4TH_FLOOR =
     {
         npc =
         {
+
+            LOOT_CRATE = 16928965,
             GROUPS =
             {
                 { offset = 16928967, count = 4 },
@@ -216,6 +245,14 @@ zones[xi.zone.TEMENOS] =
                 { offset = 16928997, count = 7 },
             },
         },
+    },
+
+    CENTRAL_TEMENOS_BASEMENT =
+    {
+        npc =
+        {
+            LOOT_CRATE = 16929052,
+        }
     },
 }
 

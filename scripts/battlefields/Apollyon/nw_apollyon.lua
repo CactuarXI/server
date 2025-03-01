@@ -18,7 +18,7 @@ local content = Limbus:new({
     entryNpc         = '_127',
     requiredKeyItems = { xi.ki.COSMO_CLEANSE, xi.ki.RED_CARD, message = ID.text.YOU_INSERT_THE_CARD_POLISHED },
     name             = 'NW_APOLLYON',
-    lootCrateId      = ID.npc.NW_LOOT_CRATE,
+    -- lootCrateId      = ID.npc.NW_LOOT_CRATE,
     timeExtension   = 5,
 })
 
@@ -377,7 +377,8 @@ content.groups =
 
         setup = empowerBoss,
         death = function(battlefield, mob, count)
-            npcUtil.showCrate(GetNPCByID(ID.npc.NW_LOOT_CRATE))
+            -- npcUtil.showCrate(GetNPCByID(ID.npc.NW_LOOT_CRATE))
+            npcUtil.showCrate(GetNPCByID(ID.NW_APOLLYON.npc.LOOT_CRATE))
         end,
     },
 
@@ -526,7 +527,8 @@ content.loot =
         },
     },
 
-    [ID.npc.NW_LOOT_CRATE] =
+    -- [ID.npc.NW_LOOT_CRATE] =
+    [ID.NW_APOLLYON.npc.LOOT_CRATE] =
     {
         {
             quantity = 6,

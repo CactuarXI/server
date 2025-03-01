@@ -19,7 +19,7 @@ local content = Limbus:new({
     requiredKeyItems = { xi.ki.COSMO_CLEANSE, xi.ki.BLACK_CARD, message = ID.text.YOU_INSERT_THE_CARD_POLISHED },
     lossEventParams  = { [5] = 1 },
     name             = 'NE_APOLLYON',
-    lootCrateId      = ID.npc.NE_LOOT_CRATE,
+    -- lootCrateId      = ID.npc.NE_LOOT_CRATE,
     exitLocation     = 1,
     timeExtension    = 5,
 })
@@ -272,7 +272,8 @@ content.groups =
     {
         mobs     = { 'Troglodyte_Dhalmel' },
         allDeath = function(battlefield, mob)
-            npcUtil.showCrate(GetNPCByID(ID.npc.NE_LOOT_CRATE))
+            -- npcUtil.showCrate(GetNPCByID(ID.npc.NE_LOOT_CRATE))
+            npcUtil.showCrate(GetNPCByID(ID.NE_APOLLYON.npc.LOOT_CRATE))
         end,
     },
 
@@ -425,7 +426,8 @@ content.loot =
         },
     },
 
-    [ID.npc.NE_LOOT_CRATE] =
+    -- [ID.npc.NE_LOOT_CRATE] =
+    [ID.NE_APOLLYON.npc.LOOT_CRATE] =
     {
         {
             quantity = 6,
