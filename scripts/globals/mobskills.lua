@@ -116,17 +116,13 @@ end
 end]]
 
 -- helper function to handle a single hit and check for parrying, guarding, and blocking
-local function handleSinglePhysicalHit(mob, target, hitdamage, hitslanded, finaldmg, tpEffect, minRatio, maxRatio)
+local function handleSinglePhysicalHit(mob, target, hitdamage, hitslanded, finaldmg, tpEffect)
     -- if a non-ranged physical mobskill then can parry or guard
     if
         tpEffect == xi.mobskills.physicalTpBonus.RANGED or
         (not xi.combat.physical.isParried(target, mob) and
         not xi.combat.physical.isGuarded(target, mob))
     then
-        local pdif = math.random((minRatio * 1000), (maxRatio * 1000)) --generate random PDIF
-        pdif = pdif / 1000 --multiplier set.
-        hitdamage = hitdamage * pdif
-
         -- also handle blocking
         local isBlockedWithShieldMastery = false
         if xi.combat.physical.isBlocked(target, mob) then
@@ -147,6 +143,57 @@ local function handleSinglePhysicalHit(mob, target, hitdamage, hitslanded, final
     end
 
     return hitslanded, finaldmg
+end
+
+xi.mobskills.getHitRate = function(attacker, target, bonus)
+    local flourishEffect = attacker:getStatusEffect(xi.effect.BUILDING_FLOURISH)
+
+    if flourishEffect ~= nil and flourishEffect:getPower() >= 1 then -- 1 or more Finishing moves used.
+        attacker:addMod(xi.mod.ACC, 40 + flourishEffect:getSubPower() * 2)
+    end
+
+    local acc = attacker:getACC()
+    local eva = target:getEVA() + target:getMod(xi.mod.SPECIAL_ATTACK_EVASION)
+
+    if flourishEffect ~= nil and flourishEffect:getPower() >= 1 then -- 1 or more Finishing moves used.
+        attacker:delMod(xi.mod.ACC, 40 + flourishEffect:getSubPower() * 2)
+    end
+
+    if bonus == nil then
+        bonus = 0
+    end
+
+    if
+        attacker:hasStatusEffect(xi.effect.INNIN) and
+        attacker:isBehind(target, 23)
+    then
+        -- Innin acc boost if attacker is behind target
+        bonus = bonus + attacker:getStatusEffect(xi.effect.INNIN):getPower()
+    end
+
+    if
+        target:hasStatusEffect(xi.effect.YONIN) and
+        attacker:isFacing(target, 23)
+    then
+        -- Yonin evasion boost if attacker is facing target
+        bonus = bonus - target:getStatusEffect(xi.effect.YONIN):getPower()
+    end
+
+    if attacker:hasTrait(xi.trait.AMBUSH) and attacker:isBehind(target, 23) then
+        bonus = bonus + attacker:getMerit(xi.merit.AMBUSH)
+    end
+
+    acc = acc + bonus
+
+    local dLvl = math.max(0, attacker:getMainLvl() - target:getMainLvl())
+    dLvl = utils.clamp(dLvl, 0, 38)
+
+    --work out hit rate for mobs
+    local hitrate = 75 + math.floor(((acc - eva) / 2)) + (2 * dLvl)
+
+    hitrate = utils.clamp(hitrate, 20, 95)
+
+    return hitrate
 end
 
 xi.mobskills.mobRangedMove = function(mob, target, skill, numHits, accMod, dmgMod, tpEffect1, tpEffect1_ftp100, tpEffect1_ftp200, tpEffect1_ftp300, tpEffect2, tpEffect2_ftp100, tpEffect2_ftp200, tpEffect2_ftp300, critPerc, attMod)
@@ -229,6 +276,7 @@ xi.mobskills.mobRangedMove = function(mob, target, skill, numHits, accMod, dmgMo
     if base < 1 then --(ASB)
         base = 1
     end
+
     ----------------------------------
     -- Calculate hitrate for mobskill.
     ----------------------------------
@@ -346,6 +394,7 @@ xi.mobskills.mobRangedMove = function(mob, target, skill, numHits, accMod, dmgMo
             -- finaldmg = xi.weaponskills.handleBlock(mob, target, finaldmg) -- (ASB)
             hitslanded = hitslanded + 1
         end
+
         hitsdone = hitsdone + 1
     end
 
@@ -409,17 +458,6 @@ end
 xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmgMod, tpEffect1, tpEffect1_ftp100, tpEffect1_ftp200, tpEffect1_ftp300, tpEffect2, tpEffect2_ftp100, tpEffect2_ftp200, tpEffect2_ftp300, critPerc, attMod, isCannonball)
     local returninfo    = {}
 
-
-    -- local lvldiff = math.max(0, mob:getMainLvl() - target:getMainLvl())
-    -- TODO: Added in LSB Sync
-    --[[ mobs use fSTR (but with special calculation in the called function)
-    local fSTR = xi.combat.physical.calculateMeleeStatFactor(mob, target)
-    if tpEffect == xi.mobskills.physicalTpBonus.RANGED then
-        fSTR = xi.combat.physical.calculateRangedStatFactor(mob, target)
-    end]]
-
-    -- nil checks
-
     if tpEffect1 == nil then
         tpEffect1 = xi.mobskills.physicalTpBonus.DMG_VARIES
         -- print('xi.mobskills.physicalTpBonus.NONE')
@@ -481,6 +519,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
     -- else
         -- fStr = xi.mobskills.fSTR(mob:getStat(xi.mod.STR), target:getStat(xi.mod.VIT))
     end
+
     ----------------------------------
     -- Calculate Base Damage
     ----------------------------------
@@ -503,28 +542,6 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
     if base < 1 then --(ASB)
         base = 1
     end
-    ----------------------------------
-    -- Calculate hitrate for mobskill.
-    ----------------------------------
-    local hitrate = xi.weaponskills.getHitRate(mob, target, 0)
-
-    if
-        accMod and
-        accMod ~= 0
-    then
-        hitrate = utils.clamp((hitrate * accMod), 0.2, 0.95)
-    end
-
-    --[[if
-        tpEffect1 == xi.mobskills.physicalTpBonus.RANGED or
-        tpEffect2 == xi.mobskills.physicalTpBonus.RANGED
-    then -- (ASB)
-        -- hitrate = xi.weaponskills.getRangedHitRate(mob, target, 0, 0) TODO: Need to build out in weaponskills or physical utilities.
-    end]]
-
-    --[[work out min and max cRatio -- TODO: LSB MERGE
-    local maxRatio = ratio
-    local minRatio = ratio - 0.375]]
 
     ----------------------------------
     -- Calculate base damage for a single hit.
@@ -545,33 +562,28 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
     end
 
     ----------------------------------
+    -- Calculate hitrate for mobskill.
+    ----------------------------------
+    local hitrate = xi.mobskills.getHitRate(mob, target, 0)
+    local firstHitChance = hitrate
+
+    if
+        accMod and
+        accMod ~= 0
+    then
+        hitrate = utils.clamp((hitrate * accMod), 20, 95)
+    end
+
+    -- first hit has a higher chance to land
+    firstHitChance = hitrate * 1.5
+    firstHitChance = utils.clamp(firstHitChance, 20, 95)
+
+    ----------------------------------
     -- Start the hits
     ----------------------------------
     local finaldmg   = 0
     local hitsdone   = 1
     local hitslanded = 0
-    local chance = math.random()
-
-    -- If mobskill is not ranged, allow for Parry/Guard chance.
-    if
-        tpEffect1 ~= xi.mobskills.physicalTpBonus.RANGED and
-        tpEffect2 ~= xi.mobskills.physicalTpBonus.RANGED
-    then
-        chance = xi.weaponskills.handleParry(mob, target, chance)
-        chance = xi.weaponskills.handleGuard(mob, target, chance)
-    end
-
-    local firstHitChance = hitrate + 0.5 -- (ASB)
-
-    if
-        tpEffect1 == xi.mobskills.physicalTpBonus.RANGED or
-        tpEffect2 == xi.mobskills.physicalTpBonus.RANGED
-    then -- (ASB)
-        firstHitChance = hitrate
-    end
-
-    -- firstHitChance = utils.clamp(firstHitChance, 35, 95)
-    firstHitChance = utils.clamp(firstHitChance, 0.20, 0.95) -- (ASB)
 
     -- Getting PDIF
     if tpEffect1 == xi.mobskills.physicalTpBonus.ATK_VARIES then
@@ -593,21 +605,19 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
         end
     end
 
-    local weaponType = mob:getWeaponSkillType(xi.slot.MAIN)
-    local applyLevelCorrection = xi.combat.levelCorrection.isLevelCorrectedZone(mob)
-    -- local weaponType           = xi.skill.NONE -- use NONE for mobs
-    -- local attMod               = 1             -- TODO: implement attack boosts for mobskills
-    -- local canCrit              = false         -- TODO: implement which skills can crit
-    local isCannonball         = isCannonball or false
-    local pdif = 0
+    local weaponType            = xi.skill.NONE -- use NONE for mobs
+    local applyLevelCorrection  = xi.combat.levelCorrection.isLevelCorrectedZone(mob)
+    local useDefInPlaceOfAttack = isCannonball or false
+    local pdif                  = 0
 
-    if chance <= firstHitChance then -- First hit
-        local isCrit = math.random() < critRate
-        pdif = xi.combat.physical.calculateMeleePDIF(mob, target, weaponType, attMod, isCrit, applyLevelCorrection, false, 0, false, isCannonball)
+    if (math.random(1, 100)) <= firstHitChance then -- First hit
+        local isCrit = math.random(1, 100) < critRate
+        pdif = xi.combat.physical.calculateMeleePDIF(mob, target, weaponType, attMod, isCrit, applyLevelCorrection, false, 0, false, xi.slot.MAIN, useDefInPlaceOfAttack)
         finaldmg = finaldmg + hitdamage * pdif
-        finaldmg = xi.weaponskills.handleBlock(mob, target, finaldmg) -- (ASB)
-        hitslanded = hitslanded + 1
+        -- use helper function check for parry guard and blocking and handle the hit
+        hitslanded, finaldmg = handleSinglePhysicalHit(mob, target, hitdamage, hitslanded, finaldmg, tpEffect1)
 
+        -- Used for "Tornado Edge" Mob Skill
         if
             (tpEffect1 == xi.mobskills.physicalTpBonus.ENFEEB_SPECIAL or
             tpEffect2 == xi.mobskills.physicalTpBonus.ENFEEB_SPECIAL) and
@@ -621,24 +631,18 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
     end
 
     while hitsdone < numHits do
-        chance = math.random()
-
-        if tpEffect1 ~= xi.mobskills.physicalTpBonus.RANGED and tpEffect2 ~= xi.mobskills.physicalTpBonus.RANGED then
-            chance = xi.weaponskills.handleParry(mob, target, chance)
-            chance = xi.weaponskills.handleGuard(mob, target, chance)
-        end
-
-        if chance <= hitrate then
-            local isCrit = math.random() < critRate
-            pdif = xi.combat.physical.calculateMeleePDIF(mob, target, weaponType, attMod, isCrit, applyLevelCorrection, false, 0, false, isCannonball)
+        if (math.random(1, 100)) <= hitrate then
+            local isCrit = math.random(1, 100) < critRate
+            pdif = xi.combat.physical.calculateMeleePDIF(mob, target, weaponType, attMod, isCrit, applyLevelCorrection, false, 0, false, xi.slot.MAIN, useDefInPlaceOfAttack)
             finaldmg = finaldmg + (hitdamage * pdif)
-            finaldmg = xi.weaponskills.handleBlock(mob, target, finaldmg) -- (ASB)
-            hitslanded = hitslanded + 1
+            -- use helper function check for parry guard and blocking and handle the hit
+            hitslanded, finaldmg = handleSinglePhysicalHit(mob, target, hitdamage, hitslanded, finaldmg, tpEffect1)
 
             if
                 tpEffect1 == xi.mobskills.physicalTpBonus.ENFEEB_SPECIAL or
                 tpEffect2 == xi.mobskills.physicalTpBonus.ENFEEB_SPECIAL
             then
+                -- Used for "Tornado Edge" Mob Skill
                 if hitsdone == 1 then
                     target:addStatusEffect(xi.effect.MAX_HP_DOWN, 50, 0, 120)
                 elseif hitsdone == 2 then
@@ -646,6 +650,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
                 end
             end
         end
+
         hitsdone = hitsdone + 1
     end
 
@@ -653,6 +658,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, numHits, accMod, dmg
         tpEffect1 == xi.mobskills.physicalTpBonus.ENFEEB_SPECIAL or
         tpEffect2 == xi.mobskills.physicalTpBonus.ENFEEB_SPECIAL
     then
+        -- Used for "Tornado Edge" Mob Skill
         if hitslanded == 3 then
             target:addStatusEffect(xi.effect.MAX_TP_DOWN, 1000, 3, 120)
         end
@@ -730,9 +736,7 @@ end
 -- xi.mobskills.magicalTpBonus.DMG_BONUS and TP = 200, tpvalue = 1, assume V=150  --> damage is now 150*(TP*1) / 100 = 300
 -- xi.mobskills.magicalTpBonus.DMG_BONUS and TP = 100, tpvalue = 2, assume V=150  --> damage is now 150*(TP*2) / 100 = 300
 -- xi.mobskills.magicalTpBonus.DMG_BONUS and TP = 200, tpvalue = 2, assume V=150  --> damage is now 150*(TP*2) / 100 = 600
-
 xi.mobskills.mobMagicalMove = function(actor, target, action, baseDamage, actionElement, damageModifier, tpEffect, tpMultiplier, ignoreresist, ftp100, ftp200, ftp300, dStatMult)
-
     if tpMultiplier == nil then
         tpMultiplier = 1
     end
@@ -1135,12 +1139,12 @@ xi.mobskills.mobDrainMove = function(mob, target, drainType, drain, attackType, 
 end
 
 xi.mobskills.mobPhysicalDrainMove = function(mob, target, skill, drainType, drain)
-
     if
         mob:getMod(xi.mod.SAVETP) > 0 and
         mob:getTP() < mob:getMod(xi.mod.SAVETP)
     then
         mob:setTP(mob:getMod(xi.mod.SAVETP))
+
     end
     -- If target has Hysteria, no message skip rest
     if mob:hasStatusEffect(xi.effect.HYSTERIA) then
@@ -1189,7 +1193,6 @@ xi.mobskills.mobDrainAttribute = function(mob, target, typeEffect, power, tick, 
 end
 
 xi.mobskills.mobDrainStatusEffectMove = function(mob, target)
-
     -- If target has Hysteria, no message skip rest
     if mob:hasStatusEffect(xi.effect.HYSTERIA) then
         return xi.msg.basic.NONE
@@ -1246,6 +1249,7 @@ xi.mobskills.mobPhysicalStatusEffectMove = function(mob, target, skill, typeEffe
     then
         mob:setTP(mob:getMod(xi.mod.SAVETP))
     end
+
     if xi.mobskills.mobPhysicalHit(skill) then
         return xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, power, tick, duration)
     end
@@ -1261,6 +1265,7 @@ xi.mobskills.mobGazeMove = function(mob, target, typeEffect, power, tick, durati
     then
         mob:setTP(mob:getMod(xi.mod.SAVETP))
     end
+
     if
         target:isFacing(mob) and
         mob:isInfront(target)
@@ -1272,7 +1277,6 @@ xi.mobskills.mobGazeMove = function(mob, target, typeEffect, power, tick, durati
 end
 
 xi.mobskills.mobBuffMove = function(mob, typeEffect, power, tick, duration, subType, subPower)
-
     if
         mob:getMod(xi.mod.SAVETP) > 0 and
         mob:getTP() < mob:getMod(xi.mod.SAVETP)
