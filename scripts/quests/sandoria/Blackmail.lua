@@ -2,22 +2,15 @@
 -- Blackmail
 -----------------------------------
 -- Log ID: 0, Quest ID: 71
--- Dauperiat !gotoid 17723525
--- Halver !gotoid 17731591
+-----------------------------------
+-- Dauperiat : !pos -20 0 -26 231
+-- Halver    : !pos 2 0 0 233
 -----------------------------------
 
-require('scripts/globals/npc_util')
-require('scripts/globals/quests')
-
-require('scripts/globals/interaction/quest')
------------------------------------
-
-local quest = Quest:new(xi.questLog.SANDORIA, xi.quest.id.sandoria.BLACKMAIL)
+local quest = Quest:new(xi.questLog.SANDORIA, xi.quest.id.sandoria.A_KNIGHTS_TEST)
 
 quest.reward =
 {
-    fame = 30,
-    fameArea = xi.fameArea.SANDORIA,
     gil = 900,
 }
 
@@ -25,56 +18,75 @@ quest.sections =
 {
     {
         check = function(player, status, vars)
-            return status == xi.questStatus.QUEST_AVAILABLE and
-            player:getFameLevel(xi.fameArea.SANDORIA) >= 3 -- Rank 3 for home nation is assumed to get into Chateau... no need to check for it
-        end,
-
-        [xi.zone.NORTHERN_SAN_DORIA] =
-        {
-            ['Dauperiat']  = quest:progressEvent(643),
-
-            onEventFinish =
-            {
-                [643] = function(player, csid, option, npc)
-                    quest:begin(player)
-                    npcUtil.giveKeyItem(player, xi.ki.SUSPICIOUS_ENVELOPE)
-                end,
-            },
-        },
-    },
-
-    -- These functions check the status of ~= xi.questStatus.QUEST_AVAILABLE to support repeating
-    -- the quest.  Does not have to be flagged again to complete an additional time.
-    {
-        check = function(player, status, vars)
-            return status ~= xi.questStatus.QUEST_AVAILABLE
+            return status == xi.questStatus.QUEST_AVAILABLE
         end,
 
         [xi.zone.NORTHERN_SAN_DORIA] =
         {
             ['Dauperiat'] =
             {
-                onTrade = function(player, npc, trade)
-                    if
-                        npcUtil.tradeHasExactly(trade, { { xi.item.CASTLE_FLOOR_PLANS, 1 } }) and
-                        quest:getVar(player, 'Prog') == 2
-                        then
-                            return quest:progressEvent(648, 0, 530)
-                    end
-                end,
-
                 onTrigger = function(player, npc)
-                    if player:hasKeyItem(xi.ki.SUSPICIOUS_ENVELOPE) then
-                        return quest:event(645)
-                    elseif quest:getVar(player, 'Prog') == 1 then
-                        return quest:progressEvent(646, 0, 530)
-                    elseif quest:getVar(player, 'Prog') == 2 then
-                        return quest:event(647, 0, 530)
-                    elseif player:hasCompletedQuest(quest.areaId, quest.questId) then
-                        return quest:event(650, 0, 530)
+                    if
+                        player:getFameLevel(xi.fameArea.SANDORIA) >= 3 and
+                        player:getRank(player:getNation()) >= 3
+                    then
+                        return quest:progressEvent(643)
+                    else
+                        if player:needToZone() then
+                            return quest:event(642)
+                        else
+                            return quest:event(641)
+                        end
                     end
                 end,
             },
+
+            onEventFinish =
+            {
+                [641] = function(player, csid, option, npc)
+                    player:needToZone(true)
+                end,
+
+                [643] = function(player, csid, option, npc)
+                    npcUtil.giveKeyItem(player, xi.ki.SUSPICIOUS_ENVELOPE)
+                    quest:begin(player)
+                end,
+            },
+        },
+    },
+    {
+        check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_ACCEPTED and
+                player:hasKeyItem(xi.ki.SUSPICIOUS_ENVELOPE)
+        end,
+
+        [xi.zone.NORTHERN_SAN_DORIA] =
+        {
+            ['Dauperiat'] = quest:event(645),
+        },
+
+        [xi.zone.CHATEAU_DORAGUILLE] =
+        {
+            ['Halver'] = quest:progressEvent(549),
+
+            onEventFinish =
+            {
+                [549] = function(player, csid, option, npc)
+                    player:delKeyItem(xi.ki.SUSPICIOUS_ENVELOPE)
+                    quest:setVar(player, 'Prog', 1)
+                end,
+            },
+        },
+    },
+    {
+        check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_ACCEPTED and
+                vars.Prog == 1
+        end,
+
+        [xi.zone.NORTHERN_SAN_DORIA] =
+        {
+            ['Dauperiat'] = quest:progressEvent(646, { [1] = xi.item.COPY_OF_THE_CASTLE_FLOOR_PLANS }),
 
             onEventFinish =
             {
@@ -83,42 +95,84 @@ quest.sections =
                         quest:setVar(player, 'Prog', 2)
                     end
                 end,
-
-                [648] = function(player, csid, option, npc)
-                    player:confirmTrade()
-                        if not player:hasCompletedQuest(quest.areaId, quest.questId) then
-                            quest:complete(player)
-                        else
-                            player:addFame(xi.fameArea.SANDORIA, 5)
-                            npcUtil.giveCurrency(player, 'gil', xi.settings.main.GIL_RATE * 900)
-                            quest:setVar(player, 'Prog', 0)
-                        end
-                end,
-
-                [650] = function(player, csid, option, npc)
-                    if option == 1 then
-                        quest:setVar(player, 'Prog', 2)
-                    end
-                end,
             },
         },
+    },
+    {
+        check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_ACCEPTED and
+                vars.Prog == 2
+        end,
 
-        [xi.zone.CHATEAU_DORAGUILLE] =
+        [xi.zone.NORTHERN_SAN_DORIA] =
         {
-            ['Halver'] =
+            ['Dauperiat'] =
             {
-                onTrigger = function(player, npc)
-                    if player:hasKeyItem(xi.ki.SUSPICIOUS_ENVELOPE) then
-                        return quest:event(549)
+                onTrade = function(player, npc, trade)
+                    if npcUtil.tradeHas(trade, xi.item.COPY_OF_THE_CASTLE_FLOOR_PLANS) then
+                        return quest:progressEvent(648, { [1] = xi.item.COPY_OF_THE_CASTLE_FLOOR_PLANS })
                     end
                 end,
+
+                onTrigger = quest:event(647, { [1] = xi.item.COPY_OF_THE_CASTLE_FLOOR_PLANS }),
             },
 
             onEventFinish =
             {
-                [549] = function(player, csid, option, npc)
-                    quest:setVar(player, 'Prog', 1)
-                    player:delKeyItem(xi.ki.SUSPICIOUS_ENVELOPE)
+                [648] = function(player, csid, option, npc)
+                    if quest:complete(player) then
+                        player:confirmTrade()
+                    end
+                end,
+            },
+        },
+    },
+    {
+        check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_COMPLETED and
+                vars.Prog == 0
+        end,
+
+        [xi.zone.NORTHERN_SAN_DORIA] =
+        {
+            ['Dauperiat'] = quest:progressEvent(650, { [1] = xi.item.COPY_OF_THE_CASTLE_FLOOR_PLANS }),
+
+            onEventFinish =
+            {
+                [650] = function(player, csid, option, npc)
+                    if option == 1 then
+                        quest:setVar(player, 'Prog', 1)
+                    end
+                end,
+            },
+        },
+    },
+    {
+        check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_COMPLETED and
+                vars.Prog == 1
+        end,
+
+        [xi.zone.NORTHERN_SAN_DORIA] =
+        {
+            ['Dauperiat'] =
+            {
+                onTrade = function(player, npc, trade)
+                    if npcUtil.tradeHas(trade, xi.item.COPY_OF_THE_CASTLE_FLOOR_PLANS) then
+                        return quest:progressEvent(648, { [1] = xi.item.COPY_OF_THE_CASTLE_FLOOR_PLANS })
+                    end
+                end,
+
+                onTrigger = quest:event(647, { [1] = xi.item.COPY_OF_THE_CASTLE_FLOOR_PLANS }),
+            },
+
+            onEventFinish =
+            {
+                [648] = function(player, csid, option, npc)
+                    quest:setVar(player, 'Prog', 0)
+                    player:confirmTrade()
+                    npcUtil.giveCurrency(player, 'gil', 900)
+                    player:addFame(xi.quest.fameArea.SANDORIA, 5)
                 end,
             },
         },

@@ -2,19 +2,11 @@
 -- The Merchants Bidding
 -----------------------------------
 -- Log ID: 0, Quest ID: 69
--- Parvipon : !pos -169 -1 13 230
 -----------------------------------
-local ID = zones[xi.zone.SOUTHERN_SAN_DORIA]
+-- Parvipon : !pos -169 -1 13 230
 -----------------------------------
 
 local quest = Quest:new(xi.questLog.SANDORIA, xi.quest.id.sandoria.THE_MERCHANTS_BIDDING)
-
-quest.reward =
-{
-    fame = 30,
-    fameArea = xi.fameArea.SANDORIA,
-    gil = 120,
-}
 
 quest.sections =
 {
@@ -25,12 +17,7 @@ quest.sections =
 
         [xi.zone.SOUTHERN_SAN_DORIA] =
         {
-            ['Parvipon'] =
-            {
-                onTrigger = function(player, npc)
-                    return quest:progressEvent(90)
-                end,
-            },
+            ['Parvipon'] = quest:progressEvent(90),
 
             onEventFinish =
             {
@@ -42,20 +29,6 @@ quest.sections =
             },
         },
     },
-
-    {
-        check = function(player, status, vars)
-            return status == xi.questStatus.QUEST_ACCEPTED
-        end,
-
-        [xi.zone.SOUTHERN_SAN_DORIA] =
-        {
-            ['Parvipon'] = quest:progressEvent(88),
-        },
-    },
-
-    -- These functions check the status of ~= xi.questStatus.QUEST_AVAILABLE to support repeating
-    -- the quest.  Does not have to be flagged again to complete an additional time.
     {
         check = function(player, status, vars)
             return status ~= xi.questStatus.QUEST_AVAILABLE
@@ -66,8 +39,16 @@ quest.sections =
             ['Parvipon'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.RABBIT_HIDE, 3 } }) then
+                    if npcUtil.tradeHas(trade, { { xi.item.RABBIT_HIDE, 3 } }) then
                         return quest:progressEvent(89)
+                    end
+                end,
+
+                onTrigger = function(player, npc)
+                    if player:getQuestStatus(xi.questLog.SANDORIA, xi.quest.id.sandoria.THE_MERCHANTS_BIDDING) == xi.questStatus.QUEST_ACCEPTED then
+                        return quest:event(88)
+                    else
+                        return quest:event(90, { [7] = 1 })
                     end
                 end,
             },
@@ -75,13 +56,14 @@ quest.sections =
             onEventFinish =
             {
                 [89] = function(player, csid, option, npc)
+                    if quest:complete(player) then
+                        player:addFame(xi.fameArea.SANDORIA, 30)
+                    else
+                        player:addFame(xi.fameArea.SANDORIA, 5)
+                    end
+
+                    npcUtil.giveCurrency(player, 'gil', 120)
                     player:confirmTrade()
-                        if not player:hasCompletedQuest(quest.areaId, quest.questId) then
-                            quest:complete(player)
-                        else
-                            player:addFame(xi.fameArea.SANDORIA, 5)
-                            npcUtil.giveCurrency(player, 'gil', xi.settings.main.GIL_RATE * 120)
-                        end
                 end,
             },
         },

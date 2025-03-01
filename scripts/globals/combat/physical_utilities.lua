@@ -574,8 +574,7 @@ xi.combat.physical.calculateRangedPDIF = function(actor, target, weaponType, wsA
     local levelDifFactor = 0
 
     if applyLevelCorrection then
-        levelDifFactor = (actor:getMainLvl() - target:getMainLvl()) * 0.05
-        -- levelDifFactor = (target:getMainLvl() - actor:getMainLvl()) * 0.025
+        levelDifFactor = (actor:getMainLvl() - target:getMainLvl()) * 0.025
     end
 
     if actor:hasStatusEffect(xi.effect.FLASHY_SHOT) then
@@ -712,7 +711,7 @@ xi.combat.physical.criticalRateFromFencer = function(actor)
 end
 
 -- Critical rate from Building Flourish.
--- TODO: Study case were if we can attach modifiers to the effect itself, both this and the effect may need refactoring.
+-- TODO: Study case where if we can attach modifiers to the effect itself, both this and the effect may need refactoring.
 xi.combat.physical.criticalRateFromFlourish = function(actor)
     local buildingFlourishBonus = 0
 
@@ -1052,13 +1051,31 @@ xi.combat.physical.isParried = function(defender, attacker)
         xi.combat.physical.calculateParryRate(defender, attacker) > math.random(1, 100)
     then
         parried = true
+
+        -- https://www.bg-wiki.com/ffxi/Turms_Mittens
+        if
+            defender:getMod(xi.mod.PARRY_HP_RECOVERY) > 0 and
+            not defender:hasStatusEffect(xi.effect.CURSE_II)
+        then
+            local recoveryValue = defender:getMod(xi.mod.PARRY_HP_RECOVERY)
+            defender:addHP(recoveryValue)
+        end
+
         if defender:isPC() then
-            -- TODO: implement Turms mod here (when that mod is added to LSB)
-            defender:trySkillUp(xi.skill.PARRY, attacker:getMainLvl())
             -- handle tactical parry
             if defender:getMod(xi.mod.TACTICAL_PARRY) > 0 then
                 defender:addTP(defender:getMod(xi.mod.TACTICAL_PARRY))
             end
+        end
+    end
+
+    -- Handle skill ups.
+    if defender:isPC() then
+        if
+            parried or -- We parried
+            not xi.settings.map.PARRY_OLD_SKILLUP_STYLE -- Old style skillup is not enabled
+        then
+            defender:trySkillUp(xi.skill.PARRY, attacker:getMainLvl())
         end
     end
 

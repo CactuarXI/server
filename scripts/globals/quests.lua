@@ -52,20 +52,20 @@ xi.quest.id =
         UNDYING_FLAMES                  = 26, -- + Converted
         A_PURCHASE_OF_ARMS              = 27, -- + Converted
         A_KNIGHTS_TEST                  = 29, -- + Converted
-        THE_MEDICINE_WOMAN              = 30, -- +
+        THE_MEDICINE_WOMAN              = 30, -- + Converted
         BLACK_TIGER_SKINS               = 31, -- + Converted
         GROWING_FLOWERS                 = 58, -- ± Converted
         TRIAL_BY_ICE                    = 59, -- +
         THE_GENERALS_SECRET             = 60, -- ± Converted
         THE_RUMOR                       = 61, -- ± Converted
-        HER_MAJESTYS_GARDEN             = 62, -- +
+        HER_MAJESTYS_GARDEN             = 62, -- + Converted
         INTRODUCTION_TO_TEAMWORK        = 63, -- + Converted
         INTERMEDIATE_TEAMWORK           = 64, -- + Converted
         ADVANCED_TEAMWORK               = 65, -- + Converted
         GRIMY_SIGNPOSTS                 = 66, -- + Converted
         A_JOB_FOR_THE_CONSORTIUM        = 67,
         TROUBLE_AT_THE_SLUICE           = 68, -- + Converted
-        THE_MERCHANTS_BIDDING           = 69, -- + Converted
+        THE_MERCHANTS_BIDDING           = 69, -- ± Converted
         UNEXPECTED_TREASURE             = 70,
         BLACKMAIL                       = 71, -- + Converted
         THE_SETTING_SUN                 = 72, -- + Converted
@@ -75,14 +75,14 @@ xi.quest.id =
         STARTING_A_FLAME                = 77, -- ± Converted
         FEAR_OF_THE_DARK                = 78, -- + Converted
         WARDING_VAMPIRES                = 79, -- + Converted
-        SLEEPLESS_NIGHTS                = 80, -- ±
-        LUFETS_LAKE_SALT                = 81, -- ±
+        SLEEPLESS_NIGHTS                = 80, -- + Converted
+        LUFETS_LAKE_SALT                = 81, -- + Converted
         HEALING_THE_LAND                = 82, -- ± Converted
         SORCERY_OF_THE_NORTH            = 83, -- ± Converted
         THE_CRIMSON_TRIAL               = 84, -- ± Converted
         ENVELOPED_IN_DARKNESS           = 85, -- ± Converted
         PEACE_FOR_THE_SPIRIT            = 86, -- ± Converted
-        MESSENGER_FROM_BEYOND           = 87, -- ±
+        MESSENGER_FROM_BEYOND           = 87, -- ± Converted
         PRELUDE_OF_BLACK_AND_WHITE      = 88, -- ±
         PIEUJES_DECISION                = 89, -- +
         SHARPENING_THE_SWORD            = 90, -- ±
@@ -503,7 +503,7 @@ xi.quest.id =
         SURVIVAL_OF_THE_WISEST          = 33,
         MONSTROSITY                     = 34, -- + Converted
         A_HARD_DAYS_KNIGHT              = 64, -- + Converted
-        X_MARKS_THE_SPOT                = 65,
+        X_MARKS_THE_SPOT                = 65, -- ± Converted
         A_BITTER_PAST                   = 66, -- + Converted
         THE_CALL_OF_THE_SEA             = 67, -- + Converted
         PARADISE_SALVATION_AND_MAPS     = 68, -- + Converted
@@ -1214,6 +1214,8 @@ xi.quest.id =
 local function getVarPrefix(areaId, questId)
     return string.format('Quest[%d][%d]', areaId, questId)
 end
+
+xi.quest.getVarPrefix = getVarPrefix
 
 -- Interaction Framework Helper Functions
 xi.quest.incrementVar = function(player, areaId, questId, name, value)

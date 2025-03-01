@@ -123,6 +123,11 @@ zones[xi.zone.SOUTHERN_SAN_DORIA] =
         DONT_NEED_MORE_WATER           = 7912,  -- You don't need any more water.
         I_THANK_YOU_ADVENTURER         = 7914,  -- I thank you, kind adventurer. His Majesty, the late king, thanks you, too.
         TAUMILA_DIALOG                 = 7989,  -- I am Taumila, the owner of this establishment. Talk to the lady behind the counter if you wish to make a purchase.
+
+        LUSIANE_SHOP_DIALOG            = 7997,  -- Hello! Let Taumila's handle all your sundry needs!
+        OSTALIE_SHOP_DIALOG            = 7998,  -- Welcome, customer. Please have a look.
+        HELBORT_ORDERS                 = 8012,  -- It's an urgent order, so go as soon as you can. Remember, give the order to the free trader Alexius in Jugner Forest.
+        ASH_THADI_ENE_SHOP_DIALOG      = 8019,  -- Welcome to Helbort's Blades!
     },
     mob =
     {

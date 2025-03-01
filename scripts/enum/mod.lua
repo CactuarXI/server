@@ -1026,6 +1026,8 @@ xi.mod =
 
     DESPAWN_TIME_REDUCTION = 1134, -- Reduction in seconds. 1 = 1 second less to despawn.
 
+    PARRY_HP_RECOVERY = 1135, -- Recover <Mod Value> HP on successful parry.
+
         -- Permenant Resistance Build Modifiers
     --SLEEPRESBUILD                 = 1138, -- Used to create a resbuild for the appropriate effect. Will decrease overall duration of effect. (Out of 1000)
     --POISONRESBUILD                = 1139, -- Used to create a resbuild for the appropriate effect. Will decrease overall duration of effect. (Out of 1000)

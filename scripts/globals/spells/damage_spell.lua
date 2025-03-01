@@ -564,7 +564,7 @@ xi.spells.damage.calculateSDT = function(target, spellElement)
     local sdt = 1 -- The variable we want to calculate
 
     if spellElement > xi.element.NONE then
-        sdt = 1 - target:getMod(xi.combat.element.getElementalSDTModifier(spellElement)) / 10000
+        sdt = 1 + target:getMod(xi.combat.element.getElementalSDTModifier(spellElement)) / 10000
     end
 
     return utils.clamp(sdt, 0, 3)

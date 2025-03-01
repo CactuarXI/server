@@ -46,6 +46,7 @@ return {
     ['Miageau']           = { event = 517 },
     ['Morjean']           = { event = 601 },
     ['Morunaude']         = { event = 634 },
+    ['Narcheral']         = { event = 688 },
     ['Narsaude']          = { event = 668 },
     ['Nouveil']           = { event = 574 },
     ['Olbergieut']        = { event = 612 },

@@ -1,23 +1,15 @@
 -----------------------------------
 -- The Setting Sun
--- !addquest 0 72
--- Vamorcote !gotoid 17723526
--- Engraved_Key: !additem 535
--- Ahut !gotoid 17207657
 -----------------------------------
-require('scripts/globals/interaction/quest')
-require('scripts/globals/npc_util')
-require('scripts/globals/quests')
-
-
+-- LogID: 0 QuestID: 72
+-----------------------------------
+-- Vamorcote: !pos -137.070 10.999 161.855 231
 -----------------------------------
 
 local quest = Quest:new(xi.questLog.SANDORIA, xi.quest.id.sandoria.THE_SETTING_SUN)
 
 quest.reward =
 {
-    fame = 30,
-    fameArea = xi.fameArea.SANDORIA,
     gil = 10000,
 }
 
@@ -26,12 +18,13 @@ quest.sections =
     {
         check = function(player, status, vars)
             return status == xi.questStatus.QUEST_AVAILABLE and
-                player:getFameLevel(xi.fameArea.SANDORIA) >= 5
+                player:getFameLevel(xi.fameArea.SANDORIA) >= 5 and
+                player:hasCompletedQuest(xi.questLog.SANDORIA, xi.quest.id.sandoria.BLACKMAIL)
         end,
 
         [xi.zone.NORTHERN_SAN_DORIA] =
         {
-            ['Vamorcote'] = quest:progressEvent(654, 0, 535, 535),
+            ['Vamorcote'] = quest:progressEvent(654, { [1] = xi.item.ENGRAVED_KEY, [2] = xi.item.ENGRAVED_KEY }),
 
             onEventFinish =
             {
@@ -43,7 +36,6 @@ quest.sections =
             },
         },
     },
-
     {
         check = function(player, status, vars)
             return status == xi.questStatus.QUEST_ACCEPTED
@@ -53,10 +45,6 @@ quest.sections =
         {
             ['Vamorcote'] =
             {
-                onTrigger = function(player, npc)
-                    return quest:progressEvent(655, 0, 0, 535)
-                end,
-
                 onTrade = function(player, npc, trade)
                     if npcUtil.tradeHasExactly(trade, xi.item.ENGRAVED_KEY) then
                         return quest:progressEvent(658)
@@ -64,30 +52,28 @@ quest.sections =
                 end,
             },
 
+                onTrigger = quest:event(655, { [2] = xi.item.ENGRAVED_KEY }),
+            },
             onEventFinish =
             {
                 [658] = function(player, csid, option, npc)
                     if quest:complete(player) then
                         player:confirmTrade()
+                        player:needToZone(true)
                     end
                 end,
             },
         },
     },
-
     {
         check = function(player, status, vars)
-            return status == xi.questStatus.QUEST_COMPLETED
+            return status == xi.questStatus.QUEST_COMPLETED and
+                player:needToZone()
         end,
 
         [xi.zone.NORTHERN_SAN_DORIA] =
         {
-            ['Vamorcote'] =
-            {
-                onTrigger = function(player, npc)
-                    return quest:event(659):replaceDefault()
-                end,
-            },
+            ['Vamorcote'] = quest:event(659):replaceDefault(),
         },
     },
 }

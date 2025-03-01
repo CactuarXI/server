@@ -13,11 +13,10 @@ zoneObject.onInitialize = function(zone)
     xi.mogTablet.onZoneInitialize(zone)
     xi.cactuarRegimes.initializeBooks(zone)
 
-    local results = zone:queryEntitiesByName('qm2')
-    if results ~= nil and results[1] ~= nil then
-        local qm2 = results[1]
-
-        if VanadielHour() < 5 or VanadielHour() >= 18 then
+    local qm2 = GetNPCByID(ID.npc.WHM_AF1_QM)
+    if qm2 then
+        local time = VanadielHour()
+        if time < 5 or time >= 18 then
             qm2:setStatus(xi.status.NORMAL)
         else
             qm2:setStatus(xi.status.DISAPPEAR)
@@ -73,9 +72,9 @@ zoneObject.onEventFinish = function(player, csid, option, npc)
 end
 
 zoneObject.onGameHour = function(zone)
-    local results = zone:queryEntitiesByName('qm2')
-    if results ~= nil and results[1] ~= nil then
-        local qm2 = results[1]
+    local qm2 = GetNPCByID(ID.npc.WHM_AF1_QM)
+
+    if qm2 then
         if VanadielHour() == 5 then
             qm2:setStatus(xi.status.DISAPPEAR)
         end
