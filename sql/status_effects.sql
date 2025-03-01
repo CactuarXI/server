@@ -676,6 +676,7 @@ INSERT INTO `status_effects` VALUES (805,'tomahawk',544,0,0,0,807,0,0,0,0);
 INSERT INTO `status_effects` VALUES (806,'nuke_wall',0,0,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (807,'banish_sdt_debuff',0,0,0,0,805,0,0,0,0);
 INSERT INTO `status_effects` VALUES (808,'run_wild',0,0,0,0,0,0,0,0,0);
+INSERT INTO `status_effects` VALUES (809,'curse_spikes',41,34,0,0,0,0,2,0,800);
 
 /*!40000 ALTER TABLE `status_effects` ENABLE KEYS */;
 UNLOCK TABLES;

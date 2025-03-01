@@ -1,6 +1,11 @@
 -----------------------------------
 -- Area: Ceizak Battlegrounds
--- NPC: Root
+-- Mob: Bounding Chapuli
+-----------------------------------
+mixins =
+{
+    require('scripts/mixins/families/chapuli')
+}
 -----------------------------------
 local entity = {}
 

@@ -18,13 +18,17 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
-    local power = 50
-    local duration = 180
+    local power         = 10
+    local duration      = 0
+    local previousPower = 0
 
-    local typeEffect = xi.effect.ATTACK_BOOST
+    -- Attack Boost stacks up
+    if mob:hasStatusEffect(xi.effect.ATTACK_BOOST) then
+        previousPower = mob:getStatusEffect(xi.effect.ATTACK_BOOST):getPower()
+    end
 
-    skill:setMsg(xi.mobskills.mobBuffMove(mob, typeEffect, power, 0, duration))
-    return typeEffect
+    skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.ATTACK_BOOST, power + previousPower, 0, duration))
+    return xi.effect.ATTACK_BOOST
 end
 
 return mobskillObject

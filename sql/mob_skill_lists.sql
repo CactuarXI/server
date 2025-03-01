@@ -2078,10 +2078,10 @@ INSERT INTO `mob_skill_lists` VALUES ('Kumhau',457,3139);
 INSERT INTO `mob_skill_lists` VALUES ('Kumhau',457,3140);
 INSERT INTO `mob_skill_lists` VALUES ('Kumhau',457,3141);
 INSERT INTO `mob_skill_lists` VALUES ('Kumhau',457,3142);
-INSERT INTO `mob_skill_lists` VALUES ('Raaz',458,3148);
-INSERT INTO `mob_skill_lists` VALUES ('Raaz',458,3149);
-INSERT INTO `mob_skill_lists` VALUES ('Raaz',458,3150);
-INSERT INTO `mob_skill_lists` VALUES ('Raaz',458,3151);
+INSERT INTO `mob_skill_lists` VALUES ('Raaz',458,3130); -- barreling_smash
+INSERT INTO `mob_skill_lists` VALUES ('Raaz',458,3131); -- sweeping_gouge
+INSERT INTO `mob_skill_lists` VALUES ('Raaz',458,3132); -- zealous_snort
+-- INSERT INTO `mob_skill_lists` VALUES ('Raaz',458,3133); -- terrifying_snap (NM)
 INSERT INTO `mob_skill_lists` VALUES ('Yztarg',459,2922);
 INSERT INTO `mob_skill_lists` VALUES ('Yztarg',459,2923);
 INSERT INTO `mob_skill_lists` VALUES ('Yztarg',459,2924);

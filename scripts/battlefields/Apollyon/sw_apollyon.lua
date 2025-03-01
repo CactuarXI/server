@@ -18,7 +18,7 @@ local content = Limbus:new({
     entryNpc         = '_127',
     requiredKeyItems = { xi.ki.COSMO_CLEANSE, xi.ki.RED_CARD, message = ID.text.YOU_INSERT_THE_CARD_POLISHED },
     name             = 'SW_APOLLYON',
-    lootCrateId      = ID.npc.SW_LOOT_CRATE,
+    -- lootCrateId      = ID.npc.SW_LOOT_CRATE,
     timeExtension    = 10,
 })
 
@@ -80,7 +80,8 @@ local checkElementalCrate = function(mobElement, battlefield, mob)
     local weatherElement = battlefield:getLocalVar('weather')
 
     if weatherElement == mobElement then
-        npcUtil.showCrate(GetNPCByID(ID.npc.SW_LOOT_CRATE))
+        -- npcUtil.showCrate(GetNPCByID(ID.npc.SW_LOOT_CRATE))
+        npcUtil.showCrate(GetNPCByID(ID.SW_APOLLYON.npc.LOOT_CRATE))
     end
 end
 
@@ -573,7 +574,9 @@ content.loot =
         },
     },
 
-    [ID.npc.SW_LOOT_CRATE] =
+    -- [ID.npc.SW_LOOT_CRATE] =
+
+    [ID.SW_APOLLYON.npc.LOOT_CRATE] =
     {
         {
             quantity = 5,

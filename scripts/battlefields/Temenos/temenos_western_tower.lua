@@ -18,7 +18,7 @@ local content = Limbus:new({
     entryNpc         = 'Matter_Diffusion_Module',
     requiredKeyItems = { xi.ki.COSMO_CLEANSE, xi.ki.WHITE_CARD, message = ID.text.YOU_INSERT_THE_CARD_POLISHED },
     name             = 'TEMENOS_WESTERN_TOWER',
-    lootCrateId      = ID.npc.W_LOOT_CRATE,
+    -- lootCrateId      = ID.npc.W_LOOT_CRATE,
     timeExtension    = 15,
 })
 
@@ -307,7 +307,8 @@ content.groups =
     {
         mobs     = { 'Enhanced_Vulture' },
         allDeath = function(battlefield, mob)
-            npcUtil.showCrate(GetEntityByID(ID.npc.W_LOOT_CRATE))
+            -- npcUtil.showCrate(GetEntityByID(ID.npc.W_LOOT_CRATE))
+            npcUtil.showCrate(GetEntityByID(ID.TEMENOS_WESTERN_TOWER.npc.LOOT_CRATE))
         end,
     },
 }
@@ -458,7 +459,8 @@ content.loot =
         },
     },
 
-    [ID.npc.W_LOOT_CRATE] =
+    -- [ID.npc.W_LOOT_CRATE] =
+    [ID.TEMENOS_WESTERN_TOWER.npc.LOOT_CRATE] =
     {
         {
             quantity = 5,

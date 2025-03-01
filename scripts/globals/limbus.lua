@@ -94,9 +94,9 @@ function Limbus:register()
     Battlefield.register(self)
 
     -- Add recover crates that are technically "mobs"
-    if self.ID and self.ID.npc then
+    -- if self.ID and self.ID.npc then
         table.insert(self.groups, { mobIds = self.ID.npc.RECOVER_CRATES })
-    end
+    -- end
 
     return self
 end
@@ -167,8 +167,10 @@ function Limbus:onBattlefieldInitialize(battlefield)
     end
 
     -- Setup Winning Loot Crate
-    if self.lootCrateId then
-        local crate = GetEntityByID(self.lootCrateId)
+    --if self.lootCrateId then
+    --    local crate = GetEntityByID(self.lootCrateId)
+    if ID.npc.LOOT_CRATE then
+        local crate = GetEntityByID(ID.npc.LOOT_CRATE)
 
         if crate then
             xi.limbus.hideCrate(crate)
@@ -262,7 +264,8 @@ function Limbus:handleOpenLootCrate(player, crate)
     npcUtil.openCrate(crate, function()
         local battlefield = player:getBattlefield()
 
-        self:handleLootRolls(battlefield, self.loot[self.lootCrateId], crate)
+        self:handleLootRolls(battlefield, self.loot[self.ID.npc.LOOT_CRATE], crate)
+        -- self:handleLootRolls(battlefield, self.loot[self.lootCrateId], crate)
         battlefield:setLocalVar('cutsceneTimer', self.delayToExit)
         battlefield:setStatus(xi.battlefield.status.WON)
     end)

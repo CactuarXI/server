@@ -991,6 +991,12 @@ namespace battleutils
                             return false;
                         }
                         break;
+                    case SPIKE_CURSE:
+                        {
+                            Action->spikesMessage = MSGBASIC_STATUS_SPIKES;
+                            Action->spikesParam   = EFFECT_CURSE;
+                        }
+                        break;
 
                     default:
                         break;
@@ -1175,6 +1181,8 @@ namespace battleutils
                 {
                     PAttacker->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_CURSE, EFFECT_CURSE, 15, 0, 180));
                 }
+                Action->spikesMessage = MSGBASIC_STATUS_SPIKES;
+                Action->spikesParam   = EFFECT_CURSE;
                 break;
             }
             case SUBEFFECT_ICE_SPIKES:

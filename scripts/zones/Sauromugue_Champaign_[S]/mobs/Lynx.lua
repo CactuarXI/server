@@ -3,6 +3,8 @@
 --  Mob: Lynx
 -- Note: PH for Balam-Quitz
 -----------------------------------
+mixins = { require('scripts/mixins/families/lynx') }
+-----------------------------------
 local ID = zones[xi.zone.SAUROMUGUE_CHAMPAIGN_S]
 -----------------------------------
 ---@type TMobEntity
