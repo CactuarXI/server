@@ -2716,7 +2716,7 @@ INSERT INTO `mob_skills` VALUES (2692,1812,'royal_decree',1,0.0,18.0,2000,1000,4
 -- INSERT INTO `mob_skills` VALUES (2696,2440,'baleful_roar',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2697,2441,'infinite_terror',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2698,1381,'lithic_breath',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (2699,2443,'tarsal_slam',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (2699,831,'tarsal_slam',4,10.0,12.0,2000,1500,2049,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2700,2444,'enthrall',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (2701,1228,'acheron_flame',1,0.0,20.0,2000,1500,4,8,0,0,0,0,0); -- Cerberus
 -- INSERT INTO `mob_skills` VALUES (2702,2446,'terra_wing',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
@@ -3522,7 +3522,7 @@ INSERT INTO `mob_skills` VALUES (3496,2505,'hollow_smite',0,0.0,7.0,2000,1500,4,
 INSERT INTO `mob_skills` VALUES (3502,89,'nott',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (3503,3247,'justicebreaker',0,0.0,7.0,2000,0,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (3504,3248,'rancid_breath',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (3505,3249,'geotic_spin',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (3505,833,'geotic_spin',1,15.0,15.0,2000,2000,2049,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (3506,3250,'hellfire_arrow',4,0.0,7.0,2000,1500,4,0,0,1,0,0,0);
 INSERT INTO `mob_skills` VALUES (3507,3251,'incensed_pummel',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (3508,3252,'.',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
