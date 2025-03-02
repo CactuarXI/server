@@ -282,7 +282,7 @@ INSERT INTO `abilities` VALUES (264,'climactic_flourish',19,80,1,90,226,529,0,22
 INSERT INTO `abilities` VALUES (265,'libra',20,1,4,60,237,100,0,231,2000,0,6,11.2,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (266,'tactical_switch',18,79,1,180,213,100,0,232,2000,0,6,11.2,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (267,'blood_rage',1,87,1,300,11,319,0,239,2000,0,6,13.9,1,1,300,0,0,NULL);
-INSERT INTO `abilities` VALUES (269,'impetus',2,88,1,300,31,100,0,240,2000,0,6,20.0,0,1,80,0,0,NULL);
+INSERT INTO `abilities` VALUES (269,'impetus',2,50,1,300,31,100,0,240,2000,0,6,20.0,0,1,80,0,0,NULL);
 INSERT INTO `abilities` VALUES (270,'divine_caress',3,70,1,60,32,100,0,254,2000,0,6,20.0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (271,'sacrosanctity',3,95,1,600,33,100,0,268,2000,0,6,13.9,1,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (272,'enmity_douse',4,87,4,600,34,100,0,257,2000,0,6,18.0,0,1,0,0,0,NULL); -- check animation
@@ -298,7 +298,7 @@ INSERT INTO `abilities` VALUES (281,'spur',9,65,1,180,45,100,0,255,2000,0,6,20.0
 INSERT INTO `abilities` VALUES (282,'run_wild',9,60,1,900,46,100,0,255,2000,0,6,20.0,0,0,80,0,0,NULL); -- needs animation
 INSERT INTO `abilities` VALUES (283,'tenuto',10,83,1,5,47,0,0,257,2000,0,6,20.0,0,0,0,0,0,'ABYSSEA');
 INSERT INTO `abilities` VALUES (284,'marcato',10,95,1,600,48,0,0,251,2000,0,6,20.0,0,0,0,0,0,'ABYSSEA');
-INSERT INTO `abilities` VALUES (285,'bounty_shot',11,87,4,60,51,100,0,189,2000,0,3,21.0,0,0,0,0,0,NULL);
+INSERT INTO `abilities` VALUES (285,'bounty_shot',11,50,4,60,51,100,0,189,2000,0,3,21.0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (286,'decoy_shot',11,95,4,300,52,100,0,261,2000,0,6,20.0,0,0,0,0,0,NULL); -- needs animation
 INSERT INTO `abilities` VALUES (287,'hamanoha',12,87,4,300,53,100,0,249,2000,0,6,12.0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (288,'hagakure',12,95,1,180,54,0,0,249,2000,0,6,20.0,0,1,80,0,0,'ABYSSEA');
