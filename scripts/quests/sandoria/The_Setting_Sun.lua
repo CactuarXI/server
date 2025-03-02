@@ -50,7 +50,6 @@ quest.sections =
                         return quest:progressEvent(658)
                     end
                 end,
-            },
 
                 onTrigger = quest:event(655, { [2] = xi.item.ENGRAVED_KEY }),
             },
