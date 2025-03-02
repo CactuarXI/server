@@ -52,7 +52,7 @@ zones[xi.zone.VALKURM_DUNES] =
         TIME_ELAPSED                   = 7807,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
         FOUND_ITEM_WITH_EASE           = 7331,  -- It appears your chocobo found this item with ease.
 
-        FOUL_PRESENCE                  = 7722,  -- You sense a foul presence.
+        FOUL_PRESENCE                  = 7715,  -- You sense a foul presence.
     },
 
     mob =

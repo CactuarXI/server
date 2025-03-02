@@ -56,8 +56,7 @@ zones[xi.zone.JUGNER_FOREST] =
         TIME_ELAPSED                  = 8485,  -- Time Elapsed: / [hour/hours] (Vanadiel Time) / [minute/minutes] and [second/seconds] (Earth time)
         FOUND_ITEM_WITH_EASE          = 7805,  -- It appears your chocobo found this item with ease.
         SIGNPOST_NEW                  = 7887,  -- The signpost looks as good as new!
-
-        ALEXIUS_ORDERS                = 7905, -- Take that ${keyitem} back and hand it to the master at the weapons shop. Got it?
+        ALEXIUS_ORDERS                = 7898, -- Take that ${keyitem} back and hand it to the master at the weapons shop. Got it?
     },
 
     mob =

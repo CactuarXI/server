@@ -34,16 +34,16 @@ zones[xi.zone.OUTER_HORUTOTO_RUINS] =
         NO_COMBINATION                = 8276,  -- You were unable to enter a combination.
         REGIME_REGISTERED             = 10354, -- New training regime registered!
 
-        IF_HAD_ORBS                   = 7356,  -- You sense that if you had <keyitem>, <keyitem>, <keyitem>, or <keyitem>, something might happen.
-        MUST_WAIT_LONGER              = 7360,  -- It appears you must wait longer to commence the battle.
-        COMMENCING_EXPERIMENT         = 7361,  -- CoMM-eN-cInG*Ex-PE-rI-MeNt.
-        INITIATING_TRANSMISSION       = 7362,  -- INi-TiAT-iNG*TRAnS-miSS-IOn*TO*PRo-FeSS-oR...
-        VENTURED_TOO_FAR              = 7363,  -- You have ventured too far from the field of battle.\nThe Confrontation will automatically disengage if you do not return.
-        CONFRONTATION_DISENGAGED      = 7364,  -- You have ventured too far from the field of battle.\n The Confrotation has been disengaged.
-        RETURNED_TO_BATTLE            = 7365,  -- You have returned to the field of battle.
-        YOU_HAVE_X_MINUTES_LEFT       = 7366,  -- You have <number> minutes (Earth time) to complete the battle.
-        YOU_HAVE_ONLY_X_SECONDS_LEFT  = 7367,  -- You have only <number> seconds (Earth time) remaining.
-        CONFRONTATION_TIME_UP         = 7369,  -- Your time for this confrontation is up...
+        IF_HAD_ORBS                   = 7349,  -- You sense that if you had <keyitem>, <keyitem>, <keyitem>, or <keyitem>, something might happen.
+        MUST_WAIT_LONGER              = 7353,  -- It appears you must wait longer to commence the battle.
+        COMMENCING_EXPERIMENT         = 7354,  -- CoMM-eN-cInG*Ex-PE-rI-MeNt.
+        INITIATING_TRANSMISSION       = 7355,  -- INi-TiAT-iNG*TRAnS-miSS-IOn*TO*PRo-FeSS-oR...
+        VENTURED_TOO_FAR              = 7356,  -- You have ventured too far from the field of battle.\nThe Confrontation will automatically disengage if you do not return.
+        CONFRONTATION_DISENGAGED      = 7357,  -- You have ventured too far from the field of battle.\n The Confrotation has been disengaged.
+        RETURNED_TO_BATTLE            = 7358,  -- You have returned to the field of battle.
+        YOU_HAVE_X_MINUTES_LEFT       = 7359,  -- You have <number> minutes (Earth time) to complete the battle.
+        YOU_HAVE_ONLY_X_SECONDS_LEFT  = 7360,  -- You have only <number> seconds (Earth time) remaining.
+        CONFRONTATION_TIME_UP         = 7362,  -- Your time for this confrontation is up...
     },
 
     mob =
