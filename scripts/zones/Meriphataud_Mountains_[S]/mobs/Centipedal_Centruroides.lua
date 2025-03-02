@@ -2,6 +2,8 @@
 -- Area: Meriphataud Mountains [S]
 --   NM: Centipedal Centruroides
 -----------------------------------
+mixins = { require('scripts/mixins/families/scolopendrid') }
+-----------------------------------
 ---@type TMobEntity
 local entity = {}
 
@@ -9,6 +11,7 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+    mob:addMobMod(xi.mobMod.EXP_BONUS, 10)
     mob:setMod(xi.mod.DOUBLE_ATTACK, 100)
     mob:setMod(xi.mod.MOVE_SPEED_STACKABLE, 13)
 end
